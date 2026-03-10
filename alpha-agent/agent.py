@@ -9,44 +9,39 @@ from langgraph.prebuilt import ToolNode
 from state import AgentState
 from tools import tools_list
 
-# Muat variabel lingkungan (API Key) 
-os.environ["GOOGLE_API_KEY"] = "REDACTED"
+# Muat variabel lingkungan (API Key) secara aman
+os.environ["GOOGLE_API_KEY"] = ""
 
 # Inisialisasi Model LLM
-llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite-preview", temperature=0) # Temperature 0 agar responnya deterministik dan tidak berhalusinasi
+# Pastikan GEMINI_API_KEY sudah ada di file .env
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0) # Temperature 0 agar responnya deterministik dan tidak berhalusinasi
 
 # Ikat alat (tools) ke otak AI
 llm_with_tools = llm.bind_tools(tools_list)
 
-# PROMPT SISTEM: "hukum mutlak" yang mengatur cara agen berpikir
+# PROMPT SISTEM: Ini adalah "hukum mutlak" yang mengatur cara agen berpikir
 system_prompt = """Kamu adalah Agentic AI utama untuk Tim 3 di proyek Sekolah Rakyat.
 Tujuanmu adalah menyusun materi pembelajaran terstruktur berbasis data.
-Kamu BUKAN chatbot yang boleh langsung menjawab. Kamu adalah mesin orkestrator alat (tools).
+Kamu BUKAN sekadar chatbot. Kamu adalah orkestrator alat (tools).
 
-KAMU WAJIB MENGIKUTI URUTAN LANGKAH BERIKUT TANPA BOLEH BERHENTI DI TENGAH JALAN:
-Langkah 1: Baca Konteks Sistem (Parameter dan Emosi) yang diberikan.
-Langkah 2: Panggil 'retriever_tool' untuk mencari fakta dasar. Jangan pernah mengarang materi.
-Langkah 3: Panggil 'curriculum_mapper_tool' untuk memvalidasi tingkat pendidikan.
-Langkah 4: Panggil 'content_generator_tool' untuk merancang draf narasi dari fakta tersebut.
-Langkah 5: Panggil 'emotion_adapter_tool' untuk menyesuaikan gaya draf dengan status emosi siswa.
-Langkah 6: Panggil 'citation_builder_tool' untuk menambahkan sumber pada draf adaptif.
-Langkah 7: Panggil 'difficulty_adjuster_tool' untuk menyesuaikan tingkat kesulitan jika perlu.
-Langkah 8: TERAKHIR, panggil 'content_structurer_tool' untuk mengubah draf akhirmu menjadi format JSON strict.
-
-HUKUM FINAL: 
-1. Jangan pernah memberikan Final Answer sebelum Langkah 8 selesai. 
-2. Jawaban akhirmu HARUS SAMA PERSIS (RAW/MENTAH) 100% dengan output yang dihasilkan oleh 'content_structurer_tool'. 
-3. DILARANG KERAS merangkum, mengubah, atau membuat struktur JSON sendiri. UI sistem membutuhkan key 'struktur_materi' yang berupa array. Kembalikan teks dari tool tersebut apa adanya!
+Aturan Mutlak:
+1. Kamu WAJIB membaca Konteks Sistem (Parameter dan Emosi) sebelum bertindak.
+2. Kamu WAJIB menggunakan 'retriever_tool' terlebih dahulu untuk mencari fakta dasar. Jangan mengarang materi sendiri.
+3. Gunakan 'curriculum_mapper_tool' untuk memastikan materi sesuai tingkat pendidikan.
+4. Gunakan 'emotion_adapter_tool' untuk menyesuaikan gaya bahasa jika emosi siswa terdeteksi negatif.
+5. Gunakan 'content_structurer_tool' SEBAGAI LANGKAH TERAKHIR untuk memformat hasil akhir ke dalam JSON strict.
+6. Jawaban akhirmu kepada pengguna HARUS berupa JSON dari 'content_structurer_tool', bukan teks narasi biasa.
 """
+
 # ---------------------------------------------------------------------------
-# DEFINE NODE (PEKERJA)
+# DEFINISI NODE (PEKERJA)
 # ---------------------------------------------------------------------------
 
 # Node 1: Otak AI (Berpikir dan Memilih Alat)
 def call_model(state: AgentState):
     messages = state["messages"]
     
-    # langkah pertama, suntikkan Hukum Mutlak dan Konteks (Emosi & Parameter) dari Tim 1 & 6
+    # Jika ini adalah langkah pertama, suntikkan Hukum Mutlak dan Konteks (Emosi & Parameter) dari Tim 1 & 6
     if len(messages) == 1:
         # Mengambil variabel spesifik dari AgentState
         params = state.get('request_params', {})
@@ -68,7 +63,7 @@ def call_model(state: AgentState):
     # Simpan hasil pemikiran LLM ke dalam memori
     return {"messages": [response]}
 
-# Node 2: Tool AI (Mengeksekusi tool)
+# Node 2: Tangan AI (Mengeksekusi Alat)
 # ToolNode secara otomatis akan mencari tool mana yang diminta oleh LLM di dalam tools_list
 tool_node = ToolNode(tools_list)
 
