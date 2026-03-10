@@ -58,7 +58,7 @@ def difficulty_adjuster_tool(konten: str, riwayat_nilai_rata_rata: int) -> str:
     level = "HOTS (Tingkat Tinggi)" if riwayat_nilai_rata_rata > 80 else "Dasar"
     return f"{konten}\n[PENYESUAIAN LEVEL]: Latihan soal disesuaikan ke tingkat {level}."
 
-# 7. Content Structurer Tool (Wajib untuk UI Tim 6)
+# 7. Content Structurer Tool (Utuk UI Tim 6)
 @tool
 def content_structurer_tool(materi_final: str, topik: str, tingkat: str, saran_guru: str) -> str:
     """

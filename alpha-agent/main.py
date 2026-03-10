@@ -37,7 +37,6 @@ def main():
     for step in alpha_agent_app.stream(initial_state, stream_mode="updates"):
         for node_name, node_data in step.items():
             print(f"📍 [LOG] Node aktif: {node_name.upper()}")
-            
             if "messages" in node_data:
                 last_msg = node_data["messages"][-1]
                 
@@ -46,22 +45,25 @@ def main():
                     tools_dipanggil = [t['name'] for t in last_msg.tool_calls]
                     print(f"   🔧 ACTION: Memanggil Tool -> {tools_dipanggil}")
                 
-                # Cek jika agen memberikan pesan/respon (dari Tool atau Final Answer)
-                elif hasattr(last_msg, 'content') and last_msg.content:
-                    isi_konten = last_msg.content
+                # Jika pesan datang dari ToolNode (tipe ToolMessage)
+                elif last_msg.__class__.__name__ == 'ToolMessage':
+                    snippet = str(last_msg.content).replace('\n', ' ')
+                    if len(snippet) > 100:
+                        snippet = snippet[:100] + " ... [dipotong]"
+                    print(f"   ⚙️ TOOL OUTPUT: {snippet}")
                     
-                    # Normalisasi: Jika Gemini mengembalikan list of blocks, gabungkan menjadi string
-                    if isinstance(isi_konten, list):
-                        isi_konten = " ".join([str(item.get('text', item)) if isinstance(item, dict) else str(item) for item in isi_konten])
-                    else:
-                        isi_konten = str(isi_konten)
-                        
-                    snippet = isi_konten.replace('\n', ' ')
+                    # Jika tool yang baru saja selesai adalah content_structurer_tool, ini adalah kebenaran mutlaknya
+                    if last_msg.name == "content_structurer_tool":
+                        final_output = last_msg.content  # Kunci output murni di sini
+                
+                # Jika pesan dari agen (AIMessage)
+                elif hasattr(last_msg, 'content') and last_msg.content:
+                    snippet = str(last_msg.content).replace('\n', ' ')
                     if len(snippet) > 100:
                         snippet = snippet[:100] + " ... [dipotong]"
                     print(f"   💬 OBSERVATION/REASONING: {snippet}")
-                    final_output = isi_konten
-
+                    # Kita TIDAK LAGI menimpa final_output dengan ocehan akhir agen
+    
             print("-" * 60)
             
     print("\n=== HASIL AKHIR (OUTPUT UNTUK UI TIM 6) ===")

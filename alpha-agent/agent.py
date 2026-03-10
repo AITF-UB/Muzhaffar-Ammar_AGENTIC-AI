@@ -10,7 +10,7 @@ from state import AgentState
 from tools import tools_list
 
 # Muat variabel lingkungan (API Key) 
-os.environ["GOOGLE_API_KEY"] = ""
+os.environ["GOOGLE_API_KEY"] = "REDACTED"
 
 # Inisialisasi Model LLM
 llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite-preview", temperature=0) # Temperature 0 agar responnya deterministik dan tidak berhalusinasi
@@ -34,7 +34,9 @@ Langkah 7: Panggil 'difficulty_adjuster_tool' untuk menyesuaikan tingkat kesulit
 Langkah 8: TERAKHIR, panggil 'content_structurer_tool' untuk mengubah draf akhirmu menjadi format JSON strict.
 
 HUKUM FINAL: 
-Jangan pernah memberikan Final Answer sebelum Langkah 8 selesai. Jawaban akhirmu HARUS BERUPA HASIL OUTPUT DARI 'content_structurer_tool' (berbentuk JSON), BUKAN narasi teks biasa.
+1. Jangan pernah memberikan Final Answer sebelum Langkah 8 selesai. 
+2. Jawaban akhirmu HARUS SAMA PERSIS (RAW/MENTAH) 100% dengan output yang dihasilkan oleh 'content_structurer_tool'. 
+3. DILARANG KERAS merangkum, mengubah, atau membuat struktur JSON sendiri. UI sistem membutuhkan key 'struktur_materi' yang berupa array. Kembalikan teks dari tool tersebut apa adanya!
 """
 # ---------------------------------------------------------------------------
 # DEFINE NODE (PEKERJA)
