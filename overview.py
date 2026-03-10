@@ -6,7 +6,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 
 # Masukkan API Key kamu di sini atau lewat environment variable
-os.environ["GOOGLE_API_KEY"] = "REDACTED"
+os.environ["GOOGLE_API_KEY"] = ""
 
 # Inisialisasi model Gemini 1.5 Flash
 model = ChatGoogleGenerativeAI(
