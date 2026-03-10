@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 
 # Hapus Gemini API
@@ -136,19 +137,24 @@ def content_generator_node(state: AgentState) -> dict:
     relevant = state.get("documents_relevant", False)
     
     # 1. Persiapan Pipeline Instruksi
-    context = "\\n".join(docs) if relevant and docs else "Gunakan pengetahuan umummu karena referensi tidak ditemukan."
+    context = "\n".join(docs) if relevant and docs else "Gunakan pengetahuan umummu karena referensi tidak ditemukan."
     mapper_msg = util_mapper_kurikulum(topik, tingkat)
-    diff_msg = util_difficulty_adjuster(riwayat)
+    
+    # Ambil instruksi prompt dan label level dari utility
+    diff_msg, level_label = util_difficulty_adjuster(riwayat)
     
     # 2. Generasi Berbasis Fakta
     draft = _chat(
-        system=f"Kamu guru {tingkat} yang kreatif. Wajib baca instruksi kurikulum: {mapper_msg}\\nJuga ikuti pedoman kesulitan: {diff_msg}\\nTulislah penjelasan 1-3 paragraf saja yang padat.",
-        user=f"Referensi: {context}\\n\\nJelaskan topik '{topik}' berdasarkan referensi di atas:"
+        system=f"Kamu guru {tingkat} yang kreatif. Wajib baca instruksi kurikulum: {mapper_msg}\nJuga ikuti pedoman kesulitan: {diff_msg}\nTulislah penjelasan 1-3 paragraf saja yang padat.",
+        user=f"Referensi: {context}\n\nJelaskan topik '{topik}' berdasarkan referensi di atas:"
     )
     
-    # 3. Validasi Akademik (Citation Builder)
+    # 3. Validasi Akademik (Citation Builder & Penyesuaian Level)
     if relevant:
         draft = util_build_citation(draft, "[Tervalidasi: Modul Sekolah Dasar/Menengah]")
+        
+    # Memaksa cap level tercetak di materi akhir tanpa campur tangan AI
+    draft += f"\n\n[PENYESUAIAN LEVEL]: Materi disesuaikan ke tingkat {level_label} berdasarkan riwayat nilai."
         
     return {
         "draft_content": draft,
@@ -206,25 +212,46 @@ def revision_node(state: AgentState) -> dict:
     adapted = state.get("adapted_content", "")
     feedback = state.get("quality_feedback", "")
     
-    revised = _chat(
-        system="Perbaiki teks materi berdasarkan FEEDBACK QUALITY CHECKER.",
-        user=f"FEEDBACK: {feedback}\\n\\nMATERI SAAT INI:\\n{adapted}"
+    # 1. Pagari LLM dengan instruksi batas yang mutlak
+    revised_raw = _chat(
+        system="Kamu adalah editor materi pendidikan. Perbaiki materi berdasarkan feedback. HUKUM MUTLAK: Kamu HANYA BOLEH memberikan teks materi perbaikannya saja. JANGAN menambahkan kata pengantar. JANGAN mengulang feedback. WAJIB membungkus hasil materi perbaikanmu dengan tag <MATERI>teks_disini</MATERI>.",
+        user=f"FEEDBACK REVISI:\n{feedback}\n\nMATERI SAAT INI:\n{adapted}\n\nKeluarkan teks perbaikan di dalam tag <MATERI> sekarang:"
     )
     
+    # 2. Parsing Paksa: Ekstrak hanya teks yang ada di dalam batas tag
+    match = re.search(r"<MATERI>(.*?)</MATERI>", revised_raw, re.DOTALL | re.IGNORECASE)
+    
+    if match:
+        clean_revised = match.group(1).strip()
+    else:
+        # Fallback pertahanan terakhir jika AI masih keras kepala membuang tag
+        clean_revised = revised_raw.split("MATERI SETELAH PERBAIKAN:")[-1].strip()
+        clean_revised = clean_revised.split("FEEDBACK:")[-1].strip()
+        # Buang sisa markdown json jika masih terbawa
+        clean_revised = clean_revised.replace("```json", "").replace("```", "").strip()
+    
     return {
-        "adapted_content": revised,
-        "messages": [AIMessage(content=f"[Content Revised based on QC Feedback]")]
+        "adapted_content": clean_revised,
+        "messages": [AIMessage(content=f"[Content Revised and Boundaries Clipped Strictly]")]
     }
-
 
 def structurer_node(state: AgentState) -> dict:
     """Node 6: Finalisasi ke Bentuk JSON Strict (Tim 6)"""
     params = state["request_params"]
     topik = params.get("topik", "")
     tingkat = params.get("tingkat", "")
+    riwayat = params.get("riwayat_nilai_rata_rata", 70)
+    emosi = state["emotion_input"].get("emosi", "netral")
     final_text = state.get("adapted_content", "")
     
-    final_json = util_structure_json(final_text, topik, tingkat)
+    # Membangun analitik saran guru secara terstruktur
+    if emosi in ["frustrasi", "bingung", "sedih"]:
+        saran_guru = f"Siswa terdeteksi {emosi} (Nilai rata-rata: {riwayat}). Pendekatan sistem saat ini menggunakan banyak analogi dasar. Mohon pantau pemahaman konsep fundamental siswa."
+    else:
+        saran_guru = f"Siswa dalam kondisi {emosi} (Nilai rata-rata: {riwayat}). Siswa siap menerima tantangan materi sesuai standar kurikulum."
+    
+    # Masukkan saran_guru ke dalam util_structure_json
+    final_json = util_structure_json(final_text, topik, tingkat, saran_guru)
     
     return {
         "final_payload": final_json,

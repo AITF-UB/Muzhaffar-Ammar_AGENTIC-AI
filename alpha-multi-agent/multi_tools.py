@@ -196,12 +196,13 @@ def util_adapt_emotion(draft_konten: str, status_emosi: str) -> str:
 def util_build_citation(konten: str, sumber: str) -> str:
     return f"{konten}\n\n*Sumber*: {sumber}"
 
-def util_difficulty_adjuster(riwayat_nilai: int) -> str:
+def util_difficulty_adjuster(riwayat_nilai: int) -> tuple[str, str]:
+    """Mengembalikan 2 nilai: (Instruksi Prompt, Label Cetak)"""
     if riwayat_nilai > 80:
-        return "Gunakan pertanyaan tingkat tinggi (HOTS) pada instruksimu."
-    return "Gunakan analogi dasar yang sangat mudah diresapi."
+        return "Gunakan pertanyaan tingkat tinggi (HOTS) pada instruksimu.", "HOTS (Tingkat Tinggi)"
+    return "Gunakan analogi dasar yang sangat mudah diresapi.", "Dasar"
 
-def util_structure_json(materi_final: str, topik: str, tingkat: str) -> dict:
+def util_structure_json(materi_final: str, topik: str, tingkat: str, saran_guru: str) -> dict:
     """
     Format wajib untuk Frontend Tim 6.
     Langsung memulangkan dictionary Python yang valid.
@@ -215,5 +216,6 @@ def util_structure_json(materi_final: str, topik: str, tingkat: str) -> dict:
                 "tipe": "teks_imersif",
                 "konten": materi_final,
             }
-        ]
+        ],
+        "rekomendasi_guru": saran_guru
     }
