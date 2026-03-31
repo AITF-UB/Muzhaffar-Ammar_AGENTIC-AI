@@ -1,4 +1,5 @@
 import json
+import re
 from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -9,7 +10,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # ================================================================
 
 class DatabaseSekolah:
-    # Dokumen di-hardcode seperti pada tes_1.ipynb untuk demo
     DOCUMENTS = [
         Document(
             page_content="""
@@ -153,7 +153,7 @@ class DatabaseSekolah:
     ]
 
     def __init__(self):
-        print("📚 Membangun Database Sekolah...")
+        print("📚 Membangun Database Sekolah untuk Router Agent...")
         self.embeddings = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2",
             model_kwargs={"device": "cpu"}
@@ -165,7 +165,7 @@ class DatabaseSekolah:
         self.vectorstore = Chroma.from_documents(
             documents=docs,
             embedding=self.embeddings,
-            collection_name="sekolah_db"
+            collection_name="sekolah_db_router"
         )
         print(f"   ✅ {len(docs)} chunks KB siap!")
 
@@ -176,42 +176,57 @@ class DatabaseSekolah:
 kb_sekolah = DatabaseSekolah()
 
 # ================================================================
-# 2. Node Utility Functions
+# 2. Node Utility Functions & JSON Cleaners
 # ================================================================
 
-def util_mapper_kurikulum(topik: str, tingkat: str) -> str:
-    """Utility tambahan (opsional) untuk validasi"""
-    return f"[VALIDASI]: '{topik}' sesuai kurikulum {tingkat}."
+def clean_json_from_llm(raw_text: str) -> dict:
+    """Fallback JSON parser tangguh untuk mengekstrak string JSON kotor dari LLM"""
+    # 1. Hapus Markdown code blocks (```json ... ```)
+    clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
+    
+    # 2. Cari kurung kurawal pembuka dan penutup terakhir
+    start_idx = clean_text.find('{')
+    end_idx = clean_text.rfind('}')
+    
+    if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+        json_str = clean_text[start_idx:end_idx+1]
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError:
+            pass
+            
+    # Cari kurung siku (untuk JSON array yg di-wrap)
+    start_idx = clean_text.find('[')
+    end_idx = clean_text.rfind(']')
+    
+    if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+        json_str = clean_text[start_idx:end_idx+1]
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError:
+            pass
+            
+    # Jika semua gagal, return format error aman
+    return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:100]}
 
-def util_adapt_emotion(draft_konten: str, status_emosi: str) -> str:
-    """Sistem adaptif yang disuntikkan oleh Node Emosi"""
-    if status_emosi.lower() in ["frustrasi", "bingung", "sedih", "bosan"]:
-        return f"💡 *Hei, jangan menyerah! Mari kita bedah pelan-pelan ya. Konsep ini mirip seperti saat kita...*\n{draft_konten}"
-    return f"🚀 *Kamu sudah melangkah sejauh ini! Mari gaskan materi berikutnya!*\n{draft_konten}"
-
-def util_build_citation(konten: str, sumber: str) -> str:
-    return f"{konten}\n\n*Sumber*: {sumber}"
-
-def util_difficulty_adjuster(riwayat_nilai: int) -> tuple[str, str]:
-    """Mengembalikan 2 nilai: (Instruksi Prompt, Label Cetak)"""
-    if riwayat_nilai > 80:
-        return "Gunakan pertanyaan tingkat tinggi (HOTS) pada instruksimu.", "HOTS (Tingkat Tinggi)"
-    return "Gunakan analogi dasar yang sangat mudah diresapi.", "Dasar"
-
-def util_structure_json(materi_final: str, topik: str, tingkat: str, saran_guru: str) -> dict:
-    """
-    Format wajib untuk Frontend Tim 6.
-    Langsung memulangkan dictionary Python yang valid.
-    """
+def util_format_recommender(top_topics: list, emosi_pesan: str) -> dict:
     return {
+        "tipe": "rekomendasi_topik",
+        "pesan_empatik": emosi_pesan,
+        "daftar_topik": top_topics
+    }
+
+def util_format_flashcard(topik: str, flashcards: list) -> dict:
+    return {
+        "tipe": "flashcard_set",
         "topik": topik,
-        "tingkat": tingkat,
-        "struktur_materi": [
-            {
-                "judul_bagian": f"Pengantar {topik}",
-                "tipe": "teks_imersif",
-                "konten": materi_final,
-            }
-        ],
-        "rekomendasi_guru": saran_guru
+        "jumlah_kartu": len(flashcards) if isinstance(flashcards, list) else 0,
+        "kartu": flashcards
+    }
+    
+def util_format_mindmap(topik: str, nodes: list) -> dict:
+    return {
+        "tipe": "mindmap_hierarki",
+        "topik": topik,
+        "nodes": nodes
     }

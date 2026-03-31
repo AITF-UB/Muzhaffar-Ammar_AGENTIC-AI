@@ -64,7 +64,7 @@ def main():
                 
             print("-" * 60)
             
-    # 5. Output Validasi Format JSON Terstrict
+    # 5. Output Validasi Format JSON
     print("\n=== HASIL AKHIR (OUTPUT UNTUK UI TIM 6) ===")
     print("Agen berhenti. Memeriksa format Final Answer...\n")
     

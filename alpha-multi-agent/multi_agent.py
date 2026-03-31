@@ -1,10 +1,6 @@
 import os
 import re
 from dotenv import load_dotenv
-
-# Hapus Gemini API
-# from langchain_google_genai import ChatGoogleGenerativeAI
-
 from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END
 
@@ -39,7 +35,7 @@ class HFChatModel(BaseChatModel):
 
     class Config:
         arbitrary_types_allowed = True
-
+        
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.client = InferenceClient(
