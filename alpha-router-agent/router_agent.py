@@ -24,7 +24,7 @@ from huggingface_hub import InferenceClient
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.outputs import ChatResult, ChatGeneration
 
-HF_TOKEN = os.getenv("HF_TOKEN", "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")
+HF_TOKEN = os.getenv("HF_TOKEN", "")
 
 class HFChatModel(BaseChatModel):
     client: InferenceClient = None
