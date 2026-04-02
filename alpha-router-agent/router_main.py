@@ -15,6 +15,7 @@ def run_simulation(scenario_name: str, task: str, request_params: dict, emotion:
         "top_recommendations": "",
         "flashcards_data": "",
         "mindmap_data": "",
+        "quiz_data": "",
         "final_payload": {}
     }
     
@@ -72,6 +73,15 @@ def main():
         task="mindmap",
         request_params={"topik": "Fotosintesis"},
         emotion={"emosi": "penasaran", "confidence": 0.85}
+    )
+    
+    # Skenario 4 (Jalur Quiz Agent)
+    # Siswa ingin latihan soal pilihan ganda Teorema Pythagoras
+    run_simulation(
+        scenario_name="Generate Quiz Pilihan Ganda",
+        task="quiz",
+        request_params={"topik": "Teorema Pythagoras", "jumlah_soal": 3},
+        emotion={"emosi": "semangat", "confidence": 0.9}
     )
 
 if __name__ == "__main__":

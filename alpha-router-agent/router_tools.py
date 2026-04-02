@@ -230,3 +230,11 @@ def util_format_mindmap(topik: str, nodes: list) -> dict:
         "topik": topik,
         "nodes": nodes
     }
+
+def util_format_quiz(topik: str, soal: list) -> dict:
+    return {
+        "tipe": "quiz_soal",
+        "topik": topik,
+        "jumlah_soal": len(soal) if isinstance(soal, list) else 0,
+        "soal": soal
+    }

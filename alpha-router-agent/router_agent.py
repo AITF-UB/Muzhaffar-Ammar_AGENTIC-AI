@@ -11,6 +11,7 @@ from router_tools import (
     util_format_recommender,
     util_format_flashcard,
     util_format_mindmap,
+    util_format_quiz,
 )
 
 # ================================================================
@@ -93,6 +94,8 @@ def router_task(state: AgentState) -> str:
         return "to_flashcard"
     elif "mindmap" in task:
         return "to_mindmap"
+    elif "quiz" in task:
+        return "to_quiz"
     else:
         return "to_structurer" # Fallback jika task tidak dikenali
 
@@ -211,6 +214,63 @@ Format yang diminta (DALAM TAG <MINDMAP>):
     return {"mindmap_data": extracted}
 
 
+def quiz_node(state: AgentState) -> dict:
+    """Spesialis 4: NotebookLM-style Quiz — soal pilihan ganda grounded RAG + referensi sumber"""
+    topik = state["request_params"].get("topik", "Sains")
+    jumlah = state["request_params"].get("jumlah_soal", 5)
+    
+    # 1. RAG Retrieve — k=3 agar relevansi terjaga, tidak kecampur topik lain
+    docs = kb_sekolah.search(topik, k=3)
+    context = "\n---\n".join([d.page_content.strip() for d in docs])
+    
+    # 2. Kumpulkan daftar metadata sumber untuk referensi singkat
+    sumber_list = list({
+        f"{d.metadata.get('subject', 'Umum').title()} — {d.metadata.get('topic', '?').replace('_', ' ').title()}"
+        for d in docs
+    })
+
+    prompt_sys = f"""Kamu adalah pembuat soal ujian profesional bergaya NotebookLM.
+TUGAS: Buat tepat {jumlah} soal pilihan ganda KHUSUS tentang topik "{topik}".
+ATURAN WAJIB:
+1. Soal HARUS berhubungan langsung dengan "{topik}". Abaikan bagian referensi yang tidak relevan.
+2. Setiap soal memiliki 4 pilihan (A, B, C, D) dan SATU jawaban benar.
+3. Field "pembahasan" berisi penjelasan singkat mengapa jawaban benar.
+4. Field "sumber" cukup diisi nama mata pelajaran dan topik referensinya saja (sudah disediakan).
+5. DILARANG membuat soal di luar topik "{topik}".
+6. Output: JSON Array murni dalam tag <QUIZ> ... </QUIZ>."""
+
+    prompt_usr = f"""Topik: {topik}
+Jumlah Soal: {jumlah}
+Sumber referensi yang tersedia: {', '.join(sumber_list)}
+
+Referensi:
+{context}
+
+Format yang diminta (DALAM TAG <QUIZ>):
+[
+  {{
+    "nomor": 1,
+    "pertanyaan": "Pertanyaan tentang {topik}?",
+    "pilihan": {{
+      "A": "Pilihan A",
+      "B": "Pilihan B",
+      "C": "Pilihan C",
+      "D": "Pilihan D"
+    }},
+    "jawaban_benar": "A",
+    "pembahasan": "Penjelasan singkat mengapa A benar.",
+    "sumber": "Nama Mata Pelajaran — Nama Topik"
+  }}
+]"""
+
+    result = _chat(system=prompt_sys, user=prompt_usr)
+    
+    match = re.search(r"<QUIZ>(.*?)</QUIZ>", result, re.DOTALL | re.IGNORECASE)
+    extracted = match.group(1).strip() if match else result
+    
+    return {"quiz_data": extracted}
+
+
 def structurer_node(state: AgentState) -> dict:
     """Muara Akhir: Merapikan Payload menjadi Strict JSON Dictionary untuk UI"""
     task = state.get("task", "")
@@ -262,6 +322,23 @@ def structurer_node(state: AgentState) -> dict:
         nodes_arr = [parsed_json] if isinstance(parsed_json, dict) else parsed_json
         final_payload = util_format_mindmap(topik, nodes_arr)
         
+    elif task == "quiz":
+        raw_data = state.get("quiz_data", "[]")
+        parsed_json = clean_json_from_llm(raw_data)
+        
+        topik = state["request_params"].get("topik", "Tidak diketahui")
+        if not isinstance(parsed_json, list):
+            # Coba cari dalam field keys kalau bentuknya dict aneh
+            if isinstance(parsed_json, dict):
+                for k, v in parsed_json.items():
+                    if isinstance(v, list):
+                        parsed_json = v
+                        break
+            if not isinstance(parsed_json, list):
+                parsed_json = [{"error": "Data rusak"}]
+                
+        final_payload = util_format_quiz(topik, parsed_json)
+        
     else:
         final_payload = {"error": f"Task '{task}' tidak dikenal"}
 
@@ -278,6 +355,7 @@ workflow = StateGraph(AgentState)
 workflow.add_node("recommender", recommender_node)
 workflow.add_node("flashcard", flashcard_node)
 workflow.add_node("mindmap", mindmap_node)
+workflow.add_node("quiz", quiz_node)
 workflow.add_node("structurer", structurer_node)
 
 # Konfigurasi Percabangan Multi-Single-Agent
@@ -288,6 +366,7 @@ workflow.add_conditional_edges(
         "to_recommender": "recommender",
         "to_flashcard": "flashcard",
         "to_mindmap": "mindmap",
+        "to_quiz": "quiz",
         "to_structurer": "structurer" # Fallthrough bypass
     }
 )
@@ -296,6 +375,7 @@ workflow.add_conditional_edges(
 workflow.add_edge("recommender", "structurer")
 workflow.add_edge("flashcard", "structurer")
 workflow.add_edge("mindmap", "structurer")
+workflow.add_edge("quiz", "structurer")
 
 # Structurer mengakhiri pipeline
 workflow.add_edge("structurer", END)
