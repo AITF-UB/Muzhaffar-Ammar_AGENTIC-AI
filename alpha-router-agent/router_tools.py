@@ -209,6 +209,8 @@ def clean_json_from_llm(raw_text: str) -> dict:
     # Jika semua gagal, return format error aman
     return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:100]}
 
+import uuid
+
 def util_format_recommender(top_topics: list, emosi_pesan: str) -> dict:
     return {
         "tipe": "rekomendasi_topik",
@@ -231,10 +233,73 @@ def util_format_mindmap(topik: str, nodes: list) -> dict:
         "nodes": nodes
     }
 
+# ----------------------------------------------------------------
+# Helper: generate soal_id unik (Python-side, bukan LLM)
+# ----------------------------------------------------------------
+def generate_soal_id(tipe: str, topik: str) -> str:
+    """Generate ID unik per soal: {tipe}-{topik_slug}-{4hex}"""
+    slug = topik.lower().replace(" ", "_")[:20]
+    return f"{tipe}-{slug}-{uuid.uuid4().hex[:4]}"
+
+# ----------------------------------------------------------------
+# Quiz PG — generate formatter (tambah soal_id per soal)
+# ----------------------------------------------------------------
 def util_format_quiz(topik: str, soal: list) -> dict:
+    """Inject soal_id ke tiap soal PG, lalu wrap payload."""
+    for item in soal:
+        if isinstance(item, dict) and "soal_id" not in item:
+            item["soal_id"] = generate_soal_id("pg", topik)
     return {
         "tipe": "quiz_soal",
         "topik": topik,
         "jumlah_soal": len(soal) if isinstance(soal, list) else 0,
         "soal": soal
+    }
+
+# ----------------------------------------------------------------
+# Quiz Uraian — generate formatter
+# ----------------------------------------------------------------
+def util_format_quiz_uraian(topik: str, soal: list) -> dict:
+    """Inject soal_id ke tiap soal uraian, lalu wrap payload."""
+    for item in soal:
+        if isinstance(item, dict) and "soal_id" not in item:
+            item["soal_id"] = generate_soal_id("uraian", topik)
+    return {
+        "tipe": "quiz_uraian",
+        "topik": topik,
+        "jumlah_soal": len(soal) if isinstance(soal, list) else 0,
+        "soal": soal
+    }
+
+# ----------------------------------------------------------------
+# Grade Quiz PG — grading formatter (deterministik)
+# ----------------------------------------------------------------
+def util_format_grade_quiz(topik: str, detail: list) -> dict:
+    total_benar = sum(1 for d in detail if d.get("benar", False))
+    total_skor  = sum(d.get("skor", 0) for d in detail)
+    skor_maks   = sum(d.get("skor_maksimal", 10) for d in detail)
+    return {
+        "tipe": "hasil_grade_quiz",
+        "topik": topik,
+        "total_benar": total_benar,
+        "total_soal": len(detail),
+        "total_skor": total_skor,
+        "skor_maksimal": skor_maks,
+        "detail": detail
+    }
+
+# ----------------------------------------------------------------
+# Grade Uraian — grading formatter (LLM)
+# ----------------------------------------------------------------
+def util_format_grade_uraian(topik: str, detail: list, pemahaman: str, ringkasan: str) -> dict:
+    total_skor = sum(d.get("skor", 0) for d in detail)
+    skor_maks  = sum(d.get("skor_maksimal", 20) for d in detail)
+    return {
+        "tipe": "hasil_grade_uraian",
+        "topik": topik,
+        "total_skor": total_skor,
+        "skor_maksimal": skor_maks,
+        "tingkat_pemahaman": pemahaman,
+        "ringkasan_feedback": ringkasan,
+        "detail": detail
     }

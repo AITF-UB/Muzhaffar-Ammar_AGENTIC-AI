@@ -25,13 +25,17 @@ app = FastAPI(
     title="Router Agent API",
     description=(
         "Microservice untuk Agentic AI Pipeline berbasis LangGraph.\n\n"
-        "Tersedia 4 jalur agent spesialis:\n"
+        "**4 Mekanik Generate:**\n"
         "- **rekomendasi** — Analisis nilai & emosi → 3 topik prioritas\n"
         "- **flashcard** — NotebookLM-style flashcard dengan kutipan sumber\n"
         "- **mindmap** — Peta konsep hierarki (parent-child)\n"
-        "- **quiz** — Soal pilihan ganda grounded RAG + kutipan sumber\n"
+        "- **quiz** — Soal pilihan ganda (PG) grounded RAG + soal_id\n"
+        "- **quiz_uraian** — Soal esai/uraian grounded RAG + kunci + soal_id\n\n"
+        "**2 Mekanik Grading:**\n"
+        "- **grade_quiz** — Nilai jawaban PG (deterministik, no LLM)\n"
+        "- **grade_uraian** — Nilai jawaban uraian (LLM, feedback per soal)\n"
     ),
-    version="1.0.0",
+    version="2.0.0",
 )
 
 # CORS — izinkan semua origin untuk development
@@ -107,6 +111,9 @@ def _run_graph(task: str, request_params: dict, emotion: dict) -> tuple[dict, li
         "flashcards_data": "",
         "mindmap_data": "",
         "quiz_data": "",
+        "quiz_uraian_data": "",
+        "grade_quiz_result": "",
+        "grade_uraian_result": "",
         "final_payload": {},
     }
 
@@ -132,7 +139,7 @@ def health_check():
     return HealthResponse(
         status="ok",
         message="Router Agent API berjalan normal 🚀",
-        available_tasks=["rekomendasi", "flashcard", "mindmap", "quiz"],
+        available_tasks=["rekomendasi", "flashcard", "mindmap", "quiz", "quiz_uraian", "grade_quiz", "grade_uraian"],
     )
 
 
@@ -179,7 +186,7 @@ def run_agent(request: AgentRequest):
     }
     ```
     """
-    VALID_TASKS = {"rekomendasi", "flashcard", "mindmap", "quiz"}
+    VALID_TASKS = {"rekomendasi", "flashcard", "mindmap", "quiz", "quiz_uraian", "grade_quiz", "grade_uraian"}
     if request.task.lower() not in VALID_TASKS:
         raise HTTPException(
             status_code=400,
@@ -270,7 +277,7 @@ def run_quiz(
     emosi: str = "semangat",
     confidence: float = 0.8,
 ):
-    """Shortcut endpoint untuk generate quiz pilihan ganda NotebookLM-style."""
+    """Shortcut endpoint untuk generate quiz pilihan ganda NotebookLM-style (+ soal_id)."""
     final_payload, nodes_executed = _run_graph(
         task="quiz",
         request_params={"topik": topik, "jumlah_soal": jumlah_soal},
@@ -279,6 +286,104 @@ def run_quiz(
     return AgentResponse(
         status="success",
         task="quiz",
+        nodes_executed=nodes_executed,
+        output=final_payload,
+    )
+
+
+@app.post("/agent/quiz_uraian", response_model=AgentResponse, tags=["Agent - Shortcuts"])
+def run_quiz_uraian(
+    topik: str = "Hukum Newton",
+    jumlah_soal: int = 5,
+    emosi: str = "fokus",
+    confidence: float = 0.8,
+):
+    """Shortcut endpoint untuk generate soal uraian/esai (+ kunci jawaban + soal_id)."""
+    final_payload, nodes_executed = _run_graph(
+        task="quiz_uraian",
+        request_params={"topik": topik, "jumlah_soal": jumlah_soal},
+        emotion={"emosi": emosi, "confidence": confidence},
+    )
+    return AgentResponse(
+        status="success",
+        task="quiz_uraian",
+        nodes_executed=nodes_executed,
+        output=final_payload,
+    )
+
+
+@app.post("/agent/grade_quiz", response_model=AgentResponse, tags=["Agent - Grading"])
+def run_grade_quiz(request: AgentRequest):
+    """
+    **Grade jawaban Quiz PG** — deterministik, tanpa LLM.
+
+    Contoh request:
+    ```json
+    {
+      "task": "grade_quiz",
+      "request_params": {
+        "topik": "Hukum Newton",
+        "skor_per_soal": 10,
+        "soal_pg": [
+          {"soal_id": "pg-hukum_newton-a3f2", "nomor": 1, "jawaban_benar": "A", "pembahasan": "..."}
+        ],
+        "jawaban_siswa": [
+          {"soal_id": "pg-hukum_newton-a3f2", "jawaban": "A"}
+        ]
+      },
+      "emotion": {"emosi": "netral", "confidence": 0.8}
+    }
+    ```
+    """
+    final_payload, nodes_executed = _run_graph(
+        task="grade_quiz",
+        request_params=request.request_params,
+        emotion=request.emotion.model_dump(),
+    )
+    return AgentResponse(
+        status="success",
+        task="grade_quiz",
+        nodes_executed=nodes_executed,
+        output=final_payload,
+    )
+
+
+@app.post("/agent/grade_uraian", response_model=AgentResponse, tags=["Agent - Grading"])
+def run_grade_uraian(request: AgentRequest):
+    """
+    **Grade jawaban Quiz Uraian** — LLM menilai kemiripan + pemahaman + feedback.
+
+    Contoh request:
+    ```json
+    {
+      "task": "grade_uraian",
+      "request_params": {
+        "topik": "Hukum Newton",
+        "soal_uraian": [
+          {
+            "soal_id": "uraian-hukum_newton-9c1b",
+            "nomor": 1,
+            "pertanyaan": "Jelaskan Hukum Newton I!",
+            "kunci_jawaban": "Benda tetap diam atau bergerak lurus...",
+            "skor_maksimal": 20
+          }
+        ],
+        "jawaban_siswa": [
+          {"soal_id": "uraian-hukum_newton-9c1b", "jawaban": "Hukum Newton I adalah..."}
+        ]
+      },
+      "emotion": {"emosi": "netral", "confidence": 0.8}
+    }
+    ```
+    """
+    final_payload, nodes_executed = _run_graph(
+        task="grade_uraian",
+        request_params=request.request_params,
+        emotion=request.emotion.model_dump(),
+    )
+    return AgentResponse(
+        status="success",
+        task="grade_uraian",
         nodes_executed=nodes_executed,
         output=final_payload,
     )
