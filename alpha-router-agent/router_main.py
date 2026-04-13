@@ -65,7 +65,7 @@ def main():
         request_params={"topik": "Hukum Newton"},
         emotion={"emosi": "fokus", "confidence": 0.8}
     )
-    
+
     # Skenario 3 (Jalur Mindmap Agent)
     # Siswa butuh peta hierarki konsep Fotosintesis
     run_simulation(
