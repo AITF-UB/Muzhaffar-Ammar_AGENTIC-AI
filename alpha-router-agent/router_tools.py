@@ -210,12 +210,35 @@ def clean_json_from_llm(raw_text: str) -> dict:
     return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:100]}
 
 import uuid
+import json as _json
 
-def util_format_recommender(top_topics: list, emosi_pesan: str) -> dict:
+# ----------------------------------------------------------------
+# Helper: filter N bab terburuk sebelum masuk LLM 
+# ----------------------------------------------------------------
+def _ambil_prioritas_belajar(riwayat: list, top_n: int = 5) -> list:
+    """Ambil N bab paling lemah dari riwayat progress, sort by pemahaman lalu skor."""
+    urutan_pemahaman = {"Belum Paham": 0, "Paham Dasar": 1, "Paham Mendalam": 2}
+    valid = [r for r in riwayat if isinstance(r, dict)]
+    sorted_riwayat = sorted(
+        valid,
+        key=lambda x: (
+            urutan_pemahaman.get(x.get("tingkat_pemahaman", "Belum Paham"), 0),
+            x.get("skor_terakhir", 100)
+        )
+    )
+    return sorted_riwayat[:top_n]
+
+# ----------------------------------------------------------------
+# Recommender — formatter (first_time + returning)
+# ----------------------------------------------------------------
+def util_format_recommender(student_id: str, first_time: bool, pesan: str, rekomendasi: list) -> dict:
+    """Formatter utama recommender — v2 support first_time dan returning."""
     return {
         "tipe": "rekomendasi_topik",
-        "pesan_empatik": emosi_pesan,
-        "daftar_topik": top_topics
+        "student_id": student_id,
+        "first_time": first_time,
+        "pesan_empatik": pesan,
+        "rekomendasi": rekomendasi
     }
 
 def util_format_flashcard(topik: str, flashcards: list) -> dict:
@@ -272,14 +295,14 @@ def util_format_quiz_uraian(topik: str, soal: list) -> dict:
     }
 
 # ----------------------------------------------------------------
-# Grade Quiz PG — grading formatter (deterministik)
+# Evaluasi Quiz PG — formatter (deterministik)
 # ----------------------------------------------------------------
-def util_format_grade_quiz(topik: str, detail: list) -> dict:
+def util_format_evaluasi_quiz(topik: str, detail: list) -> dict:
     total_benar = sum(1 for d in detail if d.get("benar", False))
     total_skor  = sum(d.get("skor", 0) for d in detail)
     skor_maks   = sum(d.get("skor_maksimal", 10) for d in detail)
     return {
-        "tipe": "hasil_grade_quiz",
+        "tipe": "hasil_evaluasi_quiz",
         "topik": topik,
         "total_benar": total_benar,
         "total_soal": len(detail),
@@ -289,17 +312,47 @@ def util_format_grade_quiz(topik: str, detail: list) -> dict:
     }
 
 # ----------------------------------------------------------------
-# Grade Uraian — grading formatter (LLM)
+# Evaluasi Uraian — formatter (LLM)
 # ----------------------------------------------------------------
-def util_format_grade_uraian(topik: str, detail: list, pemahaman: str, ringkasan: str) -> dict:
+def util_format_evaluasi_uraian(topik: str, detail: list, pemahaman: str, ringkasan: str) -> dict:
     total_skor = sum(d.get("skor", 0) for d in detail)
     skor_maks  = sum(d.get("skor_maksimal", 20) for d in detail)
     return {
-        "tipe": "hasil_grade_uraian",
+        "tipe": "hasil_evaluasi_uraian",
         "topik": topik,
         "total_skor": total_skor,
         "skor_maksimal": skor_maks,
         "tingkat_pemahaman": pemahaman,
         "ringkasan_feedback": ringkasan,
         "detail": detail
+    }
+
+# ----------------------------------------------------------------
+# Konten Belajar — formatter (konten panjang terstruktur)
+# ----------------------------------------------------------------
+def util_format_konten_belajar(topik: str, bab: str, judul: str, konten_list: list, sumber: list) -> dict:
+    return {
+        "tipe": "konten_belajar",
+        "topik": topik,
+        "bab": bab,
+        "judul_konten": judul,
+        "jumlah_sub_bab": len(konten_list),
+        "konten": konten_list,
+        "sumber": sumber
+    }
+
+# ----------------------------------------------------------------
+# RAG Query — formatter (pure RAG, no LLM)
+# ----------------------------------------------------------------
+def util_format_rag_query(query: str, topik: str, chunks: list) -> dict:
+    return {
+        "tipe": "rag_konteks",
+        "query": query,
+        "topik": topik,
+        "jumlah_chunk": len(chunks),
+        "konteks": chunks,
+        "petunjuk_untuk_chatbot": (
+            "Gunakan konteks di atas untuk menjawab pertanyaan siswa. "
+            "Jangan mengarang di luar konteks yang diberikan."
+        )
     }

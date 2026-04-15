@@ -111,8 +111,8 @@ def main():
             })
 
     run_simulation(
-        scenario_name="Grade Quiz PG — Teorema Pythagoras (Dummy Jawaban)",
-        task="grade_quiz",
+        scenario_name="Evaluasi Quiz PG — Teorema Pythagoras (Dummy Jawaban)",
+        task="evaluasi_quiz",
         request_params={
             "topik": "Teorema Pythagoras",
             "skor_per_soal": 10,
@@ -153,14 +153,85 @@ def main():
             })
 
     run_simulation(
-        scenario_name="Grade Quiz Uraian — Proklamasi Kemerdekaan (Dummy Jawaban)",
-        task="grade_uraian",
+        scenario_name="Evaluasi Quiz Uraian — Proklamasi Kemerdekaan (Dummy Jawaban)",
+        task="evaluasi_uraian",
         request_params={
             "topik": "Proklamasi Kemerdekaan",
             "soal_uraian": soal_uraian_list,
             "jawaban_siswa": jawaban_dummy_uraian
         },
         emotion={"emosi": "netral", "confidence": 0.8}
+    )
+
+    # ------------------------------------------------------------------
+    # Skenario 8 — Rekomendasi FIRST TIME (siswa baru, berdasarkan pretest)
+    # ------------------------------------------------------------------
+    run_simulation(
+        scenario_name="Rekomendasi v2 — First Time (Hasil Pretest)",
+        task="rekomendasi",
+        request_params={
+            "student_id": "siswa-baru-001",
+            "first_time": True,
+            "matpel_dipilih": ["Matematika", "Fisika", "Biologi"],
+            "hasil_pretest": [
+                {"matpel": "Matematika", "skor": 45, "topik_lemah": ["Teorema Pythagoras", "Persamaan Kuadrat"]},
+                {"matpel": "Fisika",     "skor": 30, "topik_lemah": ["Hukum Newton", "Gerak Lurus"]},
+                {"matpel": "Biologi",    "skor": 62, "topik_lemah": ["Fotosintesis"]}
+            ]
+        },
+        emotion={"emosi": "gugup", "confidence": 0.8}
+    )
+
+    # ------------------------------------------------------------------
+    # Skenario 9 — Rekomendasi RETURNING (8 riwayat bab → filter ke 5 terburuk)
+    # ------------------------------------------------------------------
+    run_simulation(
+        scenario_name="Rekomendasi v2 — Returning (8 bab riwayat)",
+        task="rekomendasi",
+        request_params={
+            "student_id": "siswa-lama-042",
+            "first_time": False,
+            "matpel_dipilih": ["Matematika", "Fisika"],
+            "riwayat_progress": [
+                {"matpel": "Matematika", "bab": "Teorema Pythagoras",    "skor_terakhir": 20, "jumlah_evaluasi": 3, "tingkat_pemahaman": "Belum Paham",   "emosi_dominan": "bingung", "jumlah_prompt": 22},
+                {"matpel": "Fisika",     "bab": "Hukum Newton",         "skor_terakhir": 35, "jumlah_evaluasi": 2, "tingkat_pemahaman": "Belum Paham",   "emosi_dominan": "frustrasi","jumlah_prompt": 18},
+                {"matpel": "Matematika", "bab": "Persamaan Kuadrat",    "skor_terakhir": 50, "jumlah_evaluasi": 2, "tingkat_pemahaman": "Paham Dasar",   "emosi_dominan": "netral",  "jumlah_prompt": 10},
+                {"matpel": "Fisika",     "bab": "Gerak Lurus Beraturan","skor_terakhir": 55, "jumlah_evaluasi": 1, "tingkat_pemahaman": "Paham Dasar",   "emosi_dominan": "fokus",   "jumlah_prompt": 7},
+                {"matpel": "Matematika", "bab": "Sistem Persamaan",     "skor_terakhir": 65, "jumlah_evaluasi": 2, "tingkat_pemahaman": "Paham Dasar",   "emosi_dominan": "netral",  "jumlah_prompt": 8},
+                {"matpel": "Fisika",     "bab": "Energi Mekanik",       "skor_terakhir": 70, "jumlah_evaluasi": 1, "tingkat_pemahaman": "Paham Mendalam","emosi_dominan": "semangat","jumlah_prompt": 5},
+                {"matpel": "Matematika", "bab": "Statistika Dasar",     "skor_terakhir": 80, "jumlah_evaluasi": 1, "tingkat_pemahaman": "Paham Mendalam","emosi_dominan": "semangat","jumlah_prompt": 3},
+                {"matpel": "Fisika",     "bab": "Gelombang",            "skor_terakhir": 85, "jumlah_evaluasi": 1, "tingkat_pemahaman": "Paham Mendalam","emosi_dominan": "fokus",   "jumlah_prompt": 4},
+            ]
+        },
+        emotion={"emosi": "semangat", "confidence": 0.9}
+    )
+
+    # ------------------------------------------------------------------
+    # Skenario 10 — Konten Belajar (materi panjang terstruktur)
+    # ------------------------------------------------------------------
+    run_simulation(
+        scenario_name="Konten Belajar — Hukum Newton (SMA)",
+        task="konten_belajar",
+        request_params={
+            "topik": "Hukum Newton",
+            "bab": "Hukum Newton I dan Inersia",
+            "level": "SMA"
+        },
+        emotion={"emosi": "semangat", "confidence": 0.85}
+    )
+
+    # ------------------------------------------------------------------
+    # Skenario 11 — RAG Query (pure RAG, no LLM — T&A real-time)
+    # ------------------------------------------------------------------
+    run_simulation(
+        scenario_name="RAG Query — Pertanyaan Siswa tentang Inersia (no LLM)",
+        task="rag_query",
+        request_params={
+            "query": "apa yang dimaksud dengan inersia dan bagaimana contohnya?",
+            "topik": "Hukum Newton",
+            "k": 3
+        },
+        emotion={"emosi": "penasaran", "confidence": 0.8}
     )
 
 
