@@ -241,40 +241,43 @@ def util_format_recommender(student_id: str, first_time: bool, pesan: str, rekom
         "rekomendasi": rekomendasi
     }
 
-def util_format_flashcard(topik: str, flashcards: list) -> dict:
+def util_format_flashcard(matpel: str, bab: str, flashcards: list) -> dict:
     return {
         "tipe": "flashcard_set",
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "jumlah_kartu": len(flashcards) if isinstance(flashcards, list) else 0,
         "kartu": flashcards
     }
     
-def util_format_mindmap(topik: str, nodes: list) -> dict:
+def util_format_mindmap(matpel: str, bab: str, nodes: list) -> dict:
     return {
         "tipe": "mindmap_hierarki",
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "nodes": nodes
     }
 
 # ----------------------------------------------------------------
 # Helper: generate soal_id unik (Python-side, bukan LLM)
 # ----------------------------------------------------------------
-def generate_soal_id(tipe: str, topik: str) -> str:
+def generate_soal_id(tipe: str, topik_slug: str) -> str:
     """Generate ID unik per soal: {tipe}-{topik_slug}-{4hex}"""
-    slug = topik.lower().replace(" ", "_")[:20]
+    slug = topik_slug.lower().replace(" ", "_")[:20]
     return f"{tipe}-{slug}-{uuid.uuid4().hex[:4]}"
 
 # ----------------------------------------------------------------
 # Quiz PG — generate formatter (tambah soal_id per soal)
 # ----------------------------------------------------------------
-def util_format_quiz(topik: str, soal: list) -> dict:
+def util_format_quiz(matpel: str, bab: str, soal: list) -> dict:
     """Inject soal_id ke tiap soal PG, lalu wrap payload."""
     for item in soal:
         if isinstance(item, dict) and "soal_id" not in item:
-            item["soal_id"] = generate_soal_id("pg", topik)
+            item["soal_id"] = generate_soal_id("pg", bab)
     return {
         "tipe": "quiz_soal",
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "jumlah_soal": len(soal) if isinstance(soal, list) else 0,
         "soal": soal
     }
@@ -282,14 +285,15 @@ def util_format_quiz(topik: str, soal: list) -> dict:
 # ----------------------------------------------------------------
 # Quiz Uraian — generate formatter
 # ----------------------------------------------------------------
-def util_format_quiz_uraian(topik: str, soal: list) -> dict:
+def util_format_quiz_uraian(matpel: str, bab: str, soal: list) -> dict:
     """Inject soal_id ke tiap soal uraian, lalu wrap payload."""
     for item in soal:
         if isinstance(item, dict) and "soal_id" not in item:
-            item["soal_id"] = generate_soal_id("uraian", topik)
+            item["soal_id"] = generate_soal_id("uraian", bab)
     return {
         "tipe": "quiz_uraian",
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "jumlah_soal": len(soal) if isinstance(soal, list) else 0,
         "soal": soal
     }
@@ -297,13 +301,14 @@ def util_format_quiz_uraian(topik: str, soal: list) -> dict:
 # ----------------------------------------------------------------
 # Evaluasi Quiz PG — formatter (deterministik)
 # ----------------------------------------------------------------
-def util_format_evaluasi_quiz(topik: str, detail: list) -> dict:
+def util_format_evaluasi_quiz(matpel: str, bab: str, detail: list) -> dict:
     total_benar = sum(1 for d in detail if d.get("benar", False))
     total_skor  = sum(d.get("skor", 0) for d in detail)
     skor_maks   = sum(d.get("skor_maksimal", 10) for d in detail)
     return {
         "tipe": "hasil_evaluasi_quiz",
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "total_benar": total_benar,
         "total_soal": len(detail),
         "total_skor": total_skor,
@@ -314,26 +319,27 @@ def util_format_evaluasi_quiz(topik: str, detail: list) -> dict:
 # ----------------------------------------------------------------
 # Evaluasi Uraian — formatter (LLM)
 # ----------------------------------------------------------------
-def util_format_evaluasi_uraian(topik: str, detail: list, pemahaman: str, ringkasan: str) -> dict:
-    total_skor = sum(d.get("skor", 0) for d in detail)
-    skor_maks  = sum(d.get("skor_maksimal", 20) for d in detail)
+def util_format_evaluasi_uraian(matpel: str, bab: str, detail: list, overall: dict) -> dict:
     return {
         "tipe": "hasil_evaluasi_uraian",
-        "topik": topik,
-        "total_skor": total_skor,
-        "skor_maksimal": skor_maks,
-        "tingkat_pemahaman": pemahaman,
-        "ringkasan_feedback": ringkasan,
+        "matpel": matpel,
+        "bab": bab,
+        "total_skor": overall.get("skor_total", sum(d.get("skor", 0) for d in detail)),
+        "skor_maksimal": overall.get("skor_maksimal", sum(d.get("skor_maksimal", 20) for d in detail)),
+        "tingkat_pemahaman": overall.get("tingkat_pemahaman", "Tidak diketahui"),
+        "ringkasan_feedback": overall.get("catatan", ""),
+        "nomor_terlemah": overall.get("nomor_terlemah", None),
+        "nomor_terkuat": overall.get("nomor_terkuat", None),
         "detail": detail
     }
 
 # ----------------------------------------------------------------
 # Konten Belajar — formatter (konten panjang terstruktur)
 # ----------------------------------------------------------------
-def util_format_konten_belajar(topik: str, bab: str, judul: str, konten_list: list, sumber: list) -> dict:
+def util_format_konten_belajar(matpel: str, bab: str, judul: str, konten_list: list, sumber: list) -> dict:
     return {
         "tipe": "konten_belajar",
-        "topik": topik,
+        "matpel": matpel,
         "bab": bab,
         "judul_konten": judul,
         "jumlah_sub_bab": len(konten_list),
@@ -344,11 +350,12 @@ def util_format_konten_belajar(topik: str, bab: str, judul: str, konten_list: li
 # ----------------------------------------------------------------
 # RAG Query — formatter (pure RAG, no LLM)
 # ----------------------------------------------------------------
-def util_format_rag_query(query: str, topik: str, chunks: list) -> dict:
+def util_format_rag_query(query: str, matpel: str, bab: str, chunks: list) -> dict:
     return {
         "tipe": "rag_konteks",
         "query": query,
-        "topik": topik,
+        "matpel": matpel,
+        "bab": bab,
         "jumlah_chunk": len(chunks),
         "konteks": chunks,
         "petunjuk_untuk_chatbot": (
