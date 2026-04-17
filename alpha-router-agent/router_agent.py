@@ -215,17 +215,19 @@ def flashcard_node(state: AgentState) -> dict:
     query_rag   = f"{matpel} {bab}".strip()
     level_soal, instruksi_kesulitan = _hitung_level_soal(nilai_siswa)
 
-    docs    = kb_sekolah.search(query_rag, k=3)
+    docs    = kb_sekolah.search(query_rag, k=8)
     context = "\n---\n".join([d.page_content.strip() for d in docs])
 
     prompt_sys = f"""Kamu adalah spesialis pembuat Flashcard berstandar tinggi bergaya NotebookLM.
-TUGAS: Buat TEPAT 5 pasang pertanyaan (Front) dan jawaban (Back) tentang bab "{bab}" dari mata pelajaran {matpel},
+TUGAS: Buat TEPAT 10-15 pasang pertanyaan (Front) dan jawaban (Back) tentang bab "{bab}" dari mata pelajaran {matpel},
 berdasarkan referensi berikut.
 TINGKAT KESULITAN: {level_soal}
 {instruksi_kesulitan}
+
 ATURAN NOTEBOOKLM (WAJIB):
-Pada bagian "Back", WAJIB sertakan field "kutipan_sumber" berisi salinan tepat 1 kalimat dari
-teks referensi yang membuktikan kebenaran jawaban.
+1. Field "front": Berisi pertanyaan ringkas yang menguji konsep utama.
+2. Field "back": WAJIB SANGAT SINGKAT DAN JELAS. Maksimal 1 hingga 2 kalimat pendek! Flashcard tidak boleh berupa paragraf panjang.
+
 ATURAN OUTPUT:
 Keluarkan output dalam format JSON Array murni. Bungkus dalam tag <FLASHCARD> ... </FLASHCARD>."""
 
@@ -240,8 +242,7 @@ Format (DALAM TAG <FLASHCARD>):
 [
   {{
     "front": "Pertanyaan {level_soal} tentang {bab}?",
-    "back": "Jawaban dan penjelasan sesuai level {level_soal}.",
-    "kutipan_sumber": "Salinan 1 kalimat persis dari referensi"
+    "back": "Jawaban sangat singkat dan jelas (maks 2 kalimat singkat)."
   }}
 ]"""
 
@@ -273,7 +274,7 @@ def mindmap_node(state: AgentState) -> dict:
             "Gunakan istilah ilmiah yang tepat."
         )
 
-    docs    = kb_sekolah.search(query_rag, k=2)
+    docs    = kb_sekolah.search(query_rag, k=10)
     context = "\n---\n".join([d.page_content.strip() for d in docs])
 
     prompt_sys = f"""Kamu adalah ahli pembuat Peta Konsep (Mindmap) yang komprehensif.
@@ -359,7 +360,7 @@ def quiz_node(state: AgentState) -> dict:
     query_rag     = f"{matpel} {bab}".strip()
     level_soal, instruksi_kesulitan = _hitung_level_soal(nilai_siswa)
 
-    docs = kb_sekolah.search(query_rag, k=3)
+    docs = kb_sekolah.search(query_rag, k=5)
     context = "\n---\n".join([d.page_content.strip() for d in docs])
     sumber_list = list({
         f"{d.metadata.get('subject', 'Umum').title()} — {d.metadata.get('topic', '?').replace('_', ' ').title()}"
@@ -371,10 +372,10 @@ TUGAS: Buat tepat {jumlah} soal pilihan ganda KHUSUS tentang bab "{bab}" dari ma
 TINGKAT KESULITAN: {level_soal}
 {instruksi_kesulitan}
 ATURAN WAJIB:
-1. Soal HARUS berhubungan langsung dengan bab "{bab}". Abaikan bagian referensi yang tidak relevan.
-2. Setiap soal memiliki 4 pilihan (A, B, C, D) dan SATU jawaban benar.
-3. Field "pembahasan" berisi penjelasan singkat mengapa jawaban benar.
-4. Field "sumber" diisi: "{matpel} — {bab}".
+1. Soal HARUS berhubungan langsung dengan bab "{bab}". Abaikan referensi yang tidak relevan.
+2. Setiap pertanyaan harus memiliki 4 pilihan jawaban (A, B, C, D).
+3. Field "jawaban_benar" hanya berisi satu huruf kapital (A/B/C/D).
+4. Field "pembahasan" berisi alasan mengapa jawaban tersebut benar.
 5. DILARANG membuat soal di luar bab "{bab}".
 6. Output: JSON Array murni dalam tag <QUIZ> ... </QUIZ>."""
 
@@ -382,7 +383,6 @@ ATURAN WAJIB:
 Bab: {bab}
 Jumlah Soal: {jumlah}
 Tingkat Kesulitan: {level_soal}
-Sumber referensi: {', '.join(sumber_list)}
 
 Referensi:
 {context}
@@ -394,8 +394,7 @@ Format (DALAM TAG <QUIZ>):
     "pertanyaan": "Pertanyaan {level_soal} tentang {bab}?",
     "pilihan": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
     "jawaban_benar": "A",
-    "pembahasan": "Penjelasan mengapa A benar.",
-    "sumber": "{matpel} — {bab}"
+    "pembahasan": "Penjelasan mengapa A benar."
   }}
 ]"""
 
@@ -450,12 +449,8 @@ def quiz_uraian_node(state: AgentState) -> dict:
     query_rag     = f"{matpel} {bab}".strip()
     level_soal, instruksi_kesulitan = _hitung_level_soal(nilai_siswa)
 
-    docs = kb_sekolah.search(query_rag, k=3)
+    docs = kb_sekolah.search(query_rag, k=5)
     context = "\n---\n".join([d.page_content.strip() for d in docs])
-    sumber_list = list({
-        f"{d.metadata.get('subject', 'Umum').title()} — {d.metadata.get('topic', '?').replace('_', ' ').title()}"
-        for d in docs
-    })
 
     prompt_sys = f"""Kamu adalah pembuat soal ujian esai profesional bergaya NotebookLM.
 TUGAS: Buat tepat {jumlah} soal uraian/esai KHUSUS tentang bab "{bab}" dari mata pelajaran {matpel}.
@@ -466,15 +461,13 @@ ATURAN WAJIB:
 2. Setiap soal bersifat terbuka (uraian), bukan pilihan ganda.
 3. Field "kunci_jawaban" berisi jawaban ideal yang lengkap dan terstruktur.
 4. Field "skor_maksimal" diisi angka 20 untuk semua soal.
-5. Field "sumber" diisi: "{matpel} — {bab}".
-6. DILARANG membuat soal di luar bab "{bab}".
-7. Output: JSON Array murni dalam tag <QUIZ_URAIAN> ... </QUIZ_URAIAN>."""
+5. DILARANG membuat soal di luar bab "{bab}".
+6. Output: JSON Array murni dalam tag <QUIZ_URAIAN> ... </QUIZ_URAIAN>."""
 
     prompt_usr = f"""Mata Pelajaran: {matpel}
 Bab: {bab}
 Jumlah Soal: {jumlah}
 Tingkat Kesulitan: {level_soal}
-Sumber referensi: {', '.join(sumber_list)}
 
 Referensi:
 {context}
@@ -483,10 +476,9 @@ Format (DALAM TAG <QUIZ_URAIAN>):
 [
   {{
     "nomor": 1,
-    "pertanyaan": "Pertanyaan {level_soal} tentang {bab}...",
-    "kunci_jawaban": "Jawaban ideal yang lengkap berdasarkan referensi.",
-    "skor_maksimal": 20,
-    "sumber": "Nama Mata Pelajaran — Nama Topik"
+    "pertanyaan": "Pertanyaan uraian tentang {bab}?",
+    "kunci_jawaban": "Jawaban panjang ideal untuk evaluasi.",
+    "skor_maksimal": 20
   }}
 ]"""
 
@@ -622,7 +614,6 @@ Referensi:
 Format yang diminta (DALAM TAG <KONTEN>):
 {{
   "judul_konten": "Judul menarik untuk bab ini",
-  "sumber": {json.dumps(sumber_list)},
   "konten": [
     {{"sub_bab": "1. Pengantar", "isi": "Pembuka yang menarik perhatian siswa..."}},
     {{"sub_bab": "2. Konsep Utama", "isi": "Penjelasan mendalam konsep inti..."}},
@@ -645,21 +636,35 @@ def rag_query_node(state: AgentState) -> dict:
     params = state["request_params"]
     query  = params.get("query", "")
     topik  = params.get("topik", "")
-    k      = int(params.get("k", 3))
+    k      = int(params.get("k", 6))
 
     search_query = f"{topik} {query}".strip() if topik else query
-    docs = kb_sekolah.search(search_query, k=k)
+    docs = kb_sekolah.search(search_query, k=6)
 
-    chunks = []
-    for i, doc in enumerate(docs, 1):
-        chunks.append({
-            "urutan": i,
-            "isi": doc.page_content.strip(),
-            "sumber": f"{doc.metadata.get('subject', 'Umum').title()} — {doc.metadata.get('topic', '?').replace('_', ' ').title()}",
-            "relevansi_rank": i
+    import os
+    chunks_list = []
+    for d in docs:
+        isi = d.page_content.strip()
+        sumber = "Dokumen Sekolah"
+        if d.metadata and "source" in d.metadata:
+            import os
+            sumber = os.path.basename(d.metadata["source"]).title()
+            
+        raw_asli = d.metadata.get("raw_sebelum_regex", "N/A") if d.metadata else "N/A"
+        kena_regex = d.metadata.get("apakah_kena_regex_di_router", False) if d.metadata else False
+        
+        chunks_list.append({
+            "isi": isi,
+            "raw_sebelum_regex": raw_asli,
+            "kena_regex_router": kena_regex,
+            "sumber": sumber
         })
-
-    return {"rag_query_result": json.dumps({"query": query, "topik": topik, "chunks": chunks}, ensure_ascii=False)}
+    
+    result_dict = {
+        "query": query,
+        "chunks": chunks_list
+    }
+    return {"rag_query_result": json.dumps(result_dict, ensure_ascii=False)}
 
 
 # ================================================================
@@ -700,6 +705,18 @@ def structurer_node(state: AgentState) -> dict:
                 for k, v in parsed_json.items():
                     if isinstance(v, list): parsed_json = v; break
             if not isinstance(parsed_json, list): parsed_json = [{"error": "Data rusak"}]
+            
+        import os
+        docs = kb_sekolah.search(f"{matpel} {bab}", k=1)
+        sumber_text = "Materi Sekolah"
+        if docs and docs[0].metadata and "source" in docs[0].metadata:
+            sumber_text = os.path.basename(docs[0].metadata["source"]).replace(".md", "").replace("_", " ").title()
+
+        # Inject kutipan_sumber by python logic
+        for card in parsed_json:
+            if isinstance(card, dict):
+                card["kutipan_sumber"] = f"Sumber: {sumber_text}"
+
         final_payload = util_format_flashcard(matpel, bab, parsed_json)
 
     # ── Mindmap ──
@@ -720,6 +737,17 @@ def structurer_node(state: AgentState) -> dict:
                 for k, v in parsed_json.items():
                     if isinstance(v, list): parsed_json = v; break
             if not isinstance(parsed_json, list): parsed_json = [{"error": "Data rusak"}]
+            
+        import os
+        docs = kb_sekolah.search(f"{matpel} {bab}", k=1)
+        sumber_text = "Materi Sekolah"
+        if docs and docs[0].metadata and "source" in docs[0].metadata:
+            sumber_text = os.path.basename(docs[0].metadata["source"]).replace(".md", "").replace("_", " ").title()
+
+        for s in parsed_json:
+            if isinstance(s, dict):
+                s["sumber"] = f"Sumber: {sumber_text}"
+                
         final_payload = util_format_quiz(matpel, bab, parsed_json)
 
     # ── Quiz Uraian generate ──
@@ -731,6 +759,17 @@ def structurer_node(state: AgentState) -> dict:
                 for k, v in parsed_json.items():
                     if isinstance(v, list): parsed_json = v; break
             if not isinstance(parsed_json, list): parsed_json = [{"error": "Data rusak"}]
+            
+        import os
+        docs = kb_sekolah.search(f"{matpel} {bab}", k=1)
+        sumber_text = "Materi Sekolah"
+        if docs and docs[0].metadata and "source" in docs[0].metadata:
+            sumber_text = os.path.basename(docs[0].metadata["source"]).replace(".md", "").replace("_", " ").title()
+
+        for s in parsed_json:
+            if isinstance(s, dict):
+                s["sumber"] = f"Sumber: {sumber_text}"
+                
         final_payload = util_format_quiz_uraian(matpel, bab, parsed_json)
 
     # ── Evaluasi Quiz PG ──
@@ -758,11 +797,21 @@ def structurer_node(state: AgentState) -> dict:
         parsed_json = clean_json_from_llm(raw_data)
         if not isinstance(parsed_json, dict) or "error" in parsed_json:
             parsed_json = {"judul_konten": bab, "sumber": [], "konten": [{"sub_bab": "Error", "isi": "Gagal generate konten."}]}
+            
+        import os
+        docs = kb_sekolah.search(f"{matpel} {bab}", k=4)
+        sumber_list = list(set([
+            os.path.basename(d.metadata["source"]).replace(".md", "").replace("_", " ").title()
+            for d in docs if getattr(d, 'metadata', None) and "source" in d.metadata
+        ]))
+        if not sumber_list:
+            sumber_list = ["Materi Sekolah"]
+
         final_payload = util_format_konten_belajar(
             matpel, bab,
             parsed_json.get("judul_konten", bab),
             parsed_json.get("konten", []),
-            parsed_json.get("sumber", [])
+            sumber_list
         )
 
     # ── RAG Query ──
@@ -824,3 +873,9 @@ for node in ["recommender", "konten_belajar", "rag_query", "flashcard", "mindmap
 workflow.add_edge("structurer", END)
 
 router_agent_app = workflow.compile()
+
+png = router_agent_app.get_graph().draw_mermaid_png()
+
+
+with open("router_agent.png", "wb") as f:
+    f.write(png)

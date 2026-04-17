@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON to Mind Map (Interaktif)</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1c22;
+      margin: 0;
+      padding: 20px;
+      color: #eee;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ccc;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-family: monospace;
+      resize: vertical;
+      box-sizing: border-box;
+      background-color: #2c3240;
+      color: #eee;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #444b5f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #555e76;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-weight: bold;
+      display: none;
+    }
+
+    #mindmap-container {
+      background-color: #1a1c22;
+      border: none;
+      overflow-x: auto;
+      min-height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    /* Gaya Node Dasar */
+    .node {
+      cursor: pointer;
+      /* Menambahkan kursor pointer agar terlihat bisa diklik */
+      transition: opacity 0.2s;
+    }
+
+    .node:hover {
+      opacity: 0.8;
+      /* Efek hover saat mouse di atas node */
+    }
+
+    .node text {
+      font: 14px sans-serif;
+      fill: white;
+      pointer-events: none;
+    }
+
+    /* Gaya Box Berdasarkan Level */
+    .node.level0 rect:not(.node-shadow) {
+      fill: #3a4358;
+      rx: 6;
+      ry: 6;
+    }
+
+    .node.level1 rect:not(.node-shadow) {
+      fill: #2c3240;
+      rx: 6;
+      ry: 6;
+    }
+
+    .node.level2 rect:not(.node-shadow) {
+      fill: #232b2e;
+      rx: 6;
+      ry: 6;
+    }
+
+    .node.level3 rect:not(.node-shadow) {
+      fill: #1e2528;
+      rx: 6;
+      ry: 6;
+    }
+
+    /* Level tambahan untuk JSON Fotosintesis */
+
+    /* Gaya Garis Penghubung (Link) */
+    .link {
+      fill: none;
+      stroke: #6a7cc1;
+      stroke-width: 1.5px;
+    }
+
+    /* Bayangan Node */
+    .node-shadow {
+      fill: rgba(0, 0, 0, 0.3);
+      filter: blur(2px);
+    }
+
+    /* --- STYLING UNTUK MODAL POP-UP --- */
+    .modal-overlay {
+      display: none;
+      /* Sembunyikan secara default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-content {
+      background-color: #2c3240;
+      padding: 25px 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      position: relative;
+      border: 1px solid #444b5f;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-title {
+      margin-top: 0;
+      color: #6a7cc1;
+      border-bottom: 1px solid #444b5f;
+      padding-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .modal-body {
+      line-height: 1.6;
+      margin-top: 15px;
+      font-size: 15px;
+      color: #ddd;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .close-btn:hover {
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Generator Mind Map Interaktif</h1>
+
+    <label for="jsonInput"><strong>Masukkan JSON Anda di sini:</strong></label>
+    <textarea id="jsonInput" rows="12">{
+"topik": "Fotosintesis",
+"nodes": [
+    {
+    "konsep_utama": "Fotosintesis",
+    "deskripsi": "Proses tumbuhan membuat makanan menggunakan cahaya matahari.",
+    "children": [
+        {
+        "sub_konsep": "Tahapan Fotosintesis",
+        "penjelasan": "Proses fotosintesis terdiri dari dua tahap utama: Reaksi Terang dan Reaksi Gelap.",
+        "children": [
+            {
+            "sub_konsep": "Reaksi Terang",
+            "penjelasan": "Tahap pertama fotosintesis yang terjadi di membran tilakoid di kloroplas, dimana tumbuhan menyerap cahaya, memecah air, dan menghasilkan ATP dan NADPH.",
+            "children": []
+            },
+            {
+            "sub_konsep": "Reaksi Gelap",
+            "penjelasan": "Tahap kedua fotosintesis yang terjadi di stroma kloroplas, dimana tumbuhan mengikat karbondioksida dan menghasilkan glukosa.",
+            "children": []
+            }
+        ]
+        }
+    ]
+    }
+]
+}</textarea>
+
+    <button onclick="renderMindMap()">Buat Mind Map</button>
+    <div id="errorMessage" class="error">Format JSON tidak valid. Silakan periksa kembali tanda kutip atau koma Anda.
+    </div>
+
+    <div id="mindmap-container"></div>
+  </div>
+
+  <div id="infoModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h2 id="modalTitle" class="modal-title">Judul Konsep</h2>
+      <div id="modalBody" class="modal-body">Penjelasan akan muncul di sini.</div>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk mengelola tampilan Modal
+    function showModal(title, description) {
+      document.getElementById('modalTitle').innerText = title;
+      // Menampilkan pesan default jika node tidak memiliki deskripsi
+      document.getElementById('modalBody').innerText = description || "Tidak ada data penjelasan/deskripsi untuk konsep ini.";
+      document.getElementById('infoModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('infoModal').style.display = 'none';
+    }
+
+    // Tutup modal jika user mengklik area luar modal
+    window.onclick = function (event) {
+      const modal = document.getElementById('infoModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Normalisasi struktur JSON
+    function normalizeData(node) {
+      if (node.topik && node.nodes) {
+        return {
+          name: node.topik,
+          description: "Root utama dari mindmap.",
+          children: node.nodes.map(normalizeData)
+        };
+      }
+
+      let name = node.konsep_utama || node.sub_konsep || "Tanpa Nama";
+      // Membaca key 'deskripsi' atau 'penjelasan' dari input JSON
+      let description = node.deskripsi || node.penjelasan || "";
+      let children = [];
+
+      if (node.children && node.children.length > 0) {
+        children = node.children.map(normalizeData);
+      }
+
+      return {
+        name: name,
+        description: description,
+        children: children.length > 0 ? children : null
+      };
+    }
+
+    // Fungsi memecah teks ke beberapa baris
+    function wrapText(textGroup, width) {
+      textGroup.each(function () {
+        var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.2,
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+        }
+      });
+    }
+
+    function renderMindMap() {
+      const input = document.getElementById('jsonInput').value;
+      const errorMsg = document.getElementById('errorMessage');
+      const container = document.getElementById('mindmap-container');
+
+      container.innerHTML = "";
+      errorMsg.style.display = "none";
+
+      let rawData;
+      try {
+        rawData = JSON.parse(input);
+      } catch (e) {
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      const data = normalizeData(rawData);
+
+      // Jarak yang lebih lebar untuk mengakomodasi node yang beranak cucu
+      const dx = 120; // Jarak horizontal
+      const dy = 280; // Jarak vertikal
+      const margin = { top: 20, right: 120, bottom: 20, left: 120 };
+
+      const root = d3.hierarchy(data);
+      const tree = d3.tree().nodeSize([dx, dy]);
+      tree(root);
+
+      let x0 = Infinity;
+      let x1 = -x0;
+      let y0 = Infinity;
+      let y1 = -y0;
+      root.each(d => {
+        if (d.x > x1) x1 = d.x;
+        if (d.x < x0) x0 = d.x;
+        if (d.y > y1) y1 = d.y;
+        if (d.y < y0) y0 = d.y;
+      });
+      const height = x1 - x0 + dx * 2;
+      const totalWidth = y1 - y0 + dy * 2;
+
+      const svg = d3.select("#mindmap-container")
+        .append("svg")
+        .attr("width", totalWidth)
+        .attr("height", height)
+        .attr("viewBox", [y0 - margin.left, x0 - margin.top, totalWidth, height])
+        .attr("style", "max-width: 100%; height: auto;");
+
+      svg.append("g")
+        .attr("class", "link")
+        .selectAll("path")
+        .data(root.links())
+        .join("path")
+        .attr("d", d3.linkHorizontal()
+          .x(d => d.y)
+          .y(d => d.x));
+
+      const nodeWidth = 200;
+      const nodeHeight = 55;
+      const textPaddingHorizontal = 10;
+
+      const node = svg.append("g")
+        .attr("class", "node")
+        .selectAll("g")
+        .data(root.descendants())
+        .join("g")
+        .attr("transform", d => `translate(${d.y},${d.x})`)
+        .attr("class", d => `node level${d.depth}`)
+        // ----- MENAMBAHKAN FITUR KLIK PADA NODE -----
+        .on("click", function (event, d) {
+          showModal(d.data.name, d.data.description);
+        });
+
+      node.append("rect")
+        .attr("class", "node-shadow")
+        .attr("x", -nodeWidth / 2 + 3)
+        .attr("y", -nodeHeight / 2 + 3)
+        .attr("width", nodeWidth)
+        .attr("height", nodeHeight)
+        .attr("rx", 6)
+        .attr("ry", 6);
+
+      node.append("rect")
+        .attr("x", -nodeWidth / 2)
+        .attr("y", -nodeHeight / 2)
+        .attr("width", nodeWidth)
+        .attr("height", nodeHeight)
+        .attr("rx", 6)
+        .attr("ry", 6);
+
+      node.append("text")
+        .attr("dy", "0em")
+        .attr("x", 0)
+        .attr("text-anchor", "middle")
+        .attr("y", -5)
+        .text(d => d.data.name)
+        .call(wrapText, nodeWidth - textPaddingHorizontal * 2);
+    }
+
+    window.onload = renderMindMap;
+  </script>
+</body>
+
+</html>

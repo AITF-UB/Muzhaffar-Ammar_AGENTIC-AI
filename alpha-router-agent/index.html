@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI - Interactive Hub</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-panel: #1e1e1e;
+            --bg-card: #2c2c2c;
+            --bg-hover: #3d3d3d;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #5865F2;
+            --accent-hover: #4752C4;
+            --success: #3ba55c;
+            --danger: #ed4245;
+            --border: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: auto;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-generate:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-generate:disabled {
+            background-color: #3f4147;
+            color: #72767d;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .tab {
+            padding: 20px 24px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .view-area {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: none;
+            /* controlled by JS */
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--bg-dark);
+        }
+
+        .view-area.active {
+            display: flex;
+        }
+
+        /* --- LOADING OVERLAY --- */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--bg-card);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-weight: 500;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* =======================================================================
+           COMPONENTS CSS (Imported from the 4 HTML files with namespace scoping)
+           ======================================================================= */
+
+        /* --- SHARED KUIS CSS --- */
+        .quiz-container {
+            max-width: 720px;
+            width: 100%;
+            display: none;
+            flex-direction: column;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            word-wrap: break-word;
+            background-color: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-prev,
+        .btn-next {
+            border-radius: 24px;
+            padding: 10px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-prev {
+            background-color: transparent;
+            color: #b5bac1;
+            border: 1px solid #454950;
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background-color: #35373c;
+            color: #ffffff;
+        }
+
+        .btn-prev:disabled {
+            border-color: #2f3136;
+            color: #4f545c;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-next:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-next:disabled {
+            background-color: #3f4147;
+            color: #72767d;
+            cursor: not-allowed;
+        }
+
+        .result-area {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .score-info {
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #b5bac1;
+            line-height: 1.5;
+            background: #2b2d31;
+            padding: 15px 30px;
+            border-radius: 8px;
+        }
+
+        .review-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .review-item {
+            background-color: #2b2d31;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid transparent;
+        }
+
+        .review-item h4 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            border-bottom: 1px solid #3f4147;
+            padding-bottom: 12px;
+        }
+
+        /* --- ESSAY CSS --- */
+        textarea.essay-answer {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 150px;
+            box-sizing: border-box;
+            background-color: #313338;
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.6;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        textarea.essay-answer:focus {
+            border-color: var(--accent);
+            background-color: #2b2d31;
+        }
+
+        .ans-user .label,
+        .ans-key .label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+
+        .ans-user .label {
+            color: var(--accent);
+        }
+
+        .ans-key .label {
+            color: var(--success);
+        }
+
+        .ans-user .text,
+        .ans-key .text {
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 14.5px;
+            white-space: pre-wrap;
+        }
+
+        .ans-user .text {
+            background: #202225;
+        }
+
+        .ans-key .text {
+            background: rgba(59, 165, 92, 0.1);
+            border-left: 3px solid var(--success);
+        }
+
+        /* --- QUIZ PG CSS --- */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background-color: #2b2d31;
+            border: 1px solid transparent;
+            padding: 18px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .option:hover {
+            background-color: #35373c;
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background-color: rgba(88, 101, 242, 0.08);
+        }
+
+        .option .opt-label {
+            margin-right: 15px;
+            font-weight: 700;
+            color: #8e9297;
+        }
+
+        .option.selected .opt-label {
+            color: var(--accent);
+        }
+
+        .review-item.correct {
+            border-left-color: var(--success);
+        }
+
+        .review-item.wrong {
+            border-left-color: var(--danger);
+        }
+
+        .review-item p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .review-item span.correct {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .review-item span.wrong {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .pembahasan {
+            margin-top: 15px;
+            color: #b5bac1;
+            font-size: 13.5px;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        /* --- FLASHCARD CSS --- */
+        .flashcard-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .hint {
+            color: #8f95a3;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 440px;
+            perspective: 1000px;
+            margin-bottom: 40px;
+        }
+
+        .glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 110%;
+            height: 110%;
+            background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.5) 0%, transparent 40%), radial-gradient(circle at bottom right, rgba(39, 174, 96, 0.4) 0%, transparent 40%), radial-gradient(circle at center, rgba(235, 87, 87, 0.2) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            filter: blur(40px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-color: #313338;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            padding: 24px 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #2b2d31;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #949ba4;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 22px;
+            line-height: 1.5;
+            word-break: break-word;
+            overflow-y: auto;
+        }
+
+        .card-back .card-content {
+            font-size: 16px;
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .kutipan {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #8f95a3;
+            font-style: italic;
+            border-top: 1px solid #3f4147;
+            padding-top: 15px;
+            width: 100%;
+        }
+
+        .card-footer {
+            text-align: center;
+            color: #949ba4;
+            font-size: 13px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .control-btn {
+            background-color: #313338;
+            border: none;
+            color: #dbdee1;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn:hover {
+            background-color: #3f4147;
+        }
+
+        .control-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* --- MINDMAP CSS (D3.js) --- */
+        #mindmap-container {
+            width: 100%;
+            min-height: 600px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+        }
+
+        .node {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .node:hover {
+            opacity: 0.8;
+        }
+
+        .node text {
+            font: 14px sans-serif;
+            fill: white;
+            pointer-events: none;
+        }
+
+        .node.level0 rect:not(.node-shadow) {
+            fill: #3a4358;
+            rx: 6;
+            ry: 6;
+        }
+
+        .node.level1 rect:not(.node-shadow) {
+            fill: #2c3240;
+            rx: 6;
+            ry: 6;
+        }
+
+        .node.level2 rect:not(.node-shadow) {
+            fill: #232b2e;
+            rx: 6;
+            ry: 6;
+        }
+
+        .node.level3 rect:not(.node-shadow) {
+            fill: #1e2528;
+            rx: 6;
+            ry: 6;
+        }
+
+        .link {
+            fill: none;
+            stroke: #6a7cc1;
+            stroke-width: 1.5px;
+        }
+
+        .node-shadow {
+            fill: rgba(0, 0, 0, 0.3);
+            filter: blur(2px);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background-color: #2c3240;
+            padding: 25px 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 1px solid #444b5f;
+        }
+
+        .modal-title {
+            color: #6a7cc1;
+            border-bottom: 1px solid #444b5f;
+            padding-bottom: 10px;
+            font-size: 22px;
+            margin-top: 0;
+        }
+
+        .modal-body {
+            line-height: 1.6;
+            margin-top: 15px;
+            font-size: 15px;
+            color: #ddd;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Helpers */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .empty-state h3 {
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR FORM -->
+    <div class="sidebar">
+        <div class="logo">
+            <span>⚡</span> Agentic Hub
+        </div>
+
+        <div class="form-group">
+            <label>Mata Pelajaran</label>
+            <input type="text" id="inpMatpel" placeholder="Contoh: Fisika" value="Fisika">
+        </div>
+
+        <div class="form-group">
+            <label>Bab / Topik</label>
+            <input type="text" id="inpBab" placeholder="Contoh: Hukum Newton" value="Hukum Newton">
+        </div>
+
+        <div class="form-group">
+            <label>Nilai Siswa (0-100) *Opsional</label>
+            <input type="number" id="inpNilai" placeholder="Contoh: 85" min="0" max="100">
+        </div>
+
+        <div id="apiError" class="error-msg">Gagal terhubung ke API</div>
+
+        <button class="btn-generate" id="btnGenerate" onclick="callAgentAPI()">Mulai Generate</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('mindmap')">Mindmap</div>
+            <div class="tab" onclick="switchTab('flashcard')">Flashcard</div>
+            <div class="tab" onclick="switchTab('quiz_pg')">Quiz PG</div>
+            <div class="tab" onclick="switchTab('quiz_uraian')">Quiz Uraian</div>
+        </div>
+
+        <!-- LOADING OVERLAY -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-text">Sedang Memproses...</div>
+        </div>
+
+        <!-- VIEW AREAS -->
+        <!-- 1. MINDMAP VIEW -->
+        <div class="view-area active" id="view-mindmap">
+            <div id="mindmap-empty" class="empty-state">
+                <h3>Mindmap Kosong</h3>
+                <p>Isi form di samping untuk mulai me-generate peta konsep.</p>
+            </div>
+            <div id="mindmap-container"></div>
+        </div>
+
+        <!-- 2. FLASHCARD VIEW -->
+        <div class="view-area" id="view-flashcard">
+            <div id="flashcard-empty" class="empty-state">
+                <h3>Flashcard Kosong</h3>
+                <p>Isi form di samping untuk mulai me-generate flashcard.</p>
+            </div>
+            <div class="flashcard-container" id="flashcard-container">
+                <div class="hint">Press "Space" to flip, "← / →" to navigate</div>
+                <div class="card-container">
+                    <div class="glow"></div>
+                    <div class="card" id="flashcard" onclick="fcFlip()">
+                        <div class="card-face card-front">
+                            <div class="card-header">
+                                <span id="fcCountFront">1 / 5</span>
+                                <span class="menu-icon">⋮</span>
+                            </div>
+                            <div class="card-content" id="fcFrontText">Front</div>
+                            <div class="card-footer">See answer</div>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="card-header">
+                                <span id="fcCountBack">1 / 5</span>
+                                <span class="menu-icon">⋮</span>
+                            </div>
+                            <div class="card-content">
+                                <div id="fcBackText">Back</div>
+                                <div id="fcKutipan" class="kutipan"></div>
+                            </div>
+                            <div class="card-footer">See question</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="control-btn" id="fcPrev" onclick="fcPrevCard()">&#8592;</button>
+                    <button class="control-btn" id="fcNext" onclick="fcNextCard()">&#8594;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. QUIZ PG VIEW -->
+        <div class="view-area" id="view-quiz_pg">
+            <div id="quizpg-empty" class="empty-state">
+                <h3>Kuis Pilihan Ganda Kosong</h3>
+                <p>Isi form di samping untuk mulai me-generate soal.</p>
+            </div>
+
+            <div class="quiz-container" id="quizpg-do">
+                <div class="quiz-header">
+                    <span id="quizpgProgress">1 / 5</span>
+                    <span>&#9998; Aktif</span>
+                </div>
+                <div class="question-text" id="quizpgQuestion">Pertanyaan...</div>
+                <div class="options-container" id="quizpgOptions"></div>
+                <div class="quiz-footer">
+                    <div class="footer-buttons">
+                        <button class="btn-prev" id="quizpgBtnPrev" onclick="qpgPrev()">Sebelumnya</button>
+                        <button class="btn-next" id="quizpgBtnNext" onclick="qpgNext()">Selanjutnya</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-area" id="quizpg-result">
+                <h2 class="result-title">Kuis Selesai!</h2>
+                <div class="score-info"
+                    style="font-size: 18px; font-weight:bold; color:var(--accent); background:rgba(88, 101, 242, 0.1);">
+                    Benar: <span id="quizpgScore"></span> dari <span id="quizpgTotal"></span>
+                </div>
+                <div class="review-container" id="quizpgReview"></div>
+            </div>
+        </div>
+
+        <!-- 4. QUIZ URAIAN VIEW -->
+        <div class="view-area" id="view-quiz_uraian">
+            <div id="essay-empty" class="empty-state">
+                <h3>Soal Uraian Kosong</h3>
+                <p>Isi form di samping untuk mulai me-generate studi kasus.</p>
+            </div>
+
+            <div class="quiz-container" id="essay-do">
+                <div class="quiz-header">
+                    <span id="essayProgress">1 / 5</span>
+                    <span>&#9998; Aktif</span>
+                </div>
+                <div class="question-text" id="essayQuestion">Pertanyaan Uraian...</div>
+                <textarea id="essayAnswer" class="essay-answer" placeholder="Ketik jawaban Anda di sini..."></textarea>
+                <div class="quiz-footer">
+                    <span id="essayWordCount" style="color:var(--text-muted); font-size:13px;">0 kata</span>
+                    <div class="footer-buttons">
+                        <button class="btn-prev" id="essayBtnPrev" onclick="essayPrev()">Sebelumnya</button>
+                        <button class="btn-next" id="essayBtnNext" onclick="essayNext()">Selanjutnya</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-area" id="essay-result">
+                <h2 class="result-title">Selesai!</h2>
+                <div class="score-info">
+                    Sistem tidak menilai secara otomatis. Silakan evaluasi mandiri dari kunci jawaban di bawah.
+                </div>
+                <div class="review-container" id="essayReview"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal for Mindmap -->
+    <div id="infoModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
+        <div class="modal-content">
+            <button class="close-btn"
+                onclick="document.getElementById('infoModal').style.display='none'">&times;</button>
+            <h2 id="modalTitle" class="modal-title">Judul Konsep</h2>
+            <div id="modalBody" class="modal-body">Penjelasan...</div>
+        </div>
+    </div>
+
+    <script>
+        // =======================================================
+        // GLOBAL ENUM & INIT
+        // =======================================================
+        const API_BASE = "http://127.0.0.1:8000/agent";
+        let activeTab = 'mindmap'; // mindmap, flashcard, quiz_pg, quiz_uraian
+
+        function switchTab(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.view-area').forEach(v => v.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(`view-${tabId}`).classList.add('active');
+        }
+
+        // Utils
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // =======================================================
+        // MAIN API CALL
+        // =======================================================
+        async function callAgentAPI() {
+            const matpel = document.getElementById('inpMatpel').value;
+            const bab = document.getElementById('inpBab').value;
+            let nilaiStr = document.getElementById('inpNilai').value;
+
+            if (!matpel || !bab) {
+                alert("Mata Pelajaran dan Bab wajib diisi!");
+                return;
+            }
+
+            const payloadObject = { "matpel": matpel, "bab": bab };
+            if (nilaiStr) payloadObject["nilai_siswa"] = parseInt(nilaiStr);
+            if (activeTab === 'quiz_pg' || activeTab === 'quiz_uraian') {
+                payloadObject["jumlah_soal"] = 5;
+            }
+
+            // The endpoint corresponds to activeTab (mindmap, flashcard, quiz, quiz_uraian)
+            let endpointSuffix = activeTab;
+            if (activeTab === 'quiz_pg') endpointSuffix = 'quiz';
+
+            const url = `${API_BASE}/${endpointSuffix}`;
+
+            document.getElementById('apiError').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payloadObject)
+                });
+
+                if (!response.ok) throw new Error("HTTP Status " + response.status);
+
+                const data = await response.json();
+                const payloadArrayOrObject = data.output; // The structurer payload
+
+                // Handle routing execution
+                if (activeTab === 'mindmap') setupMindmap(payloadArrayOrObject);
+                else if (activeTab === 'flashcard') setupFlashcard(payloadArrayOrObject);
+                else if (activeTab === 'quiz_pg') setupQuizPG(payloadArrayOrObject);
+                else if (activeTab === 'quiz_uraian') setupQuizUraian(payloadArrayOrObject);
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('apiError').innerText = "Gagal terhubung ke API: " + err.message;
+                document.getElementById('apiError').style.display = 'block';
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+
+        // =======================================================
+        // MODULE: MINDMAP
+        // =======================================================
+        function setupMindmap(data) {
+            document.getElementById('mindmap-empty').style.display = 'none';
+            const container = document.getElementById('mindmap-container');
+            container.style.display = 'flex';
+            container.innerHTML = '';
+
+            let rawData = data;
+
+            function normalize(node) {
+                // Cek apakah ini adalah root level payload (memiliki key 'nodes' array)
+                if (node.nodes && Array.isArray(node.nodes)) {
+                    // Jika LLM sudah memberikan tepat 1 konsep root utama, langsung return itu saja agar tidak overlap / double.
+                    if (node.nodes.length === 1) {
+                        return normalize(node.nodes[0]);
+                    }
+
+                    // Jika ternyata lebih dari 1, buatkan "Pusat Payung" buatan
+                    const rootName = node.bab || node.topik || node.matpel || "Mindmap";
+                    return {
+                        name: rootName,
+                        description: `Peta pikiran utama untuk materi ${rootName}`,
+                        children: node.nodes.map(normalize)
+                    };
+                }
+
+                // Node standar
+                let name = node.konsep_utama || node.sub_konsep || node.nama || "Tanpa Nama";
+                let desc = node.deskripsi || node.penjelasan || "";
+                let childs = (node.children && node.children.length > 0) ? node.children.map(normalize) : null;
+                return { name, description: desc, children: childs };
+            }
+
+            const rootData = normalize(rawData);
+            renderD3Mindmap(rootData, container);
+        }
+
+        function renderD3Mindmap(data, contElement) {
+            const dx = 120, dy = 280, margin = { top: 20, right: 120, bottom: 20, left: 120 };
+            const root = d3.hierarchy(data);
+            const tree = d3.tree().nodeSize([dx, dy]);
+            tree(root);
+
+            let x0 = Infinity, x1 = -x0, y0 = Infinity, y1 = -y0;
+            root.each(d => {
+                if (d.x > x1) x1 = d.x; if (d.x < x0) x0 = d.x;
+                if (d.y > y1) y1 = d.y; if (d.y < y0) y0 = d.y;
+            });
+            const height = x1 - x0 + dx * 2;
+            const totalWidth = y1 - y0 + dy * 2;
+
+            const svg = d3.select(contElement).append("svg")
+                .attr("width", totalWidth)
+                .attr("height", height)
+                .attr("viewBox", [y0 - margin.left, x0 - margin.top, totalWidth, height])
+                .attr("style", "max-width: 100%; height: auto;");
+
+            svg.append("g").attr("class", "link")
+                .selectAll("path").data(root.links()).join("path")
+                .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+
+            const nW = 200, nH = 55, pad = 10;
+            const node = svg.append("g").attr("class", "node")
+                .selectAll("g").data(root.descendants()).join("g")
+                .attr("transform", d => `translate(${d.y},${d.x})`)
+                .attr("class", d => `node level${d.depth}`)
+                .on("click", (evt, d) => showNodeModal(d.data.name, d.data.description));
+
+            node.append("rect").attr("class", "node-shadow").attr("x", -nW / 2 + 3).attr("y", -nH / 2 + 3).attr("width", nW).attr("height", nH).attr("rx", 6).attr("ry", 6);
+            node.append("rect").attr("x", -nW / 2).attr("y", -nH / 2).attr("width", nW).attr("height", nH).attr("rx", 6).attr("ry", 6);
+            node.append("text").attr("dy", "0em").attr("text-anchor", "middle").attr("y", -5).text(d => d.data.name).call(wrapText, nW - pad * 2);
+
+            function wrapText(textGroup, width) {
+                textGroup.each(function () {
+                    let txt = d3.select(this), words = txt.text().split(/\s+/).reverse(), word, line = [], lNum = 0, lHeight = 1.2, y = txt.attr("y"), dy = parseFloat(txt.attr("dy")), tspan = txt.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+                    while (word = words.pop()) {
+                        line.push(word); tspan.text(line.join(" "));
+                        if (tspan.node().getComputedTextLength() > width) { line.pop(); tspan.text(line.join(" ")); line = [word]; tspan = txt.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lNum * lHeight + dy + "em").text(word); }
+                    }
+                });
+            }
+        }
+        function showNodeModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = desc || "Tidak ada detail.";
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        // =======================================================
+        // MODULE: FLASHCARD
+        // =======================================================
+        let fcData = [], fcIdx = 0, fcIsFlipped = false;
+        function setupFlashcard(data) {
+            document.getElementById('flashcard-empty').style.display = 'none';
+            document.getElementById('flashcard-container').style.display = 'flex';
+
+            // Expected structurer format: { tipe: "flashcard_set", kartu: [...] }
+            fcData = data.kartu || data;
+            fcIdx = 0; fcIsFlipped = false;
+            renderFc();
+        }
+        function renderFc() {
+            if (!fcData || fcData.length === 0) return;
+            const card = fcData[fcIdx];
+            document.getElementById('fcCountFront').innerText = `${fcIdx + 1} / ${fcData.length}`;
+            document.getElementById('fcCountBack').innerText = `${fcIdx + 1} / ${fcData.length}`;
+            document.getElementById('fcFrontText').innerText = card.front;
+            document.getElementById('fcBackText').innerText = card.back;
+            const ktp = document.getElementById('fcKutipan');
+            if (card.kutipan_sumber && card.kutipan_sumber.trim() !== "") {
+                ktp.innerText = `Kutipan: "${card.kutipan_sumber}"`; ktp.style.display = 'block';
+            } else { ktp.style.display = 'none'; }
+
+            const cardEl = document.getElementById('flashcard');
+            if (fcIsFlipped) {
+                cardEl.style.transition = 'none';
+                cardEl.classList.remove('is-flipped');
+                fcIsFlipped = false;
+                setTimeout(() => cardEl.style.transition = 'transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1)', 50);
+            }
+            document.getElementById('fcPrev').disabled = (fcIdx === 0);
+            document.getElementById('fcNext').disabled = (fcIdx === fcData.length - 1);
+        }
+        function fcFlip() {
+            const el = document.getElementById('flashcard');
+            fcIsFlipped = !fcIsFlipped;
+            if (fcIsFlipped) el.classList.add('is-flipped'); else el.classList.remove('is-flipped');
+        }
+        function fcNextCard() { if (fcIdx < fcData.length - 1) { fcIdx++; renderFc(); } }
+        function fcPrevCard() { if (fcIdx > 0) { fcIdx--; renderFc(); } }
+        document.addEventListener('keydown', e => {
+            if (activeTab === 'flashcard' && document.getElementById('flashcard-container').style.display === 'flex' && document.activeElement.tagName !== 'TEXTAREA') {
+                if (e.code === 'Space') { e.preventDefault(); fcFlip(); }
+                else if (e.code === 'ArrowRight') { e.preventDefault(); fcNextCard(); }
+                else if (e.code === 'ArrowLeft') { e.preventDefault(); fcPrevCard(); }
+            }
+        });
+
+        // =======================================================
+        // MODULE: QUIZ PG
+        // =======================================================
+        let qpgData = [], qpgIdx = 0, qpgAnswers = [];
+        function setupQuizPG(data) {
+            document.getElementById('quizpg-empty').style.display = 'none';
+            document.getElementById('quizpg-result').style.display = 'none';
+            document.getElementById('quizpg-do').style.display = 'flex';
+
+            qpgData = data.soal || data;
+            qpgIdx = 0; qpgAnswers = new Array(qpgData.length).fill(null);
+            renderQpg();
+        }
+        function renderQpg() {
+            const q = qpgData[qpgIdx];
+            document.getElementById('quizpgProgress').innerText = `${qpgIdx + 1} / ${qpgData.length}`;
+            document.getElementById('quizpgQuestion').innerText = q.pertanyaan;
+
+            const optsCont = document.getElementById('quizpgOptions');
+            optsCont.innerHTML = '';
+            Object.keys(q.pilihan || {}).forEach(k => {
+                const optDiv = document.createElement('div');
+                optDiv.className = 'option';
+                if (qpgAnswers[qpgIdx] === k) optDiv.classList.add('selected');
+                optDiv.onclick = () => { qpgAnswers[qpgIdx] = k; renderQpg(); };
+                optDiv.innerHTML = `<span class="opt-label">${k}</span> <span class="opt-text">${q.pilihan[k]}</span>`;
+                optsCont.appendChild(optDiv);
+            });
+            document.getElementById('quizpgBtnPrev').disabled = (qpgIdx === 0);
+            const nBtn = document.getElementById('quizpgBtnNext');
+            nBtn.disabled = !qpgAnswers[qpgIdx];
+            nBtn.innerText = (qpgIdx === qpgData.length - 1) ? "Selesai" : "Selanjutnya";
+        }
+        function qpgPrev() { if (qpgIdx > 0) { qpgIdx--; renderQpg(); } }
+        function qpgNext() {
+            if (qpgIdx < qpgData.length - 1) { qpgIdx++; renderQpg(); }
+            else { finishQpg(); }
+        }
+        function finishQpg() {
+            document.getElementById('quizpg-do').style.display = 'none';
+            document.getElementById('quizpg-result').style.display = 'flex';
+
+            let correctCount = 0;
+            const revC = document.getElementById('quizpgReview');
+            revC.innerHTML = '';
+
+            qpgData.forEach((q, i) => {
+                const ua = qpgAnswers[i];
+                const ca = q.jawaban_benar;
+                const ok = (ua === ca);
+                if (ok) correctCount++;
+
+                let h = `<div class="review-item ${ok ? 'correct' : 'wrong'}"><h4>${i + 1}. ${q.pertanyaan}</h4>`;
+                if (ok) h += `<p class="ans-user">Jawaban Anda: <span class="correct">${ua} - ${q.pilihan[ua]}</span></p>`;
+                else {
+                    h += `<p class="ans-user">Jawaban Anda: <span class="wrong">${ua || '-'} - ${q.pilihan[ua] || 'Kosong'}</span></p>`;
+                    h += `<p class="ans-key">Kunci: ${ca} - ${q.pilihan[ca]}</p>`;
+                }
+                if (q.pembahasan) h += `<div class="pembahasan"><strong>Pembahasan:</strong><br>${q.pembahasan}</div>`;
+                h += `</div>`;
+                revC.innerHTML += h;
+            });
+            document.getElementById('quizpgScore').innerText = correctCount;
+            document.getElementById('quizpgTotal').innerText = qpgData.length;
+        }
+
+        // =======================================================
+        // MODULE: QUIZ URAIAN
+        // =======================================================
+        let esData = [], esIdx = 0, esAnswers = [];
+        function setupQuizUraian(data) {
+            document.getElementById('essay-empty').style.display = 'none';
+            document.getElementById('essay-result').style.display = 'none';
+            document.getElementById('essay-do').style.display = 'flex';
+
+            esData = data.soal || data;
+            esIdx = 0; esAnswers = new Array(esData.length).fill("");
+            renderEs();
+        }
+        function esWordCount(str) { str = str.trim(); return str === "" ? 0 : str.split(/\s+/).length; }
+        function renderEs() {
+            const q = esData[esIdx];
+            document.getElementById('essayProgress').innerText = `${esIdx + 1} / ${esData.length}`;
+            document.getElementById('essayQuestion').innerText = q.pertanyaan;
+
+            const ta = document.getElementById('essayAnswer');
+            ta.value = esAnswers[esIdx] || "";
+            document.getElementById('essayWordCount').innerText = `${esWordCount(ta.value)} kata`;
+
+            document.getElementById('essayBtnPrev').disabled = (esIdx === 0);
+            const cInput = () => {
+                const txt = ta.value; esAnswers[esIdx] = txt;
+                document.getElementById('essayWordCount').innerText = `${esWordCount(txt)} kata`;
+                document.getElementById('essayBtnNext').disabled = (txt.trim().length === 0);
+            };
+            ta.oninput = cInput; cInput();
+
+            document.getElementById('essayBtnNext').innerText = (esIdx === esData.length - 1) ? "Kumpulkan" : "Selanjutnya";
+            ta.focus();
+        }
+        function essayPrev() { if (esIdx > 0) { esIdx--; renderEs(); } }
+        function essayNext() {
+            if (esIdx < esData.length - 1) { esIdx++; renderEs(); }
+            else { finishEs(); }
+        }
+        function finishEs() {
+            document.getElementById('essay-do').style.display = 'none';
+            document.getElementById('essay-result').style.display = 'flex';
+
+            const revC = document.getElementById('essayReview');
+            revC.innerHTML = '';
+
+            esData.forEach((q, i) => {
+                const ua = esAnswers[i];
+                let h = `<div class="review-item"><h4>${i + 1}. ${q.pertanyaan}</h4>`;
+                h += `<div class="ans-user"><span class="label">Jawaban Anda:</span><div class="text">${escapeHtml(ua) || '<em>Kosong</em>'}</div></div>`;
+                if (q.kunci_jawaban) {
+                    h += `<div class="ans-key"><span class="label">Kunci Jawaban:</span><div class="text">${escapeHtml(q.kunci_jawaban)}</div></div>`;
+                }
+                h += `</div>`;
+                revC.innerHTML += h;
+            });
+        }
+    </script>
+</body>
+
+</html>

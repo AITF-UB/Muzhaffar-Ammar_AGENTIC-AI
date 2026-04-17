@@ -1,0 +1,1932 @@
+Percobaan 1
+input
+{
+  "bab": "Teorema Pythagoras",
+  "emotion": {
+    "confidence": 0.9,
+    "emosi": "semangat"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 45
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Teorema Pythagoras",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam segitiga siku-siku ABC dengan sudut siku-siku di B, jika panjang sisi AB = 6 cm dan BC = 8 cm, maka panjang sisi AC (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "10 cm",
+          "B": "12 cm",
+          "C": "14 cm",
+          "D": "16 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = a² + b². Jadi, AC² = 6² + 8² = 36 + 64 = 100. Maka, AC = √100 = 10 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-9ab3"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Jika segitiga DEF adalah segitiga siku-siku dengan DE = 9 cm dan EF = 12 cm, maka panjang DF (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "15 cm",
+          "B": "18 cm",
+          "C": "21 cm",
+          "D": "24 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, DF² = DE² + EF². Jadi, DF² = 9² + 12² = 81 + 144 = 225. Maka, DF = √225 = 15 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-6946"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Dalam suatu segitiga siku-siku, jika salah satu sisi siku-siku adalah 5 cm dan hipotenusa adalah 13 cm, maka panjang sisi lainnya adalah...",
+        "pilihan": {
+          "A": "12 cm",
+          "B": "14 cm",
+          "C": "16 cm",
+          "D": "18 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, 13² = 5² + b². Jadi, 169 = 25 + b². Maka, b² = 144. Jadi, b = √144 = 12 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-a20f"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Segitiga XYZ adalah segitiga siku-siku dengan sisi siku-siku XZ = 7 cm dan XY = 24 cm. Panjang sisi miring YZ adalah...",
+        "pilihan": {
+          "A": "25 cm",
+          "B": "26 cm",
+          "C": "27 cm",
+          "D": "28 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, YZ² = XY² + XZ². Jadi, YZ² = 24² + 7² = 576 + 49 = 625. Maka, YZ = √625 = 25 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-cbb8"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam segitiga siku-siku PQR, jika PR = 10 cm dan QR = 24 cm, maka panjang PQ (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "26 cm",
+          "B": "28 cm",
+          "C": "30 cm",
+          "D": "32 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, PQ² = PR² + QR². Jadi, PQ² = 10² + 24² = 100 + 576 = 676. Maka, PQ = √676 = 26 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-2da9"
+      }
+    ]
+  }
+}
+
+Percobaan 2
+input
+{
+  "bab": "Teorema Pythagoras",
+  "emotion": {
+    "confidence": 0.6,
+    "emosi": "frustasi"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Teorema Pythagoras",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam segitiga siku-siku ABC dengan sudut siku-siku di B, jika panjang sisi AB = 6 cm dan BC = 8 cm, maka panjang sisi AC (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "10 cm",
+          "B": "12 cm",
+          "C": "14 cm",
+          "D": "16 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = a² + b². Jadi, c² = 6² + 8² = 36 + 64 = 100. Maka, c = √100 = 10 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-e0f1"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Sebuah tangga panjangnya 10 meter diletakkan di dinding. Jika jarak bawah tangga ke dinding adalah 6 meter, maka tinggi dinding yang dapat dicapai oleh ujung tangga adalah...",
+        "pilihan": {
+          "A": "8 m",
+          "B": "10 m",
+          "C": "12 m",
+          "D": "14 m"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, tinggi dinding (hipotenusa) = √(10² - 6²) = √(100 - 36) = √64 = 8 m.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-b76f"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Dalam segitiga siku-siku XYZ, jika panjang sisi XZ = 15 cm dan YZ = 20 cm, maka panjang sisi XY (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "25 cm",
+          "B": "20 cm",
+          "C": "30 cm",
+          "D": "35 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, XY² = XZ² + YZ² = 15² + 20² = 225 + 400 = 625. Maka, XY = √625 = 25 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-ece8"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Dalam segitiga siku-siku PQR, jika panjang sisi PQ = 7 cm dan PR = 24 cm, maka panjang sisi QR (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "25 cm",
+          "B": "26 cm",
+          "C": "27 cm",
+          "D": "28 cm"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Menurut Teorema Pythagoras, QR² = PQ² + PR² = 7² + 24² = 49 + 576 = 625. Maka, QR = √625 = 25 cm. Namun, 25 cm bukan triple Pythagoras yang umum, jadi 26 cm adalah jawaban yang paling dekat dan benar.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-e67f"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam segitiga siku-siku DEF, jika panjang sisi DE = 9 cm dan EF = 12 cm, maka panjang sisi DF (hipotenusa) adalah...",
+        "pilihan": {
+          "A": "15 cm",
+          "B": "16 cm",
+          "C": "17 cm",
+          "D": "18 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, DF² = DE² + EF² = 9² + 12² = 81 + 144 = 225. Maka, DF = √225 = 15 cm.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-3873"
+      }
+    ]
+  }
+}
+
+Percobaan 3
+input
+{
+  "bab": "Teorema Pythagoras",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "biasa"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 95
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Teorema Pythagoras",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam sebuah segitiga siku-siku, jika sisi siku-sikunya memiliki panjang 6 cm dan 8 cm, berapa panjang hipotenusa? Berikan alasan mengapa jawaban Anda benar.",
+        "pilihan": {
+          "A": "10 cm",
+          "B": "12 cm",
+          "C": "14 cm",
+          "D": "16 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban benar adalah A, 10 cm. Menggunakan Teorema Pythagoras, c² = 6² + 8² = 36 + 64 = 100, jadi c = √100 = 10 cm. Pilihan lain tidak memenuhi persamaan tersebut.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-a65e"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Dalam suatu bangunan, seorang arsitek mengukur jarak vertikal dan horizontal antara dua titik. Jika jarak vertikal adalah 9 m dan jarak horizontal adalah 12 m, berapa jarak diagonal antara kedua titik tersebut? Gunakan konsep Teorema Pythagoras untuk menjelaskan.",
+        "pilihan": {
+          "A": "15 m",
+          "B": "18 m",
+          "C": "21 m",
+          "D": "24 m"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban benar adalah A, 15 m. Menggunakan Teorema Pythagoras, c² = 9² + 12² = 81 + 144 = 225, jadi c = √225 = 15 m. Pilihan lain tidak memenuhi persamaan tersebut.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-31ee"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Diberikan segitiga siku-siku ABC dengan AB = 5 cm, BC = 12 cm, dan AC = 13 cm. Apakah segitiga ABC memenuhi Teorema Pythagoras? Jelaskan jawaban Anda.",
+        "pilihan": {
+          "A": "Ya, karena 5² + 12² = 13²",
+          "B": "Tidak, karena 5² + 12² ≠ 13²",
+          "C": "Ya, karena 12² + 13² = 5²",
+          "D": "Tidak, karena 13² + 5² ≠ 12²"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban benar adalah A, karena 5² + 12² = 25 + 144 = 169 = 13². Ini menunjukkan bahwa segitiga ABC memenuhi Teorema Pythagoras.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-9f42"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Dalam suatu situasi navigasi, seorang pelaut mengukur jarak antara dua pulau dengan menggunakan dua jarak siku-siku. Jika jarak siku-siku pertama adalah 8 km dan jarak siku-siku kedua adalah 15 km, berapa jarak terpendek antara dua pulau tersebut? Gunakan konsep Teorema Pythagoras untuk menjelaskan.",
+        "pilihan": {
+          "A": "17 km",
+          "B": "20 km",
+          "C": "23 km",
+          "D": "25 km"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban benar adalah A, 17 km. Menggunakan Teorema Pythagoras, c² = 8² + 15² = 64 + 225 = 289, jadi c = √289 = 17 km. Pilihan lain tidak memenuhi persamaan tersebut.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-f8ea"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Diberikan segitiga ABC dengan AB = 7 cm, BC = 24 cm, dan AC = 25 cm. Apakah segitiga ABC memenuhi Teorema Pythagoras? Jelaskan jawaban Anda.",
+        "pilihan": {
+          "A": "Ya, karena 7² + 24² = 25²",
+          "B": "Tidak, karena 7² + 24² ≠ 25²",
+          "C": "Ya, karena 24² + 25² = 7²",
+          "D": "Tidak, karena 25² + 7² ≠ 24²"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban benar adalah A, karena 7² + 24² = 49 + 576 = 625 = 25². Ini menunjukkan bahwa segitiga ABC memenuhi Teorema Pythagoras.",
+        "sumber": "Matematika — Teorema Pythagoras",
+        "soal_id": "pg-teorema_pythagoras-ceeb"
+      }
+    ]
+  }
+}
+
+Percobaan 4
+input
+{
+  "bab": "Fotosintesis",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "biasa"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 40
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Fotosintesis",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Di mana proses fotosintesis terjadi?",
+        "pilihan": {
+          "A": "Nukleus",
+          "B": "Mitokondria",
+          "C": "Kloroplas",
+          "D": "Endoplasma retikulum"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Proses fotosintesis terjadi di kloroplas yang mengandung klorofil (pigmen hijau).",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-b55b"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Rumus fotosintesis di atas menghasilkan apa?",
+        "pilihan": {
+          "A": "Karbondioksida dan Air",
+          "B": "Glukosa dan Oksigen",
+          "C": "ATP dan NADPH",
+          "D": "Aminosida"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Rumus fotosintesis menghasilkan glukosa dan oksigen.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-bb2f"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Pigmen yang mengandung kloroplas adalah?",
+        "pilihan": {
+          "A": "Klorofil",
+          "B": "Karoten",
+          "C": "Xantofil",
+          "D": "Flavonoid"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Pigmen yang mengandung kloroplas adalah klorofil (pigmen hijau).",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-027c"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Proses fotosintesis yang memecah air menghasilkan?",
+        "pilihan": {
+          "A": "Glukosa",
+          "B": "Oksigen",
+          "C": "ATP dan NADPH",
+          "D": "CO₂"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Proses fotosintesis yang memecah air menghasilkan ATP dan NADPH.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-90a0"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Tahap mana dari fotosintesis yang mengikat CO₂?",
+        "pilihan": {
+          "A": "Reaksi Terang",
+          "B": "Reaksi Gelap/Siklus Calvin",
+          "C": "Membran Tilakoid",
+          "D": "Stroma"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Tahap reaksi gelap/siklus Calvin yang mengikat CO₂.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-9473"
+      }
+    ]
+  }
+}
+
+Percobaan 5
+input
+{
+  "bab": "Fotosintesis",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "semangat"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Fotosintesis",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Di mana terjadi reaksi terang dalam proses fotosintesis?",
+        "pilihan": {
+          "A": "Stroma",
+          "B": "Membran tilakoid",
+          "C": "Klorofil",
+          "D": "Karbondioksida"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Reaksi terang terjadi di membran tilakoid dalam kloroplas, di mana tumbuhan menyerap cahaya, memecah air, dan menghasilkan ATP & NADPH.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-fa63"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Faktor apa yang paling mempengaruhi efisiensi fotosintesis?",
+        "pilihan": {
+          "A": "Suhu",
+          "B": "Karbon dioksida",
+          "C": "Cahaya",
+          "D": "Air"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Intensitas cahaya adalah faktor yang paling mempengaruhi efisiensi fotosintesis, karena tumbuhan memerlukan cahaya untuk menghasilkan ATP & NADPH.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-aadb"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Pada tahap siklus Calvin, apa yang dihasilkan dari pengikatan CO₂?",
+        "pilihan": {
+          "A": "ATP",
+          "B": "NADPH",
+          "C": "Glukosa",
+          "D": "Oksigen"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Pada tahap siklus Calvin, CO₂ diikat dan diubah menjadi glukosa, yang merupakan hasil akhir dari fotosintesis.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-49c4"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Bagaimana ketersediaan air mempengaruhi fotosintesis?",
+        "pilihan": {
+          "A": "Air menghambat proses fotosintesis",
+          "B": "Air digunakan untuk memproduksi ATP",
+          "C": "Air digunakan sebagai substrat dalam reaksi fotosintesis",
+          "D": "Air menghasilkan karbondioksida"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Air digunakan sebagai substrat dalam reaksi fotosintesis, di mana air dipecah menjadi hidrogen dan oksigen oleh reaksi terang.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-6f4b"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Mengapa klorofil penting dalam proses fotosintesis?",
+        "pilihan": {
+          "A": "Klorofil menyerap cahaya",
+          "B": "Klorofil menghasilkan ATP",
+          "C": "Klorofil mengikat CO₂",
+          "D": "Klorofil menghasilkan glukosa"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Klorofil berfungsi sebagai pigmen yang menyerap cahaya, yang kemudian digunakan dalam proses fotosintesis untuk menghasilkan ATP & NADPH.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-01d6"
+      }
+    ]
+  }
+}
+
+Percobaan 6
+input
+{
+  "bab": "Fotosintesis",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "semangat"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 95
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Fotosintesis",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam konteks fotosintesis, bagaimana perubahan suhu dapat mempengaruhi efisiensi reaksi terang dan siklus Calvin?",
+        "pilihan": {
+          "A": "Suhu rendah meningkatkan efisiensi reaksi terang dan siklus Calvin.",
+          "B": "Suhu tinggi meningkatkan efisiensi reaksi terang tetapi menurunkan efisiensi siklus Calvin.",
+          "C": "Suhu tinggi meningkatkan efisiensi reaksi terang dan siklus Calvin.",
+          "D": "Suhu rendah menurunkan efisiensi reaksi terang tetapi meningkatkan efisiensi siklus Calvin."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Suhu tinggi dapat mempengaruhi reaksi enzim yang terlibat dalam fotosintesis, terutama dalam siklus Calvin. Enzim-enzim tersebut memiliki titik leleh tertentu, sehingga suhu tinggi dapat menghambat reaksi mereka. Namun, reaksi terang yang terjadi di membran tilakoid tidak terlalu dipengaruhi oleh suhu, sehingga efisiensinya cenderung tetap. Oleh karena itu, suhu tinggi meningkatkan efisiensi reaksi terang tetapi menurunkan efisiensi siklus Calvin.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-46a7"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Jika suatu tanaman ditempatkan di ruangan yang memiliki intensitas cahaya yang berubah-ubah, bagaimana strategi tanaman tersebut untuk menyesuaikan proses fotosintesis?",
+        "pilihan": {
+          "A": "Tanaman akan menghentikan proses fotosintesis ketika cahaya berkurang.",
+          "B": "Tanaman akan menyesuaikan jumlah ATP dan NADPH yang dihasilkan sesuai dengan intensitas cahaya.",
+          "C": "Tanaman akan mengubah pigmen klorofilnya menjadi bentuk yang lebih gelap.",
+          "D": "Tanaman akan menutup pori-pori (stomata) ketika cahaya berkurang."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Tanaman dapat menyesuaikan jumlah ATP dan NADPH yang dihasilkan sesuai dengan intensitas cahaya yang ada. Dalam kondisi cahaya yang berubah-ubah, tanaman akan mengatur produksi energi (ATP dan NADPH) untuk memaksimalkan fotosintesis tanpa membuang-buang energi berlebihan.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-0e10"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Bagaimana perubahan ketersediaan CO₂ dapat mempengaruhi hasil fotosintesis dalam jangka panjang?",
+        "pilihan": {
+          "A": "Ketersediaan CO₂ yang berkurang akan meningkatkan produksi glukosa.",
+          "B": "Ketersediaan CO₂ yang berkurang akan menurunkan produksi glukosa tetapi meningkatkan efisiensi reaksi terang.",
+          "C": "Ketersediaan CO₂ yang berkurang akan menurunkan produksi glukosa dan efisiensi reaksi terang.",
+          "D": "Ketersediaan CO₂ yang berkurang tidak akan mempengaruhi produksi glukosa."
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Ketersediaan CO₂ yang berkurang akan menurunkan produksi glukosa dan efisiensi reaksi terang. Siklus Calvin yang membutuhkan CO₂ sebagai substrat akan terhambat, sehingga produksi glukosa akan menurun. Selain itu, reaksi terang yang membutuhkan CO₂ untuk menghasilkan ATP dan NADPH juga akan terhambat, mengurangi efisiensi reaksi terang.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-6f43"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Apakah perubahan pigmen klorofil dalam tanaman dapat mempengaruhi efisiensi fotosintesis, dan jika ya, bagaimana?",
+        "pilihan": {
+          "A": "Perubahan pigmen klorofil tidak mempengaruhi efisiensi fotosintesis.",
+          "B": "Perubahan pigmen klorofil dapat meningkatkan efisiensi fotosintesis dengan menyerap cahaya pada spektrum yang lebih luas.",
+          "C": "Perubahan pigmen klorofil dapat menurunkan efisiensi fotosintesis karena mengurangi serapan cahaya.",
+          "D": "Perubahan pigmen klorofil hanya mempengaruhi warna tanaman, tidak efisiensi fotosintesis."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Perubahan pigmen klorofil dapat meningkatkan efisiensi fotosintesis dengan menyerap cahaya pada spektrum yang lebih luas. Pigmen klorofil biasanya menyerap cahaya merah dan biru, tetapi perubahan pigmen dapat memperluas spektrum cahaya yang dapat diserap, sehingga meningkatkan efisiensi fotosintesis.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-9bca"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Bagaimana perubahan ketersediaan air dapat mempengaruhi proses fotosintesis, dan bagaimana tanaman dapat menyesuaikan diri?",
+        "pilihan": {
+          "A": "Ketersediaan air yang berkurang tidak mempengaruhi proses fotosintesis.",
+          "B": "Ketersediaan air yang berkurang akan menurunkan efisiensi reaksi terang dan siklus Calvin, tetapi tanaman dapat menyesuaikan dengan menutup stomata.",
+          "C": "Ketersediaan air yang berkurang akan meningkatkan efisiensi reaksi terang dan siklus Calvin, tetapi tanaman tidak dapat menyesuaikan diri.",
+          "D": "Ketersediaan air yang berkurang akan menurunkan efisiensi reaksi terang dan siklus Calvin, dan tanaman tidak dapat menyesuaikan diri."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Ketersediaan air yang berkurang akan menurunkan efisiensi reaksi terang dan siklus Calvin, tetapi tanaman dapat menyesuaikan diri dengan menutup stomata untuk mengurangi kehilangan air. Hal ini akan mengurangi kebutuhan air tanpa menghentikan fotosintesis sepenuhnya.",
+        "sumber": "Biologi — Fotosintesis",
+        "soal_id": "pg-fotosintesis-1541"
+      }
+    ]
+  }
+}
+
+Percobaan 7
+input
+{
+  "bab": "Tata Surya",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bingung"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 30
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Tata Surya",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Planet terkecil dalam Sistem Tata Surya adalah ...",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Bumi",
+          "D": "Mars"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Merkurius adalah planet terkecil dalam Sistem Tata Surya.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-f9d7"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Planet yang disebut Bintang Kejora adalah ...",
+        "pilihan": {
+          "A": "Bumi",
+          "B": "Mars",
+          "C": "Venus",
+          "D": "Jupiter"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Venus disebut Bintang Kejora.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-0db2"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Planet yang memiliki Bintik Merah Besar adalah ...",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Mars",
+          "D": "Jupiter"
+        },
+        "jawaban_benar": "D",
+        "pembahasan": "Jupiter memiliki Bintik Merah Besar.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-a0eb"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Planet terjauh dari Matahari adalah ...",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Neptunus",
+          "D": "Mars"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Neptunus adalah planet terjauh dari Matahari.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-39ef"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Planet yang terkenal dengan cincinnya adalah ...",
+        "pilihan": {
+          "A": "Saturnus",
+          "B": "Uranus",
+          "C": "Neptunus",
+          "D": "Merkurius"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Saturnus terkenal dengan cincinnya.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-8988"
+      }
+    ]
+  }
+}
+
+Percobaan 8
+input
+{
+  "bab": "Tata Surya",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "frustasi"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Tata Surya",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Mengapa Mars dikenal sebagai planet merah?",
+        "pilihan": {
+          "A": "Karena permukaannya terutama terdiri dari pasir merah",
+          "B": "Karena memiliki atmosfer merah",
+          "C": "Karena memiliki gunung berapi merah",
+          "D": "Karena memiliki benua merah"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Mars dikenal sebagai planet merah karena permukaannya terutama terdiri dari pasir dan batuan yang mengandung oksida besi (oksida ferrous), yang memberikan warna merah kemerahan.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-3360"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Mengapa Jupiter memiliki ukuran yang jauh lebih besar dibandingkan planet lainnya?",
+        "pilihan": {
+          "A": "Karena Jupiter memiliki banyak satelit",
+          "B": "Karena Jupiter memiliki massa yang lebih besar",
+          "C": "Karena Jupiter memiliki orbit yang lebih dekat ke Matahari",
+          "D": "Karena Jupiter memiliki atmosfer yang lebih tebal"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Jupiter memiliki ukuran yang jauh lebih besar dibandingkan planet lainnya karena memiliki massa yang lebih besar, yang membuatnya menarik lebih banyak gas dan menjadi planet gas raksasa.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-8180"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Mengapa Venus disebut Bintang Kejora?",
+        "pilihan": {
+          "A": "Karena Venus mengorbit Matahari lebih cepat",
+          "B": "Karena Venus memiliki cincin yang indah",
+          "C": "Karena Venus memiliki atmosfer yang paling panas",
+          "D": "Karena Venus terlihat sangat terang di malam hari"
+        },
+        "jawaban_benar": "D",
+        "pembahasan": "Venus disebut Bintang Kejora karena terlihat sangat terang di malam hari, bahkan lebih terang dari bintang-bintang lainnya, karena atmosfernya yang padat dan penuh dengan karbon dioksida yang menyerap cahaya matahari.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-6fad"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Mengapa Uranus memiliki rotasi yang sangat miring?",
+        "pilihan": {
+          "A": "Karena Uranus mengalami tabrakan besar dengan objek lain",
+          "B": "Karena Uranus memiliki banyak satelit",
+          "C": "Karena Uranus berada di luar orbit Pluto",
+          "D": "Karena Uranus memiliki atmosfer yang sangat tebal"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Uranus memiliki rotasi yang sangat miring karena dugaan bahwa planet ini pernah mengalami tabrakan besar dengan objek lain yang mengubah sumbu rotasinya.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-73de"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Mengapa Neptunus memiliki warna biru?",
+        "pilihan": {
+          "A": "Karena permukaannya terutama terdiri dari air",
+          "B": "Karena memiliki atmosfer yang mengandung uap air",
+          "C": "Karena memiliki atmosfer yang mengandung gas nitrogen",
+          "D": "Karena memiliki atmosfer yang mengandung karbon dioksida"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Neptunus memiliki warna biru karena atmosfernya mengandung gas nitrogen, yang berefleksi cahaya biru dan meredam cahaya lainnya.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-7e2e"
+      }
+    ]
+  }
+}
+
+Percobaan 9
+input
+{
+  "bab": "Tata Surya",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "biasa"
+  },
+  "matpel": "Biologi",
+  "nilai_siswa": 90
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Biologi",
+    "bab": "Tata Surya",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dari 8 planet dalam Sistem Tata Surya, planet mana yang memiliki cincin yang paling terkenal dan unik, dan bagaimana cincin tersebut mempengaruhi penampilan planet tersebut dari Bumi?",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Saturnus",
+          "C": "Uranus",
+          "D": "Neptunus"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Saturnus adalah planet yang terkenal dengan cincinnya yang indah dan unik. Cincin Saturnus mempengaruhi penampilan planet tersebut dari Bumi dengan membuat warna-warna beragam dan pola yang menarik, terutama saat melintasi planet tersebut di langit malam.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-8866"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Bumi, sebagai satu-satunya planet yang diketahui memiliki kehidupan, memiliki beberapa ciri khas yang memungkinkannya mendukung kehidupan. Dari pilihan berikut, ciri khas apa yang paling mendasar dan penting untuk kehidupan di Bumi?",
+        "pilihan": {
+          "A": "Oksigen",
+          "B": "Air",
+          "C": "Oksida nitrogen",
+          "D": "Karbon dioksida"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Air adalah ciri khas yang paling mendasar dan penting untuk kehidupan di Bumi. Tanpa air, kehidupan seperti yang kita kenal tidak dapat berkembang dan bertahan.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-c849"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Jika kita membandingkan planet-planet dalam Sistem Tata Surya, planet mana yang memiliki suhu termasuk paling tinggi dan mengapa?",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Mars",
+          "D": "Jupiter"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Venus memiliki suhu termasuk paling tinggi di antara planet-planet dalam Sistem Tata Surya. Hal ini disebabkan oleh efek rumah kaca yang kuat di atmosfer Venus, yang menyebabkan suhu permukaan mencapai sekitar 462 derajat Celsius.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-dd7c"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Dari 8 planet, planet mana yang memiliki rotasi paling ekstrem dan bagaimana hal ini mempengaruhi planet tersebut?",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Uranus",
+          "D": "Neptunus"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Uranus memiliki rotasi paling ekstrem, dengan sumbu rotasinya hampir sejajar dengan bidang orbitnya. Hal ini menyebabkan Uranus mengalami musim yang sangat panjang dan pendek, dengan setengah planet menghadap ke Matahari selama 42 tahun.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-a0ea"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Jika kita mempertimbangkan planet-planet dalam Sistem Tata Surya, planet mana yang memiliki atmosfer yang paling berbeda dari yang lain dan mengapa?",
+        "pilihan": {
+          "A": "Merkurius",
+          "B": "Venus",
+          "C": "Bumi",
+          "D": "Mars"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Venus memiliki atmosfer yang paling berbeda dari planet-planet lain dalam Sistem Tata Surya. Atmosfer Venus terdiri dari sekitar 97% karbon dioksida dengan tekanan sangat tinggi, yang menjadikannya planet dengan suhu termasuk paling panas di tata surya kita.",
+        "sumber": "Biologi — Tata Surya",
+        "soal_id": "pg-tata_surya-d984"
+      }
+    ]
+  }
+}
+
+Percobaan 10
+input
+{
+  "bab": "Hukum Newton",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bingung"
+  },
+  "matpel": "Fisika",
+  "nilai_siswa": 20
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Fisika",
+    "bab": "Hukum Newton",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Menurut Hukum I Newton, apa yang akan terjadi pada benda jika tidak ada gaya luar yang bekerja padanya?",
+        "pilihan": {
+          "A": "Benda akan bergerak dengan kecepatan konstan.",
+          "B": "Benda akan berhenti.",
+          "C": "Benda akan bergerak dengan percepatan.",
+          "D": "Benda akan bergerak dengan decelerasi."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Hukum I Newton, benda akan tetap diam atau bergerak lurus beraturan jika tidak ada gaya luar yang bekerja padanya.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-af7c"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Dalam Hukum II Newton, apa yang berbanding lurus dengan percepatan?",
+        "pilihan": {
+          "A": "Massa",
+          "B": "Gaya",
+          "C": "Kecepatan",
+          "D": "Waktu"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Dalam Hukum II Newton, percepatan berbanding lurus dengan gaya dan berbanding terbalik dengan massa.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-dafe"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Dalam rumus F = ma, apa yang mewakili gaya?",
+        "pilihan": {
+          "A": "F",
+          "B": "m",
+          "C": "a",
+          "D": "g"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Dalam rumus F = ma, F mewakili gaya, m mewakili massa, dan a mewakili percepatan.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-01f0"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Menurut Hukum I Newton, apa yang terjadi pada penumpang saat mobil mendadak rem?",
+        "pilihan": {
+          "A": "Penumpang akan terdorong ke depan.",
+          "B": "Penumpang akan terdorong ke belakang.",
+          "C": "Penumpang akan tetap diam.",
+          "D": "Penumpang akan bergerak ke kiri."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Hukum I Newton, penumpang akan terdorong ke depan saat mobil mendadak rem karena benda akan tetap bergerak jika tidak ada gaya luar yang bekerja padanya.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-9be8"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam Hukum II Newton, apa yang akan terjadi jika massa benda dikali dua dan gaya tetap?",
+        "pilihan": {
+          "A": "Percepatan akan menjadi dua kali lipat.",
+          "B": "Percepatan akan menjadi setengah.",
+          "C": "Percepatan akan tetap sama.",
+          "D": "Percepatan akan menjadi empat kali lipat."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Dalam Hukum II Newton, percepatan berbanding terbalik dengan massa. Jika massa benda dikali dua dan gaya tetap, percepatan akan menjadi setengah.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-12a4"
+      }
+    ]
+  }
+}
+
+Percobaan 11
+input
+{
+  "bab": "Hukum Newton",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bosan"
+  },
+  "matpel": "Fisika",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Fisika",
+    "bab": "Hukum Newton",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Seorang penumpang dalam mobil yang mendadak rem, mengapa ia terdorong ke depan?",
+        "pilihan": {
+          "A": "Karena gaya inersia",
+          "B": "Karena gaya gravitasi",
+          "C": "Karena gaya sentrifugal",
+          "D": "Karena gaya gesek"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Penumpang terdorong ke depan karena gaya inersia, yang merupakan bagian dari Hukum I Newton tentang gerak. Menurut Hukum I, benda akan tetap diam atau bergerak lurus beraturan jika tidak ada gaya luar. Saat rem mobil mendadak, gaya luar yang tiba-tiba berubah mengakibatkan penumpang, yang sebelumnya bergerak beraturan, terdorong ke depan.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-f5cf"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Sebuah mobil dengan massa 1000 kg mengalami percepatan 2 m/s². Berapa gaya yang diperlukan?",
+        "pilihan": {
+          "A": "500 N",
+          "B": "2000 N",
+          "C": "1000 N",
+          "D": "200 N"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Gaya yang diperlukan dapat dihitung menggunakan Hukum II Newton (F = ma). Dengan massa 1000 kg dan percepatan 2 m/s², maka gaya yang diperlukan adalah 1000 kg × 2 m/s² = 2000 N.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-3c3b"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Sebuah bola dengan massa 0,5 kg bergerak dengan percepatan 4 m/s². Berapa gaya yang bekerja pada bola?",
+        "pilihan": {
+          "A": "1 N",
+          "B": "2 N",
+          "C": "4 N",
+          "D": "8 N"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Gaya yang bekerja pada bola dapat dihitung menggunakan Hukum II Newton (F = ma). Dengan massa 0,5 kg dan percepatan 4 m/s², maka gaya yang bekerja pada bola adalah 0,5 kg × 4 m/s² = 2 N.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-b4dc"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Jika sebuah mobil dengan massa 1500 kg bergerak dengan percepatan 3 m/s², berapa gaya yang bekerja pada mobil?",
+        "pilihan": {
+          "A": "4500 N",
+          "B": "5000 N",
+          "C": "3000 N",
+          "D": "6000 N"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Gaya yang bekerja pada mobil dapat dihitung menggunakan Hukum II Newton (F = ma). Dengan massa 1500 kg dan percepatan 3 m/s², maka gaya yang bekerja pada mobil adalah 1500 kg × 3 m/s² = 4500 N.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-d417"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Sebuah roda dengan massa 200 kg bergerak dengan percepatan 5 m/s². Berapa gaya yang bekerja pada roda?",
+        "pilihan": {
+          "A": "100 N",
+          "B": "200 N",
+          "C": "400 N",
+          "D": "1000 N"
+        },
+        "jawaban_benar": "D",
+        "pembahasan": "Gaya yang bekerja pada roda dapat dihitung menggunakan Hukum II Newton (F = ma). Dengan massa 200 kg dan percepatan 5 m/s², maka gaya yang bekerja pada roda adalah 200 kg × 5 m/s² = 1000 N.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-0f6e"
+      }
+    ]
+  }
+}
+
+Percobaan 12
+input
+{
+  "bab": "Hukum Newton",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "biasa"
+  },
+  "matpel": "Fisika",
+  "nilai_siswa": 95
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Fisika",
+    "bab": "Hukum Newton",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Seorang astronot berada di luar kapal ruang angkasa yang bergerak dengan kecepatan konstan. Menurut Hukum Newton, apa yang akan terjadi jika astronot melempar bola ke arah depan kapal?",
+        "pilihan": {
+          "A": "Bola akan terus bergerak dengan kecepatan yang sama seiring kapal.",
+          "B": "Bola akan bergerak mundur seiring kapal.",
+          "C": "Bola akan berhenti seketika setelah dilempar.",
+          "D": "Bola akan bergerak dengan kecepatan yang lebih cepat dari kapal."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Hukum Inersia (Hukum I), benda akan tetap bergerak dengan kecepatan dan arah yang sama jika tidak ada gaya luar yang mempengaruhinya. Jadi, jika astronot melempar bola ke arah depan kapal, bola akan terus bergerak dengan kecepatan yang sama seiring kapal karena tidak ada gaya luar yang mempengaruhinya di ruang angkasa hampir bebas dari gravitasi.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-f4a1"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan di jalan lurus. Sementara itu, seorang penumpang di dalam mobil melempar bola ke arah depan. Dengan mengingat Hukum Newton, apa yang akan terjadi pada bola tersebut?",
+        "pilihan": {
+          "A": "Bola akan bergerak lurus ke depan.",
+          "B": "Bola akan bergerak mundur.",
+          "C": "Bola akan bergerak melengkung ke depan.",
+          "D": "Bola akan berhenti di tempatnya."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Dalam mobil yang bergerak dengan kecepatan konstan, penumpang merasakan inersia. Jika bola dilempar ke arah depan, bola akan terus bergerak lurus ke depan karena tidak ada gaya luar yang mempengaruhinya. Hal ini sesuai dengan Hukum Inersia (Hukum I).",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-56ee"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan. Penumpang di dalam mobil melempar bola ke arah depan. Dengan mempertimbangkan Hukum Newton, apa yang akan terjadi pada bola tersebut jika mobil tiba-tiba rem mendadak?",
+        "pilihan": {
+          "A": "Bola akan bergerak lurus ke depan.",
+          "B": "Bola akan bergerak mundur.",
+          "C": "Bola akan berhenti di tempatnya.",
+          "D": "Bola akan meluncur ke luar mobil."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Dengan tiba-tiba rem mendadak, mobil akan berhenti. Menurut Hukum Inersia (Hukum I), bola akan terus bergerak dengan kecepatan yang sama sebelum dilempar, yaitu ke depan. Oleh karena itu, bola akan bergerak mundur relatif terhadap mobil.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-9591"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan. Jika seorang penumpang melempar bola ke arah depan dengan kecepatan 5 m/s, berapa percepatan bola tersebut setelah dilempar? (asumsikan tidak ada gaya luar yang mempengaruhinya)",
+        "pilihan": {
+          "A": "5 m/s²",
+          "B": "0 m/s²",
+          "C": "10 m/s²",
+          "D": "15 m/s²"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Dalam ruang angkasa atau di dalam mobil yang bergerak dengan kecepatan konstan, bola akan terus bergerak dengan kecepatan yang sama sebelum dilempar. Oleh karena itu, percepatan bola tersebut setelah dilempar adalah 0 m/s², karena tidak ada gaya luar yang mempengaruhinya.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-8c47"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan. Penumpang melempar bola ke arah depan dengan kecepatan 5 m/s. Jika massa bola adalah 0,5 kg, berapa gaya yang diperlukan untuk mempertahankan bola tersebut bergerak dengan kecepatan 5 m/s? (asumsikan tidak ada gaya luar yang mempengaruhinya)",
+        "pilihan": {
+          "A": "2,5 N",
+          "B": "5 N",
+          "C": "0 N",
+          "D": "10 N"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Dalam ruang angkasa atau di dalam mobil yang bergerak dengan kecepatan konstan, bola akan terus bergerak dengan kecepatan yang sama sebelum dilempar. Oleh karena itu, tidak ada gaya yang diperlukan untuk mempertahankan bola tersebut bergerak dengan kecepatan 5 m/s, sehingga gaya yang diperlukan adalah 0 N.",
+        "sumber": "Fisika — Hukum Newton",
+        "soal_id": "pg-hukum_newton-8291"
+      }
+    ]
+  }
+}
+
+Percobaan 13
+input
+{
+  "bab": "Proklamasi",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "biasa"
+  },
+  "matpel": "Sejarah",
+  "nilai_siswa": 95
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Sejarah",
+    "bab": "Proklamasi",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Bagaimana peristiwa Proklamasi Kemerdekaan Indonesia pada 17 Agustus 1945 dapat diinterpretasikan sebagai implementasi dari Hukum III (Aksi-Reaksi) dalam konteks sejarah?",
+        "pilihan": {
+          "A": "Proklamasi merespons penyerahan Jepang dengan memulai proses kemerdekaan.",
+          "B": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap penjajahan Jepang.",
+          "C": "Proklamasi adalah aksi yang tidak memiliki reaksi langsung dalam konteks sejarah.",
+          "D": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap kemerdekaan Indonesia."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Jawaban B benar karena Proklamasi Kemerdekaan Indonesia merupakan reaksi terhadap penyerahan Jepang pada 16 Agustus 1945. Penyerahan Jepang merupakan aksi yang mengakibatkan reaksi berupa Proklamasi Kemerdekaan Indonesia oleh Soekarno dan Hatta.",
+        "sumber": "Sejarah — Proklamasi",
+        "soal_id": "pg-proklamasi-e9a3"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Dalam konteks Proklamasi Kemerdekaan, bagaimana peran teks proklamasi yang diketik Sayuti Melik dapat dilihat sebagai implementasi dari konsep Hukum III (Aksi-Reaksi)?",
+        "pilihan": {
+          "A": "Teks proklamasi adalah aksi yang tidak memiliki reaksi.",
+          "B": "Teks proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap penjajahan Jepang.",
+          "C": "Teks proklamasi adalah aksi yang menghasilkan reaksi dalam bentuk perubahan status Indonesia menjadi negara merdeka.",
+          "D": "Teks proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap perubahan status Indonesia menjadi negara merdeka."
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Jawaban C benar karena teks proklamasi yang diketik Sayuti Melik merupakan aksi yang menghasilkan reaksi dalam bentuk perubahan status Indonesia menjadi negara merdeka setelah Proklamasi dibacakan.",
+        "sumber": "Sejarah — Proklamasi",
+        "soal_id": "pg-proklamasi-a7c0"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Berdasarkan kronologi Proklamasi, bagaimana peristiwa Proklamasi dapat dianalisis sebagai reaksi terhadap peristiwa-peristiwa sebelumnya, seperti penyerahan Jepang?",
+        "pilihan": {
+          "A": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap penjajahan Jepang.",
+          "B": "Proklamasi adalah aksi yang tidak memiliki reaksi.",
+          "C": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap kemerdekaan Indonesia.",
+          "D": "Proklamasi adalah reaksi terhadap peristiwa Rengasdengklok, yang merupakan aksi terhadap penyerahan Jepang."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban A benar karena Proklamasi Kemerdekaan Indonesia merupakan reaksi terhadap penyerahan Jepang pada 16 Agustus 1945, yang merupakan aksi terhadap penjajahan Jepang.",
+        "sumber": "Sejarah — Proklamasi",
+        "soal_id": "pg-proklamasi-a654"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Bagaimana peran bendera Merah Putih dalam Proklamasi Kemerdekaan Indonesia dapat dilihat sebagai implementasi dari Hukum III (Aksi-Reaksi) dalam konteks sejarah?",
+        "pilihan": {
+          "A": "Bendera Merah Putih adalah aksi yang tidak memiliki reaksi.",
+          "B": "Bendera Merah Putih adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap penjajahan Jepang.",
+          "C": "Bendera Merah Putih adalah aksi yang menghasilkan reaksi dalam bentuk identitas nasionalisme Indonesia.",
+          "D": "Bendera Merah Putih adalah reaksi terhadap peristiwa Rengasdengklok, yang merupakan aksi terhadap penyerahan Jepang."
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Jawaban C benar karena bendera Merah Putih yang dijahit oleh Ibu Fatmawati merupakan aksi yang menghasilkan reaksi dalam bentuk identitas nasionalisme Indonesia yang dideklarasikan dalam Proklamasi Kemerdekaan.",
+        "sumber": "Sejarah — Proklamasi",
+        "soal_id": "pg-proklamasi-dd2d"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam konteks Proklamasi Kemerdekaan, bagaimana peristiwa Proklamasi dapat dianalisis sebagai reaksi terhadap peristiwa-peristiwa sebelumnya, seperti penyerahan Jepang dan peristiwa Rengasdengklok?",
+        "pilihan": {
+          "A": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap penjajahan Jepang.",
+          "B": "Proklamasi adalah reaksi terhadap peristiwa Rengasdengklok, yang merupakan aksi terhadap penyerahan Jepang.",
+          "C": "Proklamasi adalah reaksi terhadap peristiwa Rengasdengklok, yang merupakan aksi terhadap perubahan status Indonesia menjadi negara merdeka.",
+          "D": "Proklamasi adalah reaksi terhadap penyerahan Jepang, yang merupakan aksi terhadap perubahan status Indonesia menjadi negara merdeka."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Jawaban A benar karena Proklamasi Kemerdekaan Indonesia merupakan reaksi terhadap penyerahan Jepang pada 16 Agustus 1945, yang merupakan aksi terhadap penjajahan Jepang.",
+        "sumber": "Sejarah — Proklamasi",
+        "soal_id": "pg-proklamasi-8653"
+      }
+    ]
+  }
+}
+
+Percobaan 14
+input
+{
+  "bab": "Kemerdekaan",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "frustasi"
+  },
+  "matpel": "Sejarah",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Sejarah",
+    "bab": "Kemerdekaan",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Mengapa Proklamasi Kemerdekaan Indonesia dibacakan pada 17 Agustus 1945?",
+        "pilihan": {
+          "A": "Karena tanggal tersebut ditetapkan sebagai Hari Kemerdekaan Indonesia.",
+          "B": "Pasukan Indonesia merasa siap untuk memproklamasikan kemerdekaan.",
+          "C": "Jepang telah menyerah pada 14 Agustus, memberikan kesempatan bagi Indonesia untuk merdeka.",
+          "D": "Ir. Soekarno dan Drs. Hatta memilih tanggal tersebut karena memiliki arti khusus dalam sejarah perjuangan Indonesia."
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Jepang menyerah pada 14 Agustus 1945, dan pada 16 Agustus terjadi peristiwa Rengasdengklok yang menandai penyerahan kekuasaan Jepang kepada pemerintah Indonesia. Proklamasi dibacakan pada 17 Agustus 1945, tepatnya di Jalan Pegangsaan Timur No. 56, Jakarta.",
+        "sumber": "Sejarah — Kemerdekaan",
+        "soal_id": "pg-kemerdekaan-c5f7"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Bagaimana peran Ir. Soekarno dalam Proklamasi Kemerdekaan Indonesia?",
+        "pilihan": {
+          "A": "Ia menulis teks proklamasi.",
+          "B": "Ia membacakan proklamasi di hadapan publik.",
+          "C": "Ia menjahit bendera Merah Putih.",
+          "D": "Ia merancang simbol-simbol nasional Indonesia."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Ir. Soekarno membacakan proklamasi kemerdekaan Indonesia di depan publik pada 17 Agustus 1945 di Jalan Pegangsaan Timur No. 56, Jakarta, didampingi oleh Drs. Mohammad Hatta.",
+        "sumber": "Sejarah — Kemerdekaan",
+        "soal_id": "pg-kemerdekaan-e39c"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Mengapa peristiwa Rengasdengklok penting dalam Proklamasi Kemerdekaan Indonesia?",
+        "pilihan": {
+          "A": "Karena peristiwa tersebut menandai kemenangan Indonesia dalam Perang Dunia II.",
+          "B": "Karena peristiwa tersebut menandai penyerahan kekuasaan Jepang kepada pemerintah Indonesia.",
+          "C": "Karena peristiwa tersebut menandai penyerahan kekuasaan Belanda kepada pemerintah Indonesia.",
+          "D": "Karena peristiwa tersebut menandai penyerahan kekuasaan Inggris kepada pemerintah Indonesia."
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Peristiwa Rengasdengklok pada 16 Agustus 1945 menandai penyerahan kekuasaan Jepang kepada pemerintah Indonesia, yang merupakan tahap penting sebelum Proklamasi Kemerdekaan pada 17 Agustus 1945.",
+        "sumber": "Sejarah — Kemerdekaan",
+        "soal_id": "pg-kemerdekaan-684b"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Bagaimana peran Sayuti Melik dalam Proklamasi Kemerdekaan Indonesia?",
+        "pilihan": {
+          "A": "Ia membacakan proklamasi.",
+          "B": "Ia menjahit bendera Merah Putih.",
+          "C": "Ia menulis teks proklamasi.",
+          "D": "Ia merancang simbol-simbol nasional Indonesia."
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Sayuti Melik adalah pengetik teks proklamasi kemerdekaan Indonesia yang dibacakan oleh Ir. Soekarno pada 17 Agustus 1945.",
+        "sumber": "Sejarah — Kemerdekaan",
+        "soal_id": "pg-kemerdekaan-22f2"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Mengapa proklamasi dibacakan di Jalan Pegangsaan Timur No. 56, Jakarta?",
+        "pilihan": {
+          "A": "Karena lokasi tersebut merupakan tempat pertemuan para pemimpin Indonesia.",
+          "B": "Karena lokasi tersebut merupakan tempat pertemuan para pemimpin Jepang.",
+          "C": "Karena lokasi tersebut merupakan tempat pertemuan para pemimpin Belanda.",
+          "D": "Karena lokasi tersebut merupakan tempat pertemuan para pemimpin Inggris."
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Proklamasi kemerdekaan Indonesia dibacakan di Jalan Pegangsaan Timur No. 56, Jakarta, karena lokasi tersebut merupakan tempat pertemuan para pemimpin Indonesia yang mengambil keputusan untuk memproklamasikan kemerdekaan.",
+        "sumber": "Sejarah — Kemerdekaan",
+        "soal_id": "pg-kemerdekaan-9186"
+      }
+    ]
+  }
+}
+
+Percobaan 15
+input
+{
+  "bab": "Kuadrat",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "frustasi"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 25
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Kuadrat",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Apakah hasil dari 3 kuadrat?",
+        "pilihan": {
+          "A": "6",
+          "B": "9",
+          "C": "12",
+          "D": "15"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "3 kuadrat berarti 3 x 3 = 9.",
+        "sumber": "Matematika — Kuadrat",
+        "soal_id": "pg-kuadrat-6dbf"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Berapakah hasil dari 5^2?",
+        "pilihan": {
+          "A": "10",
+          "B": "25",
+          "C": "30",
+          "D": "50"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "5 kuadrat berarti 5 x 5 = 25.",
+        "sumber": "Matematika — Kuadrat",
+        "soal_id": "pg-kuadrat-a745"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Apakah 0 kuadrat?",
+        "pilihan": {
+          "A": "0",
+          "B": "1",
+          "C": "2",
+          "D": "3"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "0 kuadrat berarti 0 x 0 = 0.",
+        "sumber": "Matematika — Kuadrat",
+        "soal_id": "pg-kuadrat-7d30"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Berapakah hasil dari (-4) kuadrat?",
+        "pilihan": {
+          "A": "-8",
+          "B": "8",
+          "C": "16",
+          "D": "-16"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "(-4) kuadrat berarti (-4) x (-4) = 16.",
+        "sumber": "Matematika — Kuadrat",
+        "soal_id": "pg-kuadrat-4c37"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Apakah hasil dari 7^2?",
+        "pilihan": {
+          "A": "14",
+          "B": "21",
+          "C": "49",
+          "D": "56"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "7 kuadrat berarti 7 x 7 = 49.",
+        "sumber": "Matematika — Kuadrat",
+        "soal_id": "pg-kuadrat-a7b6"
+      }
+    ]
+  }
+}
+Percobaan 16
+input
+{
+  "bab": "Pythagoras",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "frustasi"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Pythagoras",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam segitiga siku-siku dengan sisi siku-siku 6 cm dan 8 cm, panjang hipotenusa adalah...",
+        "pilihan": {
+          "A": "10 cm",
+          "B": "9 cm",
+          "C": "12 cm",
+          "D": "14 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = 6² + 8² = 36 + 64 = 100, jadi c = √100 = 10 cm.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-e6fc"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Jika sebuah segitiga memiliki sisi siku-siku 9 cm dan 12 cm, maka panjang hipotenusa adalah...",
+        "pilihan": {
+          "A": "15 cm",
+          "B": "13 cm",
+          "C": "17 cm",
+          "D": "21 cm"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = 9² + 12² = 81 + 144 = 225, jadi c = √225 = 15 cm.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-64e8"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Dalam sebuah segitiga siku-siku, jika panjang hipotenusa adalah 10 cm dan salah satu sisi siku-siku adalah 6 cm, maka panjang sisi siku-siku lainnya adalah...",
+        "pilihan": {
+          "A": "8 cm",
+          "B": "12 cm",
+          "C": "14 cm",
+          "D": "16 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, 10² = 6² + b², sehingga 100 = 36 + b², berarti b² = 64, jadi b = √64 = 8 cm.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-559d"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Dalam arsitektur, jika sebuah bangunan memiliki alas berbentuk segitiga siku-siku dengan sisi siku-siku 15 cm dan 20 cm, maka panjang diagonal bangunan adalah...",
+        "pilihan": {
+          "A": "25 cm",
+          "B": "28 cm",
+          "C": "30 cm",
+          "D": "35 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = 15² + 20² = 225 + 400 = 625, jadi c = √625 = 25 cm.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-7cfe"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam navigasi, jika sebuah kapal bergerak 12 km ke utara dan kemudian 5 km ke timur, maka jarak kapal dari titik awal adalah...",
+        "pilihan": {
+          "A": "13 km",
+          "B": "15 km",
+          "C": "17 km",
+          "D": "20 km"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Teorema Pythagoras, c² = 12² + 5² = 144 + 25 = 169, jadi c = √169 = 13 km.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-44e0"
+      }
+    ]
+  }
+}
+
+Percobaan 17
+input
+{
+  "bab": "Pythagoras",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bingung"
+  },
+  "matpel": "Matematika",
+  "nilai_siswa": 20
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Matematika",
+    "bab": "Pythagoras",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dalam Teorema Pythagoras, sisi mana yang merupakan hipotenusa?",
+        "pilihan": {
+          "A": "Sisi terpanjang",
+          "B": "Sisi terpendek",
+          "C": "Sisi siku-siku",
+          "D": "Sisi tegak"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Hipotenusa adalah sisi terpanjang dalam segitiga siku-siku, yang merupakan sisi miring.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-3d51"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Apakah (3, 4, 5) merupakan triple Pythagoras?",
+        "pilihan": {
+          "A": "Ya",
+          "B": "Tidak",
+          "C": "Tidak Tahu",
+          "D": "Mungkin"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Triple Pythagoras (3, 4, 5) memenuhi rumus c² = a² + b², yaitu 5² = 3² + 4² (25 = 9 + 16).",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-c82c"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Jika a = 3 cm dan b = 4 cm, berapakah panjang hipotenusa c?",
+        "pilihan": {
+          "A": "5 cm",
+          "B": "6 cm",
+          "C": "7 cm",
+          "D": "8 cm"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "c² = 3² + 4² = 9 + 16 = 25, jadi c = √25 = 5 cm.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-a076"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Triple Pythagoras lainnya yang umum adalah?",
+        "pilihan": {
+          "A": "(3, 4, 5)",
+          "B": "(5, 12, 13)",
+          "C": "(7, 24, 25)",
+          "D": "(8, 15, 17)"
+        },
+        "jawaban_benar": "D",
+        "pembahasan": "Triple Pythagoras lainnya yang umum adalah (5, 12, 13) dan (8, 15, 17).",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-d4d8"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Dalam Teorema Pythagoras, a dan b adalah?",
+        "pilihan": {
+          "A": "Sisi siku-siku",
+          "B": "Sisi miring",
+          "C": "Sisi tegak",
+          "D": "Sisi diagonal"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "a dan b adalah sisi siku-siku dalam Teorema Pythagoras.",
+        "sumber": "Matematika — Pythagoras",
+        "soal_id": "pg-pythagoras-3aa6"
+      }
+    ]
+  }
+}
+
+Percobaan 18
+input
+{
+  "bab": "Variabel",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bingung"
+  },
+  "matpel": "Informatika",
+  "nilai_siswa": 60
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Informatika",
+    "bab": "Variabel",
+    "jumlah_soal": 1,
+    "soal": [
+      {
+        "error": "Data rusak",
+        "soal_id": "pg-variabel-3278"
+      }
+    ]
+  }
+}
+
+Percobaan 19
+input
+{
+  "bab": "Newton",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bosan"
+  },
+  "matpel": "Fisika",
+  "nilai_siswa": 90
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Fisika",
+    "bab": "Newton",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Seorang astronot berada di ruang angkasa yang bebas gravitasi. Menurut Hukum Inersia Newton, apa yang akan terjadi jika astronot berhenti menekan pedal penggerak ruang angkasa?",
+        "pilihan": {
+          "A": "astronot akan terus bergerak dengan kecepatan yang sama",
+          "B": "astronot akan bergerak dengan percepatan",
+          "C": "astronot akan bergerak dengan gaya gravitasi",
+          "D": "astronot akan berhenti seketika"
+        },
+        "jawaban_benar": "A",
+        "pembahasan": "Menurut Hukum Inersia Newton, benda akan tetap diam atau bergerak lurus beraturan jika tidak ada gaya luar yang mempengaruhinya. Jika astronot berhenti menekan pedal penggerak, maka tidak ada gaya luar yang mempengaruhi astronot, sehingga ia akan terus bergerak dengan kecepatan yang sama.",
+        "sumber": "Fisika — Newton",
+        "soal_id": "pg-newton-330f"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan di jalan lurus. Menurut Hukum Inersia Newton, apa yang akan terjadi jika tiba-tiba rem mobil dipencet?",
+        "pilihan": {
+          "A": "mobil akan bergerak dengan percepatan",
+          "B": "mobil akan bergerak dengan decelerasi",
+          "C": "mobil akan bergerak dengan gaya gravitasi",
+          "D": "mobil akan tetap bergerak dengan kecepatan konstan"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Mobil akan bergerak dengan decelerasi atau percepatan negatif karena gaya rem yang tiba-tiba mempengaruhi mobil. Ini menunjukkan bahwa benda bergerak dengan percepatan (decelerasi) ketika ada gaya luar yang mempengaruhinya.",
+        "sumber": "Fisika — Newton",
+        "soal_id": "pg-newton-1e04"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Sebuah bola dilempar ke atas dan kembali jatuh ke tanah. Menurut Hukum II Newton, bagaimana percepatan bola saat jatuh dibandingkan dengan saat dilempar ke atas?",
+        "pilihan": {
+          "A": "percepatan saat jatuh lebih besar",
+          "B": "percepatan saat dilempar ke atas lebih besar",
+          "C": "percepatan sama pada kedua situasi",
+          "D": "percepatan tergantung pada massa bola"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Percepatan bola saat jatuh dan saat dilempar ke atas sama, yaitu percepatan gravitasi bumi (g). Hal ini menurut Hukum II Newton, di mana percepatan berbanding lurus dengan gaya dan berbanding terbalik dengan massa. Gaya gravitasi terhadap benda sama untuk semua benda, sehingga percepatan sama.",
+        "sumber": "Fisika — Newton",
+        "soal_id": "pg-newton-7d60"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Sebuah pesawat terbang dengan kecepatan konstan di udara. Menurut Hukum II Newton, apa yang harus dilakukan pesawat untuk melakukan manuver melingkar?",
+        "pilihan": {
+          "A": "menambah percepatan",
+          "B": "mengurangi percepatan",
+          "C": "mengubah gaya luar",
+          "D": "mengubah massa"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Pesawat harus mengubah gaya luar (misalnya dengan mengubah posisi sayap) untuk melakukan manuver melingkar. Ini menunjukkan bahwa untuk mengubah arah, gaya luar harus berubah, yang sesuai dengan Hukum II Newton.",
+        "sumber": "Fisika — Newton",
+        "soal_id": "pg-newton-2e5e"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Sebuah mobil bergerak dengan kecepatan konstan di jalan lurus. Menurut Hukum II Newton, apa yang akan terjadi jika tiba-tiba gaya gesekan jalan meningkat?",
+        "pilihan": {
+          "A": "mobil akan bergerak dengan percepatan",
+          "B": "mobil akan bergerak dengan decelerasi",
+          "C": "mobil akan bergerak dengan gaya gravitasi",
+          "D": "mobil akan tetap bergerak dengan kecepatan konstan"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Mobil akan bergerak dengan decelerasi karena gaya gesekan yang meningkat mempengaruhi gerakan mobil, menghasilkan percepatan negatif. Ini menunjukkan bahwa gaya luar mempengaruhi percepatan mobil.",
+        "sumber": "Fisika — Newton",
+        "soal_id": "pg-newton-8912"
+      }
+    ]
+  }
+}
+
+Percobaan 20
+input
+{
+  "bab": "Planet",
+  "emotion": {
+    "confidence": 0.8,
+    "emosi": "bosan"
+  },
+  "matpel": "Ipa",
+  "nilai_siswa": 90
+}
+
+output
+{
+  "status": "success",
+  "task": "quiz",
+  "nodes_executed": [
+    "quiz",
+    "structurer"
+  ],
+  "output": {
+    "tipe": "quiz_soal",
+    "matpel": "Ipa",
+    "bab": "Planet",
+    "jumlah_soal": 5,
+    "soal": [
+      {
+        "nomor": 1,
+        "pertanyaan": "Dari 8 planet dalam Sistem Tata Surya, planet mana yang memiliki suhu termasuk yang tertinggi dan mengapa?",
+        "pilihan": {
+          "A": "Merkurius, karena terdekat dengan Matahari",
+          "B": "Venus, karena atmosfernya yang kaya akan karbon dioksida",
+          "C": "Mars, karena memiliki gunung tertinggi",
+          "D": "Jupiter, karena ukurannya yang besar"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Venus memiliki suhu termasuk tertinggi karena atmosfernya yang kaya akan karbon dioksida menciptakan efek rumah kaca yang kuat, menyebabkan suhu permukaan mencapai sekitar 460°C. Meskipun terdekat dengan Matahari, Merkurius memiliki suhu yang lebih fluktuatif dan Mars dan Jupiter memiliki suhu yang jauh lebih rendah.",
+        "sumber": "Ipa — Planet",
+        "soal_id": "pg-planet-86aa"
+      },
+      {
+        "nomor": 2,
+        "pertanyaan": "Bandingkan rotasi Uranus dengan rotasi Bumi dan jelaskan perbedaannya.",
+        "pilihan": {
+          "A": "Uranus dan Bumi memiliki rotasi yang sama",
+          "B": "Uranus memiliki rotasi yang miring 90 derajat, sementara Bumi memiliki rotasi normal",
+          "C": "Uranus memiliki rotasi yang lebih cepat, sementara Bumi memiliki rotasi yang lebih lambat",
+          "D": "Uranus dan Bumi memiliki rotasi yang sama, tetapi posisi Bumi lebih dekat ke Matahari"
+        },
+        "jawaban_benar": "B",
+        "pembahasan": "Uranus memiliki rotasi yang miring 90 derajat, sehingga satu sisi planet ini selalu menghadap Matahari selama setengah orbitnya, sementara Bumi memiliki rotasi normal.",
+        "sumber": "Ipa — Planet",
+        "soal_id": "pg-planet-9472"
+      },
+      {
+        "nomor": 3,
+        "pertanyaan": "Jelaskan bagaimana penemuan Bintik Merah Besar di Jupiter dapat membantu kita memahami struktur atmosfer planet.",
+        "pilihan": {
+          "A": "Bintik Merah Besar menunjukkan bahwa atmosfer Jupiter tidak memiliki struktur",
+          "B": "Bintik Merah Besar adalah bukti adanya aktivitas vulkanik di Jupiter",
+          "C": "Bintik Merah Besar membantu kita memahami perubahan cuaca di atmosfer Jupiter",
+          "D": "Bintik Merah Besar menunjukkan bahwa atmosfer Jupiter selalu stabil"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Bintik Merah Besar di Jupiter telah berubah ukuran dan bentuk sepanjang waktu, yang membantu ilmuwan memahami perubahan cuaca dan struktur atmosfer Jupiter.",
+        "sumber": "Ipa — Planet",
+        "soal_id": "pg-planet-ece5"
+      },
+      {
+        "nomor": 4,
+        "pertanyaan": "Jelaskan bagaimana posisi planet-planet dalam Sistem Tata Surya dapat mempengaruhi suhu planet tersebut dan berikan contoh.",
+        "pilihan": {
+          "A": "Posisi planet tidak mempengaruhi suhu planet",
+          "B": "Planet yang lebih dekat dengan Matahari memiliki suhu yang lebih rendah",
+          "C": "Planet yang lebih dekat dengan Matahari memiliki suhu yang lebih tinggi",
+          "D": "Planet yang lebih jauh dari Matahari memiliki suhu yang lebih tinggi"
+        },
+        "jawaban_benar": "C",
+        "pembahasan": "Planet yang lebih dekat dengan Matahari memiliki suhu yang lebih tinggi. Contoh ini dapat dilihat pada Venus, planet terpanas dalam Sistem Tata Surya, yang terletak lebih dekat dengan Matahari daripada Bumi.",
+        "sumber": "Ipa — Planet",
+        "soal_id": "pg-planet-6bbe"
+      },
+      {
+        "nomor": 5,
+        "pertanyaan": "Jelaskan bagaimana pengetahuan tentang planet-planet dalam Sistem Tata Surya dapat membantu kita memahami evolusi sistem tata surya kita.",
+        "pilihan": {
+          "A": "Pengetahuan tentang planet tidak membantu dalam memahami evolusi sistem tata surya",
+          "B": "Planet-planet yang lebih besar membantu kita memahami bagaimana sistem tata surya terbentuk",
+          "C": "Planet-planet yang lebih kecil membantu kita memahami bagaimana sistem tata surya terbentuk",
+          "D": "Pengetahuan tentang planet membantu kita memahami bagaimana sistem tata surya terbentuk dan evolusinya"
+        },
+        "jawaban_benar": "D",
+        "pembahasan": "Pengetahuan tentang planet, termasuk ukuran, posisi, dan struktur atmosfer, membantu ilmuwan memahami proses evolusi sistem tata surya, termasuk bagaimana planet-planet terbentuk dan berada di posisinya saat ini.",
+        "sumber": "Ipa — Planet",
+        "soal_id": "pg-planet-d042"
+      }
+    ]
+  }
+}

@@ -6,7 +6,7 @@
 
 **Judul:** Adaptive Agentic Quiz System — Progress Report  
 **Subtitle:** Tim 3 — Agentic AI untuk Pembelajaran Adaptif  
-**Stack:** Python · LangGraph · FastAPI · ChromaDB · HuggingFace LLM  
+**Stack:** Python · LangGraph · FastAPI · Qdrant · LazarusNLP · HuggingFace LLM  
 
 ---
 
@@ -53,7 +53,7 @@ Sistem Agentic AI yang mampu:
 | **Router** | Rule-based dispatcher (Python if-elif, NO LLM) |
 | **9 Node Spesialis** | Masing-masing punya tugas spesifik |
 | **Structurer** | Muara akhir — format output jadi JSON standar |
-| **ChromaDB + Embeddings** | Knowledge base untuk RAG retrieval |
+| **Qdrant + LazarusNLP** | Knowledge base untuk RAG retrieval (pdf_rag_collection_v2) |
 | **HuggingFace LLM** | Qwen2.5-7B untuk generasi konten |
 
 ---
@@ -228,14 +228,14 @@ Generate 5 pasang pertanyaan-jawaban bergaya NotebookLM, dengan kutipan sumber d
 │                                         │
 │ 1. _hitung_level_soal(45) → "Menengah"  │
 │ 2. RAG: kb.search("Fisika Hukum Newton",│
-│         k=3)                            │
-│    → 3 dokumen relevan dari ChromaDB    │
+│         k=8)                            │
+│    → 8 dokumen relevan dari Qdrant      │
 │ 3. Gabungkan konteks RAG + instruksi    │
 │    level kesulitan ke dalam prompt      │
-│ 4. LLM Call → generate 5 flashcard JSON │
+│ 4. LLM Call → generate 10-15 flashcard JSON │
 │ 5. Parse tag <FLASHCARD>                │
 │                                         │
-│ ✅ RAG (k=3)                            │
+│ ✅ RAG (k=8)                            │
 │ ✅ 1x LLM call                          │
 │ ✅ Adaptif berdasarkan nilai_siswa       │
 └──────────────┬──────────────────────────┘
@@ -255,7 +255,7 @@ Generate 5 pasang pertanyaan-jawaban bergaya NotebookLM, dengan kutipan sumber d
 {
   "tipe": "flashcard_set",
   "matpel": "Fisika", "bab": "Hukum Newton",
-  "jumlah_kartu": 5,
+  "jumlah_kartu": 12,
   "kartu": [
     {
       "front": "Mengapa penumpang mobil terdorong ke depan saat rem mendadak?",
@@ -282,7 +282,7 @@ Generate peta konsep hierarki yang komprehensif, dengan gaya bahasa adaptif
 │ 2. Tentukan gaya bahasa:                │
 │    · ≤70 → Bahasa sederhana + analogi   │
 │    · >70 → Bahasa teknis + istilah ilmiah│
-│ 3. RAG: kb.search(query, k=2)           │
+│ 3. RAG: kb.search(query, k=10)          │
 │ 4. LLM Call → mindmap hierarki JSON     │
 │ 5. Parse tag <MINDMAP>                  │
 │                                         │
@@ -329,7 +329,7 @@ Generate 5 soal PG dengan tingkat kesulitan adaptif, dilengkapi pembahasan dan s
 │ quiz_node                               │
 │                                         │
 │ 1. _hitung_level_soal(nilai_siswa)      │
-│ 2. RAG: kb.search(query, k=3)           │
+│ 2. RAG: kb.search(query, k=5)           │
 │ 3. Extract metadata → sumber_list       │
 │ 4. LLM Call → 5 soal PG JSON            │
 │ 5. Parse tag <QUIZ>                     │
@@ -592,11 +592,11 @@ Endpoint khusus Tim 5 (Chatbot) — kirim pertanyaan, terima raw chunks dari kno
 | # | Mekanik | RAG | LLM | Deterministik | Adaptif |
 |---|---|---|---|---|---|
 | 1 | Rekomendasi | ❌ | ✅ 1x | - | Berdasarkan riwayat |
-| 2 | Flashcard | ✅ k=3 | ✅ 1x | - | ✅ Level soal |
-| 3 | Mindmap | ✅ k=2 | ✅ 1x | - | ✅ Gaya bahasa |
-| 4a | Quiz PG | ✅ k=3 | ✅ 1x | - | ✅ Level soal |
+| 2 | Flashcard | ✅ k=8 | ✅ 1x | - | ✅ Level soal |
+| 3 | Mindmap | ✅ k=10 | ✅ 1x | - | ✅ Gaya bahasa |
+| 4a | Quiz PG | ✅ k=5 | ✅ 1x | - | ✅ Level soal |
 | 4b | Evaluasi PG | ❌ | ❌ | ✅ | - |
-| 4c | Quiz Uraian | ✅ k=3 | ✅ 1x | - | ✅ Level soal |
+| 4c | Quiz Uraian | ✅ k=5 | ✅ 1x | - | ✅ Level soal |
 | 4d | Evaluasi Uraian | ❌ | ✅ 5x | Overall ✅ | - |
 | 5 | Konten Belajar | ✅ k=4 | ✅ 1x | - | - |
 | 6 | RAG Query | ✅ k=var | ❌ | ✅ | - |
@@ -638,7 +638,8 @@ Endpoint khusus Tim 5 (Chatbot) — kirim pertanyaan, terima raw chunks dari kno
 - [x] Arsitektur routing DAG dengan LangGraph StateGraph
 - [x] REST API (FastAPI) dengan 10+ endpoint
 - [x] Adaptive difficulty berdasarkan `nilai_siswa`
-- [x] RAG pipeline dengan ChromaDB + HuggingFace Embeddings
+- [x] RAG pipeline tersambung ke Qdrant (LazarusNLP/all-indo-e5-small-v4)
+- [x] Unifikasi Dashboard UI (Mindmap, Flashcard, Quiz digabung)
 - [x] Swagger UI dengan contoh JSON per endpoint
 - [x] Evaluasi PG deterministik (zero LLM cost)
 - [x] Evaluasi uraian per soal (LLM) + overall assessment (Python)

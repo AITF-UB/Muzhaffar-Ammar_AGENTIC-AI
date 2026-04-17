@@ -778,3 +778,7 @@ def run_rag_query(request: RagQueryRequest):
         emotion={"emosi": "netral", "confidence": 0.8},
     )
     return AgentResponse(status="success", task="rag_query", nodes_executed=nodes_executed, output=final_payload)
+
+import os
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = "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"
