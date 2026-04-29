@@ -211,31 +211,38 @@
 
     <label for="jsonInput"><strong>Masukkan JSON Anda di sini:</strong></label>
     <textarea id="jsonInput" rows="12">{
-"topik": "Fotosintesis",
-"nodes": [
+  "tipe": "mindmap_hierarki",
+  "mata_pelajaran": "Biologi",
+  "materi": "Fotosintesis",
+  "nodes": [
     {
-    "konsep_utama": "Fotosintesis",
-    "deskripsi": "Proses tumbuhan membuat makanan menggunakan cahaya matahari.",
-    "children": [
+      "konsep_utama": "Fotosintesis",
+      "deskripsi": "Proses tumbuhan membuat makanan menggunakan cahaya matahari, air, dan CO₂.",
+      "children": [
         {
-        "sub_konsep": "Tahapan Fotosintesis",
-        "penjelasan": "Proses fotosintesis terdiri dari dua tahap utama: Reaksi Terang dan Reaksi Gelap.",
-        "children": [
-            {
-            "sub_konsep": "Reaksi Terang",
-            "penjelasan": "Tahap pertama fotosintesis yang terjadi di membran tilakoid di kloroplas, dimana tumbuhan menyerap cahaya, memecah air, dan menghasilkan ATP dan NADPH.",
-            "children": []
-            },
-            {
-            "sub_konsep": "Reaksi Gelap",
-            "penjelasan": "Tahap kedua fotosintesis yang terjadi di stroma kloroplas, dimana tumbuhan mengikat karbondioksida dan menghasilkan glukosa.",
-            "children": []
-            }
-        ]
+          "sub_konsep": "Reaksi Terang",
+          "penjelasan": "Terjadi di membran tilakoid. Tumbuhan menyerap cahaya, memecah air (H₂O), dan menghasilkan ATP dan NADPH.",
+          "children": [
+            { "sub_konsep": "Fotosistem I & II", "penjelasan": "Kompleks protein yang menyerap foton cahaya.", "children": [] },
+            { "sub_konsep": "Fotolisis Air", "penjelasan": "Pemecahan H₂O menghasilkan O₂ dan elektron.", "children": [] }
+          ]
+        },
+        {
+          "sub_konsep": "Reaksi Gelap (Siklus Calvin)",
+          "penjelasan": "Terjadi di stroma kloroplas. Mengikat CO₂ dan menggunakan ATP serta NADPH untuk menghasilkan glukosa (C₆H₁₂O₆).",
+          "children": [
+            { "sub_konsep": "Fiksasi CO₂", "penjelasan": "CO₂ diikat oleh RuBisCO membentuk 3-PGA.", "children": [] },
+            { "sub_konsep": "Reduksi", "penjelasan": "3-PGA diubah menjadi G3P menggunakan ATP dan NADPH.", "children": [] }
+          ]
+        },
+        {
+          "sub_konsep": "Faktor yang Mempengaruhi",
+          "penjelasan": "Laju fotosintesis dipengaruhi oleh intensitas cahaya, kadar CO₂, suhu, dan ketersediaan air.",
+          "children": []
         }
-    ]
+      ]
     }
-]
+  ]
 }</textarea>
 
     <button onclick="renderMindMap()">Buat Mind Map</button>
@@ -274,18 +281,28 @@
       }
     }
 
-    // Normalisasi struktur JSON
+    // Normalisasi struktur JSON — mendukung format lama (topik) dan baru (materi/mata_pelajaran)
     function normalizeData(node) {
-      if (node.topik && node.nodes) {
+      // Format baru: { tipe, mata_pelajaran, materi, nodes: [...] }
+      if (node.nodes && Array.isArray(node.nodes)) {
+        const rootName = node.materi || node.topik || node.mata_pelajaran || "Mindmap";
+        const rootDesc = node.mata_pelajaran
+          ? `Peta konsep ${node.mata_pelajaran} — ${rootName}`
+          : "Root utama dari mindmap.";
+
+        // Jika hanya 1 node di array, gunakan langsung (hindari double root)
+        if (node.nodes.length === 1) {
+          return normalizeData(node.nodes[0]);
+        }
         return {
-          name: node.topik,
-          description: "Root utama dari mindmap.",
+          name: rootName,
+          description: rootDesc,
           children: node.nodes.map(normalizeData)
         };
       }
 
-      let name = node.konsep_utama || node.sub_konsep || "Tanpa Nama";
-      // Membaca key 'deskripsi' atau 'penjelasan' dari input JSON
+      // Node isi biasa
+      let name = node.konsep_utama || node.sub_konsep || node.nama || "Tanpa Nama";
       let description = node.deskripsi || node.penjelasan || "";
       let children = [];
 

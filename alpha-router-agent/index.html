@@ -770,18 +770,39 @@
         </div>
 
         <div class="form-group">
+            <label>Jenjang (Kelas)</label>
+            <select id="inpJenjang" style="width:100%;padding:12px;background:var(--bg-dark);border:1px solid var(--border);border-radius:8px;color:var(--text-main);font-size:15px;font-family:'Inter',sans-serif;box-sizing:border-box;">
+                <option value="10">Kelas 10</option>
+                <option value="11">Kelas 11</option>
+                <option value="12">Kelas 12</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kelas Spesifik</label>
+            <input type="text" id="inpKelas" placeholder="Contoh: 10A" value="10A">
+        </div>
+
+        <div class="form-group">
             <label>Mata Pelajaran</label>
             <input type="text" id="inpMatpel" placeholder="Contoh: Fisika" value="Fisika">
         </div>
 
         <div class="form-group">
-            <label>Bab / Topik</label>
-            <input type="text" id="inpBab" placeholder="Contoh: Hukum Newton" value="Hukum Newton">
+            <label>Elemen CP</label>
+            <input type="text" id="inpElemen" placeholder="Contoh: Mekanika" value="Mekanika">
         </div>
 
         <div class="form-group">
-            <label>Nilai Siswa (0-100) *Opsional</label>
-            <input type="number" id="inpNilai" placeholder="Contoh: 85" min="0" max="100">
+            <label>Materi / Topik</label>
+            <input type="text" id="inpMateri" placeholder="Contoh: Hukum Newton" value="Hukum Newton">
+        </div>
+
+        <div class="form-group">
+            <label>Alur Tujuan Pembelajaran</label>
+            <textarea id="inpAtp" placeholder="Satu tujuan per baris..." rows="3" style="width:100%;padding:10px;background:var(--bg-dark);border:1px solid var(--border);border-radius:8px;color:var(--text-main);font-size:13px;font-family:'Inter',sans-serif;box-sizing:border-box;resize:vertical;">Peserta didik dapat menjelaskan Hukum Newton I, II, III
+Peserta didik dapat menerapkan rumus F=ma
+Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
         </div>
 
         <div id="apiError" class="error-msg">Gagal terhubung ke API</div>
@@ -797,6 +818,7 @@
             <div class="tab" onclick="switchTab('flashcard')">Flashcard</div>
             <div class="tab" onclick="switchTab('quiz_pg')">Quiz PG</div>
             <div class="tab" onclick="switchTab('quiz_uraian')">Quiz Uraian</div>
+            <div class="tab" onclick="switchTab('bacaan')">Bacaan</div>
         </div>
 
         <!-- LOADING OVERLAY -->
@@ -918,9 +940,25 @@
             </div>
         </div>
 
+        <!-- 5. BACAAN VIEW -->
+        <div class="view-area" id="view-bacaan">
+            <div id="bacaan-empty" class="empty-state">
+                <h3>Bacaan Kosong</h3>
+                <p>Isi form di samping untuk mulai me-generate materi bacaan.</p>
+            </div>
+            <div id="bacaan-container" style="display:none;flex-direction:column;width:100%;max-width:800px;gap:24px;"></div>
+        </div>
+
     </div>
 
-    <!-- Modal for Mindmap -->
+    <!-- Level Picker Overlay (untuk Quiz PG, Quiz Uraian, Flashcard, Bacaan) -->
+    <div id="levelPickerOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;justify-content:center;align-items:center;">
+        <div style="background:#1e1e1e;border-radius:16px;padding:36px;max-width:680px;width:90%;">
+            <h2 id="overlayTitle" style="color:#fff;margin:0 0 8px;">Pilih Level</h2>
+            <p id="overlayDesc" style="color:#a0a0a0;margin:0 0 28px;font-size:14px;"></p>
+            <div id="overlayCards" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;"></div>
+        </div>
+    </div>
     <div id="infoModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
         <div class="modal-content">
             <button class="close-btn"
@@ -956,22 +994,18 @@
         // MAIN API CALL
         // =======================================================
         async function callAgentAPI() {
-            const matpel = document.getElementById('inpMatpel').value;
-            const bab = document.getElementById('inpBab').value;
-            let nilaiStr = document.getElementById('inpNilai').value;
+            const matpel   = document.getElementById('inpMatpel').value.trim();
+            const materi   = document.getElementById('inpMateri').value.trim();
+            const jenjang  = document.getElementById('inpJenjang').value.trim();
+            const kelas    = document.getElementById('inpKelas').value.trim();
+            const elemen   = document.getElementById('inpElemen').value.trim();
+            const atpRaw   = document.getElementById('inpAtp').value.trim();
+            const atp      = atpRaw ? atpRaw.split('\n').map(s=>s.trim()).filter(Boolean) : [];
 
-            if (!matpel || !bab) {
-                alert("Mata Pelajaran dan Bab wajib diisi!");
-                return;
-            }
+            if (!matpel || !materi) { alert('Mata Pelajaran dan Materi wajib diisi!'); return; }
 
-            const payloadObject = { "matpel": matpel, "bab": bab };
-            if (nilaiStr) payloadObject["nilai_siswa"] = parseInt(nilaiStr);
-            if (activeTab === 'quiz_pg' || activeTab === 'quiz_uraian') {
-                payloadObject["jumlah_soal"] = 5;
-            }
+            const payload = { jenjang, kelas, mata_pelajaran: matpel, elemen, materi, atp };
 
-            // The endpoint corresponds to activeTab (mindmap, flashcard, quiz, quiz_uraian)
             let endpointSuffix = activeTab;
             if (activeTab === 'quiz_pg') endpointSuffix = 'quiz';
 
@@ -982,29 +1016,64 @@
 
             try {
                 const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payloadObject)
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-
-                if (!response.ok) throw new Error("HTTP Status " + response.status);
-
+                if (!response.ok) throw new Error('HTTP Status ' + response.status);
                 const data = await response.json();
-                const payloadArrayOrObject = data.output; // The structurer payload
+                const output = data.output;
 
-                // Handle routing execution
-                if (activeTab === 'mindmap') setupMindmap(payloadArrayOrObject);
-                else if (activeTab === 'flashcard') setupFlashcard(payloadArrayOrObject);
-                else if (activeTab === 'quiz_pg') setupQuizPG(payloadArrayOrObject);
-                else if (activeTab === 'quiz_uraian') setupQuizUraian(payloadArrayOrObject);
+                if      (activeTab === 'mindmap')     setupMindmap(output);
+                else if (activeTab === 'flashcard')   showLevelPicker(output, 'flashcard');
+                else if (activeTab === 'quiz_pg')     showLevelPicker(output, 'quiz_pg');
+                else if (activeTab === 'quiz_uraian') showLevelPicker(output, 'quiz_uraian');
+                else if (activeTab === 'bacaan')      setupBacaan(output);
 
             } catch (err) {
                 console.error(err);
-                document.getElementById('apiError').innerText = "Gagal terhubung ke API: " + err.message;
+                document.getElementById('apiError').innerText = 'Gagal terhubung ke API: ' + err.message;
                 document.getElementById('apiError').style.display = 'block';
             } finally {
                 document.getElementById('loadingOverlay').style.display = 'none';
             }
+        }
+
+        // Level Picker Overlay
+        const LVLMETA = {
+            LOTS: { bg:'rgba(59,165,92,.1)',  border:'#3ba55c', color:'#3ba55c', desc:'Mengingat & Memahami (C1–C2)' },
+            MOTS: { bg:'rgba(240,177,50,.1)', border:'#f0b132', color:'#f0b132', desc:'Menerapkan & Menganalisis (C3–C4)' },
+            HOTS: { bg:'rgba(237,66,69,.1)',  border:'#ed4245', color:'#ed4245', desc:'Mengevaluasi & Mencipta (C5–C6)' }
+        };
+        let _pendingOutput = null, _pendingType = '';
+
+        function showLevelPicker(output, type) {
+            _pendingOutput = output; _pendingType = type;
+            const overlay = document.getElementById('levelPickerOverlay');
+            document.getElementById('overlayTitle').innerText = 'Pilih Level';
+            document.getElementById('overlayDesc').innerText = `Materi: ${output.materi || ''}. Pilih tingkat kesulitan:`;
+            const container = document.getElementById('overlayCards');
+            container.innerHTML = '';
+            ['LOTS','MOTS','HOTS'].forEach(lvl => {
+                const m = LVLMETA[lvl];
+                let arr = [];
+                if (type==='flashcard')   arr = (output.kartu_per_level||{})[lvl]?.kartu||[];
+                else if (type==='bacaan') arr = [];
+                else arr = (output.soal_per_level||{})[lvl]?.soal||[];
+                const count = arr.length;
+                const card = document.createElement('div');
+                card.style.cssText = `flex:1;min-width:150px;max-width:180px;background:${m.bg};border:2px solid ${m.border};border-radius:12px;padding:20px;text-align:center;cursor:${count>0?'pointer':'not-allowed'};opacity:${count>0?1:.4};transition:.2s;`;
+                card.innerHTML = `<div style="font-size:22px;font-weight:700;color:${m.color};margin-bottom:6px;">${lvl}</div><div style="font-size:11px;color:#a0a0a0;line-height:1.4;margin-bottom:8px;">${m.desc}</div><div style="font-size:13px;font-weight:600;color:#fff;">${count} item</div>`;
+                if (count > 0) card.onclick = () => { overlay.style.display='none'; applyLevel(lvl); };
+                container.appendChild(card);
+            });
+            overlay.style.display = 'flex';
+        }
+
+        function applyLevel(lvl) {
+            const out = _pendingOutput, type = _pendingType;
+            if (type==='flashcard')   { const d=(out.kartu_per_level||{})[lvl]||{}; setupFlashcard({kartu:d.kartu||[],level:lvl}); }
+            else if (type==='quiz_pg')     { const d=(out.soal_per_level||{})[lvl]||{}; setupQuizPG({soal:d.soal||[],level:lvl}); }
+            else if (type==='quiz_uraian') { const d=(out.soal_per_level||{})[lvl]||{}; setupQuizUraian({soal:d.soal||[],level:lvl}); }
         }
 
         // =======================================================
@@ -1104,8 +1173,7 @@
         function setupFlashcard(data) {
             document.getElementById('flashcard-empty').style.display = 'none';
             document.getElementById('flashcard-container').style.display = 'flex';
-
-            // Expected structurer format: { tipe: "flashcard_set", kartu: [...] }
+            // data.kartu = flat array (sudah dipilih per level oleh applyLevel)
             fcData = data.kartu || data;
             fcIdx = 0; fcIsFlipped = false;
             renderFc();
@@ -1155,7 +1223,7 @@
             document.getElementById('quizpg-empty').style.display = 'none';
             document.getElementById('quizpg-result').style.display = 'none';
             document.getElementById('quizpg-do').style.display = 'flex';
-
+            // data.soal = flat array sudah dipilih per level
             qpgData = data.soal || data;
             qpgIdx = 0; qpgAnswers = new Array(qpgData.length).fill(null);
             renderQpg();
@@ -1221,10 +1289,33 @@
             document.getElementById('essay-empty').style.display = 'none';
             document.getElementById('essay-result').style.display = 'none';
             document.getElementById('essay-do').style.display = 'flex';
-
+            // data.soal = flat array sudah dipilih per level
             esData = data.soal || data;
             esIdx = 0; esAnswers = new Array(esData.length).fill("");
             renderEs();
+        }
+
+        // MODULE: BACAAN
+        function setupBacaan(data) {
+            document.getElementById('bacaan-empty').style.display = 'none';
+            const container = document.getElementById('bacaan-container');
+            container.style.display = 'flex';
+            container.innerHTML = '';
+            const levels = data.bacaan_per_level || {};
+            const LVLCOLOR = {LOTS:'#3ba55c',MOTS:'#f0b132',HOTS:'#ed4245'};
+            ['LOTS','MOTS','HOTS'].forEach(lvl => {
+                const ld = levels[lvl]; if (!ld) return;
+                const section = document.createElement('div');
+                section.style.cssText = 'background:#2c2c2c;border-radius:12px;padding:24px;border-left:4px solid '+(LVLCOLOR[lvl]||'#5865F2');
+                let h = `<h3 style="margin:0 0 4px;color:${LVLCOLOR[lvl]||'#fff'}">${lvl}</h3>`;
+                h += `<p style="margin:0 0 16px;font-size:12px;color:#a0a0a0;">${ld.label||''}</p>`;
+                h += `<h4 style="margin:0 0 16px;color:#fff;font-size:18px;">${ld.judul||data.materi||''}</h4>`;
+                (ld.konten||[]).forEach(sub => {
+                    h += `<div style="margin-bottom:16px;"><strong style="color:#ddd;display:block;margin-bottom:6px;">${sub.sub_bab||''}</strong><p style="margin:0;line-height:1.7;color:#b5bac1;font-size:15px;">${sub.isi||''}</p></div>`;
+                });
+                section.innerHTML = h;
+                container.appendChild(section);
+            });
         }
         function esWordCount(str) { str = str.trim(); return str === "" ? 0 : str.split(/\s+/).length; }
         function renderEs() {
