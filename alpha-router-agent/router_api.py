@@ -290,8 +290,7 @@ def run_bacaan(request: TeacherContentRequest):
     """
     Generate **teks bacaan / materi** dalam **3 level** (LOTS, MOTS, HOTS) sekaligus.
 
-    Setiap level menghasilkan 5 sub-bab terstruktur dengan gaya dan kedalaman berbeda
-    sesuai Taksonomi Bloom.
+    Setiap level menghasilkan 5 sub-bab terstruktur dengan gaya dan kedalaman berbeda.
     """
     payload, nodes = _run_graph("bacaan", request.model_dump())
     return AgentResponse(status="success", task="bacaan", nodes_executed=nodes, output=payload)
@@ -303,7 +302,7 @@ def run_flashcard(request: TeacherContentRequest):
     Generate **flashcard** dalam **3 level** (LOTS, MOTS, HOTS) sekaligus.
 
     Setiap level menghasilkan 10 kartu (front & back) bergaya NotebookLM
-    dengan kesulitan berbeda sesuai Taksonomi Bloom.
+    dengan kesulitan berbeda.
     """
     payload, nodes = _run_graph("flashcard", request.model_dump())
     return AgentResponse(status="success", task="flashcard", nodes_executed=nodes, output=payload)
@@ -326,14 +325,14 @@ def run_quiz(request: TeacherContentRequest):
     """
     Generate **soal pilihan ganda (PG)** dalam **3 level** (LOTS, MOTS, HOTS) sekaligus.
 
-    Setiap level menghasilkan 5 soal dengan tingkat kognitif berbeda sesuai Taksonomi Bloom.
+    Setiap level menghasilkan 5 soal dengan tingkat kognitif berbeda.
     Setiap soal sudah dilengkapi `soal_id` unik untuk keperluan evaluasi.
 
-    | Level | Bloom | Karakteristik |
+    | Level | Karakteristik |
     |---|---|---|
-    | LOTS | C1–C2 | Mengingat & Memahami |
-    | MOTS | C3–C4 | Menerapkan & Menganalisis |
-    | HOTS | C5–C6 | Mengevaluasi & Mencipta |
+    | LOTS | Mengingat & Memahami |
+    | MOTS | Menerapkan & Menganalisis |
+    | HOTS | Mengevaluasi & Mencipta |
     """
     payload, nodes = _run_graph("quiz", request.model_dump())
     return AgentResponse(status="success", task="quiz", nodes_executed=nodes, output=payload)
@@ -344,8 +343,7 @@ def run_quiz_uraian(request: TeacherContentRequest):
     """
     Generate **soal uraian / esai** dalam **3 level** (LOTS, MOTS, HOTS) sekaligus.
 
-    Setiap level menghasilkan 5 soal esai dengan kunci jawaban ideal,
-    sesuai Taksonomi Bloom. Setiap soal sudah dilengkapi `soal_id` unik.
+    Setiap level menghasilkan 5 soal esai dengan kunci jawaban ideal. Setiap soal sudah dilengkapi `soal_id` unik.
     """
     payload, nodes = _run_graph("quiz_uraian", request.model_dump())
     return AgentResponse(status="success", task="quiz_uraian", nodes_executed=nodes, output=payload)

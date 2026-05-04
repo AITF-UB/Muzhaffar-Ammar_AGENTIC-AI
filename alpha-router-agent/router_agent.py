@@ -100,7 +100,7 @@ def _extract_tag(text: str, tag: str) -> str:
     return m.group(1).strip() if m else text.strip()
 
 # ================================================================
-# 4. NODE — Rekomendasi (tetap ada, tanpa emotion)
+# 4. NODE — Rekomendasi 
 # ================================================================
 def recommender_node(state: AgentState) -> dict:
     params     = state["request_params"]
@@ -602,3 +602,6 @@ if __name__ == "__main__":
             with open("arsitektur_route.mmd", "w", encoding="utf-8") as f:
                 f.write(mmd)
             print("✅ Diagram Mermaid disimpan ke arsitektur_route.mmd")
+        except Exception as e2:
+            print(f"⚠️ Gagal generate diagram Mermaid: {e2}")
+ 

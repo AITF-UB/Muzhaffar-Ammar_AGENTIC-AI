@@ -758,6 +758,45 @@
             color: var(--text-main);
             margin-bottom: 8px;
         }
+
+        /* --- LEVEL TAB BAR --- */
+        .level-tab-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            padding: 5px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            width: fit-content;
+            align-self: flex-start;
+        }
+        .ltab {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+            letter-spacing: .5px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+        }
+        .ltab:hover:not(:disabled) { background: var(--bg-hover); color: #fff; }
+        .ltab:disabled { opacity: .35; cursor: not-allowed; }
+        .ltab-lots.ltab-active { background: rgba(59,165,92,.2); color: #3ba55c; }
+        .ltab-mots.ltab-active { background: rgba(240,177,50,.2); color: #f0b132; }
+        .ltab-hots.ltab-active { background: rgba(237,66,69,.2); color: #ed4245; }
+        .level-info-bar {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border-radius: 6px;
+            display: none;
+        }
     </style>
 </head>
 
@@ -843,6 +882,12 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
                 <h3>Flashcard Kosong</h3>
                 <p>Isi form di samping untuk mulai me-generate flashcard.</p>
             </div>
+            <div class="level-tab-bar" id="fc-level-tabs" style="display:none;">
+                <button class="ltab ltab-lots" id="fc-tab-LOTS" onclick="switchLevel('flashcard','LOTS')">LOTS</button>
+                <button class="ltab ltab-mots" id="fc-tab-MOTS" onclick="switchLevel('flashcard','MOTS')">MOTS</button>
+                <button class="ltab ltab-hots" id="fc-tab-HOTS" onclick="switchLevel('flashcard','HOTS')">HOTS</button>
+            </div>
+            <div class="level-info-bar" id="fc-level-info"></div>
             <div class="flashcard-container" id="flashcard-container">
                 <div class="hint">Press "Space" to flip, "← / →" to navigate</div>
                 <div class="card-container">
@@ -882,6 +927,12 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
                 <h3>Kuis Pilihan Ganda Kosong</h3>
                 <p>Isi form di samping untuk mulai me-generate soal.</p>
             </div>
+            <div class="level-tab-bar" id="qpg-level-tabs" style="display:none;">
+                <button class="ltab ltab-lots" id="qpg-tab-LOTS" onclick="switchLevel('quiz_pg','LOTS')">LOTS</button>
+                <button class="ltab ltab-mots" id="qpg-tab-MOTS" onclick="switchLevel('quiz_pg','MOTS')">MOTS</button>
+                <button class="ltab ltab-hots" id="qpg-tab-HOTS" onclick="switchLevel('quiz_pg','HOTS')">HOTS</button>
+            </div>
+            <div class="level-info-bar" id="qpg-level-info"></div>
 
             <div class="quiz-container" id="quizpg-do">
                 <div class="quiz-header">
@@ -914,6 +965,12 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
                 <h3>Soal Uraian Kosong</h3>
                 <p>Isi form di samping untuk mulai me-generate studi kasus.</p>
             </div>
+            <div class="level-tab-bar" id="essay-level-tabs" style="display:none;">
+                <button class="ltab ltab-lots" id="essay-tab-LOTS" onclick="switchLevel('quiz_uraian','LOTS')">LOTS</button>
+                <button class="ltab ltab-mots" id="essay-tab-MOTS" onclick="switchLevel('quiz_uraian','MOTS')">MOTS</button>
+                <button class="ltab ltab-hots" id="essay-tab-HOTS" onclick="switchLevel('quiz_uraian','HOTS')">HOTS</button>
+            </div>
+            <div class="level-info-bar" id="essay-level-info"></div>
 
             <div class="quiz-container" id="essay-do">
                 <div class="quiz-header">
@@ -949,15 +1006,6 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
             <div id="bacaan-container" style="display:none;flex-direction:column;width:100%;max-width:800px;gap:24px;"></div>
         </div>
 
-    </div>
-
-    <!-- Level Picker Overlay (untuk Quiz PG, Quiz Uraian, Flashcard, Bacaan) -->
-    <div id="levelPickerOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;justify-content:center;align-items:center;">
-        <div style="background:#1e1e1e;border-radius:16px;padding:36px;max-width:680px;width:90%;">
-            <h2 id="overlayTitle" style="color:#fff;margin:0 0 8px;">Pilih Level</h2>
-            <p id="overlayDesc" style="color:#a0a0a0;margin:0 0 28px;font-size:14px;"></p>
-            <div id="overlayCards" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;"></div>
-        </div>
     </div>
     <div id="infoModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
         <div class="modal-content">
@@ -1024,9 +1072,9 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
                 const output = data.output;
 
                 if      (activeTab === 'mindmap')     setupMindmap(output);
-                else if (activeTab === 'flashcard')   showLevelPicker(output, 'flashcard');
-                else if (activeTab === 'quiz_pg')     showLevelPicker(output, 'quiz_pg');
-                else if (activeTab === 'quiz_uraian') showLevelPicker(output, 'quiz_uraian');
+                else if (activeTab === 'flashcard')   setupFlashcard(output);
+                else if (activeTab === 'quiz_pg')     setupQuizPG(output);
+                else if (activeTab === 'quiz_uraian') setupQuizUraian(output);
                 else if (activeTab === 'bacaan')      setupBacaan(output);
 
             } catch (err) {
@@ -1038,42 +1086,59 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
             }
         }
 
-        // Level Picker Overlay
-        const LVLMETA = {
-            LOTS: { bg:'rgba(59,165,92,.1)',  border:'#3ba55c', color:'#3ba55c', desc:'Mengingat & Memahami (C1–C2)' },
-            MOTS: { bg:'rgba(240,177,50,.1)', border:'#f0b132', color:'#f0b132', desc:'Menerapkan & Menganalisis (C3–C4)' },
-            HOTS: { bg:'rgba(237,66,69,.1)',  border:'#ed4245', color:'#ed4245', desc:'Mengevaluasi & Mencipta (C5–C6)' }
-        };
-        let _pendingOutput = null, _pendingType = '';
+        // =======================================================
+        // LEVEL TAB SYSTEM — ganti level bebas kapan saja
+        // =======================================================
+        const LVLCOLOR = { LOTS:'#3ba55c', MOTS:'#f0b132', HOTS:'#ed4245' };
+        const LVLDESC  = { LOTS:'Mengingat & Memahami', MOTS:'Menerapkan & Menganalisis', HOTS:'Mengevaluasi & Mencipta' };
+        let _fullData  = { flashcard: null, quiz_pg: null, quiz_uraian: null };
 
-        function showLevelPicker(output, type) {
-            _pendingOutput = output; _pendingType = type;
-            const overlay = document.getElementById('levelPickerOverlay');
-            document.getElementById('overlayTitle').innerText = 'Pilih Level';
-            document.getElementById('overlayDesc').innerText = `Materi: ${output.materi || ''}. Pilih tingkat kesulitan:`;
-            const container = document.getElementById('overlayCards');
-            container.innerHTML = '';
+        function _showLevelTabs(prefix, counts) {
+            const bar = document.getElementById(`${prefix}-level-tabs`);
+            if (bar) bar.style.display = 'flex';
             ['LOTS','MOTS','HOTS'].forEach(lvl => {
-                const m = LVLMETA[lvl];
-                let arr = [];
-                if (type==='flashcard')   arr = (output.kartu_per_level||{})[lvl]?.kartu||[];
-                else if (type==='bacaan') arr = [];
-                else arr = (output.soal_per_level||{})[lvl]?.soal||[];
-                const count = arr.length;
-                const card = document.createElement('div');
-                card.style.cssText = `flex:1;min-width:150px;max-width:180px;background:${m.bg};border:2px solid ${m.border};border-radius:12px;padding:20px;text-align:center;cursor:${count>0?'pointer':'not-allowed'};opacity:${count>0?1:.4};transition:.2s;`;
-                card.innerHTML = `<div style="font-size:22px;font-weight:700;color:${m.color};margin-bottom:6px;">${lvl}</div><div style="font-size:11px;color:#a0a0a0;line-height:1.4;margin-bottom:8px;">${m.desc}</div><div style="font-size:13px;font-weight:600;color:#fff;">${count} item</div>`;
-                if (count > 0) card.onclick = () => { overlay.style.display='none'; applyLevel(lvl); };
-                container.appendChild(card);
+                const btn = document.getElementById(`${prefix}-tab-${lvl}`);
+                if (btn) btn.disabled = (counts[lvl] === 0);
             });
-            overlay.style.display = 'flex';
         }
 
-        function applyLevel(lvl) {
-            const out = _pendingOutput, type = _pendingType;
-            if (type==='flashcard')   { const d=(out.kartu_per_level||{})[lvl]||{}; setupFlashcard({kartu:d.kartu||[],level:lvl}); }
-            else if (type==='quiz_pg')     { const d=(out.soal_per_level||{})[lvl]||{}; setupQuizPG({soal:d.soal||[],level:lvl}); }
-            else if (type==='quiz_uraian') { const d=(out.soal_per_level||{})[lvl]||{}; setupQuizUraian({soal:d.soal||[],level:lvl}); }
+        function _setActiveTab(prefix, lvl) {
+            ['LOTS','MOTS','HOTS'].forEach(l => {
+                const btn = document.getElementById(`${prefix}-tab-${l}`);
+                if (!btn) return;
+                btn.className = `ltab ltab-${l.toLowerCase()}${l===lvl?' ltab-active':''}`;
+            });
+            const info = document.getElementById(`${prefix}-level-info`);
+            if (info) {
+                info.style.display = 'block';
+                info.style.color = LVLCOLOR[lvl];
+                info.innerText = `Level: ${lvl} — ${LVLDESC[lvl]}`;
+            }
+        }
+
+        function switchLevel(type, lvl) {
+            const prefix = type==='quiz_pg'?'qpg': type==='quiz_uraian'?'essay':'fc';
+            _setActiveTab(prefix, lvl);
+            const data = _fullData[type];
+            if (!data) return;
+
+            if (type === 'flashcard') {
+                const arr = (data.kartu_per_level||{})[lvl]?.kartu || [];
+                fcData = arr; fcIdx = 0; fcIsFlipped = false;
+                renderFc();
+            } else if (type === 'quiz_pg') {
+                qpgData = (data.soal_per_level||{})[lvl]?.soal || [];
+                qpgIdx = 0; qpgAnswers = new Array(qpgData.length).fill(null);
+                document.getElementById('quizpg-result').style.display = 'none';
+                document.getElementById('quizpg-do').style.display = 'flex';
+                renderQpg();
+            } else if (type === 'quiz_uraian') {
+                esData = (data.soal_per_level||{})[lvl]?.soal || [];
+                esIdx = 0; esAnswers = new Array(esData.length).fill('');
+                document.getElementById('essay-result').style.display = 'none';
+                document.getElementById('essay-do').style.display = 'flex';
+                renderEs();
+            }
         }
 
         // =======================================================
@@ -1173,10 +1238,22 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
         function setupFlashcard(data) {
             document.getElementById('flashcard-empty').style.display = 'none';
             document.getElementById('flashcard-container').style.display = 'flex';
-            // data.kartu = flat array (sudah dipilih per level oleh applyLevel)
-            fcData = data.kartu || data;
-            fcIdx = 0; fcIsFlipped = false;
-            renderFc();
+
+            if (data.kartu_per_level) {
+                // Format multi-level baru
+                _fullData.flashcard = data;
+                const counts = {};
+                ['LOTS','MOTS','HOTS'].forEach(l => counts[l] = (data.kartu_per_level[l]?.kartu||[]).length);
+                _showLevelTabs('fc', counts);
+                // Default ke level pertama yang punya data
+                const first = ['LOTS','MOTS','HOTS'].find(l => counts[l] > 0) || 'LOTS';
+                switchLevel('flashcard', first);
+            } else {
+                // Format flat lama
+                fcData = data.kartu || data;
+                fcIdx = 0; fcIsFlipped = false;
+                renderFc();
+            }
         }
         function renderFc() {
             if (!fcData || fcData.length === 0) return;
@@ -1223,10 +1300,21 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
             document.getElementById('quizpg-empty').style.display = 'none';
             document.getElementById('quizpg-result').style.display = 'none';
             document.getElementById('quizpg-do').style.display = 'flex';
-            // data.soal = flat array sudah dipilih per level
-            qpgData = data.soal || data;
-            qpgIdx = 0; qpgAnswers = new Array(qpgData.length).fill(null);
-            renderQpg();
+
+            if (data.soal_per_level) {
+                // Format multi-level baru
+                _fullData.quiz_pg = data;
+                const counts = {};
+                ['LOTS','MOTS','HOTS'].forEach(l => counts[l] = (data.soal_per_level[l]?.soal||[]).length);
+                _showLevelTabs('qpg', counts);
+                const first = ['LOTS','MOTS','HOTS'].find(l => counts[l] > 0) || 'LOTS';
+                switchLevel('quiz_pg', first);
+            } else {
+                // Format flat lama
+                qpgData = data.soal || data;
+                qpgIdx = 0; qpgAnswers = new Array(qpgData.length).fill(null);
+                renderQpg();
+            }
         }
         function renderQpg() {
             const q = qpgData[qpgIdx];
@@ -1289,10 +1377,21 @@ Peserta didik dapat menganalisis gaya aksi-reaksi</textarea>
             document.getElementById('essay-empty').style.display = 'none';
             document.getElementById('essay-result').style.display = 'none';
             document.getElementById('essay-do').style.display = 'flex';
-            // data.soal = flat array sudah dipilih per level
-            esData = data.soal || data;
-            esIdx = 0; esAnswers = new Array(esData.length).fill("");
-            renderEs();
+
+            if (data.soal_per_level) {
+                // Format multi-level baru
+                _fullData.quiz_uraian = data;
+                const counts = {};
+                ['LOTS','MOTS','HOTS'].forEach(l => counts[l] = (data.soal_per_level[l]?.soal||[]).length);
+                _showLevelTabs('essay', counts);
+                const first = ['LOTS','MOTS','HOTS'].find(l => counts[l] > 0) || 'LOTS';
+                switchLevel('quiz_uraian', first);
+            } else {
+                // Format flat lama
+                esData = data.soal || data;
+                esIdx = 0; esAnswers = new Array(esData.length).fill("");
+                renderEs();
+            }
         }
 
         // MODULE: BACAAN
