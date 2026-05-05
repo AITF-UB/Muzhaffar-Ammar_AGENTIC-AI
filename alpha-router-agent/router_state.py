@@ -8,7 +8,7 @@ class AgentState(TypedDict):
     # Generate (teacher-centric):
     #   "bacaan" | "flashcard" | "mindmap" | "quiz" | "quiz_uraian"
     # Evaluasi (student-side):
-    #   "evaluasi_quiz" | "evaluasi_uraian"
+    #   "evaluasi_uraian"
     # Lainnya:
     #   "rag_query" | "rekomendasi"
 
@@ -61,11 +61,11 @@ class AgentState(TypedDict):
     # 7. Output: Rekomendasi, Evaluasi, RAG
     # ================================================================
     top_recommendations: str
-    evaluasi_quiz_result: str
+
     evaluasi_uraian_result: str
     rag_query_result: str
 
     # ================================================================
-    # 8. Final Output JSON (dikonsumsi Tim 6)
+    # 8. Final Output JSON
     # ================================================================
     final_payload: Dict[str, Any]

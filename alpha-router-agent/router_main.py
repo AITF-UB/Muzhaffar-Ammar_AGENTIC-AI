@@ -120,36 +120,6 @@ def main():
     )
 
     # ------------------------------------------------------------------
-    # Skenario 2 — Evaluasi Quiz PG (ambil soal dari skenario 1)
-    # ------------------------------------------------------------------
-    soal_pg_list   = []
-    jawaban_dummy  = []
-    if isinstance(quiz_output, dict):
-        per_level = quiz_output.get("soal_per_level", {})
-        for level_data in per_level.values():
-            for s in level_data.get("soal", []):
-                soal_pg_list.append({
-                    "soal_id":       s.get("soal_id", ""),
-                    "nomor":         s.get("nomor", 1),
-                    "level":         s.get("level", ""),
-                    "jawaban_benar": s.get("jawaban_benar", "A"),
-                    "pembahasan":    s.get("pembahasan", ""),
-                })
-                jawaban_dummy.append({"soal_id": s.get("soal_id", ""), "jawaban": "A"})
-
-    run_simulation(
-        scenario_name="Evaluasi Quiz PG — Bilangan Berpangkat (Jawaban Dummy)",
-        task="evaluasi_quiz",
-        request_params={
-            "mata_pelajaran": "Matematika",
-            "materi": "Bilangan Berpangkat",
-            "skor_per_soal": 10,
-            "soal_pg": soal_pg_list,
-            "jawaban_siswa": jawaban_dummy,
-        },
-    )
-
-    # ------------------------------------------------------------------
     # Skenario 3 — Quiz Uraian (3 level sekaligus)
     # ------------------------------------------------------------------
     uraian_output = run_simulation(

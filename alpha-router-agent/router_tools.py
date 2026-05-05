@@ -5,213 +5,211 @@ import uuid
 from langchain_core.documents import Document
 
 # ================================================================
-# [DUMMY MODE] — Qdrant sedang error, pakai in-memory ChromaDB
-# Untuk restore ke Qdrant: hapus blok DUMMY, un-comment blok QDRANT
+# Qdrant
 # ================================================================
 
 # --- [QDRANT — DISABLED] ---
-# from qdrant_client import QdrantClient
-# from langchain_qdrant import QdrantVectorStore
-# from sentence_transformers import SentenceTransformer
-# from langchain_core.embeddings import Embeddings
+from qdrant_client import QdrantClient
+from langchain_qdrant import QdrantVectorStore
+from sentence_transformers import SentenceTransformer
+from langchain_core.embeddings import Embeddings
 
 # ================================================================
 # 1. Knowledge Base (RAG) Setup
 # ================================================================
 
-# --- [QDRANT — DISABLED sementara, uncomment kalau Qdrant sudah oke] ---
-#
-# class SentenceTransformerEmbeddings(Embeddings):
-#     def __init__(self, model_name: str):
-#         self.model_name = model_name
-#         self.model = SentenceTransformer(model_name)
-#
-#     def embed_documents(self, texts):
-#         passages = [f"passage: {text.strip()}" for text in texts]
-#         return self.model.encode(
-#             passages, batch_size=32, normalize_embeddings=True,
-#             convert_to_numpy=True, show_progress_bar=False,
-#         ).tolist()
-#
-#     def embed_query(self, text):
-#         query = f"query: {text.strip()}"
-#         return self.model.encode(
-#             [query], normalize_embeddings=True, convert_to_numpy=True,
-#         )[0].tolist()
-#
-#
-# class DatabaseSekolah:
-#     def __init__(self):
-#         _embed_model = os.getenv("EMBED_MODEL",       "LazarusNLP/all-indo-e5-small-v4")
-#         _qdrant_host = os.getenv("QDRANT_HOST",       "10.243.18.109")
-#         _qdrant_port = int(os.getenv("QDRANT_PORT",   "6333"))
-#         _collection  = os.getenv("QDRANT_COLLECTION", "embed_pdf_chunks_v1")
-#
-#         print(f"📚 Membangun Database Sekolah (Qdrant)...")
-#         print(f"   Model Embedding : {_embed_model}")
-#         print(f"   Qdrant Host     : {_qdrant_host}:{_qdrant_port}")
-#         print(f"   Collection      : {_collection}")
-#
-#         self.embeddings      = SentenceTransformerEmbeddings(_embed_model)
-#         self.client          = QdrantClient(host=_qdrant_host, port=_qdrant_port)
-#         self.collection_name = _collection
-#
-#         self.vectorstore = QdrantVectorStore(
-#             client=self.client,
-#             collection_name=self.collection_name,
-#             embedding=self.embeddings,
-#         )
-#
-#         try:
-#             count = self.client.count(self.collection_name).count
-#             print(f"   ✅ Terhubung ke Qdrant. Jumlah chunks: {count}")
-#         except Exception as e:
-#             print(f"   ❌ Gagal terhubung ke Qdrant: {e}")
-#
-#     def search(self, query: str, k: int = 5) -> list[Document]:
-#         import ast
-#         docs = self.vectorstore.similarity_search(query, k=k)
-#         for d in docs:
-#             raw_backup = d.page_content
-#             d.metadata["raw_sebelum_regex"]  = raw_backup
-#             d.metadata["apakah_kena_regex"]  = False
-#             match = re.search(r"splits=\[(.*?)\]\s+is_triggered", d.page_content, re.DOTALL)
-#             if match:
-#                 d.metadata["apakah_kena_regex"] = True
-#                 try:
-#                     splits_str  = "[" + match.group(1) + "]"
-#                     splits_list = ast.literal_eval(splits_str)
-#                     if isinstance(splits_list, list):
-#                         d.page_content = " ".join(splits_list)
-#                 except Exception:
-#                     pass
-#         return docs
-#
-# kb_sekolah = DatabaseSekolah()  # <-- inisialisasi Qdrant
+
+class SentenceTransformerEmbeddings(Embeddings):
+    def __init__(self, model_name: str):
+        self.model_name = model_name
+        self.model = SentenceTransformer(model_name)
+
+    def embed_documents(self, texts):
+        passages = [f"passage: {text.strip()}" for text in texts]
+        return self.model.encode(
+            passages, batch_size=32, normalize_embeddings=True,
+            convert_to_numpy=True, show_progress_bar=False,
+        ).tolist()
+
+    def embed_query(self, text):
+        query = f"query: {text.strip()}"
+        return self.model.encode(
+            [query], normalize_embeddings=True, convert_to_numpy=True,
+        )[0].tolist()
+
+
+class DatabaseSekolah:
+    def __init__(self):
+        _embed_model = os.getenv("EMBED_MODEL",       "microsoft/harrier-oss-v1-0.6b")
+        _qdrant_host = os.getenv("QDRANT_HOST",       "76.13.195.1")
+        _qdrant_port = int(os.getenv("QDRANT_PORT",   "6333"))
+        _collection  = os.getenv("QDRANT_COLLECTION", "semantic_chunks")
+
+        print(f"📚 Membangun Database Sekolah (Qdrant)...")
+        print(f"   Model Embedding : {_embed_model}")
+        print(f"   Qdrant Host     : {_qdrant_host}:{_qdrant_port}")
+        print(f"   Collection      : {_collection}")
+
+        self.embeddings      = SentenceTransformerEmbeddings(_embed_model)
+        self.client          = QdrantClient(host=_qdrant_host, port=_qdrant_port)
+        self.collection_name = _collection
+
+        self.vectorstore = QdrantVectorStore(
+            client=self.client,
+            collection_name=self.collection_name,
+            embedding=self.embeddings,
+        )
+
+        try:
+            count = self.client.count(self.collection_name).count
+            print(f"   ✅ Terhubung ke Qdrant. Jumlah chunks: {count}")
+        except Exception as e:
+            print(f"   ❌ Gagal terhubung ke Qdrant: {e}")
+
+    def search(self, query: str, k: int = 5) -> list[Document]:
+        import ast
+        docs = self.vectorstore.similarity_search(query, k=k)
+        for d in docs:
+            raw_backup = d.page_content
+            d.metadata["raw_sebelum_regex"]  = raw_backup
+            d.metadata["apakah_kena_regex"]  = False
+            match = re.search(r"splits=\[(.*?)\]\s+is_triggered", d.page_content, re.DOTALL)
+            if match:
+                d.metadata["apakah_kena_regex"] = True
+                try:
+                    splits_str  = "[" + match.group(1) + "]"
+                    splits_list = ast.literal_eval(splits_str)
+                    if isinstance(splits_list, list):
+                        d.page_content = " ".join(splits_list)
+                except Exception:
+                    pass
+        return docs
+
+kb_sekolah = DatabaseSekolah() 
 
 
 # =================================================================
 # [DUMMY] — In-memory ChromaDB sementara selama Qdrant error
 # =================================================================
-try:
-    import chromadb
-    from chromadb.config import Settings as ChromaSettings
-    _USE_CHROMA = True
-except ImportError:
-    _USE_CHROMA = False
-    print("⚠️  chromadb tidak terinstall, fallback ke dummy statis.")
+# try:
+#     import chromadb
+#     from chromadb.config import Settings as ChromaSettings
+#     _USE_CHROMA = True
+# except ImportError:
+#     _USE_CHROMA = False
+#     print("⚠️  chromadb tidak terinstall, fallback ke dummy statis.")
 
 
-# Konten dummy per topik — akan di-match keyword sederhana
-_DUMMY_CORPUS = [
-    Document(
-        page_content=(
-            "Bilangan berpangkat adalah perkalian berulang suatu bilangan. "
-            "Notasi: aⁿ = a × a × ... × a (sebanyak n kali). "
-            "Sifat-sifat: a⁰ = 1, a¹ = a, aᵐ × aⁿ = aᵐ⁺ⁿ, aᵐ / aⁿ = aᵐ⁻ⁿ, (aᵐ)ⁿ = aᵐⁿ. "
-            "Bilangan berpangkat negatif: a⁻ⁿ = 1/aⁿ."
-        ),
-        metadata={"source": "matematika_bilangan_berpangkat.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Hukum Newton menjelaskan hubungan antara gaya dan gerak benda. "
-            "Hukum I Newton (Inersia): Benda diam tetap diam dan benda bergerak tetap bergerak lurus beraturan "
-            "jika tidak ada resultan gaya yang bekerja padanya. "
-            "Hukum II Newton: ΣF = m × a, gaya berbanding lurus dengan percepatan. "
-            "Hukum III Newton (Aksi-Reaksi): Setiap aksi menimbulkan reaksi yang sama besar dan berlawanan arah."
-        ),
-        metadata={"source": "fisika_hukum_newton.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Fotosintesis adalah proses biokimia tumbuhan untuk menghasilkan glukosa dari CO₂ dan H₂O "
-            "menggunakan energi cahaya matahari. "
-            "Persamaan reaksi: 6CO₂ + 6H₂O + cahaya → C₆H₁₂O₆ + 6O₂. "
-            "Reaksi Terang terjadi di membran tilakoid menghasilkan ATP dan NADPH. "
-            "Reaksi Gelap (Siklus Calvin) terjadi di stroma menggunakan ATP dan NADPH untuk fiksasi CO₂."
-        ),
-        metadata={"source": "biologi_fotosintesis.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Sistem persamaan linear dua variabel (SPLDV) adalah kumpulan dua persamaan linear "
-            "dengan dua variabel x dan y. "
-            "Metode penyelesaian: substitusi, eliminasi, dan grafik. "
-            "Contoh: 2x + y = 5 dan x - y = 1, solusi: x = 2, y = 1."
-        ),
-        metadata={"source": "matematika_spldv.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Gerak Lurus Beraturan (GLB) adalah gerak dengan kecepatan konstan (percepatan = 0). "
-            "Rumus: s = v × t. "
-            "Gerak Lurus Berubah Beraturan (GLBB) adalah gerak dengan percepatan konstan. "
-            "Rumus: vt = v₀ + a×t, s = v₀t + ½at², vt² = v₀² + 2as."
-        ),
-        metadata={"source": "fisika_glb_glbb.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Sel adalah unit struktural dan fungsional terkecil makhluk hidup. "
-            "Komponen sel: membran sel, sitoplasma, inti sel (nukleus), mitokondria, ribosom, retikulum endoplasma. "
-            "Sel prokariot tidak memiliki membran inti, sel eukariot memiliki membran inti."
-        ),
-        metadata={"source": "biologi_sel.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Teks narasi adalah teks yang menceritakan suatu peristiwa secara kronologis. "
-            "Struktur teks narasi: orientasi, komplikasi, resolusi, dan koda. "
-            "Ciri-ciri: menggunakan kata kerja aktif, alur waktu, tokoh, dan latar."
-        ),
-        metadata={"source": "bindo_teks_narasi.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-    Document(
-        page_content=(
-            "Materi umum: konsep dasar ilmu pengetahuan alam dan sosial. "
-            "Sains mempelajari alam semesta secara sistematis melalui observasi, hipotesis, eksperimen, dan analisis. "
-            "Metode ilmiah: perumusan masalah, studi literatur, pengumpulan data, analisis, kesimpulan."
-        ),
-        metadata={"source": "umum_sains_dasar.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
-    ),
-]
+# # Konten dummy per topik — akan di-match keyword sederhana
+# _DUMMY_CORPUS = [
+#     Document(
+#         page_content=(
+#             "Bilangan berpangkat adalah perkalian berulang suatu bilangan. "
+#             "Notasi: aⁿ = a × a × ... × a (sebanyak n kali). "
+#             "Sifat-sifat: a⁰ = 1, a¹ = a, aᵐ × aⁿ = aᵐ⁺ⁿ, aᵐ / aⁿ = aᵐ⁻ⁿ, (aᵐ)ⁿ = aᵐⁿ. "
+#             "Bilangan berpangkat negatif: a⁻ⁿ = 1/aⁿ."
+#         ),
+#         metadata={"source": "matematika_bilangan_berpangkat.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Hukum Newton menjelaskan hubungan antara gaya dan gerak benda. "
+#             "Hukum I Newton (Inersia): Benda diam tetap diam dan benda bergerak tetap bergerak lurus beraturan "
+#             "jika tidak ada resultan gaya yang bekerja padanya. "
+#             "Hukum II Newton: ΣF = m × a, gaya berbanding lurus dengan percepatan. "
+#             "Hukum III Newton (Aksi-Reaksi): Setiap aksi menimbulkan reaksi yang sama besar dan berlawanan arah."
+#         ),
+#         metadata={"source": "fisika_hukum_newton.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Fotosintesis adalah proses biokimia tumbuhan untuk menghasilkan glukosa dari CO₂ dan H₂O "
+#             "menggunakan energi cahaya matahari. "
+#             "Persamaan reaksi: 6CO₂ + 6H₂O + cahaya → C₆H₁₂O₆ + 6O₂. "
+#             "Reaksi Terang terjadi di membran tilakoid menghasilkan ATP dan NADPH. "
+#             "Reaksi Gelap (Siklus Calvin) terjadi di stroma menggunakan ATP dan NADPH untuk fiksasi CO₂."
+#         ),
+#         metadata={"source": "biologi_fotosintesis.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Sistem persamaan linear dua variabel (SPLDV) adalah kumpulan dua persamaan linear "
+#             "dengan dua variabel x dan y. "
+#             "Metode penyelesaian: substitusi, eliminasi, dan grafik. "
+#             "Contoh: 2x + y = 5 dan x - y = 1, solusi: x = 2, y = 1."
+#         ),
+#         metadata={"source": "matematika_spldv.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Gerak Lurus Beraturan (GLB) adalah gerak dengan kecepatan konstan (percepatan = 0). "
+#             "Rumus: s = v × t. "
+#             "Gerak Lurus Berubah Beraturan (GLBB) adalah gerak dengan percepatan konstan. "
+#             "Rumus: vt = v₀ + a×t, s = v₀t + ½at², vt² = v₀² + 2as."
+#         ),
+#         metadata={"source": "fisika_glb_glbb.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Sel adalah unit struktural dan fungsional terkecil makhluk hidup. "
+#             "Komponen sel: membran sel, sitoplasma, inti sel (nukleus), mitokondria, ribosom, retikulum endoplasma. "
+#             "Sel prokariot tidak memiliki membran inti, sel eukariot memiliki membran inti."
+#         ),
+#         metadata={"source": "biologi_sel.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Teks narasi adalah teks yang menceritakan suatu peristiwa secara kronologis. "
+#             "Struktur teks narasi: orientasi, komplikasi, resolusi, dan koda. "
+#             "Ciri-ciri: menggunakan kata kerja aktif, alur waktu, tokoh, dan latar."
+#         ),
+#         metadata={"source": "bindo_teks_narasi.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+#     Document(
+#         page_content=(
+#             "Materi umum: konsep dasar ilmu pengetahuan alam dan sosial. "
+#             "Sains mempelajari alam semesta secara sistematis melalui observasi, hipotesis, eksperimen, dan analisis. "
+#             "Metode ilmiah: perumusan masalah, studi literatur, pengumpulan data, analisis, kesimpulan."
+#         ),
+#         metadata={"source": "umum_sains_dasar.md", "apakah_kena_regex": False, "raw_sebelum_regex": ""}
+#     ),
+# ]
 
 
-class DatabaseSekolahDummy:
-    """
-    Dummy Knowledge Base — in-memory, tanpa Qdrant.
-    Pakai keyword matching sederhana untuk simulate RAG retrieval.
-    [TEMPORARY — hapus dan pakai DatabaseSekolah asli kalau Qdrant sudah oke]
-    """
-    def __init__(self):
-        print("📚 [DUMMY MODE] Menggunakan in-memory dummy corpus (Qdrant offline).")
-        print(f"   Jumlah dokumen dummy: {len(_DUMMY_CORPUS)}")
+# class DatabaseSekolahDummy:
+#     """
+#     Dummy Knowledge Base — in-memory, tanpa Qdrant.
+#     Pakai keyword matching sederhana untuk simulate RAG retrieval.
+#     [TEMPORARY — hapus dan pakai DatabaseSekolah asli kalau Qdrant sudah oke]
+#     """
+#     def __init__(self):
+#         print("📚 [DUMMY MODE] Menggunakan in-memory dummy corpus (Qdrant offline).")
+#         print(f"   Jumlah dokumen dummy: {len(_DUMMY_CORPUS)}")
 
-    def search(self, query: str, k: int = 5) -> list[Document]:
-        """Keyword-based matching sederhana."""
-        query_lower = query.lower()
-        scored = []
-        for doc in _DUMMY_CORPUS:
-            # Hitung overlap kata
-            doc_words  = set(re.split(r'\W+', doc.page_content.lower()))
-            query_words = set(re.split(r'\W+', query_lower))
-            score = len(doc_words & query_words)
-            scored.append((score, doc))
+#     def search(self, query: str, k: int = 5) -> list[Document]:
+#         """Keyword-based matching sederhana."""
+#         query_lower = query.lower()
+#         scored = []
+#         for doc in _DUMMY_CORPUS:
+#             # Hitung overlap kata
+#             doc_words  = set(re.split(r'\W+', doc.page_content.lower()))
+#             query_words = set(re.split(r'\W+', query_lower))
+#             score = len(doc_words & query_words)
+#             scored.append((score, doc))
 
-        # Sort descending, ambil top-k
-        scored.sort(key=lambda x: x[0], reverse=True)
-        results = [doc for _, doc in scored[:k] if _ > 0]
+#         # Sort descending, ambil top-k
+#         scored.sort(key=lambda x: x[0], reverse=True)
+#         results = [doc for _, doc in scored[:k] if _ > 0]
 
-        # Kalau tidak ada yang match, return semua dummy (fallback)
-        if not results:
-            results = [doc for _, doc in scored[:k]]
+#         # Kalau tidak ada yang match, return semua dummy (fallback)
+#         if not results:
+#             results = [doc for _, doc in scored[:k]]
 
-        return results
+#         return results
 
 
-# Inisialisasi KB global — pakai DUMMY sementara
-kb_sekolah = DatabaseSekolahDummy()
+# # Inisialisasi KB global — pakai DUMMY sementara
+# kb_sekolah = DatabaseSekolahDummy()
 
 
 # ================================================================
@@ -313,23 +311,17 @@ def util_format_bacaan_multi(
         "bacaan_per_level": {
             "LOTS": {
                 "label":       LEVEL_LABELS["LOTS"],
-                "judul":       lots.get("judul_konten", materi),
-                "jumlah_sub_bab": len(lots.get("konten", [])),
-                "konten":      lots.get("konten", []),
+                "markdown":    lots.get("markdown", ""),
                 "sumber":      lots.get("sumber", []),
             },
             "MOTS": {
                 "label":       LEVEL_LABELS["MOTS"],
-                "judul":       mots.get("judul_konten", materi),
-                "jumlah_sub_bab": len(mots.get("konten", [])),
-                "konten":      mots.get("konten", []),
+                "markdown":    mots.get("markdown", ""),
                 "sumber":      mots.get("sumber", []),
             },
             "HOTS": {
                 "label":       LEVEL_LABELS["HOTS"],
-                "judul":       hots.get("judul_konten", materi),
-                "jumlah_sub_bab": len(hots.get("konten", [])),
-                "konten":      hots.get("konten", []),
+                "markdown":    hots.get("markdown", ""),
                 "sumber":      hots.get("sumber", []),
             },
         },
@@ -406,20 +398,6 @@ def util_format_mindmap(matpel: str, materi: str, nodes: list) -> dict:
 # 5. Formatters — Evaluasi (tidak berubah substansi)
 # ================================================================
 
-def util_format_evaluasi_quiz(matpel: str, bab: str, detail: list) -> dict:
-    total_benar = sum(1 for d in detail if d.get("benar", False))
-    total_skor  = sum(d.get("skor", 0) for d in detail)
-    skor_maks   = sum(d.get("skor_maksimal", 10) for d in detail)
-    return {
-        "tipe":         "hasil_evaluasi_quiz",
-        "mata_pelajaran": matpel,
-        "materi":       bab,
-        "total_benar":  total_benar,
-        "total_soal":   len(detail),
-        "total_skor":   total_skor,
-        "skor_maksimal": skor_maks,
-        "detail":       detail,
-    }
 
 
 def util_format_evaluasi_uraian(matpel: str, bab: str, detail: list, overall: dict) -> dict:

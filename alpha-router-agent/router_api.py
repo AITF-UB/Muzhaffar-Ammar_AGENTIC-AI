@@ -99,37 +99,6 @@ class TeacherContentRequest(BaseModel):
 # 3. PYDANTIC MODELS — Evaluasi & RAG
 # ================================================================
 
-class SoalPGEval(BaseModel):
-    soal_id: str
-    nomor: int
-    level: str = Field(default="", examples=["LOTS", "MOTS", "HOTS"])
-    jawaban_benar: str = Field(example="A")
-    pembahasan: str = Field(default="")
-
-class JawabanSiswaPG(BaseModel):
-    soal_id: str
-    jawaban: str = Field(example="A")
-
-class EvaluasiQuizRequest(BaseModel):
-    model_config = ConfigDict(json_schema_extra={
-        "example": {
-            "mata_pelajaran": "Matematika",
-            "materi": "Bilangan Berpangkat",
-            "skor_per_soal": 10,
-            "soal_pg": [
-                {"soal_id": "pg-lots-bilangan_berpangkat-a1b2", "nomor": 1, "level": "LOTS", "jawaban_benar": "A", "pembahasan": "..."}
-            ],
-            "jawaban_siswa": [
-                {"soal_id": "pg-lots-bilangan_berpangkat-a1b2", "jawaban": "A"}
-            ]
-        }
-    })
-    mata_pelajaran: str = Field(default="Matematika")
-    materi: str = Field(default="")
-    skor_per_soal: int = Field(default=10)
-    soal_pg: List[SoalPGEval] = Field(default_factory=list)
-    jawaban_siswa: List[JawabanSiswaPG] = Field(default_factory=list)
-
 
 class SoalUraianEval(BaseModel):
     soal_id: str
@@ -352,26 +321,6 @@ def run_quiz_uraian(request: TeacherContentRequest):
 # ================================================================
 # 8. EVALUASI ENDPOINTS (Student-Side)
 # ================================================================
-
-@app.post("/agent/evaluasi_quiz", response_model=AgentResponse, tags=["Evaluasi — Siswa"])
-def run_evaluasi_quiz(request: EvaluasiQuizRequest):
-    """
-    **Evaluasi jawaban Quiz PG** — deterministik, tanpa LLM.
-
-    Kirim soal (dari output `/agent/quiz`) beserta jawaban siswa.
-    Sistem mencocokkan by `soal_id` dan menghitung skor secara langsung.
-    """
-    payload, nodes = _run_graph(
-        "evaluasi_quiz",
-        {
-            "mata_pelajaran": request.mata_pelajaran,
-            "materi": request.materi,
-            "skor_per_soal": request.skor_per_soal,
-            "soal_pg": [s.model_dump() for s in request.soal_pg],
-            "jawaban_siswa": [j.model_dump() for j in request.jawaban_siswa],
-        }
-    )
-    return AgentResponse(status="success", task="evaluasi_quiz", nodes_executed=nodes, output=payload)
 
 
 @app.post("/agent/evaluasi_uraian", response_model=AgentResponse, tags=["Evaluasi — Siswa"])
