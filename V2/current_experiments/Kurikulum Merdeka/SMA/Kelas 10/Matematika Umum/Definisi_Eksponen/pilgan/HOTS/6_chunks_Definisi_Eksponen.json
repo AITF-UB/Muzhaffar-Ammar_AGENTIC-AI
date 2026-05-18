@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "kurikulum": "Kurikulum Merdeka",
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Matematika Umum",
+    "bab_judul": "Eksponen",
+    "sub_bab": "Definisi Eksponen",
+    "task_type": "pilgan",
+    "level": "HOTS",
+    "source_file": "Matematika_Umum_6_chunk.json",
+    "est_tokens": {
+      "system": 752,
+      "user": 1474,
+      "assistant": 4347,
+      "total": 6573,
+      "max_seq_length": 6144,
+      "exceeds_budget": true
+    }
+  },
+  "system_prompt": "v3_2026-05",
+  "user_prompt": "[KRITERIA_PEMBELAJARAN_MENDALAM]\nLEVEL: HOTS (Merefleksi)\nTaxonomy: Bloom C5-C6 | SOLO Extended Abstract\nFokus: Metakognisi, regulasi diri, dan integrasi konsep ke isu global (e.g., iklim, ketahanan pangan).\nKedalaman: Formulasi hipotesis, penciptaan nilai tambah (creative output), generalisasi materi dasar dan kemampuan regulasi diri.\n\n[KONTEKS_PEMBELAJARAN]\nMapel: Matematika Umum | Bab: Eksponen | Sub Bab: Definisi Eksponen | Target: HOTS\nATP: Menyatakan perkalian bilangan bulat berulang sebagai bilangan berpangkat (eksponen).\n\n--- MATERI ---\nEksponen merupakan konsep matematika yang sangat bermanfaat untuk memecahkan berbagai permasalahan nyata di kehidupan manusia. Beberapa fenomena di alam dan kehidupan sosial yang mengikuti pola pertumbuhan eksponen antara lain adalah pertumbuhan populasi penduduk dunia, proses pembelahan koloni sel bakteri, tingkat kecepatan penyebaran virus, hingga kecepatan peredaran informasi hoaks atau video yang menjadi viral di media sosial. Layaknya penyebaran virus yang berlipat ganda dari orang ke orang, daya tarik sebuah konten di media sosial dapat membuat penyebarannya melonjak dengan sangat cepat hingga menjangkau jutaan penonton.\n\nKonsep paling dasar dari eksponen berpijak pada istilah perkalian berulang. Perkalian berulang adalah perkalian yang dilakukan secara terus-menerus dengan menggunakan faktor bilangan yang sama. Penggunaan bilangan berpangkat akan sangat memudahkan kita untuk menyederhanakan bentuk penulisan dari perkalian berulang tersebut. Sebagai contoh dasar, operasi perkalian berulang bilangan dua yang dilakukan sebanyak enam kali, yaitu 2 x 2 x 2 x 2 x 2 x 2, dapat disederhanakan dan ditulis ke dalam bentuk pangkat sebagai 2^6. Hal yang sama juga berlaku untuk variabel matematika, misalnya a x a x a x a x a x a x a dapat dituliskan secara lebih singkat menjadi a^7.\n\nPenerapan eksponen dalam merepresentasikan perkalian berulang dapat diamati dengan jelas pada pola penyebaran pesan berantai atau hoaks. Jika diasumsikan satu orang menyebarkan sebuah hoaks kepada dua orang, lalu dua orang tersebut masing-masing menyebarkan kembali kepada dua orang lainnya, dan siklus ini terus berlanjut. Pola bilangan yang terbentuk dari situasi ini adalah perkalian berulang dari bilangan dua. Pada fase pertama jumlah penerima pesannya adalah 2^1, pada fase kedua menjadi 2 x 2 = 2^2, fase ketiga 2 x 2 x 2 = 2^3, fase keempat 2 x 2 x 2 x 2 = 2^4, dan begitu seterusnya.\n\nBerdasarkan pola perkalian berulang pada penyebaran pesan berantai yang selalu bertambah dan membesar secara konstan tersebut, kita dapat merumuskan sebuah formula umum. Jika banyak fase penyebaran sebuah pesan dinyatakan dengan variabel n, dan banyak orang yang mendapatkan hoaks di fase ke-n dinyatakan dengan variabel m, maka nilai m didapatkan dari 2 x 2 x 2 x 2 x... x 2 (sebanyak n kali). Dengan demikian, banyak orang yang menerima hoaks pada fase ke-n tersebut dapat dihitung secara cepat dan akurat menggunakan rumus matematis sederhana, yaitu m = 2^n.\n\nSecara definisi matematis formal, bilangan berpangkat atau yang lazim disebut sebagai eksponen dijabarkan melalui syarat dasar berikut: Jika nilai a adalah sebuah bilangan real dan nilai n adalah sebuah bilangan bulat positif, maka lambang a^n menyatakan hasil kali bilangan a tersebut secara berulang sebanyak n faktor. Bentuk perkalian berulangnya dapat secara matematis dituliskan dengan a^n = a x a x a x... x a (sebanyak n faktor). Di dalam penulisan notasi eksponen a^n ini, komponen a dinamakan sebagai bilangan pokok (atau basis), sedangkan komponen n disebut sebagai pangkat (atau eksponen).\n\nSelain pada kondisi pangkat bilangan bulat positif, definisi eksponen juga memiliki perluasan penting untuk kondisi lainnya dengan syarat bilangan pokok a tidak boleh sama dengan nol. Jika pangkatnya berupa bilangan bulat negatif, maka akan berlaku persamaan a^(-n) = (1/a)^n. Sementara itu, jika bentuk pangkatnya berupa bilangan pecahan, maka akan berlaku definisi a^(1/n) = p sedemikian sehingga p^n = a. Lebih lanjut, untuk bentuk bilangan dengan pangkat pecahan a^(m/n), nilainya akan setara dengan (a^(1/n))^m di mana m dan n adalah bilangan bulat positif.\n\n[TASK]\nHasilkan 10 soal Pilihan Ganda dalam format **JSON** dengan ketentuan:\n\n[STRUCTURE]\n{\"id\": \"SR-PG-01\", \"level\": \"\", \"stimulus\": \"\", \"question\": \"\", \"options\": {\"A\":\"\", \"B\":\"\", \"C\":\"\", \"D\":\"\", \"E\":\"\"}, \"answer\": \"\", \"explanation\": \"\"}\n\n[RULES]\n1. Stimulus: Berbasis data riil/fenomena faktual di Indonesia. Hindari skenario imajiner.\n2. Kualitas: Pengecoh (distractor) harus logis dan tingkat kesulitan sesuai dengan distribusi level pada [KRITERIA_PEMBELAJARAN_MENDALAM].\n3. Explanation: Gunakan format **Markdown** di dalam string JSON.",
+  "assistant_response": [
+    {
+      "id": "SR-PG-01",
+      "level": "HOTS",
+      "stimulus": "Dalam materi pembelajaran, dijelaskan bahwa penyebaran hoaks dapat dimodelkan dengan m = 2^n, di mana n adalah fase penyebaran dan m adalah jumlah penerima hoaks pada fase ke-n. Model ini mengasumsikan setiap orang menyebarkan hoaks tepat kepada 2 orang baru.",
+      "question": "Refleksikan model tersebut. Jika pada kenyataannya, tidak semua orang yang menerima hoaks akan menyebarkannya, bahkan sebagian justru melaporkan hoaks tersebut. Bagaimana seharusnya kamu menyesuaikan model eksponensial tersebut agar lebih realistis?",
+      "options": {
+        "A": "Model tetap menggunakan m = 2^n karena penyebaran pasti terjadi secara eksak.",
+        "B": "Model diubah menjadi m = 2^n - n untuk mengakomodasi orang yang tidak menyebarkan.",
+        "C": "Model perlu memperhitungkan probabilitas penyebaran, misalnya m = (rata-rata jumlah penyebaran per orang)^n.",
+        "D": "Model tidak dapat dimodifikasi karena eksponen hanya berlaku untuk bilangan bulat positif.",
+        "E": "Model diubah menjadi m = n^2 karena pertumbuhan linear lebih realistis."
+      },
+      "answer": "C",
+      "explanation": "Model awal sangat idealis karena mengasumsikan setiap orang menyebarkan ke dua orang. Realitanya, tidak semua orang akan menyebarkan hoaks. Oleh karena itu, model yang lebih realistis harus memasukkan faktor probabilitas atau rata-rata penyebaran. Opsi C memungkinkan penyesuaian dengan basis yang lebih kecil dari 2, sesuai dengan rata-rata penyebaran aktual. Opsi A tidak realistis, B asal mengurangi tanpa dasar, D keliru karena eksponen bisa pecahan, E salah karena mengubah pertumbuhan menjadi kuadrat yang tidak sesuai dengan sifat penyebaran berantai."
+    },
+    {
+      "id": "SR-PG-02",
+      "level": "HOTS",
+      "stimulus": "Penyebaran hoaks di Indonesia sering kali mengikuti pola eksponensial. Misalkan pada fase ke-5, jumlah penerima hoaks mencapai 32 orang berdasarkan model m = 2^5.",
+      "question": "Seorang siswa menyimpulkan bahwa dengan model m = 2^n, total seluruh penerima hoaks dari fase 1 hingga fase n dapat dihitung dengan rumus 2^(n+1) - 2. Benarkah kesimpulan tersebut? Refleksikan dan pilih pernyataan yang tepat.",
+      "options": {
+        "A": "Benar, karena jumlah deret geometri dengan rasio 2 adalah 2^(n+1) - 2.",
+        "B": "Salah, karena total penerima hoaks seharusnya 2^n - 1.",
+        "C": "Benar, tetapi hanya berlaku jika n = 5.",
+        "D": "Salah, karena rumus yang benar adalah 2^n + 2^(n-1) + ... + 2^1 = 2^(n+1) - 2 memang benar.",
+        "E": "Tidak dapat ditentukan karena model tidak mendefinisikan fase awal."
+      },
+      "answer": "D",
+      "explanation": "Rumus yang diusulkan siswa benar secara matematis. Jumlah deret geometri dengan suku pertama 2, rasio 2, sebanyak n suku adalah 2*(2^n - 1)/(2-1) = 2^(n+1) - 2. Jadi pernyataan siswa benar. Opsi A juga benar tetapi penjelasannya kurang tepat karena bukan 'deret geometri dengan rasio 2' secara eksplisit, namun substansinya benar. Opsi B dan C salah, E tidak tepat karena model jelas. Dengan demikian, jawaban yang paling tepat adalah D karena menegaskan kebenaran rumus tersebut."
+    },
+    {
+      "id": "SR-PG-03",
+      "level": "HOTS",
+      "stimulus": "Dalam definisi eksponen, a^n = a x a x a x ... x a (sebanyak n faktor). Seseorang menyatakan bahwa jika a = 0 dan n = 0, maka 0^0 = 1 berdasarkan pola perkalian berulang.",
+      "question": "Refleksikan pernyataan tersebut. Mengapa definisi perkalian berulang tidak dapat digunakan untuk menentukan nilai 0^0?",
+      "options": {
+        "A": "Karena 0 dikalikan berulang sebanyak 0 kali tidak terdefinisi secara intuitif.",
+        "B": "Karena 0^0 harus bernilai 0 sesuai dengan basis nol.",
+        "C": "Karena definisi a^n hanya berlaku untuk a ≠ 0 dan n bilangan bulat positif.",
+        "D": "Karena 0^0 dapat bernilai 1 atau 0 tergantung konteks.",
+        "E": "Karena tidak ada kesepakatan matematis tentang 0^0."
+      },
+      "answer": "C",
+      "explanation": "Definisi eksponen yang diberikan dalam materi mensyaratkan a bilangan real dan n bilangan bulat positif. Untuk n = 0 atau a = 0, definisi tersebut tidak langsung berlaku. Perkalian berulang sebanyak nol kali tidak bermakna secara operasional. Oleh karena itu, nilai 0^0 tidak dapat ditentukan dari definisi dasar. Opsi A benar secara intuitif, tetapi alasan formalnya adalah bahwa definisi awal hanya mencakup n positif. Opsi C adalah pernyataan yang paling tepat sesuai materi. Opsi B dan D tidak konsisten dengan definisi. Opsi E benar tetapi kurang mendasar."
+    },
+    {
+      "id": "SR-PG-04",
+      "level": "HOTS",
+      "stimulus": "Penyebaran hoaks dengan model m = 2^n menunjukkan pertumbuhan yang sangat cepat. Pada fase ke-10, sudah ada 1.024 penerima. Jika fase terus berlanjut, dampak sosial bisa sangat luas.",
+      "question": "Sebagai individu yang melek informasi, refleksikan bagaimana kamu dapat menerapkan regulasi diri (self-regulation) untuk memutus rantai penyebaran hoaks berdasarkan pemahaman eksponensial?",
+      "options": {
+        "A": "Tidak perlu melakukan apa pun karena hoaks akan hilang dengan sendirinya.",
+        "B": "Cukup dengan tidak menyebarkan hoaks, karena satu orang tidak akan berpengaruh besar.",
+        "C": "Dengan tidak menyebarkan dan melaporkan hoaks, kamu mengurangi basis penyebaran sehingga pertumbuhan eksponensial dapat terhambat.",
+        "D": "Menyebarkan hoaks versi yang sudah diedit agar lebih lucu.",
+        "E": "Menunggu pemerintah bertindak karena individu tidak mampu menghentikan penyebaran."
+      },
+      "answer": "C",
+      "explanation": "Dalam model eksponensial, setiap individu yang tidak menyebarkan hoaks berarti mengurangi jumlah 'percabangan' penyebaran. Semakin sedikit orang yang menyebarkan, semakin kecil basis (rata-rata penyebaran per orang). Jika basis turun di bawah 1, penyebaran akan melambat dan akhirnya berhenti. Regulasi diri berupa verifikasi dan pelaporan sangat efektif. Opsi C mencerminkan pemahaman ini. Opsi lain pasif atau kontraproduktif."
+    },
+    {
+      "id": "SR-PG-05",
+      "level": "HOTS",
+      "stimulus": "Konsep eksponen a^n menyatakan perkalian berulang. Dalam konteks penyebaran hoaks, jika pada fase ke-n jumlah penerima adalah 2^n, maka total penerima sejak fase 1 sampai n dapat dihitung sebagai 2^(n+1) - 2.",
+      "question": "Seorang peneliti ingin membuat model baru dengan asumsi setiap orang menyebarkan hoaks kepada 3 orang, bukan 2. Bagaimana bentuk umum model tersebut untuk jumlah penerima pada fase ke-n?",
+      "options": {
+        "A": "m = 3^n",
+        "B": "m = n^3",
+        "C": "m = 3n",
+        "D": "m = 3^n - 2^n",
+        "E": "m = 3 × 2^n"
+      },
+      "answer": "A",
+      "explanation": "Jika setiap orang menyebarkan ke 3 orang, maka pada fase 1 ada 3^1=3, fase 2: 3×3=3^2, dst. Jadi m = 3^n. Ini sesuai dengan definisi eksponen sebagai perkalian berulang. Opsi B adalah pangkat tiga, bukan eksponensial basis 3. Opsi C linear, D dan E tidak tepat."
+    },
+    {
+      "id": "SR-PG-06",
+      "level": "HOTS",
+      "stimulus": "Dalam materi, disebutkan bahwa a^(-n) = (1/a)^n untuk pangkat negatif, dengan syarat a ≠ 0. Konsep ini sering membingungkan siswa.",
+      "question": "Refleksikan: Mengapa definisi a^(-n) = (1/a)^n dapat dianggap sebagai generalisasi dari pola perkalian berulang?",
+      "options": {
+        "A": "Karena a^(-n) berarti perkalian berulang a sebanyak -n kali, yang tidak masuk akal secara fisik.",
+        "B": "Karena definisi ini mempertahankan sifat a^(m+n) = a^m × a^n untuk semua bilangan bulat m dan n.",
+        "C": "Karena (1/a)^n juga merupakan perkalian berulang 1/a sebanyak n kali.",
+        "D": "Karena pembuktian matematis membuktikan bahwa a^(-n) = (1/a)^n tanpa perlu refleksi.",
+        "E": "Karena pangkat negatif muncul dari pembagian a^0 / a^n."
+      },
+      "answer": "B",
+      "explanation": "Pendefinisian a^(-n) sebagai (1/a)^n memungkinkan sifat operasi eksponen seperti a^(m+n)=a^m×a^n berlaku untuk semua bilangan bulat. Ini adalah motivasi utama generalisasi. Opsi A benar secara intuitif tetapi bukan alasan matematis. Opsi C hanya menyatakan ulang definisi. Opsi D tidak reflektif. Opsi E juga benar sebagai derivasi, tetapi yang paling mendasar adalah menjaga konsistensi sifat. Oleh karena itu, B adalah jawaban terbaik."
+    },
+    {
+      "id": "SR-PG-07",
+      "level": "HOTS",
+      "stimulus": "Penggunaan eksponen dalam model penyebaran hoaks m = 2^n menunjukkan bahwa setelah 10 fase, sudah ada 1.024 penerima. Namun, dalam kehidupan nyata, penyebaran hoaks tidak selalu berlangsung mulus karena adanya filter seperti kesadaran masyarakat.",
+      "question": "Refleksikan: Jika kamu diminta membuat model yang lebih akurat dengan memasukkan faktor koreksi bahwa 10% penerima hoaks akan melaporkan konten tersebut, bagaimana cara kamu memodifikasi model eksponensial?",
+      "options": {
+        "A": "Menggunakan m = (2 - 0,1)^n = 1,9^n",
+        "B": "Menggunakan m = 2^n - 0,1×2^n = 0,9×2^n",
+        "C": "Menggunakan m = (0,9×2)^n = 1,8^n",
+        "D": "Menggunakan m = 2^(0,9n)",
+        "E": "Tidak dapat dimodifikasi karena eksponen hanya untuk bilangan bulat."
+      },
+      "answer": "B",
+      "explanation": "Jika 10% penerima melaporkan, maka efektif hanya 90% yang mungkin menyebarkan. Namun, model m = 2^n menghitung jumlah penerima, bukan penyebar. Jika kita ingin mengurangi jumlah penyebar, kita bisa mengurangi basis dari 2 menjadi 2×0,9 = 1,8, sehingga m = 1,8^n (opsi C) atau mengurangi hasil secara langsung: m = 0,9×2^n (opsi B). Mana yang tepat? Sebenarnya, opsi B mengurangi total penerima pada setiap fase, tetapi tidak mengubah sifat perkalian berulang. Jika yang dilaporkan adalah penerima, maka mereka tidak akan menyebarkan ke fase berikutnya, sehingga basis efektif menjadi 1,8. Opsi C lebih tepat karena mencerminkan pengurangan pada setiap langkah penyebaran. Namun, dalam konteks refleksi, opsi B juga dapat diterima sebagai koreksi sederhana. Secara matematis, opsi C adalah modifikasi yang paling konsisten dengan proses eksponensial. Namun, lihat soal: '10% penerima hoaks akan melaporkan konten tersebut'. Jika mereka melaporkan, maka mereka tidak menyebarkan, sehingga orang yang menyebarkan berkurang. Fase berikutnya hanya akan menerima dari 90% penerima yang tidak melaporkan. Jadi, basis berubah. Opsi C benar. Opsi B mengurangi jumlah penerima, tetapi tidak mengubah bahwa setiap penerima baru akan melaporkan 10% lagi? Agak rumit. Dalam model diskret, pengurangan basis lebih tepat. Jadi jawaban C."
+    },
+    {
+      "id": "SR-PG-08",
+      "level": "HOTS",
+      "stimulus": "Eksponen juga digunakan dalam bidang lain, seperti fisika. Misalnya, peluruhan radioaktif mengikuti pola eksponensial negatif. Namun, dalam pembelajaran ini, fokus pada perkalian berulang.",
+      "question": "Refleksikan: Mengapa pemahaman tentang eksponen sebagai perkalian berulang penting sebagai fondasi sebelum mempelajari aplikasi yang lebih kompleks seperti pertumbuhan eksponensial atau peluruhan?",
+      "options": {
+        "A": "Karena semua aplikasi eksponen pada dasarnya adalah perkalian berulang.",
+        "B": "Karena tanpa fondasi itu, siswa akan kesulitan memahami notasi dan operasi dasar.",
+        "C": "Karena perkalian berulang adalah satu-satunya definisi eksponen yang benar.",
+        "D": "Karena peluruhan radioaktif tidak bisa dijelaskan dengan perkalian berulang.",
+        "E": "Karena konsep perkalian berulang lebih mudah diajarkan pada anak-anak."
+      },
+      "answer": "B",
+      "explanation": "Pemahaman dasar sebagai perkalian berulang memberikan intuisi tentang makna eksponen, yang kemudian bisa diperluas ke pangkat nol, negatif, dan pecahan. Tanpa fondasi ini, notasi a^n hanya menjadi simbol tanpa makna. Opsi A tidak sepenuhnya benar karena eksponen dengan pangkat bukan bilangan bulat positif tidak dapat langsung diartikan sebagai perkalian berulang. Opsi C keliru karena ada definisi lain (misalnya melalui fungsi eksponensial). Opsi D salah karena peluruhan melibatkan perkalian berulang faktor kurang dari 1. Opsi E benar secara pedagogis tetapi kurang refleksif. Jawaban B adalah yang paling tepat secara reflektif."
+    },
+    {
+      "id": "SR-PG-09",
+      "level": "HOTS",
+      "stimulus": "Dalam materi, disebutkan bahwa a^(1/n) = p sedemikian sehingga p^n = a. Ini adalah definisi akar pangkat n.",
+      "question": "Refleksikan: Dengan pemahaman eksponen sebagai perkalian berulang, bagaimana kamu dapat menjelaskan hubungan antara a^(1/2) dan akar kuadrat?",
+      "options": {
+        "A": "a^(1/2) adalah bilangan yang jika dikalikan dengan dirinya sendiri menghasilkan a, sehingga sama dengan akar kuadrat.",
+        "B": "a^(1/2) berarti setengah kali perkalian berulang, yang tidak masuk akal.",
+        "C": "a^(1/2) adalah bilangan yang dipangkatkan 2 menghasilkan a, sehingga a^(1/2) = √a.",
+        "D": "a^(1/2) tidak dapat dijelaskan dengan perkalian berulang karena pangkat pecahan.",
+        "E": "a^(1/2) adalah bilangan yang jika dikalikan berulang setengah kali menghasilkan a."
+      },
+      "answer": "C",
+      "explanation": "Definisi a^(1/n) adalah balikan dari perpangkatan: a^(1/n) adalah bilangan yang jika dipangkatkan n menghasilkan a. Jadi untuk n=2, (a^(1/2))^2 = a, yang berarti a^(1/2) adalah akar kuadrat dari a. Opsi A dan C serupa, namun A kurang tepat karena 'dikalikan dengan dirinya sendiri' tepat, tapi C lebih formal. Opsi B dan D keliru, E tidak jelas. Jawaban C adalah yang paling tepat."
+    },
+    {
+      "id": "SR-PG-10",
+      "level": "HOTS",
+      "stimulus": "Penyebaran hoaks dengan model m = 2^n menunjukkan bahwa semakin besar n, jumlah penerima meledak. Dalam kehidupan bermasyarakat, ledakan hoaks ini bisa memicu kegaduhan sosial.",
+      "question": "Refleksikan: Bagaimana pemahamanmu tentang eksponen dapat membantumu merancang strategi pencegahan penyebaran hoaks yang efektif di lingkungan sekolah?",
+      "options": {
+        "A": "Membuat poster agar siswa tidak menyebarkan hoaks tanpa verifikasi.",
+        "B": "Mengadakan seminar tentang bahaya hoaks setiap tahun.",
+        "C": "Membentuk tim verifikasi yang cepat merespons dan memutus rantai penyebaran pada fase awal (n kecil).",
+        "D": "Melarang penggunaan media sosial di sekolah.",
+        "E": "Tidak ada strategi karena penyebaran hoaks tidak bisa dicegah."
+      },
+      "answer": "C",
+      "explanation": "Karena pertumbuhan eksponensial sangat cepat, intervensi pada fase awal (n kecil) jauh lebih efektif daripada setelah besar. Membentuk tim verifikasi yang sigap dapat memotong rantai sebelum meluas. Opsi A dan B baik tetapi kurang spesifik pada kecepatan. Opsi D berlebihan. Opsi E pesimis. Jawaban C mencerminkan pemahaman sifat eksponen bahwa intervensi dini sangat krusial."
+    }
+  ]
+}

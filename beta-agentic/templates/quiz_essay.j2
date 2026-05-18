@@ -1,0 +1,31 @@
+[TASK]
+Hasilkan 5 Pertanyaan Esai/Uraian untuk siswa jenjang {{ jenjang }}, kelas {{ kelas }}.
+Tujuan Pembelajaran (ATP): {{ atp }}
+
+[KONTEKS MATERI (RAG)]
+{{ rag_context }}
+
+{% if image_context %}
+[KONTEKS GAMBAR (MULTIMODAL)]
+Gambar-gambar berikut tersedia dari pencarian visual. Buat 1 pertanyaan spesifik yang mewajibkan siswa melihat gambar ini untuk menjawabnya. Sertakan path-nya di field `image_path` (jika tidak butuh gambar, biarkan null).
+Detail Gambar:
+{{ image_context }}
+{% endif %}
+
+ATURAN:
+1. Buat pertanyaan HANYA sesuai dengan Kriteria Level Target ({{ level }}).
+2. Jawaban harus berupa rubrik penilaian (kriteria apa yang membuat jawaban benar).
+3. Setiap pertanyaan harus diberi id unik yang diawali "e1", "e2", dst.
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "pertanyaan": [
+    {
+      "id": "e1",
+      "soal": "Pertanyaan esai yang menuntut pemikiran...",
+      "image_path": "lokasi/ke/gambar.jpg", // opsional, null jika tidak ada
+      "rubrik": "Siswa menyebutkan 3 poin utama: 1)... 2)... 3)...",
+      "placeholder": "Ketik jawabanmu di sini, berikan alasan yang tepat..."
+    }
+  ]
+}

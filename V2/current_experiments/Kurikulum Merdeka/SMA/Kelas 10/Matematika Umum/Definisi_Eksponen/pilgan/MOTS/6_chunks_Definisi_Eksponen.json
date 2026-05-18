@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "kurikulum": "Kurikulum Merdeka",
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Matematika Umum",
+    "bab_judul": "Eksponen",
+    "sub_bab": "Definisi Eksponen",
+    "task_type": "pilgan",
+    "level": "MOTS",
+    "source_file": "Matematika_Umum_6_chunk.json",
+    "est_tokens": {
+      "system": 752,
+      "user": 1460,
+      "assistant": 2185,
+      "total": 4398,
+      "max_seq_length": 6144,
+      "exceeds_budget": false
+    }
+  },
+  "system_prompt": "v3_2026-05",
+  "user_prompt": "[KRITERIA_PEMBELAJARAN_MENDALAM]\nLEVEL: MOTS (Mengaplikasi)\nTaxonomy: Bloom C3-C4 | SOLO Relational\nFokus: Implementasi teori ke situasi nyata untuk solusi inovatif.\nKedalaman: Analisis sebab-akibat, komparasi, kritik, sintesis hubungan antar-konsep secara holistik dan pendalaman pengetahuan.\n\n[KONTEKS_PEMBELAJARAN]\nMapel: Matematika Umum | Bab: Eksponen | Sub Bab: Definisi Eksponen | Target: MOTS\nATP: Menyatakan perkalian bilangan bulat berulang sebagai bilangan berpangkat (eksponen).\n\n--- MATERI ---\nEksponen merupakan konsep matematika yang sangat bermanfaat untuk memecahkan berbagai permasalahan nyata di kehidupan manusia. Beberapa fenomena di alam dan kehidupan sosial yang mengikuti pola pertumbuhan eksponen antara lain adalah pertumbuhan populasi penduduk dunia, proses pembelahan koloni sel bakteri, tingkat kecepatan penyebaran virus, hingga kecepatan peredaran informasi hoaks atau video yang menjadi viral di media sosial. Layaknya penyebaran virus yang berlipat ganda dari orang ke orang, daya tarik sebuah konten di media sosial dapat membuat penyebarannya melonjak dengan sangat cepat hingga menjangkau jutaan penonton.\n\nKonsep paling dasar dari eksponen berpijak pada istilah perkalian berulang. Perkalian berulang adalah perkalian yang dilakukan secara terus-menerus dengan menggunakan faktor bilangan yang sama. Penggunaan bilangan berpangkat akan sangat memudahkan kita untuk menyederhanakan bentuk penulisan dari perkalian berulang tersebut. Sebagai contoh dasar, operasi perkalian berulang bilangan dua yang dilakukan sebanyak enam kali, yaitu 2 x 2 x 2 x 2 x 2 x 2, dapat disederhanakan dan ditulis ke dalam bentuk pangkat sebagai 2^6. Hal yang sama juga berlaku untuk variabel matematika, misalnya a x a x a x a x a x a x a dapat dituliskan secara lebih singkat menjadi a^7.\n\nPenerapan eksponen dalam merepresentasikan perkalian berulang dapat diamati dengan jelas pada pola penyebaran pesan berantai atau hoaks. Jika diasumsikan satu orang menyebarkan sebuah hoaks kepada dua orang, lalu dua orang tersebut masing-masing menyebarkan kembali kepada dua orang lainnya, dan siklus ini terus berlanjut. Pola bilangan yang terbentuk dari situasi ini adalah perkalian berulang dari bilangan dua. Pada fase pertama jumlah penerima pesannya adalah 2^1, pada fase kedua menjadi 2 x 2 = 2^2, fase ketiga 2 x 2 x 2 = 2^3, fase keempat 2 x 2 x 2 x 2 = 2^4, dan begitu seterusnya.\n\nBerdasarkan pola perkalian berulang pada penyebaran pesan berantai yang selalu bertambah dan membesar secara konstan tersebut, kita dapat merumuskan sebuah formula umum. Jika banyak fase penyebaran sebuah pesan dinyatakan dengan variabel n, dan banyak orang yang mendapatkan hoaks di fase ke-n dinyatakan dengan variabel m, maka nilai m didapatkan dari 2 x 2 x 2 x 2 x... x 2 (sebanyak n kali). Dengan demikian, banyak orang yang menerima hoaks pada fase ke-n tersebut dapat dihitung secara cepat dan akurat menggunakan rumus matematis sederhana, yaitu m = 2^n.\n\nSecara definisi matematis formal, bilangan berpangkat atau yang lazim disebut sebagai eksponen dijabarkan melalui syarat dasar berikut: Jika nilai a adalah sebuah bilangan real dan nilai n adalah sebuah bilangan bulat positif, maka lambang a^n menyatakan hasil kali bilangan a tersebut secara berulang sebanyak n faktor. Bentuk perkalian berulangnya dapat secara matematis dituliskan dengan a^n = a x a x a x... x a (sebanyak n faktor). Di dalam penulisan notasi eksponen a^n ini, komponen a dinamakan sebagai bilangan pokok (atau basis), sedangkan komponen n disebut sebagai pangkat (atau eksponen).\n\nSelain pada kondisi pangkat bilangan bulat positif, definisi eksponen juga memiliki perluasan penting untuk kondisi lainnya dengan syarat bilangan pokok a tidak boleh sama dengan nol. Jika pangkatnya berupa bilangan bulat negatif, maka akan berlaku persamaan a^(-n) = (1/a)^n. Sementara itu, jika bentuk pangkatnya berupa bilangan pecahan, maka akan berlaku definisi a^(1/n) = p sedemikian sehingga p^n = a. Lebih lanjut, untuk bentuk bilangan dengan pangkat pecahan a^(m/n), nilainya akan setara dengan (a^(1/n))^m di mana m dan n adalah bilangan bulat positif.\n\n[TASK]\nHasilkan 10 soal Pilihan Ganda dalam format **JSON** dengan ketentuan:\n\n[STRUCTURE]\n{\"id\": \"SR-PG-01\", \"level\": \"\", \"stimulus\": \"\", \"question\": \"\", \"options\": {\"A\":\"\", \"B\":\"\", \"C\":\"\", \"D\":\"\", \"E\":\"\"}, \"answer\": \"\", \"explanation\": \"\"}\n\n[RULES]\n1. Stimulus: Berbasis data riil/fenomena faktual di Indonesia. Hindari skenario imajiner.\n2. Kualitas: Pengecoh (distractor) harus logis dan tingkat kesulitan sesuai dengan distribusi level pada [KRITERIA_PEMBELAJARAN_MENDALAM].\n3. Explanation: Gunakan format **Markdown** di dalam string JSON.",
+  "assistant_response": {
+    "soal": [
+      {
+        "id": "SR-PG-01",
+        "level": "MOTS",
+        "stimulus": "Berdasarkan data Kementerian Kominfo tahun 2023, penyebaran hoaks di media sosial sering mengikuti pola eksponensial. Sebuah pesan hoaks mulai menyebar dari satu akun. Setiap fase, setiap penerima pesan menyebarkannya ke dua akun baru yang belum pernah menerima pesan tersebut. Pola ini menghasilkan jumlah total akun yang telah menerima hoaks pada fase ke-n adalah 2^n.",
+        "question": "Jika pada fase ke-5 terdapat 32 akun yang menerima hoaks, dan pada fase ke-8 terdapat 256 akun, maka jumlah total akun yang menerima hoaks dari fase ke-5 hingga fase ke-8 (inklusif) adalah ...",
+        "options": {
+          "A": "480 akun",
+          "B": "496 akun",
+          "C": "512 akun",
+          "D": "528 akun",
+          "E": "544 akun"
+        },
+        "answer": "A",
+        "explanation": "Jumlah akun pada fase ke-5: 2^5 = 32. Fase ke-6: 2^6 = 64. Fase ke-7: 2^7 = 128. Fase ke-8: 2^8 = 256. Total = 32 + 64 + 128 + 256 = 480 akun."
+      },
+      {
+        "id": "SR-PG-02",
+        "level": "MOTS",
+        "stimulus": "Dalam sebuah studi simulasi penyebaran virus di Indonesia, seorang peneliti memodelkan jumlah sel bakteri yang terinfeksi. Awalnya terdapat 1 sel bakteri. Setiap jam, setiap sel membelah diri menjadi 2 sel baru. Jumlah sel setelah t jam dinyatakan dengan 2^t. Peneliti ingin mengetahui pada jam ke berapa jumlah sel mencapai 1.024.",
+        "question": "Berdasarkan model tersebut, jumlah sel bakteri akan mencapai 1.024 setelah ...",
+        "options": {
+          "A": "8 jam",
+          "B": "9 jam",
+          "C": "10 jam",
+          "D": "11 jam",
+          "E": "12 jam"
+        },
+        "answer": "C",
+        "explanation": "2^t = 1.024. Karena 2^10 = 1.024, maka t = 10 jam."
+      },
+      {
+        "id": "SR-PG-03",
+        "level": "MOTS",
+        "stimulus": "Seorang content creator di Indonesia mengamati bahwa video yang diunggahnya mendapat 1 penonton pada menit pertama. Setiap menit berikutnya, jumlah penonton baru yang menonton video tersebut adalah dua kali lipat dari jumlah penonton baru pada menit sebelumnya. Pola ini mengikuti fungsi eksponen 2^n, dengan n adalah menit ke-n.",
+        "question": "Jika pada menit ke-7 terdapat 128 penonton baru, maka jumlah total penonton baru dari menit ke-1 hingga menit ke-7 adalah ...",
+        "options": {
+          "A": "127 penonton",
+          "B": "254 penonton",
+          "C": "255 penonton",
+          "D": "256 penonton",
+          "E": "511 penonton"
+        },
+        "answer": "B",
+        "explanation": "Total penonton baru dari menit ke-1 hingga ke-7 = 2^1 + 2^2 + ... + 2^7 = 2 + 4 + 8 + 16 + 32 + 64 + 128 = 254 penonton."
+      },
+      {
+        "id": "SR-PG-04",
+        "level": "MOTS",
+        "stimulus": "Dalam sebuah eksperimen fisika di laboratorium sekolah di Indonesia, seorang siswa mengamati peluruhan zat radioaktif. Massa awal zat adalah 64 gram. Setiap 1 jam, massa zat berkurang menjadi setengahnya. Pola ini mengikuti fungsi 64 x (1/2)^t, dengan t dalam jam. Siswa ingin mengetahui massa zat setelah 5 jam.",
+        "question": "Massa zat radioaktif setelah 5 jam adalah ...",
+        "options": {
+          "A": "1 gram",
+          "B": "2 gram",
+          "C": "4 gram",
+          "D": "8 gram",
+          "E": "16 gram"
+        },
+        "answer": "B",
+        "explanation": "Massa setelah 5 jam = 64 x (1/2)^5 = 64 x 1/32 = 2 gram."
+      },
+      {
+        "id": "SR-PG-05",
+        "level": "MOTS",
+        "stimulus": "Seorang petani di Jawa Tengah mencatat pertumbuhan populasi hama wereng pada tanamannya. Populasi awal adalah 10 ekor. Setiap minggu, populasi hama bertambah menjadi 3 kali lipat. Petani ingin memprediksi populasi hama setelah 4 minggu menggunakan konsep eksponen.",
+        "question": "Populasi hama wereng setelah 4 minggu adalah ...",
+        "options": {
+          "A": "270 ekor",
+          "B": "540 ekor",
+          "C": "810 ekor",
+          "D": "1.620 ekor",
+          "E": "2.430 ekor"
+        },
+        "answer": "C",
+        "explanation": "Populasi setelah 4 minggu = 10 x 3^4 = 10 x 81 = 810 ekor."
+      },
+      {
+        "id": "SR-PG-06",
+        "level": "MOTS",
+        "stimulus": "Dalam sebuah simulasi penyebaran berita di aplikasi pesan instan yang banyak digunakan di Indonesia, seorang pengguna mengirimkan berita kepada 4 temannya. Setiap teman yang menerima berita kemudian mengirimkannya kepada 4 teman baru yang belum menerima berita tersebut. Pola ini berulang setiap fase. Jumlah penerima berita baru pada fase ke-n adalah 4^n.",
+        "question": "Jika proses berhenti setelah fase ke-3, maka jumlah total penerima berita baru (termasuk fase ke-1, ke-2, dan ke-3) adalah ...",
+        "options": {
+          "A": "21 orang",
+          "B": "64 orang",
+          "C": "84 orang",
+          "D": "85 orang",
+          "E": "256 orang"
+        },
+        "answer": "C",
+        "explanation": "Fase 1: 4^1 = 4. Fase 2: 4^2 = 16. Fase 3: 4^3 = 64. Total = 4 + 16 + 64 = 84 orang."
+      },
+      {
+        "id": "SR-PG-07",
+        "level": "MOTS",
+        "stimulus": "Seorang peneliti di LIPI mengamati pertumbuhan koloni bakteri dalam sebuah cawan petri. Awalnya terdapat 1 bakteri. Setiap 20 menit, bakteri membelah diri menjadi 2. Jumlah bakteri setelah n periode 20 menit adalah 2^n. Peneliti ingin mengetahui jumlah bakteri setelah 2 jam.",
+        "question": "Jumlah bakteri setelah 2 jam adalah ...",
+        "options": {
+          "A": "16 bakteri",
+          "B": "32 bakteri",
+          "C": "64 bakteri",
+          "D": "128 bakteri",
+          "E": "256 bakteri"
+        },
+        "answer": "C",
+        "explanation": "2 jam = 120 menit. Jumlah periode 20 menit = 120/20 = 6 periode. Jumlah bakteri = 2^6 = 64 bakteri."
+      },
+      {
+        "id": "SR-PG-08",
+        "level": "MOTS",
+        "stimulus": "Seorang guru di Indonesia memberikan tugas kepada siswa untuk menyelidiki pola pertumbuhan tanaman kacang hijau. Tinggi tanaman pada hari ke-1 adalah 2 cm. Setiap hari, tinggi tanaman bertambah menjadi dua kali lipat dari tinggi hari sebelumnya. Pola ini mengikuti fungsi 2^n, dengan n adalah hari ke-n. Siswa diminta menghitung tinggi tanaman pada hari ke-5.",
+        "question": "Tinggi tanaman kacang hijau pada hari ke-5 adalah ...",
+        "options": {
+          "A": "10 cm",
+          "B": "16 cm",
+          "C": "32 cm",
+          "D": "64 cm",
+          "E": "128 cm"
+        },
+        "answer": "C",
+        "explanation": "Tinggi pada hari ke-5 = 2^5 = 32 cm."
+      },
+      {
+        "id": "SR-PG-09",
+        "level": "MOTS",
+        "stimulus": "Seorang analis data di BPS (Badan Pusat Statistik) memodelkan pertumbuhan jumlah pengguna internet di Indonesia. Pada tahun 2020, jumlah pengguna internet adalah 100 juta jiwa. Setiap tahun, jumlah pengguna internet bertambah menjadi 1,1 kali lipat dari tahun sebelumnya. Model ini menggunakan eksponen dengan basis 1,1. Analis ingin memprediksi jumlah pengguna internet pada tahun 2024 (setelah 4 tahun).",
+        "question": "Jumlah pengguna internet pada tahun 2024 (dalam juta jiwa) adalah ...",
+        "options": {
+          "A": "146,41 juta",
+          "B": "161,05 juta",
+          "C": "177,16 juta",
+          "D": "194,87 juta",
+          "E": "214,36 juta"
+        },
+        "answer": "A",
+        "explanation": "Jumlah pengguna = 100 x (1,1)^4 = 100 x 1,4641 = 146,41 juta."
+      },
+      {
+        "id": "SR-PG-10",
+        "level": "MOTS",
+        "stimulus": "Seorang siswa di Indonesia melakukan percobaan dengan melipat selembar kertas menjadi dua bagian berulang kali. Setiap kali dilipat, jumlah lapisan kertas menjadi dua kali lipat. Awalnya kertas memiliki 1 lapisan. Setelah n kali lipatan, jumlah lapisan adalah 2^n. Siswa ingin mengetahui berapa kali lipatan yang diperlukan agar jumlah lapisan mencapai 512.",
+        "question": "Jumlah lipatan yang diperlukan agar kertas memiliki 512 lapisan adalah ...",
+        "options": {
+          "A": "7 kali",
+          "B": "8 kali",
+          "C": "9 kali",
+          "D": "10 kali",
+          "E": "11 kali"
+        },
+        "answer": "C",
+        "explanation": "2^n = 512. Karena 2^9 = 512, maka n = 9 kali lipatan."
+      }
+    ]
+  }
+}

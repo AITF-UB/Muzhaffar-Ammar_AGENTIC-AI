@@ -1,0 +1,23 @@
+[TASK]
+Hasilkan 5 Soal Pilihan Ganda (PG) khusus untuk PRETEST penentuan level awal siswa.
+Mata Pelajaran: {{ matpel }}, Elemen: {{ elemen }}
+
+[KONTEKS MATERI (RAG)]
+{{ rag_context }}
+
+ATURAN:
+1. Soal pretest harus mengukur tingkat pemahaman siswa dari konsep dasar hingga terapan. Gradasi kesulitan: Soal 1-2 (LOTS), Soal 3-4 (MOTS), Soal 5 (HOTS).
+2. Field "jawaban" adalah INDEX INTEGER dari array pilihan (0, 1, 2, atau 3).
+3. Beri id unik diawali "pretest_".
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "soal": [
+    {
+      "id": "pretest_{{ elemen }}_1",
+      "soal": "Pertanyaan konsep dasar...",
+      "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D"],
+      "jawaban": 0
+    }
+  ]
+}

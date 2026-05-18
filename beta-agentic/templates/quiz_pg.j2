@@ -1,0 +1,33 @@
+[TASK]
+Hasilkan 10 Soal Pilihan Ganda (PG) untuk siswa jenjang {{ jenjang }}, kelas {{ kelas }}.
+Tujuan Pembelajaran (ATP): {{ atp }}
+
+[KONTEKS MATERI (RAG)]
+{{ rag_context }}
+
+{% if image_context %}
+[KONTEKS GAMBAR (MULTIMODAL)]
+Gambar-gambar berikut tersedia dari pencarian visual. Buat 1 atau 2 soal spesifik yang mewajibkan siswa melihat gambar ini untuk menjawabnya. Sertakan path-nya di field `image_path` (jika tidak butuh gambar, biarkan null).
+Detail Gambar:
+{{ image_context }}
+{% endif %}
+
+ATURAN:
+1. Buat soal HANYA sesuai dengan Kriteria Level Target ({{ level }}).
+2. Jawaban benar HANYA 1.
+3. Field "jawaban" adalah INDEX INTEGER dari array pilihan (0, 1, 2, atau 3), BUKAN teks jawabannya!
+4. Setiap soal harus diberi id unik yang diawali "q1", "q2", dst.
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "soal": [
+    {
+      "id": "q1",
+      "soal": "Pertanyaan lugas tanpa basa-basi...",
+      "image_path": "lokasi/ke/gambar.jpg", // opsional, gunakan null jika tidak ada gambar
+      "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D"],
+      "jawaban": 2, // Index dari pilihan yang benar (berarti Opsi C)
+      "penjelasan": "Penjelasan mengapa jawaban tersebut benar dan yang lain salah, secara logis."
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "kurikulum": "Kurikulum Merdeka",
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Matematika Umum",
+    "bab_judul": "Eksponen",
+    "sub_bab": "Definisi Eksponen",
+    "task_type": "pilgan",
+    "level": "LOTS",
+    "source_file": "Matematika_Umum_6_chunk.json",
+    "est_tokens": {
+      "system": 752,
+      "user": 1470,
+      "assistant": 2011,
+      "total": 4234,
+      "max_seq_length": 6144,
+      "exceeds_budget": false
+    }
+  },
+  "system_prompt": "v3_2026-05",
+  "user_prompt": "[KRITERIA_PEMBELAJARAN_MENDALAM]\nLEVEL: LOTS (Memahami)\nTaxonomy: Bloom C1-C2 | SOLO Unistructural & Multistructural\nFokus: Koneksi pengetahuan baru dengan pengalaman harian dan konteks dasar.\nKedalaman: Identifikasi, deskripsi, prosedur sederhana, pengetahuan esensial, pengetahuan aplikatif, pengetahuan nilai dan karakter.\n\n[KONTEKS_PEMBELAJARAN]\nMapel: Matematika Umum | Bab: Eksponen | Sub Bab: Definisi Eksponen | Target: LOTS\nATP: Menyatakan perkalian bilangan bulat berulang sebagai bilangan berpangkat (eksponen).\n\n--- MATERI ---\nEksponen merupakan konsep matematika yang sangat bermanfaat untuk memecahkan berbagai permasalahan nyata di kehidupan manusia. Beberapa fenomena di alam dan kehidupan sosial yang mengikuti pola pertumbuhan eksponen antara lain adalah pertumbuhan populasi penduduk dunia, proses pembelahan koloni sel bakteri, tingkat kecepatan penyebaran virus, hingga kecepatan peredaran informasi hoaks atau video yang menjadi viral di media sosial. Layaknya penyebaran virus yang berlipat ganda dari orang ke orang, daya tarik sebuah konten di media sosial dapat membuat penyebarannya melonjak dengan sangat cepat hingga menjangkau jutaan penonton.\n\nKonsep paling dasar dari eksponen berpijak pada istilah perkalian berulang. Perkalian berulang adalah perkalian yang dilakukan secara terus-menerus dengan menggunakan faktor bilangan yang sama. Penggunaan bilangan berpangkat akan sangat memudahkan kita untuk menyederhanakan bentuk penulisan dari perkalian berulang tersebut. Sebagai contoh dasar, operasi perkalian berulang bilangan dua yang dilakukan sebanyak enam kali, yaitu 2 x 2 x 2 x 2 x 2 x 2, dapat disederhanakan dan ditulis ke dalam bentuk pangkat sebagai 2^6. Hal yang sama juga berlaku untuk variabel matematika, misalnya a x a x a x a x a x a x a dapat dituliskan secara lebih singkat menjadi a^7.\n\nPenerapan eksponen dalam merepresentasikan perkalian berulang dapat diamati dengan jelas pada pola penyebaran pesan berantai atau hoaks. Jika diasumsikan satu orang menyebarkan sebuah hoaks kepada dua orang, lalu dua orang tersebut masing-masing menyebarkan kembali kepada dua orang lainnya, dan siklus ini terus berlanjut. Pola bilangan yang terbentuk dari situasi ini adalah perkalian berulang dari bilangan dua. Pada fase pertama jumlah penerima pesannya adalah 2^1, pada fase kedua menjadi 2 x 2 = 2^2, fase ketiga 2 x 2 x 2 = 2^3, fase keempat 2 x 2 x 2 x 2 = 2^4, dan begitu seterusnya.\n\nBerdasarkan pola perkalian berulang pada penyebaran pesan berantai yang selalu bertambah dan membesar secara konstan tersebut, kita dapat merumuskan sebuah formula umum. Jika banyak fase penyebaran sebuah pesan dinyatakan dengan variabel n, dan banyak orang yang mendapatkan hoaks di fase ke-n dinyatakan dengan variabel m, maka nilai m didapatkan dari 2 x 2 x 2 x 2 x... x 2 (sebanyak n kali). Dengan demikian, banyak orang yang menerima hoaks pada fase ke-n tersebut dapat dihitung secara cepat dan akurat menggunakan rumus matematis sederhana, yaitu m = 2^n.\n\nSecara definisi matematis formal, bilangan berpangkat atau yang lazim disebut sebagai eksponen dijabarkan melalui syarat dasar berikut: Jika nilai a adalah sebuah bilangan real dan nilai n adalah sebuah bilangan bulat positif, maka lambang a^n menyatakan hasil kali bilangan a tersebut secara berulang sebanyak n faktor. Bentuk perkalian berulangnya dapat secara matematis dituliskan dengan a^n = a x a x a x... x a (sebanyak n faktor). Di dalam penulisan notasi eksponen a^n ini, komponen a dinamakan sebagai bilangan pokok (atau basis), sedangkan komponen n disebut sebagai pangkat (atau eksponen).\n\nSelain pada kondisi pangkat bilangan bulat positif, definisi eksponen juga memiliki perluasan penting untuk kondisi lainnya dengan syarat bilangan pokok a tidak boleh sama dengan nol. Jika pangkatnya berupa bilangan bulat negatif, maka akan berlaku persamaan a^(-n) = (1/a)^n. Sementara itu, jika bentuk pangkatnya berupa bilangan pecahan, maka akan berlaku definisi a^(1/n) = p sedemikian sehingga p^n = a. Lebih lanjut, untuk bentuk bilangan dengan pangkat pecahan a^(m/n), nilainya akan setara dengan (a^(1/n))^m di mana m dan n adalah bilangan bulat positif.\n\n[TASK]\nHasilkan 10 soal Pilihan Ganda dalam format **JSON** dengan ketentuan:\n\n[STRUCTURE]\n{\"id\": \"SR-PG-01\", \"level\": \"\", \"stimulus\": \"\", \"question\": \"\", \"options\": {\"A\":\"\", \"B\":\"\", \"C\":\"\", \"D\":\"\", \"E\":\"\"}, \"answer\": \"\", \"explanation\": \"\"}\n\n[RULES]\n1. Stimulus: Berbasis data riil/fenomena faktual di Indonesia. Hindari skenario imajiner.\n2. Kualitas: Pengecoh (distractor) harus logis dan tingkat kesulitan sesuai dengan distribusi level pada [KRITERIA_PEMBELAJARAN_MENDALAM].\n3. Explanation: Gunakan format **Markdown** di dalam string JSON.",
+  "assistant_response": {
+    "soal": [
+      {
+        "id": "SR-PG-01",
+        "level": "LOTS",
+        "stimulus": "Berdasarkan data Kementerian Komunikasi dan Informatika, pada tahun 2022 terdapat lebih dari 1.700 konten hoaks yang teridentifikasi di media sosial. Pola penyebaran hoaks sering mengikuti pola eksponensial, di mana satu orang menyebarkan ke dua orang, lalu masing-masing menyebarkan ke dua orang lainnya, dan seterusnya.",
+        "question": "Jika pada fase pertama penyebaran hoaks terdapat 2 orang penerima, maka bentuk perkalian berulang yang tepat untuk menyatakan jumlah penerima pada fase ke-5 adalah...",
+        "options": {
+          "A": "2 x 2 x 2 x 2 x 2",
+          "B": "2 x 2 x 2 x 2",
+          "C": "2 x 2 x 2",
+          "D": "2 x 2",
+          "E": "2"
+        },
+        "answer": "A",
+        "explanation": "Pada fase ke-5, pola penyebaran hoaks menunjukkan bahwa jumlah penerima adalah hasil perkalian bilangan 2 sebanyak 5 kali, yaitu 2 x 2 x 2 x 2 x 2. Hal ini sesuai dengan definisi eksponen sebagai perkalian berulang, di mana 2^5 = 2 x 2 x 2 x 2 x 2."
+      },
+      {
+        "id": "SR-PG-02",
+        "level": "LOTS",
+        "stimulus": "Seorang siswa diminta menuliskan bentuk perkalian berulang dari 3 x 3 x 3 x 3 x 3 ke dalam bentuk bilangan berpangkat.",
+        "question": "Bentuk bilangan berpangkat yang tepat untuk perkalian berulang 3 x 3 x 3 x 3 x 3 adalah...",
+        "options": {
+          "A": "3^4",
+          "B": "3^5",
+          "C": "3^6",
+          "D": "5^3",
+          "E": "3^3"
+        },
+        "answer": "B",
+        "explanation": "Perkalian berulang 3 x 3 x 3 x 3 x 3 menunjukkan bilangan 3 dikalikan sebanyak 5 kali. Oleh karena itu, bentuk bilangan berpangkat yang tepat adalah 3^5, di mana 3 adalah bilangan pokok (basis) dan 5 adalah pangkat (eksponen)."
+      },
+      {
+        "id": "SR-PG-03",
+        "level": "LOTS",
+        "stimulus": "Dalam sebuah studi tentang penyebaran informasi di media sosial, ditemukan bahwa satu unggahan viral dapat dilihat oleh 2 orang pada menit pertama, lalu 4 orang pada menit kedua, 8 orang pada menit ketiga, dan seterusnya mengikuti pola perkalian berulang.",
+        "question": "Berdasarkan pola tersebut, jumlah penonton pada menit ke-4 dapat dinyatakan dalam bentuk bilangan berpangkat sebagai...",
+        "options": {
+          "A": "2^3",
+          "B": "2^4",
+          "C": "2^5",
+          "D": "4^2",
+          "E": "8^2"
+        },
+        "answer": "B",
+        "explanation": "Pola menunjukkan jumlah penonton pada menit ke-1 adalah 2 = 2^1, menit ke-2 adalah 4 = 2^2, menit ke-3 adalah 8 = 2^3, sehingga pada menit ke-4 jumlahnya adalah 2 x 2 x 2 x 2 = 16, yang dapat ditulis sebagai 2^4."
+      },
+      {
+        "id": "SR-PG-04",
+        "level": "LOTS",
+        "stimulus": "Dalam sebuah eksperimen biologi, satu bakteri membelah diri menjadi 2 setiap jam. Jumlah bakteri setelah 6 jam dapat dihitung menggunakan konsep eksponen.",
+        "question": "Bentuk perkalian berulang yang menyatakan jumlah bakteri setelah 6 jam adalah...",
+        "options": {
+          "A": "2 x 2 x 2 x 2 x 2 x 2",
+          "B": "2 x 2 x 2 x 2 x 2",
+          "C": "2 x 2 x 2 x 2",
+          "D": "2 x 2 x 2",
+          "E": "2 x 2"
+        },
+        "answer": "A",
+        "explanation": "Setiap jam bakteri membelah menjadi 2, sehingga setelah 6 jam terjadi perkalian berulang bilangan 2 sebanyak 6 kali, yaitu 2 x 2 x 2 x 2 x 2 x 2. Hal ini sesuai dengan definisi eksponen sebagai perkalian berulang."
+      },
+      {
+        "id": "SR-PG-05",
+        "level": "LOTS",
+        "stimulus": "Seorang siswa menuliskan bentuk bilangan berpangkat dari perkalian berulang a x a x a x a x a sebanyak 7 kali.",
+        "question": "Bentuk bilangan berpangkat yang benar untuk perkalian berulang tersebut adalah...",
+        "options": {
+          "A": "a^5",
+          "B": "a^6",
+          "C": "a^7",
+          "D": "7^a",
+          "E": "a^8"
+        },
+        "answer": "C",
+        "explanation": "Perkalian berulang a x a x a x a x a x a x a menunjukkan bilangan a dikalikan sebanyak 7 kali. Oleh karena itu, bentuk bilangan berpangkat yang tepat adalah a^7, dengan a sebagai basis dan 7 sebagai eksponen."
+      },
+      {
+        "id": "SR-PG-06",
+        "level": "LOTS",
+        "stimulus": "Berdasarkan data Badan Pusat Statistik (BPS), jumlah penduduk Indonesia pada tahun 2020 mencapai 270 juta jiwa. Pertumbuhan penduduk sering dimodelkan dengan fungsi eksponensial.",
+        "question": "Jika pertumbuhan penduduk suatu daerah mengikuti pola 2^n, maka nilai n pada fase ke-3 adalah...",
+        "options": {
+          "A": "1",
+          "B": "2",
+          "C": "3",
+          "D": "4",
+          "E": "5"
+        },
+        "answer": "C",
+        "explanation": "Pada fase ke-3, nilai n dalam pola 2^n adalah 3, sehingga jumlah penduduk pada fase tersebut adalah 2^3 = 8. Hal ini menunjukkan bahwa n merupakan bilangan yang menyatakan banyaknya faktor perkalian berulang."
+      },
+      {
+        "id": "SR-PG-07",
+        "level": "LOTS",
+        "stimulus": "Seorang guru matematika menjelaskan bahwa bentuk 5^4 dapat diuraikan menjadi perkalian berulang.",
+        "question": "Bentuk perkalian berulang dari 5^4 adalah...",
+        "options": {
+          "A": "5 x 5 x 5",
+          "B": "5 x 5 x 5 x 5",
+          "C": "4 x 4 x 4 x 4 x 4",
+          "D": "5 x 4",
+          "E": "4 x 5"
+        },
+        "answer": "B",
+        "explanation": "Bentuk 5^4 memiliki basis 5 dan eksponen 4, yang berarti bilangan 5 dikalikan secara berulang sebanyak 4 kali, yaitu 5 x 5 x 5 x 5."
+      },
+      {
+        "id": "SR-PG-08",
+        "level": "LOTS",
+        "stimulus": "Dalam sebuah permainan tradisional, seorang anak menyebarkan undangan kepada 3 teman, lalu setiap teman menyebarkan kepada 3 teman lainnya, dan seterusnya.",
+        "question": "Bentuk bilangan berpangkat yang menyatakan jumlah total undangan yang tersebar pada fase ke-2 adalah...",
+        "options": {
+          "A": "3^1",
+          "B": "3^2",
+          "C": "3^3",
+          "D": "2^3",
+          "E": "2^2"
+        },
+        "answer": "B",
+        "explanation": "Pada fase ke-1, jumlah undangan adalah 3 = 3^1. Pada fase ke-2, setiap 3 orang menyebarkan ke 3 orang lainnya, sehingga totalnya menjadi 3 x 3 = 9, yang dapat ditulis sebagai 3^2."
+      },
+      {
+        "id": "SR-PG-09",
+        "level": "LOTS",
+        "stimulus": "Seorang siswa diminta mengidentifikasi basis dan eksponen dari bentuk bilangan berpangkat 7^3.",
+        "question": "Dalam bentuk bilangan berpangkat 7^3, yang merupakan basis adalah...",
+        "options": {
+          "A": "7",
+          "B": "3",
+          "C": "21",
+          "D": "10",
+          "E": "4"
+        },
+        "answer": "A",
+        "explanation": "Dalam notasi eksponen a^n, a disebut basis (bilangan pokok) dan n disebut eksponen (pangkat). Pada 7^3, basisnya adalah 7 dan eksponennya adalah 3."
+      },
+      {
+        "id": "SR-PG-10",
+        "level": "LOTS",
+        "stimulus": "Berdasarkan data penyebaran hoaks di Indonesia, satu pesan hoaks dapat menyebar ke 2 orang dalam 1 menit, lalu ke 4 orang dalam 2 menit, dan ke 8 orang dalam 3 menit.",
+        "question": "Jumlah orang yang menerima hoaks pada menit ke-6 dapat dinyatakan dalam bentuk bilangan berpangkat sebagai...",
+        "options": {
+          "A": "2^5",
+          "B": "2^6",
+          "C": "2^7",
+          "D": "6^2",
+          "E": "8^2"
+        },
+        "answer": "B",
+        "explanation": "Pola penyebaran menunjukkan bahwa pada menit ke-n, jumlah penerima adalah 2^n. Dengan demikian, pada menit ke-6, jumlahnya adalah 2^6, yang merupakan perkalian berulang bilangan 2 sebanyak 6 kali."
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+[TASK]
+Hasilkan materi BACAAN (modul pembelajaran) berformat Markdown yang dibungkus dalam JSON.
+Materi ini ditujukan untuk siswa jenjang {{ jenjang }}, kelas {{ kelas }}.
+Tujuan Pembelajaran (ATP): {{ atp }}
+
+[KONTEKS MATERI (RAG - Single Source of Truth)]
+Teks Referensi:
+{{ rag_context }}
+
+ATURAN KONTEN:
+1. Jadikan Teks Referensi (RAG) sebagai sumber fakta satu-satunya. Dilarang mengarang fakta/teori di luar referensi.
+2. Tulis ulang dengan penjelasan sebab-akibat yang tajam dan sesuaikan kerumitan kosakatanya dengan Level Target ({{ level }}).
+3. Gunakan alur SCQ pada paragraf pertama. Awali dengan masalah/fakta riil dari konteks Indonesia (jangan gunakan kata "bayangkan").
+4. Di akhir, berikan satu Pertanyaan Refleksi Tajam.
+5. [PENTING UNTUK MATEMATIKA/FISIKA]: Cerita masalah (SCQ) di awal HARUS terhubung LANGSUNG secara logis dengan variabel dan angka pada contoh soal. Jangan membuat cerita krisis yang terpisah/tidak relevan dari persamaan matematikanya!
+6. JABARKAN SEMUA LANGKAH PERHITUNGAN ATAU LOGIKA SECARA DETAIL TAHAP DEMI TAHAP. DILARANG KERAS meloncati langkah penyelesaian (misalnya tiba-tiba menulis "setelah diselesaikan didapatkan x=..."). Tunjukkan proses substitusi/eliminasinya.
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "text": "# [Judul Naratif & Memikat]\n\n## [Sub-heading yang bercerita]\n[Isi materi lengkap dalam format Markdown murni, menggunakan heading, list, atau bold/italic secara rapi]\n\n👉 **Pertanyaan Refleksi**: ...",
+  "source": []
+}
+Catatan: "source" kembalikan array kosong [], sistem Python yang akan mengisinya secara otomatis.

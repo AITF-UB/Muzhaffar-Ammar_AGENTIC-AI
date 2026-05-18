@@ -1,0 +1,203 @@
+### BASE URL
+@baseUrl = http://localhost:8000
+
+### =================================================================
+### 1. MATEMATIKA (Kelas X)
+### =================================================================
+
+### Matematika - Generate Bacaan (Low)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "mat",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
+  "materi_id": "mat__spltv",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
+  "tipe": "bacaan",
+  "level": "Low"
+}
+
+### Matematika - Generate Quiz Pilihan Ganda (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "mat",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
+  "materi_id": "mat__spltv",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
+  "tipe": "quiz_pg",
+  "level": "Mid"
+}
+
+
+### =================================================================
+### 2. IPS (Sosiologi - Kelas X)
+### =================================================================
+
+### IPS - Generate Flashcard (High)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "ips",
+  "elemen_id": "sosiologi",
+  "elemen_label": "Pemahaman Sosial",
+  "materi": "Gejala Sosial di Lingkungan Sekitar",
+  "materi_id": "ips__gejala_sosial",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Siswa mampu menganalisis berbagai gejala sosial di masyarakat dari berbagai perspektif sosiologi.",
+  "tipe": "flashcard",
+  "level": "High"
+}
+
+### IPS - Generate Quiz Essay (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "ips",
+  "elemen_id": "sosiologi",
+  "elemen_label": "Pemahaman Sosial",
+  "materi": "Gejala Sosial di Lingkungan Sekitar",
+  "materi_id": "ips__gejala_sosial",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Siswa mampu menganalisis berbagai gejala sosial di masyarakat dari berbagai perspektif sosiologi.",
+  "tipe": "quiz_essay",
+  "level": "Mid"
+}
+
+
+### =================================================================
+### 3. BAHASA INDONESIA (Kelas X)
+### =================================================================
+
+### Bahasa Indonesia - Generate Mindmap
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "Teks Laporan Hasil Observasi (LHO)",
+  "materi_id": "bindo__teks_lho",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Siswa mengevaluasi informasi yang tidak akurat dan bias dalam paparan teks Laporan Hasil Observasi.",
+  "tipe": "mindmap",
+  "level": null
+}
+
+
+### =================================================================
+### 4. CONTOH ENDPOINT LAINNYA
+### =================================================================
+
+### REGENERATE (Refinement oleh Guru)
+# Catatan: konten_id ini didapat dari response /konten/generate sebelumnya
+POST {{baseUrl}}/konten/regenerate
+Content-Type: application/json
+
+{
+  "konten_id": "konten_mat_spltv_bacaan_low_1234567890",
+  "mapel_id": "mat",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
+  "materi_id": "mat__spltv",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
+  "tipe": "bacaan",
+  "level": "Low",
+  "instruksi_revisi": "Tolong gunakan contoh buah-buahan lokal Indonesia seperti Manggis dan Rambutan dalam soal cerita SPLTV."
+}
+
+### RAG INSIGHT (Motivasi)
+POST {{baseUrl}}/rag/insight
+Content-Type: application/json
+
+{
+  "siswa_id": "s_001",
+  "nama": "Andi Setiawan",
+  "streak": 5,
+  "total_topik": 3,
+  "total_poin_kuiz": 450,
+  "total_durasi": 120
+}
+
+### EVALUASI ESSAY
+POST {{baseUrl}}/siswa/s_001/quiz/essay
+Content-Type: application/json
+
+{
+  "publish_id": "pub_123",
+  "mapel_id": "ips",
+  "elemen_id": "sosiologi",
+  "elemen_label": "Pemahaman Sosial",
+  "materi": "Gejala Sosial",
+  "materi_id": "ips__gejala_sosial",
+  "level": "Mid",
+  "soal": {
+    "e1": "Berikan satu contoh gejala sosial di lingkungan sekitarmu dan jelaskan dampaknya!"
+  },
+  "rubrik": {
+    "e1": "Siswa menyebutkan masalah nyata (seperti kemiskinan atau pengangguran) dan memberikan analisis sebab-akibat struktural."
+  },
+  "jawaban": {
+    "e1": "Menurut saya, kemiskinan adalah contoh gejala sosial karena dipengaruhi oleh struktur ekonomi masyarakat secara luas dan bukan sekadar masalah individu malas."
+  }
+}
+
+### RAG REKOMENDASI 1 (Baru Selesai Matematika SPLTV)
+POST {{baseUrl}}/rag/rekomendasi
+Content-Type: application/json
+
+{
+  "siswa_id": "s_001",
+  "levels": {
+    "mat__spltv": "Mid",
+    "ips__gejala_sosial": "High"
+  },
+  "sudah_selesai_ids": ["mat__spltv", "ips__gejala_sosial"],
+  "sedang_dipelajari_ids": []
+}
+
+### RAG REKOMENDASI 2 (Sedang Kesulitan di Sosiologi)
+POST {{baseUrl}}/rag/rekomendasi
+Content-Type: application/json
+
+{
+  "siswa_id": "s_002",
+  "levels": {
+    "ips__interaksi_sosial": "Low"
+  },
+  "sudah_selesai_ids": [],
+  "sedang_dipelajari_ids": ["ips__interaksi_sosial"]
+}
+
+### RAG REKOMENDASI 3 (Pintar Bahasa Indonesia, Sedang Belajar Puisi)
+POST {{baseUrl}}/rag/rekomendasi
+Content-Type: application/json
+
+{
+  "siswa_id": "s_003",
+  "levels": {
+    "bindo__teks_cerpen": "High",
+    "bindo__puisi": "Mid"
+  },
+  "sudah_selesai_ids": ["bindo__teks_cerpen"],
+  "sedang_dipelajari_ids": ["bindo__puisi"]
+}

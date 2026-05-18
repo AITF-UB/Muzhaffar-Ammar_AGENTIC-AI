@@ -8,6 +8,11 @@ Swagger UI: http://127.0.0.1:8000/docs
 """
 
 import os
+from dotenv import load_dotenv
+
+# Load .env SEBELUM import router_agent (env dibaca saat module load)
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"), override=False)
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, ConfigDict
@@ -16,6 +21,15 @@ import json
 
 from router_agent import router_agent_app
 from router_state import AgentState
+
+# [EKSPERIMENTAL] Multimodal agent (quiz + image retrieval)
+try:
+    from router_agent_multimodal import router_agent_multimodal_app
+    from router_state import AgentState as MultimodalAgentState
+    _MULTIMODAL_AVAILABLE = True
+except Exception as _mm_err:
+    _MULTIMODAL_AVAILABLE = False
+    print(f"⚠️  Multimodal agent tidak tersedia: {_mm_err}")
 
 # ================================================================
 # 1. APP INITIALIZATION
@@ -217,6 +231,8 @@ def _build_initial_state(task: str, request_params: dict) -> AgentState:
         "evaluasi_uraian_result": "",
         "rag_query_result": "",
         "final_payload": {},
+        # [EKSPERIMENTAL] Field untuk multimodal image data
+        "quiz_image_data": "",
     }
 
 
@@ -373,3 +389,87 @@ def run_rekomendasi(request: RekomendasiRequest):
 # ================================================================
 os.environ["LANGSMITH_TRACING"] = os.getenv("LANGSMITH_TRACING", "false")
 os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "")
+
+
+# ================================================================
+# 11. [EKSPERIMENTAL] MULTIMODAL ENDPOINTS
+#     Input sama persis dengan /agent/quiz dan /agent/quiz_uraian.
+#     Output DITAMBAH field "gambar_konteks" dengan 2 strategi:
+#       - clip_images:     CLIP semantic search (max 2)
+#       - metadata_images: dari has_visual_content di metadata chunk
+# ================================================================
+
+def _run_graph_multimodal(task: str, request_params: dict) -> tuple[dict, list[str]]:
+    """Jalankan multimodal agent graph. Fallback ke regular jika tidak tersedia."""
+    if not _MULTIMODAL_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Multimodal agent tidak tersedia. Pastikan CLIP model bisa diload."
+        )
+    initial_state = _build_initial_state(task, request_params)
+
+    final_payload  = {}
+    nodes_executed = []
+    for step in router_agent_multimodal_app.stream(initial_state, stream_mode="updates"):
+        for node_name, node_data in step.items():
+            nodes_executed.append(node_name)
+            if node_name == "structurer":
+                final_payload = node_data.get("final_payload", {})
+    return final_payload, nodes_executed
+
+
+@app.post("/agent/quiz_multimodal", response_model=AgentResponse,
+          tags=["Eksperimental — Multimodal"])
+def run_quiz_multimodal(request: TeacherContentRequest):
+    """
+    **[EKSPERIMENTAL]** Generate soal **Quiz PG** + retrieval **gambar relevan** (2 strategi).
+
+    Output sama dengan `/agent/quiz`, ditambah field `gambar_konteks`:
+    ```json
+    {
+      "gambar_konteks": {
+        "clip_images":     [...],   // CLIP semantic search (max 2)
+        "metadata_images": [...],   // dari has_visual_content di metadata
+        "summary": { "clip_count": 2, "metadata_count": 1, ... }
+      }
+    }
+    ```
+    Gunakan endpoint ini untuk **membandingkan** hasil 2 strategi retrieval gambar.
+    """
+    payload, nodes = _run_graph_multimodal("quiz", request.model_dump())
+    return AgentResponse(
+        status="success",
+        task="quiz_multimodal",
+        nodes_executed=nodes,
+        output=payload
+    )
+
+
+@app.post("/agent/quiz_uraian_multimodal", response_model=AgentResponse,
+          tags=["Eksperimental — Multimodal"])
+def run_quiz_uraian_multimodal(request: TeacherContentRequest):
+    """
+    **[EKSPERIMENTAL]** Generate soal **Quiz Uraian** + retrieval **gambar relevan** (2 strategi).
+
+    Output sama dengan `/agent/quiz_uraian`, ditambah field `gambar_konteks`:
+    ```json
+    {
+      "gambar_konteks": {
+        "clip_images":     [...],   // CLIP semantic search (max 2)
+        "metadata_images": [...],   // dari has_visual_content di metadata
+        "summary": { "clip_count": 2, "metadata_count": 1, ... }
+      }
+    }
+    ```
+    Gunakan endpoint ini untuk **membandingkan** hasil 2 strategi retrieval gambar.
+    """
+    payload, nodes = _run_graph_multimodal("quiz_uraian", request.model_dump())
+    return AgentResponse(
+        status="success",
+        task="quiz_uraian_multimodal",
+        nodes_executed=nodes,
+        output=payload
+    )
+    
+os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGSMITH_PROJECT"] = "alpha-router-agent"  

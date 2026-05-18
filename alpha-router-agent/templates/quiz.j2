@@ -29,7 +29,11 @@ Referensi dari Buku Ajar:
 ---
 {{ konteks }}
 ---
-
+{% if visual_assets %}
+Terdapat visual (gambar/tabel) yang dapat menunjang soal berikut:
+{{ visual_assets }}
+Kamu BOLEH (opsional) menggunakan visual ini sebagai referensi konteks dalam soal. Jika digunakan, sertakan field "image": "path_gambar" dalam JSON soal tersebut.
+{% endif %}
 Format output JSON Array (tepat 10 item):
-[{"nomor": 1, "level": "{{ level }}", "atp_ke": 1, "pertanyaan": "Teks soal level {{ level }}...", "pilihan": {"A": "...", "B": "...", "C": "...", "D": "..."}, "jawaban_benar": "A", "pembahasan": "Penjelasan mengapa A benar dan pilihan lain salah.", "sumber": "{{ sumber_text }}"}]
+[{"nomor": 1, "level": "{{ level }}", "atp_ke": 1, "pertanyaan": "Teks soal level {{ level }}...", "pilihan": {"A": "...", "B": "...", "C": "...", "D": "..."}, "jawaban_benar": "A", "pembahasan": "Penjelasan mengapa A benar dan pilihan lain salah.", "sumber": "{{ sumber_text }}"{% if visual_assets %}, "image": "path_gambar"{% endif %}}]
 {% endif %}

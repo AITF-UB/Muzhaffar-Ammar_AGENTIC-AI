@@ -17,49 +17,105 @@ from router_tools import (
 # ================================================================
 # 1. LLM SETUP
 # ================================================================
-from huggingface_hub import InferenceClient
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.outputs import ChatResult, ChatGeneration
+# ─── Mode Selection ──────────────────────────────────────────────────────────
 
-HF_TOKEN = os.getenv("HF_TOKEN", "")
+COLAB_LLM_URL = "" # os.getenv("COLAB_LLM_URL", "").strip()
+HF_TOKEN      = os.getenv("HF_TOKEN")
 
-class HFChatModel(BaseChatModel):
-    client: InferenceClient = None
-    model_id: str = "Qwen/Qwen2.5-7B-Instruct"
-    temperature: float = 0.3
-    max_tokens: int = 2000
+if COLAB_LLM_URL:
+    # ── Mode Colab: OpenAI-compatible endpoint (vLLM di Colab + ngrok) ────────
+    _MAX_TOKENS      = int(os.getenv("LLM_MAX_TOKENS",      "4096"))
+    _MAX_TOKENS_LONG = int(os.getenv("LLM_MAX_TOKENS_LONG", "8192"))
+    print(f"🌐 [LLM MODE] Colab via ngrok → {COLAB_LLM_URL}")
+    print(f"   max_tokens={_MAX_TOKENS} | max_tokens_long={_MAX_TOKENS_LONG}")
+    from openai import OpenAI as _OpenAIClient
+    from langchain_core.language_models.chat_models import BaseChatModel
+    from langchain_core.outputs import ChatResult, ChatGeneration
 
-    class Config:
-        arbitrary_types_allowed = True
+    _COLAB_MODEL_ID = os.getenv("COLAB_MODEL_ID", "Qwen/Qwen2.5-7B-Instruct")
+    _colab_client   = _OpenAIClient(base_url=COLAB_LLM_URL, api_key="colab-local")
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.client = InferenceClient(model=self.model_id, token=HF_TOKEN)
+    class HFChatModel(BaseChatModel):
+        """Drop-in replacement yang hit Colab vLLM via ngrok."""
+        max_tokens: int = _MAX_TOKENS
+        temperature: float = 0.3
 
-    @property
-    def _llm_type(self) -> str:
-        return "hf-chat"
+        class Config:
+            arbitrary_types_allowed = True
 
-    def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
-        hf_msgs = []
-        for msg in messages:
-            if isinstance(msg, SystemMessage):
-                hf_msgs.append({"role": "system",    "content": msg.content})
-            elif isinstance(msg, HumanMessage):
-                hf_msgs.append({"role": "user",      "content": msg.content})
-            elif isinstance(msg, AIMessage):
-                hf_msgs.append({"role": "assistant", "content": msg.content})
-            else:
-                hf_msgs.append({"role": "user",      "content": str(msg.content)})
-        response = self.client.chat_completion(
-            messages=hf_msgs, max_tokens=self.max_tokens,
-            temperature=self.temperature, stop=stop or [],
-        )
-        content = response.choices[0].message.content
-        return ChatResult(generations=[ChatGeneration(message=AIMessage(content=content))])
+        @property
+        def _llm_type(self) -> str:
+            return "colab-vllm"
+
+        def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
+            oai_msgs = []
+            for msg in messages:
+                if isinstance(msg, SystemMessage):
+                    oai_msgs.append({"role": "system",    "content": msg.content})
+                elif isinstance(msg, HumanMessage):
+                    oai_msgs.append({"role": "user",      "content": msg.content})
+                elif isinstance(msg, AIMessage):
+                    oai_msgs.append({"role": "assistant", "content": msg.content})
+                else:
+                    oai_msgs.append({"role": "user",      "content": str(msg.content)})
+
+            response = _colab_client.chat.completions.create(
+                model=_COLAB_MODEL_ID,
+                messages=oai_msgs,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                stop=stop or [],
+            )
+            content = response.choices[0].message.content
+            return ChatResult(generations=[ChatGeneration(message=AIMessage(content=content))])
+
+else:
+    # ── Mode HuggingFace Inference API (default) ──────────────────────────────
+    _MAX_TOKENS      = int(os.getenv("LLM_MAX_TOKENS",      "2000"))
+    _MAX_TOKENS_LONG = int(os.getenv("LLM_MAX_TOKENS_LONG", "3000"))
+    print(f"🤗 [LLM MODE] HuggingFace Inference API")
+    print(f"   max_tokens={_MAX_TOKENS} | max_tokens_long={_MAX_TOKENS_LONG}")
+    from huggingface_hub import InferenceClient
+    from langchain_core.language_models.chat_models import BaseChatModel
+    from langchain_core.outputs import ChatResult, ChatGeneration
+
+    class HFChatModel(BaseChatModel):
+        client: InferenceClient = None
+        model_id: str = "Qwen/Qwen2.5-7B-Instruct"
+        temperature: float = 0.3
+        max_tokens: int = _MAX_TOKENS
+
+        class Config:
+            arbitrary_types_allowed = True
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            self.client = InferenceClient(model=self.model_id, token=HF_TOKEN)
+
+        @property
+        def _llm_type(self) -> str:
+            return "hf-chat"
+
+        def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
+            hf_msgs = []
+            for msg in messages:
+                if isinstance(msg, SystemMessage):
+                    hf_msgs.append({"role": "system",    "content": msg.content})
+                elif isinstance(msg, HumanMessage):
+                    hf_msgs.append({"role": "user",      "content": msg.content})
+                elif isinstance(msg, AIMessage):
+                    hf_msgs.append({"role": "assistant", "content": msg.content})
+                else:
+                    hf_msgs.append({"role": "user",      "content": str(msg.content)})
+            response = self.client.chat_completion(
+                messages=hf_msgs, max_tokens=self.max_tokens,
+                temperature=self.temperature, stop=stop or [],
+            )
+            content = response.choices[0].message.content
+            return ChatResult(generations=[ChatGeneration(message=AIMessage(content=content))])
 
 llm      = HFChatModel()
-llm_long = HFChatModel(max_tokens=3000)
+llm_long = HFChatModel(max_tokens=_MAX_TOKENS_LONG)
 
 def _chat(system: str, user: str) -> str:
     return llm.invoke([SystemMessage(content=system), HumanMessage(content=user)]).content.strip()
@@ -393,6 +449,15 @@ def quiz_node(state: AgentState) -> dict:
     ctx   = "\n---\n".join(d.page_content.strip() for d in docs)
     sumber_text = _get_sumber_from_docs(docs)
 
+    visual_assets = []
+    for d in docs:
+        if d.metadata and "has_visual_content" in d.metadata:
+            v = d.metadata["has_visual_content"]
+            if isinstance(v, list): visual_assets.extend(v)
+            elif isinstance(v, str): visual_assets.append(v)
+    visual_assets_str = "\n- ".join(list(set(visual_assets)))
+    if visual_assets_str: visual_assets_str = "- " + visual_assets_str
+
     hasil = {}
     for level in ("LOTS", "MOTS", "HOTS"):
         sys_p = render_system("quiz.j2",
@@ -401,7 +466,8 @@ def quiz_node(state: AgentState) -> dict:
         usr_p = render_user("quiz.j2",
                             level=level, matpel=matpel, materi=materi,
                             jenjang=jenjang, kelas=kelas, elemen=elemen,
-                            atp_str=atp_str, konteks=ctx, sumber_text=sumber_text)
+                            atp_str=atp_str, konteks=ctx, sumber_text=sumber_text,
+                            visual_assets=visual_assets_str)
         
         raw       = _chat(system=sys_p, user=usr_p)
         parsed    = clean_json_from_llm(raw)
@@ -475,6 +541,15 @@ def quiz_uraian_node(state: AgentState) -> dict:
     ctx   = "\n---\n".join(d.page_content.strip() for d in docs)
     sumber_text = _get_sumber_from_docs(docs)
 
+    visual_assets = []
+    for d in docs:
+        if d.metadata and "has_visual_content" in d.metadata:
+            v = d.metadata["has_visual_content"]
+            if isinstance(v, list): visual_assets.extend(v)
+            elif isinstance(v, str): visual_assets.append(v)
+    visual_assets_str = "\n- ".join(list(set(visual_assets)))
+    if visual_assets_str: visual_assets_str = "- " + visual_assets_str
+
     hasil = {}
     for level in ("LOTS", "MOTS", "HOTS"):
         sys_p = render_system("quiz_uraian.j2",
@@ -483,7 +558,8 @@ def quiz_uraian_node(state: AgentState) -> dict:
         usr_p = render_user("quiz_uraian.j2",
                             level=level, matpel=matpel, materi=materi,
                             jenjang=jenjang, kelas=kelas, elemen=elemen,
-                            atp_str=atp_str, konteks=ctx, sumber_text=sumber_text)
+                            atp_str=atp_str, konteks=ctx, sumber_text=sumber_text,
+                            visual_assets=visual_assets_str)
         
         raw       = _chat(system=sys_p, user=usr_p)
         parsed    = clean_json_from_llm(raw)

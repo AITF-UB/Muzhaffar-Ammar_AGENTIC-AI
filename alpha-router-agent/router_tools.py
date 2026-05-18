@@ -248,23 +248,61 @@ LEVEL_INSTRUKSI = {
 # 3. Utility Functions
 # ================================================================
 
-def clean_json_from_llm(raw_text: str) -> dict:
+def clean_json_from_llm(raw_text: str) -> dict | list:
     """Fallback JSON parser tangguh untuk mengekstrak string JSON kotor dari LLM."""
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
 
+    # Cari posisi pertama { dan [
+    idx_brace = clean_text.find('{')
+    idx_bracket = clean_text.find('[')
+
+    # Tentukan mana yang muncul duluan
+    is_array = False
+    if idx_bracket != -1 and (idx_brace == -1 or idx_bracket < idx_brace):
+        is_array = True
+
+    if is_array:
+        # Coba parse sebagai array []
+        start_idx = idx_bracket
+        end_idx = clean_text.rfind(']')
+        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            try:
+                return json.loads(clean_text[start_idx:end_idx+1])
+            except json.JSONDecodeError:
+                pass
+        
+        # Fallback: jika gagal, mungkin kepotong, coba parsing paksa
+        text_to_parse = clean_text[start_idx:].strip()
+        
+        # Bersihkan trailing comma jika ada (misal kepotong di "},")
+        if text_to_parse.endswith(','):
+            text_to_parse = text_to_parse[:-1]
+            
+        try:
+            # Mencoba menambahkan ] di akhir kalau terpotong pas setelah object selesai
+            return json.loads(text_to_parse + ']')
+        except json.JSONDecodeError:
+            pass
+            
+        try:
+            # Mencoba menambahkan }] di akhir kalau terpotong di tengah object
+            return json.loads(text_to_parse + '}]')
+        except json.JSONDecodeError:
+            pass
+
+    # Coba parse sebagai object {}
     start_idx = clean_text.find('{')
-    end_idx   = clean_text.rfind('}')
+    end_idx = clean_text.rfind('}')
     if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
         try:
             return json.loads(clean_text[start_idx:end_idx+1])
         except json.JSONDecodeError:
             pass
-
-    start_idx = clean_text.find('[')
-    end_idx   = clean_text.rfind(']')
-    if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            
+    # Fallback: coba paksa dengan menambahkan }
+    if start_idx != -1:
         try:
-            return json.loads(clean_text[start_idx:end_idx+1])
+            return json.loads(clean_text[start_idx:] + '}')
         except json.JSONDecodeError:
             pass
 

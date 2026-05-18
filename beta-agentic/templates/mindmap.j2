@@ -1,0 +1,30 @@
+[TASK]
+Hasilkan kerangka Mindmap (Peta Konsep Hierarki) untuk materi: {{ materi }} ({{ matpel }}).
+Mindmap ini HARUS mencakup struktur dari hulu ke hilir berdasarkan konteks.
+
+[KONTEKS MATERI (RAG)]
+{{ rag_context }}
+
+ATURAN:
+1. `id` harus unik, misal "n1", "n2", dst.
+2. `parent_id` menunjuk ke id node induk. Node akar utama (Root) harus memiliki `parent_id`: null.
+3. `penjelasan` adalah tooltip singkat (1-2 kalimat) saat node di-hover. Boleh string kosong "" untuk node akar jika tidak perlu penjelasan.
+4. Buat setidaknya 3-4 tingkat hierarki jika memungkinkan.
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Gagasan Utama",
+      "parent_id": null,
+      "penjelasan": ""
+    },
+    {
+      "id": "n2",
+      "label": "Cabang Pertama",
+      "parent_id": "n1",
+      "penjelasan": "Deskripsi singkat mengenai cabang pertama."
+    }
+  ]
+}

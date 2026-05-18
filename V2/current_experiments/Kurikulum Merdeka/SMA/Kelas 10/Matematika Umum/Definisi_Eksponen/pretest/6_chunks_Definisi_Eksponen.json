@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "kurikulum": "Kurikulum Merdeka",
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Matematika Umum",
+    "bab_judul": "Eksponen",
+    "sub_bab": "Definisi Eksponen",
+    "task_type": "pretest",
+    "level": null,
+    "source_file": "Matematika_Umum_6_chunk.json",
+    "est_tokens": {
+      "system": 752,
+      "user": 1654,
+      "assistant": 2197,
+      "total": 4604,
+      "max_seq_length": 6144,
+      "exceeds_budget": false
+    }
+  },
+  "system_prompt": "v3_2026-05",
+  "user_prompt": "[KRITERIA_PEMBELAJARAN_MENDALAM]\nLEVEL: LOTS (Memahami)\nTaxonomy: Bloom C1-C2 | SOLO Unistructural & Multistructural\nFokus: Koneksi pengetahuan baru dengan pengalaman harian dan konteks dasar.\nKedalaman: Identifikasi, deskripsi, prosedur sederhana, pengetahuan esensial, pengetahuan aplikatif, pengetahuan nilai dan karakter.\n\nLEVEL: MOTS (Mengaplikasi)\nTaxonomy: Bloom C3-C4 | SOLO Relational\nFokus: Implementasi teori ke situasi nyata untuk solusi inovatif.\nKedalaman: Analisis sebab-akibat, komparasi, kritik, sintesis hubungan antar-konsep secara holistik dan pendalaman pengetahuan.\n\nLEVEL: HOTS (Merefleksi)\nTaxonomy: Bloom C5-C6 | SOLO Extended Abstract\nFokus: Metakognisi, regulasi diri, dan integrasi konsep ke isu global (e.g., iklim, ketahanan pangan).\nKedalaman: Formulasi hipotesis, penciptaan nilai tambah (creative output), generalisasi materi dasar dan kemampuan regulasi diri.\n\n[KONTEKS_PEMBELAJARAN]\nMapel: Matematika Umum | Bab: Eksponen | Sub Bab: Definisi Eksponen\nATP: Menyatakan perkalian bilangan bulat berulang sebagai bilangan berpangkat (eksponen).\n\n--- MATERI ---\nEksponen merupakan konsep matematika yang sangat bermanfaat untuk memecahkan berbagai permasalahan nyata di kehidupan manusia. Beberapa fenomena di alam dan kehidupan sosial yang mengikuti pola pertumbuhan eksponen antara lain adalah pertumbuhan populasi penduduk dunia, proses pembelahan koloni sel bakteri, tingkat kecepatan penyebaran virus, hingga kecepatan peredaran informasi hoaks atau video yang menjadi viral di media sosial. Layaknya penyebaran virus yang berlipat ganda dari orang ke orang, daya tarik sebuah konten di media sosial dapat membuat penyebarannya melonjak dengan sangat cepat hingga menjangkau jutaan penonton.\n\nKonsep paling dasar dari eksponen berpijak pada istilah perkalian berulang. Perkalian berulang adalah perkalian yang dilakukan secara terus-menerus dengan menggunakan faktor bilangan yang sama. Penggunaan bilangan berpangkat akan sangat memudahkan kita untuk menyederhanakan bentuk penulisan dari perkalian berulang tersebut. Sebagai contoh dasar, operasi perkalian berulang bilangan dua yang dilakukan sebanyak enam kali, yaitu 2 x 2 x 2 x 2 x 2 x 2, dapat disederhanakan dan ditulis ke dalam bentuk pangkat sebagai 2^6. Hal yang sama juga berlaku untuk variabel matematika, misalnya a x a x a x a x a x a x a dapat dituliskan secara lebih singkat menjadi a^7.\n\nPenerapan eksponen dalam merepresentasikan perkalian berulang dapat diamati dengan jelas pada pola penyebaran pesan berantai atau hoaks. Jika diasumsikan satu orang menyebarkan sebuah hoaks kepada dua orang, lalu dua orang tersebut masing-masing menyebarkan kembali kepada dua orang lainnya, dan siklus ini terus berlanjut. Pola bilangan yang terbentuk dari situasi ini adalah perkalian berulang dari bilangan dua. Pada fase pertama jumlah penerima pesannya adalah 2^1, pada fase kedua menjadi 2 x 2 = 2^2, fase ketiga 2 x 2 x 2 = 2^3, fase keempat 2 x 2 x 2 x 2 = 2^4, dan begitu seterusnya.\n\nBerdasarkan pola perkalian berulang pada penyebaran pesan berantai yang selalu bertambah dan membesar secara konstan tersebut, kita dapat merumuskan sebuah formula umum. Jika banyak fase penyebaran sebuah pesan dinyatakan dengan variabel n, dan banyak orang yang mendapatkan hoaks di fase ke-n dinyatakan dengan variabel m, maka nilai m didapatkan dari 2 x 2 x 2 x 2 x... x 2 (sebanyak n kali). Dengan demikian, banyak orang yang menerima hoaks pada fase ke-n tersebut dapat dihitung secara cepat dan akurat menggunakan rumus matematis sederhana, yaitu m = 2^n.\n\nSecara definisi matematis formal, bilangan berpangkat atau yang lazim disebut sebagai eksponen dijabarkan melalui syarat dasar berikut: Jika nilai a adalah sebuah bilangan real dan nilai n adalah sebuah bilangan bulat positif, maka lambang a^n menyatakan hasil kali bilangan a tersebut secara berulang sebanyak n faktor. Bentuk perkalian berulangnya dapat secara matematis dituliskan dengan a^n = a x a x a x... x a (sebanyak n faktor). Di dalam penulisan notasi eksponen a^n ini, komponen a dinamakan sebagai bilangan pokok (atau basis), sedangkan komponen n disebut sebagai pangkat (atau eksponen).\n\nSelain pada kondisi pangkat bilangan bulat positif, definisi eksponen juga memiliki perluasan penting untuk kondisi lainnya dengan syarat bilangan pokok a tidak boleh sama dengan nol. Jika pangkatnya berupa bilangan bulat negatif, maka akan berlaku persamaan a^(-n) = (1/a)^n. Sementara itu, jika bentuk pangkatnya berupa bilangan pecahan, maka akan berlaku definisi a^(1/n) = p sedemikian sehingga p^n = a. Lebih lanjut, untuk bentuk bilangan dengan pangkat pecahan a^(m/n), nilainya akan setara dengan (a^(1/n))^m di mana m dan n adalah bilangan bulat positif.\n\n[TASK]\nHasilkan 10 soal Pilihan Ganda dalam format **JSON** dengan distribusi soal 70% LOTS, 20% MOTS, 10% HOTS.\n\n[STRUCTURE]\n{\"id\": \"SR-PR-01\", \"level\": \"\", \"stimulus\": \"\", \"question\": \"\", \"options\": {\"A\":\"\", \"B\":\"\", \"C\":\"\", \"D\":\"\", \"E\":\"\"}, \"answer\": \"\", \"explanation\": \"\"}\n\n[RULES]\n1. Stimulus: Berbasis data riil/fenomena faktual di Indonesia. Hindari skenario imajiner.\n2. Kualitas: Pengecoh (distractor) harus logis dan tingkat kesulitan sesuai dengan distribusi level pada [KRITERIA_PEMBELAJARAN_MENDALAM].\n3. Explanation: Gunakan format **Markdown** di dalam string JSON.",
+  "assistant_response": [
+    {
+      "id": "SR-PR-01",
+      "level": "LOTS",
+      "stimulus": "Pada tahun 2024, sebuah video pendek tentang kuliner viral di media sosial. Video tersebut ditonton oleh 2 orang pada menit pertama, lalu setiap menitnya jumlah penonton bertambah menjadi 2 kali lipat dari menit sebelumnya. Pada menit ke-5, jumlah penonton dapat dihitung dengan konsep eksponen.",
+      "question": "Bentuk perpangkatan yang tepat untuk menyatakan jumlah penonton pada menit ke-5 adalah ...",
+      "options": {
+        "A": "2^4",
+        "B": "2^5",
+        "C": "5^2",
+        "D": "2×5",
+        "E": "5×2"
+      },
+      "answer": "B",
+      "explanation": "Pada menit ke-1 terdapat 2 penonton (2^1). Setiap menit jumlahnya berlipat dua, sehingga pada menit ke-5 terjadi perkalian berulang 2 sebanyak 5 kali: 2×2×2×2×2 = 2^5. Jadi jawaban yang benar adalah 2^5."
+    },
+    {
+      "id": "SR-PR-02",
+      "level": "LOTS",
+      "stimulus": "Berdasarkan data Kementerian Kesehatan RI, penyebaran virus COVID-19 di suatu daerah mengikuti pola eksponensial. Jika pada hari pertama terdapat 3 kasus, dan setiap hari kasus baru bertambah menjadi 3 kali lipat dari hari sebelumnya.",
+      "question": "Banyaknya kasus baru pada hari ke-4 dapat dinyatakan dalam bentuk perpangkatan ...",
+      "options": {
+        "A": "3^3",
+        "B": "3^4",
+        "C": "4^3",
+        "D": "3×4",
+        "E": "4×3"
+      },
+      "answer": "B",
+      "explanation": "Hari ke-1: 3 = 3^1. Hari ke-2: 3×3 = 3^2. Hari ke-3: 3×3×3 = 3^3. Hari ke-4: 3×3×3×3 = 3^4. Jadi bentuk perpangkatannya adalah 3^4."
+    },
+    {
+      "id": "SR-PR-03",
+      "level": "LOTS",
+      "stimulus": "Dalam sebuah percobaan di laboratorium, bakteri E. coli membelah diri menjadi 2 setiap 30 menit. Mulanya terdapat 1 bakteri.",
+      "question": "Setelah 3 jam, banyak bakteri dapat ditulis sebagai ...",
+      "options": {
+        "A": "2^3",
+        "B": "2^6",
+        "C": "2^9",
+        "D": "6^2",
+        "E": "3^6"
+      },
+      "answer": "B",
+      "explanation": "Setiap 30 menit membelah, 3 jam = 180 menit = 6 periode. Setiap periode terjadi perkalian 2. Jadi banyak bakteri = 2×2×2×2×2×2 = 2^6."
+    },
+    {
+      "id": "SR-PR-04",
+      "level": "LOTS",
+      "stimulus": "Dalam matematika, eksponen digunakan untuk menyederhanakan bentuk perkalian berulang. Perhatikan perkalian berikut: 5×5×5×5×5.",
+      "question": "Bentuk eksponen dari perkalian tersebut adalah ...",
+      "options": {
+        "A": "5^4",
+        "B": "5^5",
+        "C": "4^5",
+        "D": "5×5",
+        "E": "5+5"
+      },
+      "answer": "B",
+      "explanation": "Perkalian 5 sebanyak 5 kali ditulis sebagai 5^5. Bilangan pokok (basis) adalah 5 dan pangkatnya adalah 5."
+    },
+    {
+      "id": "SR-PR-05",
+      "level": "LOTS",
+      "stimulus": "Seorang siswa menuliskan bentuk perpangkatan dari 2×2×2×2×2×2. Ia ingin mengetahui nilai pangkat yang tepat.",
+      "question": "Bentuk perpangkatan yang benar adalah ...",
+      "options": {
+        "A": "2^5",
+        "B": "2^6",
+        "C": "6^2",
+        "D": "2×6",
+        "E": "6×2"
+      },
+      "answer": "B",
+      "explanation": "Angka 2 diulang sebanyak 6 kali, sehingga ditulis 2^6. Basis adalah 2, eksponen adalah 6."
+    },
+    {
+      "id": "SR-PR-06",
+      "level": "LOTS",
+      "stimulus": "Dalam penyebaran hoaks, satu orang menyebarkan ke 3 orang, masing-masing menyebarkan ke 3 orang lagi, dan seterusnya.",
+      "question": "Jika proses berlangsung hingga fase ke-3, jumlah penerima hoaks pada fase ke-3 adalah ...",
+      "options": {
+        "A": "3^2",
+        "B": "3^3",
+        "C": "3^4",
+        "D": "9",
+        "E": "27"
+      },
+      "answer": "B",
+      "explanation": "Fase 1: 3 = 3^1. Fase 2: 3×3 = 3^2. Fase 3: 3×3×3 = 3^3 = 27. Jadi bentuk perpangkatan yang tepat adalah 3^3."
+    },
+    {
+      "id": "SR-PR-07",
+      "level": "LOTS",
+      "stimulus": "Bentuk umum eksponen untuk bilangan real a dan bilangan bulat positif n adalah a^n = a×a×a×...×a (sebanyak n faktor).",
+      "question": "Manakah dari berikut ini yang merupakan contoh penerapan definisi eksponen?",
+      "options": {
+        "A": "4^3 = 4×4×4",
+        "B": "4^3 = 3×3×3×3",
+        "C": "4^3 = 4+4+4",
+        "D": "4^3 = 3+3+3+3",
+        "E": "4^3 = 4×3"
+      },
+      "answer": "A",
+      "explanation": "Sesuai definisi, a^n = a×a×...×a sebanyak n kali. Maka 4^3 = 4×4×4."
+    },
+    {
+      "id": "SR-PR-08",
+      "level": "MOTS",
+      "stimulus": "Di media sosial, sebuah konten hoaks menyebar dengan pola: setiap orang yang menerima hoaks akan menyebarkannya ke 4 orang lain pada fase berikutnya. Pada fase ke-1, ada 1 orang penyebar.",
+      "question": "Setelah fase ke-4, total orang yang telah menerima hoaks (termasuk penyebar awal) adalah 341 orang. Pola ini sesuai dengan konsep eksponen. Jika banyak penerima pada fase ke-n adalah 4^(n-1), berapa jumlah penerima baru pada fase ke-3?",
+      "options": {
+        "A": "4^2",
+        "B": "4^3",
+        "C": "4^4",
+        "D": "4^1",
+        "E": "4^0"
+      },
+      "answer": "A",
+      "explanation": "Fase ke-3 berarti n=3, maka penerima baru = 4^(3-1) = 4^2 = 16. Jadi jawabannya 4^2."
+    },
+    {
+      "id": "SR-PR-09",
+      "level": "MOTS",
+      "stimulus": "Seorang peneliti mengamati pertumbuhan populasi bakteri. Mula-mula ada 5 bakteri. Setiap 20 menit, jumlah bakteri menjadi 2 kali lipat. Setelah 2 jam, peneliti mencatat jumlah bakteri sebanyak 5 × 2^6.",
+      "question": "Interpretasi yang tepat dari bentuk 5 × 2^6 adalah ...",
+      "options": {
+        "A": "5 bakteri awal dikali 2 sebanyak 6 kali",
+        "B": "5 bakteri awal ditambah 2 sebanyak 6 kali",
+        "C": "5 bakteri awal dikali 2 sebanyak 6 kali lalu ditambah 5",
+        "D": "2 bakteri awal dikali 5 sebanyak 6 kali",
+        "E": "5 bakteri awal dipangkatkan 6 lalu dikali 2"
+      },
+      "answer": "A",
+      "explanation": "5 × 2^6 artinya bakteri awal 5 dikalikan dengan 2 yang dipangkatkan 6, yaitu terjadi 6 kali pelipatgandaan. Setiap pelipatgandaan mengalikan dengan 2, sehingga total = 5 × 2 × 2 × ... (6 kali) = 5 × 2^6."
+    },
+    {
+      "id": "SR-PR-10",
+      "level": "HOTS",
+      "stimulus": "Penyebaran hoaks di Indonesia seringkali mengikuti pola eksponensial. Misalkan pada suatu aplikasi pesan, setiap pengguna yang menerima hoaks akan meneruskannya ke 2 orang baru. Jika pada menit ke-0 hanya ada 1 orang yang menyebarkan, maka jumlah total orang yang telah menerima hoaks setelah n menit adalah 2^n - 1. Seorang aktivis literasi digital ingin merancang kampanye untuk menghentikan penyebaran hoaks. Ia menyadari bahwa jika setiap orang yang menerima hoaks hanya meneruskannya ke 1 orang saja (bukan 2), maka penyebaran menjadi linear.",
+      "question": "Berdasarkan informasi tersebut, mana pernyataan berikut yang paling tepat menggambarkan hubungan antara pola eksponensial dan linear dalam konteks penyebaran hoaks?",
+      "options": {
+        "A": "Pola eksponensial lebih lambat daripada pola linear karena pertumbuhan yang berlipat.",
+        "B": "Pola linear menghasilkan jumlah penerima yang lebih besar daripada pola eksponensial dalam waktu yang sama.",
+        "C": "Perubahan dari pola eksponensial ke linear secara signifikan memperlambat laju penyebaran hoaks.",
+        "D": "Pola eksponensial dan linear menghasilkan jumlah penerima yang sama pada setiap fase.",
+        "E": "Pola linear tidak dapat dihentikan karena pertumbuhannya yang cepat."
+      },
+      "answer": "C",
+      "explanation": "Pola eksponensial (meneruskan ke 2 orang) menyebabkan pertumbuhan sangat cepat: setiap fase jumlahnya berlipat. Jika setiap orang hanya meneruskan ke 1 orang, maka pertumbuhan menjadi linear (setiap fase hanya bertambah 1). Perubahan ini secara drastis memperlambat penyebaran, karena pada eksponensial jumlah penerima setelah n fase adalah 2^n -1, sedangkan linear hanya n. Jadi, mengubah pola dari eksponensial ke linear merupakan strategi efektif untuk memperlambat laju penyebaran hoaks."
+    }
+  ]
+}

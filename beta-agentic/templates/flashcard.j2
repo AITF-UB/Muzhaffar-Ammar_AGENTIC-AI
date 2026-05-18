@@ -1,0 +1,24 @@
+[TASK]
+Hasilkan 5-10 Kartu Flashcard interaktif untuk mereviu konsep utama.
+Jenjang: {{ jenjang }}, Kelas: {{ kelas }}.
+Level Kedalaman: {{ level }}.
+
+[KONTEKS MATERI (RAG)]
+{{ rag_context }}
+
+ATURAN:
+1. Sisi depan (depan) berisi istilah, konsep, pertanyaan pemicu, atau studi kasus pendek.
+2. Sisi belakang (belakang) berisi definisi lugas, jawaban, atau logika sebab-akibat.
+3. Keseimbangan: Jangan terlalu pendek sehingga membingungkan, jangan terlalu panjang seperti paragraf buku.
+
+STRUKTUR JSON YANG DIWAJIBKAN:
+{
+  "cards": [
+    {
+      "depan": "Istilah atau Pertanyaan Singkat",
+      "belakang": "Definisi atau Jawaban yang informatif"
+    }
+  ],
+  "source": []
+}
+Catatan: "source" kembalikan array kosong [], sistem Python yang akan mengisinya secara otomatis.

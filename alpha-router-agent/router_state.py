@@ -69,3 +69,8 @@ class AgentState(TypedDict):
     # 8. Final Output JSON
     # ================================================================
     final_payload: Dict[str, Any]
+
+    # ================================================================
+    # 9. [EKSPERIMENTAL] Multimodal — Image data
+    # ================================================================
+    quiz_image_data: str  # JSON string gambar_konteks (clip + metadata)
