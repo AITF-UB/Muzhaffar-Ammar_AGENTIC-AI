@@ -24,26 +24,66 @@ def retrieve_node(state: AgentState) -> dict:
     """Melakukan pencarian ke Qdrant menggunakan RAGEngine."""
     tipe = state["tipe"]
     req = state["request_params"]
-    query = f"{req['elemen_label']} {req.get('materi', '')}".strip()
     
-    rag_results = RAGEngine.unified_search(query, tipe)
+    # Fokuskan query RAG HANYA pada elemen dan materi.
+    query = f"{req.get('materi', '')}".strip()
+    
+    # Mapping sederhana dari mapel_id ke string di metadata Qdrant
+    mapel_mapping = {
+        "bahasa_indonesia": "Bahasa Indonesia",
+        "bindo": "Bahasa Indonesia",
+        "matematika_umum": "Matematika",
+        "mat": "Matematika",
+        "matematika": "Matematika",
+        "mtk": "Matematika",
+        "ips": "IPS"
+    }
+    raw_mapel = req.get("mapel_id", "")
+    mapel_key = raw_mapel.lower().replace(" ", "_")
+    mapel_str = mapel_mapping.get(mapel_key, raw_mapel)
+    
+    # Ekstrak angka kelas dari jenjang (mendukung angka & romawi)
+    jenjang_str = str(req.get("jenjang", "")).lower().strip()
+    kelas_int = None
+    
+    roman_map = {"X": 10, "xi": 11, "xii": 12}
+    if jenjang_str in roman_map:
+        kelas_int = roman_map[jenjang_str]
+    else:
+        digits = ''.join(filter(str.isdigit, jenjang_str))
+        if digits:
+            kelas_int = int(digits)
+    
+    rag_results = RAGEngine.unified_search(query, tipe, mapel=mapel_str, kelas=kelas_int)
     
     # Format texts
-    text_ctx = "\n---\n".join([f"{t['text']}" for t in rag_results["text"]])
+    text_ctx_parts = []
+    for t in rag_results["text"]:
+        part = t["text"]
+        vis = t.get("visual_context", [])
+        if isinstance(vis, str):
+            vis = [vis]
+        if vis:
+            vis_str = ", ".join([os.path.basename(v) for v in vis])
+            part = f"[Referensi File Gambar: {vis_str}]\n" + part
+        text_ctx_parts.append(part)
+        
+    text_ctx = "\n---\n".join(text_ctx_parts)
     sumber = extract_source(rag_results["text"])
     
     # Format images (multimodal constraint)
-    img_ctx_list = []
-    for img_path in rag_results["images"]:
-        img_ctx_list.append({
-            "image_path": img_path,
-            "filename": os.path.basename(img_path)
-        })
+    # Build formatted image context string
+    img_ctx_str = ""
+    if rag_results["images"]:
+        for idx, img_path in enumerate(rag_results["images"]):
+            img_ctx_str += f"Gambar {idx+1}:\n"
+            img_ctx_str += f"- filename: {os.path.basename(img_path)}\n"
+            img_ctx_str += f"- image_path: {img_path}\n\n"
         
     return {
         "rag_context": text_ctx if text_ctx else "Tidak ada dokumen relevan di database.",
         "sumber_text": sumber,
-        "image_context": img_ctx_list
+        "image_context": img_ctx_str.strip()
     }
 
 def generate_node(state: AgentState) -> dict:
@@ -52,21 +92,14 @@ def generate_node(state: AgentState) -> dict:
     req = state["request_params"]
     lvl = state["level"]
     
-    # 1. Pretest Logic (hidden generation if first run)
-    pretest_data = None
-    # We simulate checking if it's the first run. 
-    # For MVP beta-agentic, we always generate it if pretest is missing and it's 'bacaan' (as a trigger).
-    if tipe == "bacaan" and not state.get("pretest_data"):
-        pretest_sys = load_prompt("system.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), level="Campuran")
-        pretest_usr = load_prompt("pretest.j2", matpel=req["mapel_id"], elemen=req["elemen_id"], rag_context=state["rag_context"])
-        pt_res = llm.invoke([SystemMessage(content=pretest_sys), HumanMessage(content=pretest_usr)])
-        pretest_data = clean_json_from_llm(pt_res.content)
-    
+
     # 2. Main Generation
     sys_prompt = load_prompt("system.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), level=lvl)
     
     if tipe == "bacaan":
-        usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=lvl)
+        usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=lvl)
+    elif tipe == "pretest":
+        usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=lvl)
     elif tipe == "quiz_pg":
         usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=lvl)
     elif tipe == "quiz_essay":
@@ -88,8 +121,7 @@ def generate_node(state: AgentState) -> dict:
     content_dict = clean_json_from_llm(response.content)
     
     return {
-        "generated_content": content_dict,
-        "pretest_data": pretest_data if pretest_data else state.get("pretest_data")
+        "generated_content": content_dict
     }
 
 def evaluator_node(state: AgentState) -> dict:
@@ -98,7 +130,7 @@ def evaluator_node(state: AgentState) -> dict:
         return {"evaluator_result": {"skor": 100, "poin_revisi": []}}
 
     req = state["request_params"]
-    sys_prompt = "Kamu adalah Evaluator JSON dan Konten Pendidikan yang sangat ketat (Killer Grader)."
+    sys_prompt = "Kamu adalah Evaluator JSON dan Konten Pendidikan."
     usr_prompt = load_prompt(
         "evaluator.j2",
         materi=req.get("materi", ""),
@@ -127,12 +159,20 @@ def structurer_node(state: AgentState) -> dict:
     req = state["request_params"]
     content = state["generated_content"]
     
-    # Auto-inject source for bacaan and flashcard if LLM didn't (or if we strictly override)
-    if tipe == "bacaan" or tipe == "flashcard":
+    # Mapping format JSON dari V3 (judul_utama & konten_markdown) menjadi 'text' untuk frontend
+    if tipe == "bacaan":
+        if isinstance(content, dict):
+            if "judul_utama" in content and "konten_markdown" in content:
+                content["text"] = f"# {content['judul_utama']}\n\n{content['konten_markdown']}"
+                content.pop("judul_utama", None)
+                content.pop("konten_markdown", None)
+            content["source"] = state["sumber_text"]
+            
+    if tipe == "flashcard":
         if isinstance(content, dict):
             content["source"] = state["sumber_text"]
             
-    konten_id = generate_konten_id(tipe, state["level"], req.get("materi_id", "materi"))
+    konten_id = generate_konten_id(tipe, state["level"], req.get("materi_id", "materi"), req.get("kelas_id", "all"))
     
     # Envelope "data" internal
     payload_data = {
@@ -143,11 +183,6 @@ def structurer_node(state: AgentState) -> dict:
         "dibuat_at": datetime.utcnow().isoformat() + "Z"
     }
     
-    # [Webhook/Pretest Logic]
-    # Jika ada pretest_data, kita selipkan di payload menggunakan hidden key agar API BE bisa memprosesnya.
-    if state.get("pretest_data"):
-        payload_data["_pretest_data"] = state["pretest_data"]
-        
     return {"final_payload": payload_data}
 
 # ================================================================

@@ -25,6 +25,7 @@ body {
 /* SIDEBAR */
 .sidebar {
     width: 320px;
+    flex-shrink: 0;
     background-color: var(--bg-panel);
     border-right: 1px solid var(--border);
     padding: 24px;

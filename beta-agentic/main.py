@@ -1,23 +1,42 @@
 import uvicorn
 import os
+
+# Mematikan handler Ctrl+C bawaan Fortran (MKL/Sentence-Transformer)
+# agar Uvicorn --reload tidak crash saat file berubah.
+os.environ["FOR_DISABLE_CONSOLE_CTRL_HANDLER"] = "1"
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
+from pathlib import Path
 from langchain_core.messages import SystemMessage, HumanMessage
 from jinja2 import Environment, FileSystemLoader
 
 from api_models import (
-    StandardResponse, GenerateRequest, RegenerateRequest,
-    MCSubmitRequest, EssaySubmitRequest, RekomendasiRequest, InsightRequest
+    StandardResponse, GenerateRequest,
+    SesiSummaryRequest, EssaySubmitRequest, RekomendasiRequest, InsightRequest
 )
+from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 load_dotenv()
 
 from graph import beta_graph
 from llm import get_llm
-from tools import clean_json_from_llm
+from graph import beta_graph
+from llm import get_llm
+from tools import clean_json_from_llm, get_sentence_model
 
-app = FastAPI(title="Beta Agentic SR API", version="3.6")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Preload model ke memory saat startup agar request pertama tidak lambat
+    print("Pre-loading Sentence Transformer model...")
+    get_sentence_model()
+    yield
+    print("Shutting down...")
+
+app = FastAPI(title="Beta Agentic SR API", version="3.6", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -38,30 +57,9 @@ def load_prompt(template_name: str, **kwargs) -> str:
 # KONTEN ENDPOINTS
 # ---------------------------------------------------------
 @app.post("/konten/generate", response_model=StandardResponse)
-async def generate_konten(req: GenerateRequest):
+def generate_konten(req: GenerateRequest):
     try:
         # Menyiapkan State Awal untuk Graf
-        initial_state = {
-            "request_params": req.model_dump(),
-            "tipe": req.tipe,
-            "level": req.level,
-            "revision_count": 0,
-            "pretest_data": None,
-            "instruksi_revisi": None
-        }
-        
-        # Mengeksekusi State Machine
-        final_state = beta_graph.invoke(initial_state)
-        
-        # Final payload dengan pretest hidden property
-        return StandardResponse(data=final_state["final_payload"])
-        
-    except Exception as e:
-        return StandardResponse(error={"code": "GEN_ERROR", "message": str(e)})
-
-@app.post("/konten/regenerate", response_model=StandardResponse)
-async def regenerate_konten(req: RegenerateRequest):
-    try:
         initial_state = {
             "request_params": req.model_dump(),
             "tipe": req.tipe,
@@ -71,26 +69,50 @@ async def regenerate_konten(req: RegenerateRequest):
             "instruksi_revisi": req.instruksi_revisi
         }
         
+        # Mengeksekusi State Machine
         final_state = beta_graph.invoke(initial_state)
         final_payload = final_state["final_payload"]
         
-        # Sesuai API Contract, konten_id tetap sama
-        final_payload["konten_id"] = req.konten_id
-        
+        # Pertahankan konten_id jika diberikan dari klien (untuk regen)
+        if req.konten_id:
+            final_payload["konten_id"] = req.konten_id
+            
         return StandardResponse(data=final_payload)
+        
     except Exception as e:
-        return StandardResponse(error={"code": "REGEN_ERROR", "message": str(e)})
+        return StandardResponse(error={"code": "GEN_ERROR", "message": str(e)})
 
+
+# ---------------------------------------------------------
+# SUMMARY SESI (Tim 3 RAG)
+# ---------------------------------------------------------
+@app.post("/sesi/{id}/summary", response_model=StandardResponse)
+def generate_summary(id: str, req: SesiSummaryRequest):
+    try:
+        prompt = load_prompt(
+            "summary.j2",
+            req=req.model_dump()
+        )
+        sys_msg = SystemMessage(content="Kamu adalah AI yang merangkum hasil belajar siswa selama satu sesi menjadi JSON.")
+        res = llm.invoke([sys_msg, HumanMessage(content=prompt)])
+        content = clean_json_from_llm(res.content)
+        
+        now = datetime.utcnow()
+        berlaku = now + timedelta(days=1)
+        
+        return StandardResponse(data={
+            "teks": content.get("teks", "Gagal menghasilkan summary."),
+            "dibuat_at": now.isoformat() + "Z",
+            "berlaku_hingga": berlaku.isoformat() + "Z"
+        })
+    except Exception as e:
+        return StandardResponse(error={"code": "SUMMARY_ERR", "message": str(e)})
 
 # ---------------------------------------------------------
 # QUIZ EVALUATION ENDPOINTS (Dipanggil BE)
 # ---------------------------------------------------------
-@app.post("/siswa/{id}/quiz/mc", response_model=StandardResponse)
-async def submit_mc(id: str, req: MCSubmitRequest):
-    return StandardResponse(data={"siswa_id": id, "status": "mc_submitted"})
-
 @app.post("/siswa/{id}/quiz/essay", response_model=StandardResponse)
-async def submit_essay(id: str, req: EssaySubmitRequest):
+def submit_essay(id: str, req: EssaySubmitRequest):
     try:
         # Kita evaluasi setiap jawaban secara individual
         evaluasi_hasil = {}
@@ -118,7 +140,7 @@ async def submit_essay(id: str, req: EssaySubmitRequest):
 # RAG SERVICES ENDPOINTS
 # ---------------------------------------------------------
 @app.post("/rag/rekomendasi", response_model=StandardResponse)
-async def rekomendasi(req: RekomendasiRequest):
+def rekomendasi(req: RekomendasiRequest):
     try:
         prompt = load_prompt(
             "rekomendasi.j2",
@@ -135,7 +157,7 @@ async def rekomendasi(req: RekomendasiRequest):
         return StandardResponse(error={"code": "REKOM_ERR", "message": str(e)})
 
 @app.post("/rag/insight", response_model=StandardResponse)
-async def insight(req: InsightRequest):
+def insight(req: InsightRequest):
     try:
         prompt = load_prompt(
             "insight.j2",
@@ -153,8 +175,13 @@ async def insight(req: InsightRequest):
     except Exception as e:
         return StandardResponse(error={"code": "INSIGHT_ERR", "message": str(e)})
 
+# Serve extraction folder for images
+EXTRACTION_BASE_DIR = Path(__file__).resolve().parent.parent / "extraction"
+if EXTRACTION_BASE_DIR.exists():
+    app.mount("/extraction", StaticFiles(directory=str(EXTRACTION_BASE_DIR)), name="extraction")
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
-os.environ["LANGSMITH_PROJECT"] = "alpha-router-agent" 
+os.environ["LANGSMITH_PROJECT"] = "beta-agentic" 

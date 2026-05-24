@@ -2,6 +2,8 @@ import os
 import json
 import re
 import uuid
+import time
+import pickle
 import torch
 import numpy as np
 import requests
@@ -11,24 +13,41 @@ from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 load_dotenv()
 
+from rank_bm25 import BM25Okapi
+from sentence_transformers import CrossEncoder
+
 # ================================================================
 # Models Configuration
 # ================================================================
-QDRANT_HOST        = os.getenv("QDRANT_HOST", "https://vbfbs-175-45-190-1.run.pinggy-free.link")
-# QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
-TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION", "semantic_chunks")
-IMAGE_COLLECTION   = os.getenv("QDRANT_IMAGE_COLLECTION", "Image_Clip_retriever")
+QDRANT_HOST        = os.getenv("QDRANT_HOST", "76.13.195.1")
+if QDRANT_HOST.startswith("http://"):
+    QDRANT_HOST = QDRANT_HOST[7:]
+elif QDRANT_HOST.startswith("https://"):
+    QDRANT_HOST = QDRANT_HOST[8:]
+QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
+TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION", "srma-22")
 
 TEXT_MODEL_NAME    = "microsoft/harrier-oss-v1-0.6b"
-CLIP_MODEL_NAME    = "openai/clip-vit-large-patch14"
+RERANKER_MODEL_NAME= "BAAI/bge-reranker-base"
 DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
 
 EXTRACTION_BASE_DIR = Path(__file__).resolve().parent.parent / "extraction"
 
+BM25_CACHE_PATH = Path(__file__).resolve().parent / f"bm25_{TEXT_COLLECTION}.pkl"
+
 # Lazy load globals
 _sentence_model = None
-_clip_model     = None
-_clip_processor = None
+_reranker_model = None
+_bm25 = None
+_bm25_docs = []
+_chunk_expansion_cache = {}
+
+# ================================================================
+# Tokenizer (for BM25)
+# ================================================================
+def tokenize(text: str):
+    text = text.lower()
+    return re.findall(r"\w+", text)
 
 # ================================================================
 # 1. Models Loader
@@ -37,17 +56,16 @@ def get_sentence_model():
     global _sentence_model
     if _sentence_model is None:
         from sentence_transformers import SentenceTransformer
+        print(f"⏳ Loading text model: {TEXT_MODEL_NAME}")
         _sentence_model = SentenceTransformer(TEXT_MODEL_NAME)
     return _sentence_model
 
-def get_clip_model():
-    global _clip_model, _clip_processor
-    if _clip_model is None:
-        from transformers import CLIPModel, CLIPProcessor
-        _clip_model     = CLIPModel.from_pretrained(CLIP_MODEL_NAME).to(DEVICE)
-        _clip_processor = CLIPProcessor.from_pretrained(CLIP_MODEL_NAME)
-        _clip_model.eval()
-    return _clip_model, _clip_processor
+def get_reranker():
+    global _reranker_model
+    if _reranker_model is None:
+        print(f"⏳ Loading reranker: {RERANKER_MODEL_NAME}")
+        _reranker_model = CrossEncoder(RERANKER_MODEL_NAME, device=DEVICE)
+    return _reranker_model
 
 def embed_text_for_text_vdb(query: str) -> list:
     model = get_sentence_model()
@@ -55,23 +73,11 @@ def embed_text_for_text_vdb(query: str) -> list:
     vector = model.encode([prefixed], normalize_embeddings=True, convert_to_numpy=True)[0]
     return vector.tolist()
 
-def embed_text_for_image_vdb(query: str) -> list:
-    clip_model, clip_processor = get_clip_model()
-    inputs = clip_processor(text=[query], return_tensors="pt", padding=True).to(DEVICE)
-    with torch.no_grad():
-        features = clip_model.get_text_features(
-            input_ids=inputs["input_ids"],
-            attention_mask=inputs["attention_mask"]
-        )
-    features = features / features.norm(dim=-1, keepdim=True)
-    return features.cpu().numpy()[0].tolist()
-
-
 # ================================================================
 # 2. Qdrant Search Engine
 # ================================================================
 def _search_qdrant(collection: str, vector: list, top_k: int, filter_payload: Optional[dict] = None) -> list:
-    url = f"{QDRANT_HOST}/collections/{collection}/points/search"
+    url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/search"
     payload = {"vector": vector, "limit": top_k, "with_payload": True}
     if filter_payload:
         payload["filter"] = filter_payload
@@ -83,74 +89,276 @@ def _search_qdrant(collection: str, vector: list, top_k: int, filter_payload: Op
         print(f"❌ Error query Qdrant: {e}")
         return []
 
-def _build_qdrant_filter(asset_type: Optional[str] = None, source: Optional[str] = None) -> Optional[dict]:
+def _scroll_qdrant(collection: str, scroll_filter: dict, limit: int = 200) -> list:
+    url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/scroll"
+    payload = {"filter": scroll_filter, "limit": limit, "with_payload": True}
+    try:
+        response = requests.post(url, json=payload, timeout=30)
+        response.raise_for_status()
+        return response.json().get("result", {}).get("points", [])
+    except Exception as e:
+        print(f"❌ Error scroll Qdrant: {e}")
+        return []
+
+def _build_qdrant_filter(asset_type: Optional[str] = None, source: Optional[str] = None, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> Optional[dict]:
     conditions = []
     if asset_type: conditions.append({"key": "asset_type", "match": {"value": asset_type}})
     if source: conditions.append({"key": "source", "match": {"value": source}})
+    if mata_pelajaran: conditions.append({"key": "mata_pelajaran", "match": {"value": mata_pelajaran}})
+    if kelas is not None: conditions.append({"key": "kelas", "match": {"value": kelas}})
     return {"must": conditions} if conditions else None
 
-def retrieve_text(query: str, top_k: int = 5) -> list:
-    if not query.strip(): return []
-    vector = embed_text_for_text_vdb(query)
-    hits = _search_qdrant(TEXT_COLLECTION, vector, top_k)
+# ================================================================
+# 3. BM25 Sparse Search
+# ================================================================
+def build_bm25_index():
+    global _bm25, _bm25_docs
+    if _bm25 is not None:
+        return
+
+    if BM25_CACHE_PATH.exists():
+        print(f"📦 Loading BM25 dari cache: {BM25_CACHE_PATH}")
+        with open(BM25_CACHE_PATH, "rb") as f:
+            cache = pickle.load(f)
+        _bm25 = cache["bm25"]
+        _bm25_docs = cache["docs"]
+        return
+
+    print("⏳ Building BM25 index dari Qdrant (pertama kali)...")
+    url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{TEXT_COLLECTION}/points/scroll"
+    all_points = []
+    offset = None
+
+    while True:
+        payload = {"limit": 1000, "with_payload": True}
+        if offset is not None:
+            payload["offset"] = offset
+        try:
+            resp = requests.post(url, json=payload, timeout=60)
+            resp.raise_for_status()
+            data = resp.json().get("result", {})
+            points = data.get("points", [])
+            all_points.extend(points)
+            offset = data.get("next_page_offset")
+            if offset is None: break
+        except Exception as e:
+            print(f"❌ BM25 scroll error: {e}")
+            break
+
+    corpus = []
+    docs = []
+    for p in all_points:
+        payload = p.get("payload", {})
+        text = payload.get("text", payload.get("page_content", ""))
+        if not text: continue
+        metadata = payload.get("metadata", {})
+        docs.append({
+            "text": text,
+            "metadata": metadata,
+            "source_file": payload.get("source_file", metadata.get("source_file", "N/A"))
+        })
+        corpus.append(tokenize(text))
+
+    if corpus:
+        _bm25 = BM25Okapi(corpus)
+        _bm25_docs = docs
+        with open(BM25_CACHE_PATH, "wb") as f:
+            pickle.dump({"bm25": _bm25, "docs": _bm25_docs}, f)
+        print(f"✅ BM25 index built & cached: {len(docs)} docs")
+    else:
+        print("⚠ Tidak ada dokumen untuk BM25.")
+
+def sparse_search(query: str, top_k: int = 10, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None):
+    build_bm25_index()
+    if _bm25 is None: return []
+
+    tokenized_query = tokenize(query)
+    scores = _bm25.get_scores(tokenized_query)
+    ranked_idx = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
+
     results = []
+    for idx in ranked_idx:
+        doc = dict(_bm25_docs[idx])
+        # Soft-filter matching untuk mapel & kelas karena BM25 ditarik full corpus
+        meta = doc.get("metadata", {})
+        if mata_pelajaran and meta.get("mata_pelajaran") != mata_pelajaran:
+            continue
+        if kelas is not None and meta.get("kelas") != kelas:
+            continue
+            
+        doc["bm25_score"] = float(scores[idx])
+        doc["retrieval_type"] = "sparse"
+        results.append(doc)
+        if len(results) >= top_k:
+            break
+            
+    return results
+
+# ================================================================
+# 4. RRF, Dedup, Expand, Rerank
+# ================================================================
+def reciprocal_rank_fusion(dense_results, sparse_results, k=60):
+    fused_scores = {}
+
+    for rank, doc in enumerate(dense_results):
+        text = doc["text"]
+        rrf_score = 1 / (k + rank + 1)
+        if text not in fused_scores:
+            fused_scores[text] = {"doc": dict(doc), "score": 0, "dense_score": doc.get("score", 0), "bm25_score": 0}
+        fused_scores[text]["score"] += rrf_score
+
+    for rank, doc in enumerate(sparse_results):
+        text = doc["text"]
+        rrf_score = 1 / (k + rank + 1)
+        if text not in fused_scores:
+            fused_scores[text] = {"doc": dict(doc), "score": 0, "dense_score": 0, "bm25_score": doc.get("bm25_score", 0)}
+        fused_scores[text]["score"] += rrf_score
+        fused_scores[text]["bm25_score"] = doc.get("bm25_score", 0)
+
+    reranked = sorted(fused_scores.values(), key=lambda x: x["score"], reverse=True)
+    final_results = []
+    for item in reranked:
+        doc = item["doc"]
+        doc["rrf_score"] = item["score"]
+        doc["dense_score"] = item["dense_score"]
+        doc["bm25_score"] = item["bm25_score"]
+        final_results.append(doc)
+    return final_results
+
+def deduplicate(docs: list) -> list:
+    unique = []
+    seen = set()
+    for doc in docs:
+        metadata = doc.get("metadata", {})
+        chunk_index = metadata.get("chunk_index")
+        source_file = doc.get("source_file", "")
+        uid = (source_file, chunk_index) if chunk_index is not None else doc["text"]
+        if uid in seen: continue
+        seen.add(uid)
+        unique.append(doc)
+    return unique
+
+def expand_chunk_context(docs: list, window=1) -> list:
+    expanded_docs = []
+    for doc in docs:
+        metadata = doc.get("metadata", {})
+        chunk_index = metadata.get("chunk_index")
+        source_file = doc.get("source_file")
+        if chunk_index is None:
+            doc["expanded_text"] = doc["text"]
+            expanded_docs.append(doc)
+            continue
+            
+        cache_key = (source_file, chunk_index, window)
+        if cache_key in _chunk_expansion_cache:
+            doc["expanded_text"] = _chunk_expansion_cache[cache_key]
+            expanded_docs.append(doc)
+            continue
+
+        min_idx = chunk_index - window
+        max_idx = chunk_index + window
+        
+        points = _scroll_qdrant(TEXT_COLLECTION, scroll_filter={"must": [{"key": "source_file", "match": {"value": source_file}}]})
+        chunks = []
+        for p in points:
+            payload = p.get("payload", {})
+            meta = payload.get("metadata", {})
+            idx = meta.get("chunk_index")
+            if idx is not None and min_idx <= idx <= max_idx:
+                text = payload.get("text", payload.get("page_content", ""))
+                if text: chunks.append((idx, text))
+
+        chunks.sort(key=lambda x: x[0])
+        expanded_text = "\n".join(text for _, text in chunks) if chunks else doc["text"]
+        _chunk_expansion_cache[cache_key] = expanded_text
+        doc["expanded_text"] = expanded_text
+        expanded_docs.append(doc)
+    return expanded_docs
+
+def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
+    if not docs: return []
+    reranker = get_reranker()
+    pairs = [(query, doc.get("expanded_text", doc["text"])) for doc in docs]
+    scores = reranker.predict(pairs, batch_size=16, show_progress_bar=False)
+    ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
+    
+    reranked_docs = []
+    for score, doc in ranked[:top_k]:
+        doc["rerank_score"] = float(score)
+        reranked_docs.append(doc)
+    return reranked_docs
+
+
+# ================================================================
+# 5. Pipeline Search Utama
+# ================================================================
+def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> list:
+    if not query.strip(): return []
+    
+    retrieve_k = max(top_k * 5, 30)
+
+    # 1. Dense Search
+    vector = embed_text_for_text_vdb(query)
+    payload_filter = _build_qdrant_filter(mata_pelajaran=mata_pelajaran, kelas=kelas)
+    hits = _search_qdrant(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
+    dense_results = []
     for hit in hits:
         payload = hit.get("payload", {})
-        results.append({
+        metadata = payload.get("metadata", {})
+        dense_results.append({
             "score": hit.get("score", 0.0),
             "text": payload.get("text", payload.get("page_content", "N/A")),
-            "metadata": payload.get("metadata", {}),
-            "source_file": payload.get("source_file", payload.get("metadata", {}).get("source_file", "N/A"))
+            "metadata": metadata,
+            "source_file": payload.get("source_file", metadata.get("source_file", "N/A")),
+            "retrieval_type": "dense"
         })
-    return results
 
-def retrieve_images(query: str, top_k: int = 6) -> list:
-    if not query.strip(): return []
-    vector = embed_text_for_image_vdb(query)
-    hits = _search_qdrant(IMAGE_COLLECTION, vector, top_k)
-    results = []
-    for hit in hits:
-        payload = hit.get("payload", {})
-        raw_fp = payload.get("filepath", "")
-        fname = payload.get("filename", "unknown")
-        results.append({
-            "score": hit.get("score", 0.0),
-            "filepath": raw_fp,
-            "filename": fname,
-            "page_num": payload.get("page_num", "?"),
-            "asset_type": payload.get("asset_type", "?")
-        })
-    return results
+    # 2. Sparse Search
+    sparse_results = sparse_search(query, top_k=retrieve_k, mata_pelajaran=mata_pelajaran, kelas=kelas)
+
+    # 3. RRF + Dedup + Expand
+    fused_results = reciprocal_rank_fusion(dense_results, sparse_results)
+    unique_results = deduplicate(fused_results)
+    expanded_results = expand_chunk_context(unique_results, window=1)
+
+    # 4. Rerank
+    reranked_results = rerank_results(query, expanded_results, top_k=top_k)
+    return reranked_results
 
 def extract_source(chunks: List[dict]) -> List[str]:
-    """Extract raw source file strings from chunks."""
     sources = set()
     for c in chunks:
         src = c.get("source_file")
         if src and src != "N/A":
-            sources.add(src)
+            # Hapus ekstensi file
+            src = re.sub(r'\.[a-zA-Z0-9]+$', '', src)
+            # Hapus suffix yang tidak perlu
+            src = re.sub(r'(?i)[_ -]*(final|paginated|chunks|rev|press|bab).*$', '', src)
+            # Bersihkan dan ubah underscore jadi spasi
+            src = src.replace("_", " ").strip(' -')
+            if src:
+                sources.add(src)
     return list(sources)
 
 # ================================================================
-# 3. Dynamic RAG Engine
+# 6. Dynamic RAG Engine
 # ================================================================
 class RAGEngine:
     @staticmethod
     def get_k_for_type(tipe: str) -> int:
         if tipe == "bacaan": return 10
-        if tipe == "flashcard": return 3
+        if tipe == "flashcard": return 5
         if tipe == "mindmap": return 7
         return 5
 
     @staticmethod
-    def unified_search(query: str, tipe: str) -> Dict[str, Any]:
-        """Perform search with dynamic chunk sizing and multimodal capabilities."""
+    def unified_search(query: str, tipe: str, mapel: Optional[str] = None, kelas: Optional[int] = None) -> Dict[str, Any]:
+        """Perform full pipeline search with dynamic chunk sizing and multimodal metadata capabilities."""
         k_text = RAGEngine.get_k_for_type(tipe)
-        texts = retrieve_text(query, top_k=k_text)
+        texts = retrieve_text(query, top_k=k_text, mata_pelajaran=mapel, kelas=kelas)
         
-        # Ekstrak gambar langsung dari metadata 'has_visual_content' di chunk teks
         images = []
-        if tipe in ["quiz_pg", "quiz_essay"]:
+        if tipe in ["quiz_pg", "quiz_essay", "bacaan"]:
             for t in texts:
                 vis = t.get("metadata", {}).get("has_visual_content", [])
                 if isinstance(vis, list):
@@ -162,15 +370,14 @@ class RAGEngine:
                         images.append(vis)
             
         return {
-            "text": texts,
+            "text": [{"text": t.get("expanded_text", t["text"]), "source_file": t["source_file"], "visual_context": t.get("metadata", {}).get("has_visual_content", [])} for t in texts],
             "images": images
         }
 
 # ================================================================
-# 4. Utilities
+# 7. Utilities
 # ================================================================
 def clean_json_from_llm(raw_text: str) -> dict | list:
-    """Robust JSON parser to extract dirty JSON string from LLM."""
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
     idx_brace = clean_text.find('{')
     idx_bracket = clean_text.find('[')
@@ -201,11 +408,8 @@ def clean_json_from_llm(raw_text: str) -> dict | list:
 
     return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:200]}
 
-# extract_source dipindahkan ke atas
-
-def generate_konten_id(tipe: str, level: str, materi_id: str) -> str:
-    """Generate konten_id specified in API Contract."""
-    import time
+def generate_konten_id(tipe: str, level: str, materi_id: str, kelas_id: str = "all") -> str:
     lvl_str = (level or "all").lower()
     mat_clean = materi_id.split("__")[-1] if "__" in materi_id else materi_id
-    return f"konten_{mat_clean}_{tipe}_{lvl_str}_{int(time.time())}"
+    kls_str = (kelas_id or "all").lower()
+    return f"konten_{mat_clean}_{tipe}_{lvl_str}_{kls_str}_{int(time.time())}"

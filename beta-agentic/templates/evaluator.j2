@@ -14,10 +14,14 @@ Tipe Konten: {{ tipe }}
 {{ generated_content }}
 
 [KRITERIA PENILAIAN WAJIB]
-1. RELEVANSI MATERI & ATP: Apakah konten benar-benar membahas "{{ materi }}" dan mencapai tujuan "{{ atp }}"? Jika melenceng, berikan skor rendah.
-2. FIDELITAS RAG (ANTI-HALUSINASI): Apakah konten murni didasarkan pada Konteks RAG? Jika Konteks RAG mengatakan "Tidak ada dokumen", namun LLM malah mengarang materi yang sangat spesifik, itu adalah HALUSINASI FATAL. WAJIB berikan skor 0.
+1. RELEVANSI MATERI & LEVEL KOGNITIF (C1-C6): Fokus utama adalah apakah konten/pertanyaan membahas Objek Materi "{{ materi }}". Kata kerja kognitif harus menyesuaikan Level Target ({{ level }}):
+   - Low: Mengingat dan Memahami (C1-C2).
+   - Mid: Mengaplikasikan dan Menganalisis (C3-C4).
+   - High: Mengevaluasi dan Mencipta (C5-C6).
+   Gunakan ATP "{{ atp }}" HANYA sebagai referensi objek/materi. Jangan kaku pada kata kerja di ATP asli, sesuaikan kata kerjanya dengan Level Target!
+2. REFERENSI RAG: Apakah konten memanfaatkan Konteks RAG secara substansial? Tidak perlu terlalu kaku/ekstrem (stick to RAG), yang terpenting konten akurat secara materi dan tidak melenceng.
 3. FORMAT JSON: Apakah formatnya JSON murni yang valid tanpa teks pendahuluan?
-4. KUALITAS PEDAGOGI: Apakah gaya bahasanya sesuai Level {{ level }} dan bebas dari pengandaian ("Bayangkan", dsb)?
+
 
 STRUKTUR OUTPUT JSON:
 {
@@ -26,3 +30,7 @@ STRUKTUR OUTPUT JSON:
   "reasoning_mendalam": "Analisis kritis kecocokan dengan ATP, RAG, dan Format...",
   "poin_revisi": ["Daftar perintah revisi spesifik untuk Generator jika tidak_layak. Kosongkan jika layak."]
 }
+
+ATURAN FINAL PENTING: 
+Output WAJIB hanya berupa JSON MURNI yang diawali `{` dan diakhiri `}`. 
+JANGAN memberikan teks penjelasan apapun sebelum atau sesudah JSON! Jangan menggunakan format array list untuk teks!

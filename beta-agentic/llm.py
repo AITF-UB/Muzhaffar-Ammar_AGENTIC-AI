@@ -13,17 +13,17 @@ load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
 from langchain_community.chat_models import ChatOllama
 
-class OllamaChatModel(ChatOllama):
-    # Kita menggunakan ChatOllama bawaan langchain-community karena lebih stabil 
-    # menghadapi isu SSL HTTPS Ngrok di Windows dibanding ollama-python native.
-    def __init__(self, **kwargs):
-        # Override default parameter di sini
-        super().__init__(
-            base_url=os.getenv("NGROK_KAGGLE_OLLAMA"),
-            model="qwen3.5:9b", # Ganti jika nama modelnya berbeda di Kaggle
-            temperature=0.3,
-            **kwargs
-        )
+# class OllamaChatModel(ChatOllama):
+#     # Kita menggunakan ChatOllama bawaan langchain-community karena lebih stabil 
+#     # menghadapi isu SSL HTTPS Ngrok di Windows dibanding ollama-python native.
+#     def __init__(self, **kwargs):
+#         # Override default parameter di sini
+#         super().__init__(
+#             base_url=os.getenv("NGROK_KAGGLE_OLLAMA"),
+#             model="qwen3.5:9b", # Ganti jika nama modelnya berbeda di Kaggle
+#             temperature=0.3,
+#             **kwargs
+#         )
 
 
 # Ambil dari .env
@@ -56,44 +56,44 @@ class OllamaChatModel(ChatOllama):
 #     return llm
 
 
-# class HFChatModel(BaseChatModel):
-#     client: InferenceClient = None
-#     model_id: str = "meta-llama/Llama-3.1-8B-Instruct"
-#     temperature: float = 0.3
-#     max_tokens: int = 4000
+class HFChatModel(BaseChatModel):
+    client: InferenceClient = None
+    model_id: str = "meta-llama/Llama-3.1-8B-Instruct"
+    temperature: float = 0.3
+    max_tokens: int = 4000
 
-#     class Config:
-#         arbitrary_types_allowed = True
+    class Config:
+        arbitrary_types_allowed = True
 
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         self.client = InferenceClient(model=self.model_id, token=HF_TOKEN)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.client = InferenceClient(model=self.model_id, token=HF_TOKEN)
 
-#     @property
-#     def _llm_type(self) -> str:
-#         return "hf-chat"
+    @property
+    def _llm_type(self) -> str:
+        return "hf-chat"
 
-#     def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
-#         hf_msgs = []
-#         for msg in messages:
-#             if isinstance(msg, SystemMessage):
-#                 hf_msgs.append({"role": "system", "content": msg.content})
-#             elif isinstance(msg, HumanMessage):
-#                 hf_msgs.append({"role": "user", "content": msg.content})
-#             elif isinstance(msg, AIMessage):
-#                 hf_msgs.append({"role": "assistant", "content": msg.content})
-#             else:
-#                 hf_msgs.append({"role": "user", "content": str(msg.content)})
+    def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
+        hf_msgs = []
+        for msg in messages:
+            if isinstance(msg, SystemMessage):
+                hf_msgs.append({"role": "system", "content": msg.content})
+            elif isinstance(msg, HumanMessage):
+                hf_msgs.append({"role": "user", "content": msg.content})
+            elif isinstance(msg, AIMessage):
+                hf_msgs.append({"role": "assistant", "content": msg.content})
+            else:
+                hf_msgs.append({"role": "user", "content": str(msg.content)})
         
-#         response = self.client.chat_completion(
-#             messages=hf_msgs,
-#             max_tokens=self.max_tokens,
-#             temperature=self.temperature,
-#             stop=stop
-#         )
-#         output_text = response.choices[0].message.content
-#         return ChatResult(generations=[ChatGeneration(message=AIMessage(content=output_text))])
+        response = self.client.chat_completion(
+            messages=hf_msgs,
+            max_tokens=self.max_tokens,
+            temperature=self.temperature,
+            stop=stop
+        )
+        output_text = response.choices[0].message.content
+        return ChatResult(generations=[ChatGeneration(message=AIMessage(content=output_text))])
 
 def get_llm():
-    return OllamaChatModel()
-    # return HFChatModel()
+    # return OllamaChatModel()
+    return HFChatModel()

@@ -1,30 +1,38 @@
-[TASK]
-Hasilkan kerangka Mindmap (Peta Konsep Hierarki) untuk materi: {{ materi }} ({{ matpel }}).
-Mindmap ini HARUS mencakup struktur dari hulu ke hilir berdasarkan konteks.
+[KONTEKS_PEMBELAJARAN]
+- Mapel: {{ matpel }}
+- Materi Pokok: {{ materi }}
 
-[KONTEKS MATERI (RAG)]
+[RAG_CONTEXT]
 {{ rag_context }}
 
-ATURAN:
-1. `id` harus unik, misal "n1", "n2", dst.
-2. `parent_id` menunjuk ke id node induk. Node akar utama (Root) harus memiliki `parent_id`: null.
-3. `penjelasan` adalah tooltip singkat (1-2 kalimat) saat node di-hover. Boleh string kosong "" untuk node akar jika tidak perlu penjelasan.
-4. Buat setidaknya 3-4 tingkat hierarki jika memungkinkan.
+[TASK]
+Hasilkan flat list JSON mindmap dari referensi di atas. TANPA teks pembuka/penutup atau blok markdown (```json).
+*Escape Requirement*: Escape baris baru menjadi "\n" dan tanda kutip ganda internal menjadi "\"".
 
-STRUKTUR JSON YANG DIWAJIBKAN:
+[STRUCTURE]
 {
   "nodes": [
-    {
-      "id": "n1",
-      "label": "Gagasan Utama",
-      "parent_id": null,
-      "penjelasan": ""
+    { 
+      "id": "n1", 
+      "label": "[Nama Topik Utama]", 
+      "parent_id": null, 
+      "penjelasan": "" 
     },
-    {
-      "id": "n2",
-      "label": "Cabang Pertama",
-      "parent_id": "n1",
-      "penjelasan": "Deskripsi singkat mengenai cabang pertama."
+    { 
+      "id": "n2", 
+      "label": "[Nama Sub-Konsep]", 
+      "parent_id": "n1", 
+      "penjelasan": "[Penjelasan hubungan konsep, maks 15 kata]" 
     }
   ]
 }
+Catatan Penting JSON: 
+- "id" harus string unik, "parent_id" merujuk ke id induknya. Root node memiliki "parent_id": null.
+- "label" adalah nama subjek singkat.
+- "penjelasan" bisa dibiarkan kosong ("") untuk root node.
+
+[CONSTRAINTS]
+- Kedalaman Pohon (Tree Depth): Minimal 3 tingkat kedalaman berjenjang (Root -> Child -> Grandchild) yang direpresentasikan lewat parent_id.
+- Batas Ketat Kata: Setiap field "penjelasan" WAJIB sangat padat, komunikatif, langsung pada inti masalah, dan MAKSIMAL 15 kata. DILARANG menggunakan kata "kamu".
+- Format Bebas Tanda Baca: DILARANG keras menggunakan tanda titik dua (:) atau penomoran kaku (1, 2, A, B) pada field "label" maupun "penjelasan".
+- Target Level Alignment: Isi "penjelasan" wajib fokus pada identifikasi pola dasar/fakta (LOTS), sebab-akibat/analogi (MOTS), atau pertanyaan reflektif/metakognisi (HOTS).

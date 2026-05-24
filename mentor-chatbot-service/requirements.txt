@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+langchain
+langgraph
+langchain-openai
+sse-starlette
+python-dotenv
+

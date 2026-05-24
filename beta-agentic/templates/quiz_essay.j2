@@ -1,31 +1,46 @@
-[TASK]
-Hasilkan 5 Pertanyaan Esai/Uraian untuk siswa jenjang {{ jenjang }}, kelas {{ kelas }}.
-Tujuan Pembelajaran (ATP): {{ atp }}
+[KONTEKS_PEMBELAJARAN]
+- Tujuan Pembelajaran (ATP): {{ atp }}
+- Jenjang & Kelas: {{ jenjang }}, Kelas {{ kelas }}
 
-[KONTEKS MATERI (RAG)]
+[RAG_CONTEXT]
 {{ rag_context }}
 
 {% if image_context %}
 [KONTEKS GAMBAR (MULTIMODAL)]
-Gambar-gambar berikut tersedia dari pencarian visual. Buat 1 pertanyaan spesifik yang mewajibkan siswa melihat gambar ini untuk menjawabnya. Sertakan path-nya di field `image_path` (jika tidak butuh gambar, biarkan null).
-Detail Gambar:
 {{ image_context }}
+
+*** INSTRUKSI MUTLAK UNTUK GAMBAR ***
+Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
+Anda WAJIB menyisipkan minimal 1 gambar ke dalam narasi materi yang selaras dengan deskripsinya!
+Gunakan sintaks markdown persis seperti ini: `![Deskripsi Gambar](PATH_ASLI_DARI_GAMBAR)`
+Ganti `PATH_ASLI_DARI_GAMBAR` secara harfiah dengan `image_path` yang sesuai dari daftar [KONTEKS GAMBAR]. JANGAN sampai tertulis kata "PATH_ASLI_DARI_GAMBAR".
+Jangan sampai instruksi ini terlewat!
 {% endif %}
 
-ATURAN:
-1. Buat pertanyaan HANYA sesuai dengan Kriteria Level Target ({{ level }}).
-2. Jawaban harus berupa rubrik penilaian (kriteria apa yang membuat jawaban benar).
-3. Setiap pertanyaan harus diberi id unik yang diawali "e1", "e2", dst.
+[TASK]
+Hasilkan 5 soal Essay dalam format **JSON murni**. DILARANG menyertakan teks pembuka/penutup atau blok markdown (```json).
+*Escape Requirement*: Escape semua baris baru menjadi "\n" dan tanda kutip ganda internal menjadi "\"".
 
-STRUKTUR JSON YANG DIWAJIBKAN:
+[STRUCTURE]
 {
   "pertanyaan": [
     {
       "id": "e1",
-      "soal": "Pertanyaan esai yang menuntut pemikiran...",
-      "image_path": "lokasi/ke/gambar.jpg", // opsional, null jika tidak ada
-      "rubrik": "Siswa menyebutkan 3 poin utama: 1)... 2)... 3)...",
-      "placeholder": "Ketik jawabanmu di sini, berikan alasan yang tepat..."
+      "soal": "[Tuliskan stimulus narasi + pertanyaan disini]",
+      "rubrik": "[Tuliskan poin-poin penilaian/rubrik disini]"
     }
   ]
 }
+Catatan Penting JSON: 
+- "soal" adalah gabungan dari Stimulus dan Pertanyaan Essay.
+
+[RULES]
+- Aturan Stimulus Essay (100 - 250 kata): Wajib menyusun teks pengantar soal yang komprehensif berdasarkan empat poin aturan mutlak berikut:
+  * Multidimensionalitas Isu: Teks wajib mengangkat kasus krisis/fakta empiris di Indonesia yang bersinggungan dengan lebih dari satu sudut pandang (misal: ekonomi vs lingkungan, efisiensi teknis vs regulasi sosial).
+  * Kedalaman Data Celah (Gap): Sajikan dua set data atau fenomena yang saling bertentangan secara parsial di dalam teks untuk memaksa siswa melakukan evaluasi sintesis, BUKAN sekadar membaca ulang informasi.
+  * Adaptasi Rumpun Mapel:
+    1. Mapel STEM: Wajib menyajikan anomali data eksperimen, kegagalan desain rekayasa lokal, atau tren kuantitatif yang membutuhkan pemodelan ulang.
+    2. Mapel Non-STEM: Wajib menyajikan konflik kebijakan, dilema etika sejarah/sosial, atau bias argumen publik yang terjadi secara nyata.
+  * Format Hibrida Kompleks: Teks wajib menggunakan kombinasi minimal DUA format visual Markdown (misalnya: Paragraf Narasi + Tabel Komparasi Data, atau Paragraf Narasi + Poin List Argumen yang saling bertentangan).
+- Question (30 - 80 kata): Wajib meminta siswa untuk "Mengevaluasi", "Mendesain ulang", atau "Memecahkan dilema". DILARANG KERAS menggunakan kata tanya tertutup atau meminta siswa mendaftar fakta ("Sebutkan", "Apa saja", "Jelaskan definisi").
+- Rubrik Penilaian (100 - 200 kata): Wajib memuat kriteria penilaian berjenjang (Skor 0-100) yang eksplisit dan tidak ambigu. Rubrik harus menilai proses berpikir (logika, koherensi, pembuktian data), BUKAN sekadar ada/tidaknya kata kunci. Gunakan daftar poin (-) ATAU tabel Markdown. Wajib mencantumkan contoh argumen benar dan contoh argumen salah (miskonsepsi umum) sebagai panduan *grading* bagi AI atau guru.

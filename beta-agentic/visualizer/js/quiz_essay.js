@@ -3,7 +3,11 @@ function renderQuizEssay(content) {
     container.innerHTML = "";
     
     content.pertanyaan.forEach((q, idx) => {
-        let imgHtml = q.image_path ? `<img src="${q.image_path}" alt="Konteks Soal" style="max-width:100%; border-radius:8px; margin-bottom:16px;">` : "";
+        let imgPath = q.image_path;
+        if (imgPath && !imgPath.startsWith("http")) {
+            imgPath = "http://localhost:8000/extraction/" + imgPath;
+        }
+        let imgHtml = imgPath ? `<img src="${imgPath}" alt="Konteks Soal" style="max-width:100%; border-radius:8px; margin-bottom:16px;">` : "";
         
         container.innerHTML += `
             <div class="quiz-card" id="essay-card-${q.id}">

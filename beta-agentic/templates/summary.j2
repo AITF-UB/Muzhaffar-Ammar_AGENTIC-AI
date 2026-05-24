@@ -1,0 +1,29 @@
+Berikan summary singkat dalam 1-2 paragraf mengenai performa belajar siswa dalam sesi ini.
+Tuliskan teks hasil evaluasi dalam objek JSON: { "teks": "<summary>" }.
+
+Data sesi:
+Siswa ID: {{ req.siswa_id }}
+Materi ID: {{ req.materi_id }}
+Durasi: {{ req.durasi_menit }} menit
+Hasil Quiz Keseluruhan:
+{% for quiz in req.hasil_quiz %}
+- Tipe: {{ quiz.tipe }}, Level: {{ quiz.level }}, Nilai: {{ quiz.nilai }}
+{% endfor %}
+
+{% if req.last_quiz %}
+Quiz Terakhir:
+- Nilai MC: {{ req.last_quiz.nilai_mc }}
+- Nilai Essay: {{ req.last_quiz.nilai_essay }}
+- Agregasi: {{ req.last_quiz.agregasi }}
+{% endif %}
+
+Emosi Terdeteksi: {{ req.emosi_sesi | join(", ") }}
+
+Pelanggaran (Violations):
+{% if req.violations|length > 0 %}
+{% for v in req.violations %}
+- {{ v.detail }} pada {{ v.terjadi_at }}
+{% endfor %}
+{% else %}
+Tidak ada pelanggaran.
+{% endif %}

@@ -39,9 +39,43 @@ Content-Type: application/json
   "level": "Mid"
 }
 
+### Matematika - Generate Flashcard (High)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "mat",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Bunga Tunggal dan Bunga Majemuk",
+  "materi_id": "mat__bunga_keuangan",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Menghitung dan membedakan bunga tunggal serta bunga majemuk dalam konteks keuangan.",
+  "tipe": "flashcard",
+  "level": "High"
+}
+
+### Matematika - Generate Quiz Essay (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "mat",
+  "elemen_id": "geometri",
+  "elemen_label": "Geometri",
+  "materi": "Pemanfaatan Perbandingan Trigonometri",
+  "materi_id": "mat__pemanfaatan_trigonometri",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri.",
+  "tipe": "quiz_essay",
+  "level": "Mid"
+}
+
 
 ### =================================================================
-### 2. IPS (Sosiologi - Kelas X)
+### 2. IPS (Kelas X)
 ### =================================================================
 
 ### IPS - Generate Flashcard (High)
@@ -78,6 +112,40 @@ Content-Type: application/json
   "level": "Mid"
 }
 
+### IPS - Generate Bacaan (Low)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "ips",
+  "elemen_id": "sejarah",
+  "elemen_label": "Sejarah",
+  "materi": "Kajian Ilmu Sejarah",
+  "materi_id": "ips__kajian_sejarah",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Menjelaskan konsep dasar Ilmu Sejarah serta menerapkan cara berpikir kronologis, diakronis, dan sinkronis.",
+  "tipe": "bacaan",
+  "level": "Low"
+}
+
+### IPS - Generate Mindmap
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "ips",
+  "elemen_id": "geografi",
+  "elemen_label": "Geografi",
+  "materi": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
+  "materi_id": "ips__litosfer",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan.",
+  "tipe": "mindmap",
+  "level": null
+}
+
 
 ### =================================================================
 ### 3. BAHASA INDONESIA (Kelas X)
@@ -98,6 +166,40 @@ Content-Type: application/json
   "atp": "Siswa mengevaluasi informasi yang tidak akurat dan bias dalam paparan teks Laporan Hasil Observasi.",
   "tipe": "mindmap",
   "level": null
+}
+
+### Bahasa Indonesia - Generate Quiz Pilihan Ganda (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "menulis",
+  "elemen_label": "Menulis",
+  "materi": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik (Anekdot)",
+  "materi_id": "bindo__kaidah_anekdot",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Menggunakan pertanyaan retoris, majas sindiran, dan kata kerja material dalam teks anekdot.",
+  "tipe": "quiz_pg",
+  "level": "Mid"
+}
+
+### Bahasa Indonesia - Generate Flashcard (High)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "Kosakata Teknis dan Informasi Faktual dalam Teks LHO",
+  "materi_id": "bindo__kosakata_fakta_lho",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Menemukan kosakata teknis, menentukan arti kata, serta mengidentifikasi informasi faktual dalam teks LHO.",
+  "tipe": "flashcard",
+  "level": "High"
 }
 
 
@@ -123,6 +225,25 @@ Content-Type: application/json
   "tipe": "bacaan",
   "level": "Low",
   "instruksi_revisi": "Tolong gunakan contoh buah-buahan lokal Indonesia seperti Manggis dan Rambutan dalam soal cerita SPLTV."
+}
+
+### REGENERATE - IPS Litosfer
+POST {{baseUrl}}/konten/regenerate
+Content-Type: application/json
+
+{
+  "konten_id": "konten_ips_litosfer_mindmap_1234567890",
+  "mapel_id": "ips",
+  "elemen_id": "geografi",
+  "elemen_label": "Geografi",
+  "materi": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
+  "materi_id": "ips__litosfer",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan.",
+  "tipe": "mindmap",
+  "level": null,
+  "instruksi_revisi": "Fokuskan mindmap pada perbedaan dampak tektonisme (epirogenetik vs orogenetik) dan vulkanisme terhadap kehidupan tani di Indonesia."
 }
 
 ### RAG INSIGHT (Motivasi)
@@ -158,6 +279,29 @@ Content-Type: application/json
   },
   "jawaban": {
     "e1": "Menurut saya, kemiskinan adalah contoh gejala sosial karena dipengaruhi oleh struktur ekonomi masyarakat secara luas dan bukan sekadar masalah individu malas."
+  }
+}
+
+### EVALUASI ESSAY - Matematika Trigonometri
+POST {{baseUrl}}/siswa/s_001/quiz/essay
+Content-Type: application/json
+
+{
+  "publish_id": "pub_456",
+  "mapel_id": "mat",
+  "elemen_id": "geometri",
+  "elemen_label": "Geometri",
+  "materi": "Pemanfaatan Perbandingan Trigonometri",
+  "materi_id": "mat__pemanfaatan_trigonometri",
+  "level": "Mid",
+  "soal": {
+    "e1": "Seorang pengamat berdiri 10 meter dari kaki sebuah pohon dan melihat puncak pohon dengan sudut elevasi 30 derajat. Jika tinggi pengamat diabaikan, jelaskan langkah dan rumus perbandingan trigonometri yang tepat untuk menentukan tinggi pohon tersebut!"
+  },
+  "rubrik": {
+    "e1": "Siswa harus mengidentifikasi bahwa perbandingan yang tepat adalah tangen (tan 30 derajat = depan/samping = tinggi pohon/jarak), lalu menghitung tinggi pohon = 10 * tan 30 = 10 * (1/sqrt(3)) atau sekitar 5.77 meter."
+  },
+  "jawaban": {
+    "e1": "Untuk mencari tinggi pohon, kita memakai perbandingan tangen karena yang diketahui adalah jarak mendatar (sisi samping = 10m) dan yang dicari adalah tinggi pohon (sisi depan). Rumusnya tan(30) = depan / samping. Maka depan = samping * tan(30) = 10 * (1/3 * akar(3)) = 10/3 akar(3) meter atau sekitar 5.77 meter."
   }
 }
 
@@ -200,4 +344,73 @@ Content-Type: application/json
   },
   "sudah_selesai_ids": ["bindo__teks_cerpen"],
   "sedang_dipelajari_ids": ["bindo__puisi"]
+}
+
+### RAG REKOMENDASI 4 (Selesai Trigonometri, Mulai Kajian Sejarah)
+POST {{baseUrl}}/rag/rekomendasi
+Content-Type: application/json
+
+{
+  "siswa_id": "s_004",
+  "levels": {
+    "mat__pemanfaatan_trigonometri": "High",
+    "ips__kajian_sejarah": "Low"
+  },
+  "sudah_selesai_ids": ["mat__pemanfaatan_trigonometri"],
+  "sedang_dipelajari_ids": ["ips__kajian_sejarah"]
+}
+
+### =================================================================
+### 5. BAHASA INDONESIA (Contoh Multimodal: Pasti Ada Gambar)
+### =================================================================
+
+### Bindo Multimodal - Generate Bacaan (Low)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "MENGUNGKAP FAKTA ALAM SECARA OBJEKTIF",
+  "materi_id": "bindo__fakta_alam",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan.",
+  "tipe": "bacaan",
+  "level": "Low"
+}
+
+### Bindo Multimodal - Generate Quiz Pilihan Ganda (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "MENGUNGKAP FAKTA ALAM SECARA OBJEKTIF",
+  "materi_id": "bindo__fakta_alam",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan.",
+  "tipe": "quiz_pg",
+  "level": "Mid"
+}
+
+### Bindo Multimodal - Generate Quiz Essay (High)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "Belalang Anggrek",
+  "materi_id": "bindo__belalang_anggrek",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan (Belalang Anggrek).",
+  "tipe": "quiz_essay",
+  "level": "High"
 }
