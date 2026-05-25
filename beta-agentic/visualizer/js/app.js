@@ -2,8 +2,8 @@ let lastGeneratedData = null; // Menyimpan data terakhir yang digenerate untuk k
 
 document.getElementById("inp-tipe").addEventListener("change", (e) => {
     const levelGroup = document.getElementById("group-level");
-    // Sembunyikan pilihan level jika tipe = mindmap
-    levelGroup.style.display = e.target.value === "mindmap" ? "none" : "block";
+    // Sembunyikan pilihan level jika tipe = mindmap atau pretest
+    levelGroup.style.display = (e.target.value === "mindmap" || e.target.value === "pretest") ? "none" : "block";
 });
 
 async function handleGenerate() {
@@ -18,10 +18,11 @@ async function handleGenerate() {
         elemen_label: document.getElementById("inp-elemen-label").value,
         materi: document.getElementById("inp-materi").value,
         atp: document.getElementById("inp-atp").value,
-        jenjang: "X",
+        kelas_id: document.getElementById("inp-kelas").value,
+        jenjang: document.getElementById("inp-jenjang").value,
         tipe: tipe
     };
-    if (tipe !== "mindmap") {
+    if (tipe !== "mindmap" && tipe !== "pretest") {
         payload.level = document.getElementById("inp-level").value;
     }
 
@@ -56,11 +57,22 @@ async function handleGenerate() {
         document.getElementById("debug-json").style.display = "block";
 
         // 5. Render konten menggunakan script modular spesifik
-        if (tipe === "bacaan") renderBacaan(content, data.source);
-        else if (tipe === "quiz_pg") renderQuizPG(content);
-        else if (tipe === "quiz_essay") renderQuizEssay(content);
-        else if (tipe === "flashcard") renderFlashcard(content);
-        else if (tipe === "mindmap") renderMindmap(content);
+        if (content.error) {
+            document.getElementById("view-bacaan").innerHTML = `
+                <div style="padding: 20px; color: #ef4444; background: #fee2e2; border-radius: 8px; border: 1px solid #fca5a5;">
+                    <h3 style="margin-top: 0;">Error dari LLM: ${content.error}</h3>
+                    <p style="margin-bottom: 0;">LLM gagal menghasilkan format JSON yang valid. Hal ini biasanya terjadi karena teks terpotong akibat limit token dari model gratis Hugging Face, atau LLM salah format.</p>
+                </div>
+            `;
+            document.getElementById("view-bacaan").classList.add("active");
+        } else {
+            if (tipe === "bacaan") renderBacaan(content, data.source);
+            else if (tipe === "quiz_pg") renderQuizPG(content);
+            else if (tipe === "quiz_essay") renderQuizEssay(content);
+            else if (tipe === "flashcard") renderFlashcard(content);
+            else if (tipe === "mindmap") renderMindmap(content);
+            else if (tipe === "pretest") renderPretest(content);
+        }
 
     } catch (err) {
         alert("Network error: " + err.message);

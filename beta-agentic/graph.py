@@ -36,7 +36,7 @@ def retrieve_node(state: AgentState) -> dict:
         "mat": "Matematika",
         "matematika": "Matematika",
         "mtk": "Matematika",
-        "ips": "IPS"
+        "ips": "Ilmu Pengetahuan Sosial"
     }
     raw_mapel = req.get("mapel_id", "")
     mapel_key = raw_mapel.lower().replace(" ", "_")
@@ -86,31 +86,11 @@ def retrieve_node(state: AgentState) -> dict:
         "image_context": img_ctx_str.strip()
     }
 
-def generate_node(state: AgentState) -> dict:
-    """Men-generate konten sesuai tipe menggunakan Jinja Template."""
-    tipe = state["tipe"]
+def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
     req = state["request_params"]
     lvl = state["level"]
-    
-
-    # 2. Main Generation
     sys_prompt = load_prompt("system.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), level=lvl)
     
-    if tipe == "bacaan":
-        usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=lvl)
-    elif tipe == "pretest":
-        usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=lvl)
-    elif tipe == "quiz_pg":
-        usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=lvl)
-    elif tipe == "quiz_essay":
-        usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=lvl)
-    elif tipe == "flashcard":
-        usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=lvl)
-    elif tipe == "mindmap":
-        usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"])
-    else:
-        raise ValueError(f"Tipe {tipe} tidak dikenali.")
-
     if state.get("instruksi_revisi"):
         usr_prompt += f"\n\n[INSTRUKSI REVISI DARI GURU]:\n{state['instruksi_revisi']}\nSesuaikan dan perbaiki hasil generasimu berdasarkan instruksi ini!"
 
@@ -123,6 +103,36 @@ def generate_node(state: AgentState) -> dict:
     return {
         "generated_content": content_dict
     }
+
+def bacaan_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    return _call_generation_llm(state, usr_prompt)
+
+def pretest_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=state["level"])
+    return _call_generation_llm(state, usr_prompt)
+
+def quiz_pg_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    return _call_generation_llm(state, usr_prompt)
+
+def quiz_essay_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    return _call_generation_llm(state, usr_prompt)
+
+def flashcard_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=state["level"])
+    return _call_generation_llm(state, usr_prompt)
+
+def mindmap_node(state: AgentState) -> dict:
+    req = state["request_params"]
+    usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"])
+    return _call_generation_llm(state, usr_prompt)
 
 def evaluator_node(state: AgentState) -> dict:
     """Mengevaluasi output generator."""
@@ -188,25 +198,64 @@ def structurer_node(state: AgentState) -> dict:
 # ================================================================
 # 2. EDGES & GRAPH
 # ================================================================
+def route_after_retrieve(state: AgentState) -> str:
+    tipe = state.get("tipe")
+    if tipe in ["bacaan", "pretest", "quiz_pg", "quiz_essay", "flashcard", "mindmap"]:
+        return tipe
+    raise ValueError(f"Tipe {tipe} tidak dikenali.")
+
 def should_revise(state: AgentState) -> str:
     eval_res = state.get("evaluator_result", {})
     skor = eval_res.get("skor", 100)
     status = eval_res.get("status", "layak")
     
     if (skor < 80 or status == "tidak_layak") and state["revision_count"] < 2:
-        return "revise"
+        return state.get("tipe")
     return "pass"
 
 builder = StateGraph(AgentState)
 builder.add_node("retrieve", retrieve_node)
-builder.add_node("generate", generate_node)
+builder.add_node("bacaan", bacaan_node)
+builder.add_node("pretest", pretest_node)
+builder.add_node("quiz_pg", quiz_pg_node)
+builder.add_node("quiz_essay", quiz_essay_node)
+builder.add_node("flashcard", flashcard_node)
+builder.add_node("mindmap", mindmap_node)
 builder.add_node("evaluate", evaluator_node)
 builder.add_node("structure", structurer_node)
 
 builder.add_edge(START, "retrieve")
-builder.add_edge("retrieve", "generate")
-builder.add_edge("generate", "evaluate")
-builder.add_conditional_edges("evaluate", should_revise, {"revise": "generate", "pass": "structure"})
+
+builder.add_conditional_edges(
+    "retrieve",
+    route_after_retrieve,
+    {
+        "bacaan": "bacaan",
+        "pretest": "pretest",
+        "quiz_pg": "quiz_pg",
+        "quiz_essay": "quiz_essay",
+        "flashcard": "flashcard",
+        "mindmap": "mindmap"
+    }
+)
+
+for node_name in ["bacaan", "pretest", "quiz_pg", "quiz_essay", "flashcard", "mindmap"]:
+    builder.add_edge(node_name, "evaluate")
+
+builder.add_conditional_edges(
+    "evaluate", 
+    should_revise, 
+    {
+        "bacaan": "bacaan",
+        "pretest": "pretest",
+        "quiz_pg": "quiz_pg",
+        "quiz_essay": "quiz_essay",
+        "flashcard": "flashcard",
+        "mindmap": "mindmap",
+        "pass": "structure"
+    }
+)
+
 builder.add_edge("structure", END)
 
 beta_graph = builder.compile()

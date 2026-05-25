@@ -5,8 +5,15 @@ import os
 sys.path.insert(0, r"c:\Users\Ammar\Projek\agentic-ai\beta-agentic")
 from tools import RAGEngine
 
-query = "perangkat keras"
+query = "Dinamika Litosfer"
 print(f"Querying: {query}")
-result = RAGEngine.unified_search(query, "bacaan")
-print("Number of texts:", len(result["text"]))
-print("Images extracted:", result["images"])
+result1 = RAGEngine.unified_search(query, "bacaan")
+print("Without filter, total found:", len(result1["text"]))
+if result1["text"]:
+    print("Sample metadata:", result1["text"][0]["metadata"])
+
+result2 = RAGEngine.unified_search(query, "bacaan", mapel="IPS", kelas=10)
+print("With filter (kelas=10, mapel=IPS):", len(result2["text"]))
+
+result3 = RAGEngine.unified_search(query, "bacaan", mapel="IPS", kelas="Kelas 10")
+print("With string filter (kelas='Kelas 10'):", len(result3["text"]))

@@ -21,8 +21,5 @@ class AgentState(TypedDict):
     evaluator_result: Any     # Output from the evaluator node
     revision_count: int       # Tracks how many times it has looped for revision
     
-    # 4. Special Fields
-    pretest_data: Optional[List[dict]] # Holds 5 pretest questions if it's the first run
-    
     # 5. Output
     final_payload: dict       # The structured data to be returned via the API

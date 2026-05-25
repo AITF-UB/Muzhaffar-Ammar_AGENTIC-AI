@@ -1,193 +1,45 @@
-### BASE URL
+﻿### BASE URL
 @baseUrl = http://localhost:8000
 
 ### =================================================================
-### TASK: BACAAN
+### 1. MATEMATIKA (Kelas X)
 ### =================================================================
 
-### Bacaan - Bahasa Indonesia (Topik Visual: Komik Anekdot)
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "bindo",
-  "elemen_id": "menulis",
-  "elemen_label": "Menulis",
-  "materi": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik (Anekdot)",
-  "materi_id": "bindo__kaidah_anekdot",
-  "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Siswa mampu menulis teks anekdot dengan kaidah bahasa yang benar dan mengkritisi fenomena sosial.",
-  "tipe": "bacaan",
-  "level": "Mid"
-}
-
-### Bacaan - Matematika (Topik Visual: Segitiga Trigonometri)
+### Matematika - Generate Bacaan (Low)
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
 {
   "mapel_id": "mat",
-  "elemen_id": "geometri",
-  "elemen_label": "Geometri",
-  "materi": "Pemanfaatan Perbandingan Trigonometri",
-  "materi_id": "mat__pemanfaatan_trigonometri",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
+  "materi_id": "mat__spltv",
   "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri.",
+  "jenjang": "X",
+  "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
   "tipe": "bacaan",
-  "level": "Mid"
+  "level": "Low"
 }
 
-### Bacaan - IPS (Topik Visual: Gambar Peta / Lapisan Bumi)
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "ips",
-  "elemen_id": "geografi",
-  "elemen_label": "Pemahaman Geografi",
-  "materi": "Dinamika Litosfer dan Dampaknya Terhadap Kehidupan",
-  "materi_id": "ips__litosfer",
-  "kelas_id": "x_2",
-  "jenjang": "10",
-  "atp": "Siswa mampu menganalisis dinamika litosfer dan dampaknya terhadap kehidupan.",
-  "tipe": "bacaan",
-  "level": "Mid"
-}
-
-### =================================================================
-### TASK: QUIZ PILIHAN GANDA (QUIZ_PG)
-### =================================================================
-
-### Quiz PG - Bahasa Indonesia
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "bindo",
-  "elemen_id": "menulis",
-  "elemen_label": "Menulis",
-  "materi": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik (Anekdot)",
-  "materi_id": "bindo__kaidah_anekdot",
-  "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Siswa mampu menulis teks anekdot dengan kaidah bahasa yang benar dan mengkritisi fenomena sosial.",
-  "tipe": "quiz_pg",
-  "level": "Mid"
-}
-
-### Quiz PG - Matematika
+### Matematika - Generate Quiz Pilihan Ganda (Mid)
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
 {
   "mapel_id": "mat",
-  "elemen_id": "geometri",
-  "elemen_label": "Geometri",
-  "materi": "Pemanfaatan Perbandingan Trigonometri",
-  "materi_id": "mat__pemanfaatan_trigonometri",
+  "elemen_id": "bil_aljabar",
+  "elemen_label": "Bilangan dan Aljabar",
+  "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
+  "materi_id": "mat__spltv",
   "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri.",
+  "jenjang": "X",
+  "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
   "tipe": "quiz_pg",
   "level": "Mid"
 }
 
-### Quiz PG - IPS
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "ips",
-  "elemen_id": "geografi",
-  "elemen_label": "Pemahaman Geografi",
-  "materi": "Dinamika Litosfer dan Dampaknya Terhadap Kehidupan",
-  "materi_id": "ips__litosfer",
-  "kelas_id": "x_2",
-  "jenjang": "10",
-  "atp": "Siswa mampu menganalisis dinamika litosfer dan dampaknya terhadap kehidupan.",
-  "tipe": "quiz_pg",
-  "level": "Mid"
-}
-
-### =================================================================
-### TASK: QUIZ ESSAY
-### =================================================================
-
-### Quiz Essay - Bahasa Indonesia
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "bindo",
-  "elemen_id": "menulis",
-  "elemen_label": "Menulis",
-  "materi": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik (Anekdot)",
-  "materi_id": "bindo__kaidah_anekdot",
-  "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Siswa mampu menulis teks anekdot dengan kaidah bahasa yang benar dan mengkritisi fenomena sosial.",
-  "tipe": "quiz_essay",
-  "level": "Mid"
-}
-
-### Quiz Essay - Matematika
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "mat",
-  "elemen_id": "geometri",
-  "elemen_label": "Geometri",
-  "materi": "Pemanfaatan Perbandingan Trigonometri",
-  "materi_id": "mat__pemanfaatan_trigonometri",
-  "kelas_id": "x_1",
-  "jenjang": "10",
-  "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri.",
-  "tipe": "quiz_essay",
-  "level": "Mid"
-}
-
-### Quiz Essay - IPS
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "ips",
-  "elemen_id": "geografi",
-  "elemen_label": "Pemahaman Geografi",
-  "materi": "Dinamika Litosfer dan Dampaknya Terhadap Kehidupan",
-  "materi_id": "ips__litosfer",
-  "kelas_id": "x_2",
-  "jenjang": "10",
-  "atp": "Siswa mampu menganalisis dinamika litosfer dan dampaknya terhadap kehidupan.",
-  "tipe": "quiz_essay",
-  "level": "Mid"
-}
-
-### =================================================================
-### TASK: FLASHCARD
-### =================================================================
-
-### Flashcard - Bahasa Indonesia
-POST {{baseUrl}}/konten/generate
-Content-Type: application/json
-
-{
-  "mapel_id": "bindo",
-  "elemen_id": "membaca_memirsa",
-  "elemen_label": "Membaca dan Memirsa",
-  "materi": "Kosakata Teknis dan Informasi Faktual dalam Teks LHO",
-  "materi_id": "bindo__kosakata_fakta_lho",
-  "kelas_id": "x_3",
-  "jenjang": "10",
-  "atp": "Menemukan kosakata teknis, menentukan arti kata, serta mengidentifikasi informasi faktual dalam teks LHO.",
-  "tipe": "flashcard",
-  "level": "Mid"
-}
-
-### Flashcard - Matematika
+### Matematika - Generate Flashcard (High)
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
@@ -198,13 +50,35 @@ Content-Type: application/json
   "materi": "Bunga Tunggal dan Bunga Majemuk",
   "materi_id": "mat__bunga_keuangan",
   "kelas_id": "x_1",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Menghitung dan membedakan bunga tunggal serta bunga majemuk dalam konteks keuangan.",
   "tipe": "flashcard",
+  "level": "High"
+}
+
+### Matematika - Generate Quiz Essay (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "mat",
+  "elemen_id": "geometri",
+  "elemen_label": "Geometri",
+  "materi": "Pemanfaatan Perbandingan Trigonometri",
+  "materi_id": "mat__pemanfaatan_trigonometri",
+  "kelas_id": "x_1",
+  "jenjang": "X",
+  "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri.",
+  "tipe": "quiz_essay",
   "level": "Mid"
 }
 
-### Flashcard - IPS
+
+### =================================================================
+### 2. IPS (Kelas X)
+### =================================================================
+
+### IPS - Generate Flashcard (High)
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
@@ -215,35 +89,47 @@ Content-Type: application/json
   "materi": "Gejala Sosial di Lingkungan Sekitar",
   "materi_id": "ips__gejala_sosial",
   "kelas_id": "x_2",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Siswa mampu menganalisis berbagai gejala sosial di masyarakat dari berbagai perspektif sosiologi.",
   "tipe": "flashcard",
-  "level": "Mid"
+  "level": "High"
 }
 
-
-### =================================================================
-### TASK: MINDMAP
-### =================================================================
-
-### Mindmap - Bahasa Indonesia
+### IPS - Generate Quiz Essay (Mid)
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
 {
-  "mapel_id": "bindo",
-  "elemen_id": "membaca_memirsa",
-  "elemen_label": "Membaca dan Memirsa",
-  "materi": "Teks Laporan Hasil Observasi (LHO)",
-  "materi_id": "bindo__teks_lho",
-  "kelas_id": "x_3",
-  "jenjang": "10",
-  "atp": "Siswa mengevaluasi informasi yang tidak akurat dan bias dalam paparan teks Laporan Hasil Observasi.",
-  "tipe": "mindmap",
-  "level": null
+  "mapel_id": "ips",
+  "elemen_id": "sosiologi",
+  "elemen_label": "Pemahaman Sosial",
+  "materi": "Gejala Sosial di Lingkungan Sekitar",
+  "materi_id": "ips__gejala_sosial",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Siswa mampu menganalisis berbagai gejala sosial di masyarakat dari berbagai perspektif sosiologi.",
+  "tipe": "quiz_essay",
+  "level": "Mid"
 }
 
-### Mindmap - IPS
+### IPS - Generate Bacaan (Low)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "ips",
+  "elemen_id": "sejarah",
+  "elemen_label": "Sejarah",
+  "materi": "Kajian Ilmu Sejarah",
+  "materi_id": "ips__kajian_sejarah",
+  "kelas_id": "x_2",
+  "jenjang": "X",
+  "atp": "Menjelaskan konsep dasar Ilmu Sejarah serta menerapkan cara berpikir kronologis, diakronis, dan sinkronis.",
+  "tipe": "bacaan",
+  "level": "Low"
+}
+
+### IPS - Generate Mindmap
 POST {{baseUrl}}/konten/generate
 Content-Type: application/json
 
@@ -254,7 +140,7 @@ Content-Type: application/json
   "materi": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
   "materi_id": "ips__litosfer",
   "kelas_id": "x_2",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan.",
   "tipe": "mindmap",
   "level": null
@@ -262,7 +148,63 @@ Content-Type: application/json
 
 
 ### =================================================================
-### CONTOH ENDPOINT LAINNYA
+### 3. BAHASA INDONESIA (Kelas X)
+### =================================================================
+
+### Bahasa Indonesia - Generate Mindmap
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "Teks Laporan Hasil Observasi (LHO)",
+  "materi_id": "bindo__teks_lho",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Siswa mengevaluasi informasi yang tidak akurat dan bias dalam paparan teks Laporan Hasil Observasi.",
+  "tipe": "mindmap",
+  "level": null
+}
+
+### Bahasa Indonesia - Generate Quiz Pilihan Ganda (Mid)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "menulis",
+  "elemen_label": "Menulis",
+  "materi": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik (Anekdot)",
+  "materi_id": "bindo__kaidah_anekdot",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Menggunakan pertanyaan retoris, majas sindiran, dan kata kerja material dalam teks anekdot.",
+  "tipe": "quiz_pg",
+  "level": "Mid"
+}
+
+### Bahasa Indonesia - Generate Flashcard (High)
+POST {{baseUrl}}/konten/generate
+Content-Type: application/json
+
+{
+  "mapel_id": "bindo",
+  "elemen_id": "membaca_memirsa",
+  "elemen_label": "Membaca dan Memirsa",
+  "materi": "Kosakata Teknis dan Informasi Faktual dalam Teks LHO",
+  "materi_id": "bindo__kosakata_fakta_lho",
+  "kelas_id": "x_3",
+  "jenjang": "X",
+  "atp": "Menemukan kosakata teknis, menentukan arti kata, serta mengidentifikasi informasi faktual dalam teks LHO.",
+  "tipe": "flashcard",
+  "level": "High"
+}
+
+
+### =================================================================
+### 4. CONTOH ENDPOINT LAINNYA
 ### =================================================================
 
 ### REGENERATE (Refinement oleh Guru)
@@ -278,7 +220,7 @@ Content-Type: application/json
   "materi": "Sistem Persamaan Linear Tiga Variabel (SPLTV)",
   "materi_id": "mat__spltv",
   "kelas_id": "x_1",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Siswa mampu menyusun sistem persamaan linear tiga variabel dari masalah kontekstual dan menyelesaikannya.",
   "tipe": "bacaan",
   "level": "Low",
@@ -297,7 +239,7 @@ Content-Type: application/json
   "materi": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
   "materi_id": "ips__litosfer",
   "kelas_id": "x_2",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan.",
   "tipe": "mindmap",
   "level": null,
@@ -419,7 +361,7 @@ Content-Type: application/json
 }
 
 ### =================================================================
-### BAHASA INDONESIA (Contoh Multimodal: Pasti Ada Gambar)
+### 5. BAHASA INDONESIA (Contoh Multimodal: Pasti Ada Gambar)
 ### =================================================================
 
 ### Bindo Multimodal - Generate Bacaan (Low)
@@ -433,7 +375,7 @@ Content-Type: application/json
   "materi": "MENGUNGKAP FAKTA ALAM SECARA OBJEKTIF",
   "materi_id": "bindo__fakta_alam",
   "kelas_id": "x_3",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan.",
   "tipe": "bacaan",
   "level": "Low"
@@ -450,7 +392,7 @@ Content-Type: application/json
   "materi": "MENGUNGKAP FAKTA ALAM SECARA OBJEKTIF",
   "materi_id": "bindo__fakta_alam",
   "kelas_id": "x_3",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan.",
   "tipe": "quiz_pg",
   "level": "Mid"
@@ -467,7 +409,7 @@ Content-Type: application/json
   "materi": "Belalang Anggrek",
   "materi_id": "bindo__belalang_anggrek",
   "kelas_id": "x_3",
-  "jenjang": "10",
+  "jenjang": "X",
   "atp": "Siswa mampu mengevaluasi dan mengungkap fakta alam secara objektif berdasarkan teks bacaan (Belalang Anggrek).",
   "tipe": "quiz_essay",
   "level": "High"

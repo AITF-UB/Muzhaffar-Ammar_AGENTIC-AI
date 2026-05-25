@@ -11,10 +11,8 @@
 
 *** INSTRUKSI MUTLAK UNTUK GAMBAR ***
 Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
-Anda WAJIB menyisipkan minimal 1 gambar ke dalam narasi materi yang selaras dengan deskripsinya!
-Gunakan sintaks markdown persis seperti ini: `![Deskripsi Gambar](PATH_ASLI_DARI_GAMBAR)`
-Ganti `PATH_ASLI_DARI_GAMBAR` secara harfiah dengan `image_path` yang sesuai dari daftar [KONTEKS GAMBAR]. JANGAN sampai tertulis kata "PATH_ASLI_DARI_GAMBAR".
-Jangan sampai instruksi ini terlewat!
+Pilih satu path gambar yang paling relevan dengan materi yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
+JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal. Cukup isikan URL path aslinya di field `image_path`.
 {% endif %}
 
 [TASK]
@@ -27,6 +25,7 @@ Hasilkan 5 soal Essay dalam format **JSON murni**. DILARANG menyertakan teks pem
     {
       "id": "e1",
       "soal": "[Tuliskan stimulus narasi + pertanyaan disini]",
+      "image_path": "[Isi dengan path asli gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan kosong string \"\"]",
       "rubrik": "[Tuliskan poin-poin penilaian/rubrik disini]"
     }
   ]

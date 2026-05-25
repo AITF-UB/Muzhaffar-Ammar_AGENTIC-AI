@@ -25,6 +25,7 @@
                 <option value="quiz_essay">Quiz Essay</option>
                 <option value="flashcard">Flashcard</option>
                 <option value="mindmap">Mindmap</option>
+                <option value="pretest">Pretest (5 Soal)</option>
             </select>
         </div>
         
@@ -40,6 +41,11 @@
         <div class="form-group">
             <label>Mapel ID</label>
             <input type="text" id="inp-mapel" value="mat">
+        </div>
+        <div class="form-group">
+            <label>Jenjang & Kelas ID</label>
+            <input type="text" id="inp-jenjang" value="10" placeholder="Jenjang (misal 10 atau X)" style="margin-bottom: 8px;">
+            <input type="text" id="inp-kelas" value="x_1" placeholder="Kelas ID (misal x_1)">
         </div>
         <div class="form-group">
             <label>Elemen ID & Label</label>
@@ -72,6 +78,9 @@
             <div class="bacaan-content" id="bacaan-html"></div>
             <div class="source-box" id="bacaan-source"></div>
         </div>
+
+        <!-- VIEW: PRETEST -->
+        <div id="view-pretest" class="view-container"></div>
 
         <!-- VIEW: QUIZ PG -->
         <div id="view-quiz-pg" class="view-container"></div>
@@ -112,6 +121,7 @@
     <!-- JAVASCRIPT MODULARS -->
     <script src="js/bacaan.js"></script>
     <script src="js/quiz_pg.js"></script>
+    <script src="js/pretest.js"></script>
     <script src="js/quiz_essay.js"></script>
     <script src="js/flashcard.js"></script>
     <script src="js/mindmap.js"></script>

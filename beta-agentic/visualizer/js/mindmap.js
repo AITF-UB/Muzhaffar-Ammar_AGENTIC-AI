@@ -19,20 +19,15 @@ function renderMindmap(content) {
     
     let root = null;
     content.nodes.forEach(n => {
-        // Cari node yang tidak punya parent
-        if (n.id === "root" || content.nodes.length === 1 || !content.nodes.some(parent => parent.children_ids && parent.children_ids.includes(n.id))) {
-            if(!root) root = nodeMap[n.id];
+        if (!n.parent_id) {
+            if (!root) root = nodeMap[n.id];
+        } else {
+            if (nodeMap[n.parent_id]) {
+                nodeMap[n.parent_id].children.push(nodeMap[n.id]);
+            }
         }
     });
     if(!root) root = nodeMap[content.nodes[0].id]; // fallback
-
-    content.nodes.forEach(n => {
-        if(n.children_ids) {
-            n.children_ids.forEach(cid => {
-                if(nodeMap[cid]) nodeMap[n.id].children.push(nodeMap[cid]);
-            });
-        }
-    });
 
     const rootHierarchy = d3.hierarchy(root);
     

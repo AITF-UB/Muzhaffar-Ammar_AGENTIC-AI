@@ -3,18 +3,21 @@ function renderQuizEssay(content) {
     container.innerHTML = "";
     
     content.pertanyaan.forEach((q, idx) => {
-        let imgPath = q.image_path;
-        if (imgPath && !imgPath.startsWith("http")) {
-            imgPath = "http://localhost:8000/extraction/" + imgPath;
+        const fixImgUrl = (text) => text.replace(/!\[(.*?)\]\((?!http)(.*?)\)/g, "![$1](http://localhost:8000/extraction/$2)");
+        const soalStr = Array.isArray(q.soal) ? q.soal.join('\n') : String(q.soal || "");
+        const rubrikStr = Array.isArray(q.rubrik) ? q.rubrik.join('\n') : String(q.rubrik || "");
+        
+        let soalHtml = marked.parse(fixImgUrl(soalStr));
+        
+        if (q.image_path && typeof q.image_path === 'string' && q.image_path.trim() !== "") {
+            soalHtml = `<img src="http://localhost:8000/extraction/${q.image_path}" alt="Ilustrasi Soal" style="max-width: 100%; border-radius: 8px; margin-bottom: 1rem;" />\n` + soalHtml;
         }
-        let imgHtml = imgPath ? `<img src="${imgPath}" alt="Konteks Soal" style="max-width:100%; border-radius:8px; margin-bottom:16px;">` : "";
         
         container.innerHTML += `
             <div class="quiz-card" id="essay-card-${q.id}">
-                <div class="quiz-q">${idx+1}. ${q.soal}</div>
-                ${imgHtml}
+                <div class="quiz-q">${idx+1}. ${soalHtml}</div>
                 <textarea class="essay-textarea" id="ans-${q.id}" placeholder="${q.placeholder || 'Ketik jawabanmu di sini...'}"></textarea>
-                <button class="btn-eval" onclick="evaluateEssay('${q.id}', \`${q.soal.replace(/`/g, "'")}\`, \`${q.rubrik.replace(/`/g, "'")}\`)">Kirim & Evaluasi (AI)</button>
+                <button class="btn-eval" onclick="evaluateEssay('${q.id}', \`${soalStr.replace(/`/g, "'")}\`, \`${rubrikStr.replace(/`/g, "'")}\`)">Kirim & Evaluasi (AI)</button>
                 
                 <div class="eval-result" id="res-${q.id}">
                     <div class="eval-skor" id="skor-${q.id}"></div>

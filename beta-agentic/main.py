@@ -65,7 +65,6 @@ def generate_konten(req: GenerateRequest):
             "tipe": req.tipe,
             "level": req.level,
             "revision_count": 0,
-            "pretest_data": None,
             "instruksi_revisi": req.instruksi_revisi
         }
         
