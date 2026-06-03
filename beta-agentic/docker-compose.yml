@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  agentic_api:
+    build: .
+    container_name: agentic_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./.env:/app/.env
+      - ./extraction:/app/extraction
+      - ./templates:/app/templates
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Optional: limit memory to prevent OOM if embedding models get too large
+    deploy:
+      resources:
+        limits:
+          memory: 4G

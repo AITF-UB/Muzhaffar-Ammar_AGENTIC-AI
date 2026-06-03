@@ -14,20 +14,43 @@ Tipe Konten: {{ tipe }}
 {{ generated_content }}
 
 [KRITERIA PENILAIAN WAJIB]
-1. RELEVANSI MATERI & LEVEL KOGNITIF (C1-C6): Fokus utama adalah apakah konten/pertanyaan membahas Objek Materi "{{ materi }}". Kata kerja kognitif harus menyesuaikan Level Target ({{ level }}):
-   - Low: Mengingat dan Memahami (C1-C2).
-   - Mid: Mengaplikasikan dan Menganalisis (C3-C4).
-   - High: Mengevaluasi dan Mencipta (C5-C6).
-   Gunakan ATP "{{ atp }}" HANYA sebagai referensi objek/materi. Jangan kaku pada kata kerja di ATP asli, sesuaikan kata kerjanya dengan Level Target!
-2. REFERENSI RAG: Apakah konten memanfaatkan Konteks RAG secara substansial? Tidak perlu terlalu kaku/ekstrem (stick to RAG), yang terpenting konten akurat secara materi dan tidak melenceng.
-3. FORMAT JSON: Apakah formatnya JSON murni yang valid tanpa teks pendahuluan?
+1. REFERENSI RAG: Apakah konten memanfaatkan Konteks RAG secara substansial dan akurat? Tidak perlu terlalu kaku/ekstrem, yang terpenting konten akurat secara materi dan tidak melenceng.
+2. FORMAT JSON: Apakah formatnya JSON murni yang valid tanpa teks pendahuluan?
 
+[KRITERIA SPESIFIK BERDASARKAN TIPE: {{ tipe|upper }}]
+{% if 'pilihan ganda' in tipe|lower or 'pg' in tipe|lower or 'quiz' in tipe|lower %}
+- Validitas (Kesesuaian Materi): Mengukur keselarasan butir soal dengan ATP/Materi target.
+- Tingkat Kesukaran (Leveling): Kesesuaian kerumitan soal (C1-C6) dengan Level Target ({{ level }}).
+- Efektivitas Pengecoh: Memastikan opsi jawaban salah (pengecoh) masuk akal, homogen, dan tidak terlalu mencolok kesalahannya.
+- Kejelasan Konstruksi: Pokok soal harus ringkas, jelas, dan tidak memiliki makna ganda (ambigu).
+{% elif 'essay' in tipe|lower or 'uraian' in tipe|lower %}
+- Validitas (Kesesuaian Materi): Soal secara akurat mewakili lingkup materi yang diuji.
+- Tingkat Kesukaran (Leveling): Kesesuaian kerumitan pertanyaan/instruksi (C1-C6) dengan Level Target ({{ level }}).
+- Rubrik Penskoran Jelas: Adanya kriteria/gradasi skor yang terukur dan logis (misal: skor 1-5 berdasarkan kelengkapan poin).
+- Kunci Jawaban Spesifik: Ketersediaan poin-poin esensial yang diharapkan ada pada jawaban benar.
+{% elif 'flashcard' in tipe|lower %}
+- Validitas (Keakuratan): Keakuratan materi yang disingkat tanpa kehilangan esensi konsep utamanya.
+- Tingkat Kesukaran (Leveling): Kesesuaian materi ringkas dengan bahasa dan kerumitan kognitif Level Target ({{ level }}).
+- Konten Relevan: Relevansi informasi dengan pokok bahasan (tidak ada informasi filler).
+- Efektif Meningkatkan Pemahaman: Penggunaan narasi/diksi yang to-the-point dan mudah diingat oleh siswa (prinsip microlearning).
+{% elif 'mind map' in tipe|lower or 'mindmap' in tipe|lower %}
+- Kata Kunci: Ketepatan dan kepadatan kata kunci utama pada setiap node (tidak berupa paragraf panjang).
+- Hubungan Cabang: Kelogisan hierarki (dari materi induk ke sub-materi) dan kejelasan relasi antar node.
+- Kelengkapan Materi: Komprehensivitas materi yang berhasil direpresentasikan ke dalam struktur mind map secara utuh.
+{% elif 'modul' in tipe|lower or 'materi' in tipe|lower or 'rekomendasi' in tipe|lower %}
+- Kesesuaian Tingkat/Level Kognitif: Penyampaian materi dan contoh disesuaikan dengan Level Target ({{ level }}) siswa.
+- Aspek Validitas Konten: Penilaian pada Kelayakan Isi (lengkap & sistematis), Kelayakan Kebahasaan (bahasa baku & komunikatif), dan Kontekstualitas (relevan dengan dunia nyata).
+- Belajar Mandiri & Praktikalitas: Alur penyampaian mudah dipahami dan memandu siswa belajar secara mandiri tanpa membutuhkan banyak bantuan eksternal.
+- Efektivitas (Estimasi Ketuntasan): Kedalaman penjabaran konsep yang berpotensi memandu siswa mencapai pemahaman utuh.
+{% else %}
+- Relevansi Materi & Level Kognitif (C1-C6): Apakah konten/pertanyaan membahas Objek Materi "{{ materi }}" dan menyesuaikan Level Target ({{ level }}).
+{% endif %}
 
 STRUKTUR OUTPUT JSON:
 {
   "status": "layak", // "layak" jika skor >= 80, "tidak_layak" jika skor < 80
   "skor": 0-100,
-  "reasoning_mendalam": "Analisis kritis kecocokan dengan ATP, RAG, dan Format...",
+  "reasoning_mendalam": "Analisis kritis kecocokan dengan ATP, RAG, Format, dan Kriteria Spesifik Tipe...",
   "poin_revisi": ["Daftar perintah revisi spesifik untuk Generator jika tidak_layak. Kosongkan jika layak."]
 }
 

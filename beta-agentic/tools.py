@@ -9,6 +9,7 @@ import numpy as np
 import requests
 from pathlib import Path
 from typing import Optional, List, Dict, Any
+import asyncio
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -31,7 +32,7 @@ TEXT_MODEL_NAME    = "microsoft/harrier-oss-v1-0.6b"
 RERANKER_MODEL_NAME= "BAAI/bge-reranker-base"
 DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
 
-EXTRACTION_BASE_DIR = Path(__file__).resolve().parent.parent / "extraction"
+EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
 
 BM25_CACHE_PATH = Path(__file__).resolve().parent / f"bm25_{TEXT_COLLECTION}.pkl"
 
@@ -67,10 +68,11 @@ def get_reranker():
         _reranker_model = CrossEncoder(RERANKER_MODEL_NAME, device=DEVICE)
     return _reranker_model
 
-def embed_text_for_text_vdb(query: str) -> list:
+async def embed_text_for_text_vdb(query: str) -> list:
     model = get_sentence_model()
     prefixed = f"query: {query.strip()}"
-    vector = model.encode([prefixed], normalize_embeddings=True, convert_to_numpy=True)[0]
+    loop = asyncio.get_event_loop()
+    vector = await loop.run_in_executor(None, lambda: model.encode([prefixed], normalize_embeddings=True, convert_to_numpy=True)[0])
     return vector.tolist()
 
 # ================================================================
@@ -275,11 +277,12 @@ def expand_chunk_context(docs: list, window=1) -> list:
         expanded_docs.append(doc)
     return expanded_docs
 
-def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
+async def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
     if not docs: return []
     reranker = get_reranker()
     pairs = [(query, doc.get("expanded_text", doc["text"])) for doc in docs]
-    scores = reranker.predict(pairs, batch_size=16, show_progress_bar=False)
+    loop = asyncio.get_event_loop()
+    scores = await loop.run_in_executor(None, lambda: reranker.predict(pairs, batch_size=16, show_progress_bar=False))
     ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
     
     reranked_docs = []
@@ -292,13 +295,13 @@ def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
 # ================================================================
 # 5. Pipeline Search Utama
 # ================================================================
-def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> list:
+async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> list:
     if not query.strip(): return []
     
     retrieve_k = max(top_k * 5, 30)
 
     # 1. Dense Search
-    vector = embed_text_for_text_vdb(query)
+    vector = await embed_text_for_text_vdb(query)
     payload_filter = _build_qdrant_filter(mata_pelajaran=mata_pelajaran, kelas=kelas)
     hits = _search_qdrant(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
     dense_results = []
@@ -322,7 +325,7 @@ def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = No
     expanded_results = expand_chunk_context(unique_results, window=1)
 
     # 4. Rerank
-    reranked_results = rerank_results(query, expanded_results, top_k=top_k)
+    reranked_results = await rerank_results(query, expanded_results, top_k=top_k)
     return reranked_results
 
 def extract_source(chunks: List[dict]) -> List[str]:
@@ -352,22 +355,26 @@ class RAGEngine:
         return 5
 
     @staticmethod
-    def unified_search(query: str, tipe: str, mapel: Optional[str] = None, kelas: Optional[int] = None) -> Dict[str, Any]:
+    async def unified_search(query: str, tipe: str, mapel: Optional[str] = None, kelas: Optional[int] = None) -> Dict[str, Any]:
         """Perform full pipeline search with dynamic chunk sizing and multimodal metadata capabilities."""
         k_text = RAGEngine.get_k_for_type(tipe)
-        texts = retrieve_text(query, top_k=k_text, mata_pelajaran=mapel, kelas=kelas)
+        texts = await retrieve_text(query, top_k=k_text, mata_pelajaran=mapel, kelas=kelas)
         
         images = []
         if tipe in ["quiz_pg", "quiz_essay", "bacaan"]:
             for t in texts:
                 vis = t.get("metadata", {}).get("has_visual_content", [])
-                if isinstance(vis, list):
-                    for img in vis:
-                        if img not in images:
-                            images.append(img)
-                elif isinstance(vis, str):
-                    if vis not in images:
-                        images.append(vis)
+                vis_list = vis if isinstance(vis, list) else [vis] if isinstance(vis, str) else []
+                
+                for img in vis_list:
+                    # Cek apakah image sudah ada di list
+                    if not any(x["path"] == img for x in images if isinstance(x, dict)):
+                        # Ambil potongan teks chunk asli sebagai konteks visual gambar (max 600 chars)
+                        context_snippet = t.get("text", "")[:600]
+                        images.append({
+                            "path": img,
+                            "context": context_snippet
+                        })
             
         return {
             "text": [{"text": t.get("expanded_text", t["text"]), "source_file": t["source_file"], "visual_context": t.get("metadata", {}).get("has_visual_content", [])} for t in texts],
@@ -377,7 +384,64 @@ class RAGEngine:
 # ================================================================
 # 7. Utilities
 # ================================================================
+def _fix_json_escapes(s: str) -> str:
+    r"""
+    Fix invalid backslash escapes in a JSON string before parsing.
+    LLMs frequently output LaTeX commands like \cdot with only a single backslash.
+    """
+    result = []
+    i = 0
+    n = len(s)
+    while i < n:
+        if s[i] == '\\':
+            if i + 1 < n:
+                next_char = s[i + 1]
+                if next_char in ('"', '/', 'b', 'f', 'n', 'r', 't'):
+                    result.append(s[i])
+                    result.append(next_char)
+                    i += 2
+                elif next_char == '\\':
+                    result.append('\\')
+                    result.append('\\')
+                    i += 2
+                elif next_char == 'u':
+                    if i + 5 < n and re.match(r'[0-9a-fA-F]{4}', s[i+2:i+6]):
+                        result.append(s[i:i+6])
+                        i += 6
+                    else:
+                        result.append('\\\\')
+                        i += 1
+                else:
+                    result.append('\\\\')
+                    i += 1
+            else:
+                result.append('\\\\')
+                i += 1
+        else:
+            result.append(s[i])
+            i += 1
+    return ''.join(result)
+
+def truncate_context_to_budget(text: str, max_tokens: int = 4000, chars_per_token: int = 4) -> str:
+    """
+    Memotong teks context agar tidak memakan terlalu banyak token input.
+    """
+    if not text:
+        return text
+    
+    max_chars = max_tokens * chars_per_token
+    if len(text) <= max_chars:
+        return text
+        
+    truncated = text[:max_chars]
+    last_period = truncated.rfind(". ")
+    if last_period > max_chars * 0.5:
+        truncated = truncated[:last_period + 1]
+        
+    return truncated + "\n\n[INFO: Teks referensi dipotong karena batas token]"
+
 def clean_json_from_llm(raw_text: str) -> dict | list:
+    raw_text = _fix_json_escapes(raw_text)
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
     idx_brace = clean_text.find('{')
     idx_bracket = clean_text.find('[')

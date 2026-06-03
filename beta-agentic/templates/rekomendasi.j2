@@ -4,13 +4,13 @@ Berdasarkan riwayat belajar siswa berikut, tentukan 1-2 materi selanjutnya yang 
 
 [PROFIL BELAJAR SISWA]
 Siswa ID: {{ siswa_id }}
+Semesta Materi (Available IDs): {{ available_ids }}
 Materi Sudah Selesai: {{ sudah_selesai }}
 Materi Sedang Dipelajari: {{ sedang_dipelajari }}
-Level Penguasaan: {{ levels }}
 
 ATURAN:
-1. Berikan rekomendasi materi yang berhubungan dengan mapel yang sama, atau lompat ke bab selanjutnya yang masuk akal.
-2. Jika siswa sudah menyelesaikan suatu materi (misal: "Sistem Persamaan Linear Tiga Variabel"), rekomendasikan bab berikutnya (misal: "Matriks" atau "Persamaan Kuadrat").
+1. Pilihlah SATU atau DUA materi yang ada di dalam `Semesta Materi (Available IDs)` namun BELUM ADA di `Materi Sudah Selesai` maupun `Materi Sedang Dipelajari`.
+2. Jika semua `Available IDs` sudah selesai, rekomendasikan bab berikutnya secara logis.
 3. Berikan alasan motivatif yang jelas mengapa materi tersebut direkomendasikan.
 4. DILARANG memberikan teks pengantar seperti "Berikut rekomendasinya:".
 5. OUTPUT HARUS RAW JSON ARRAY.

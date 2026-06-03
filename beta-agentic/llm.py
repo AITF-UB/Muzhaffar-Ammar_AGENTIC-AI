@@ -3,62 +3,16 @@ from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from huggingface_hub import InferenceClient
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.outputs import ChatResult, ChatGeneration
-import boto3
-from langchain_aws import ChatBedrock
 from dotenv import load_dotenv
-import ollama
+
 load_dotenv()
 
-
-HF_TOKEN = os.getenv("HF_TOKEN")
-from langchain_community.chat_models import ChatOllama
-
-# class OllamaChatModel(ChatOllama):
-#     # Kita menggunakan ChatOllama bawaan langchain-community karena lebih stabil 
-#     # menghadapi isu SSL HTTPS Ngrok di Windows dibanding ollama-python native.
-#     def __init__(self, **kwargs):
-#         # Override default parameter di sini
-#         super().__init__(
-#             base_url=os.getenv("NGROK_KAGGLE_OLLAMA"),
-#             model="qwen3.5:9b", # Ganti jika nama modelnya berbeda di Kaggle
-#             temperature=0.3,
-#             **kwargs
-#         )
-
-
-# Ambil dari .env
-# AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-# BEDROCK_ENDPOINT_URL = os.getenv("BEDROCK_ENDPOINT_URL")
-# BEDROCK_REGION = os.getenv("BEDROCK_REGION", "us-east-1")
-# BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0")
-
-# def get_llm():
-#     # 1. Bikin custom boto3 client yang ngarah ke URL khusus
-#     bedrock_client = boto3.client(
-#         service_name="bedrock-runtime",
-#         region_name=BEDROCK_REGION,
-#         endpoint_url=BEDROCK_ENDPOINT_URL,
-#         aws_access_key_id=AWS_ACCESS_KEY_ID,
-#         aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-#     )
-
-#     # 2. Masukkan client tersebut ke ChatBedrock bawaan Langchain
-#     llm = ChatBedrock(
-#         client=bedrock_client,
-#         model_id=BEDROCK_MODEL_ID,
-#         model_kwargs={
-#             "temperature": 0.3,
-#             "max_tokens": 4000  # Pastikan max_tokens cukup panjang
-#         }
-#     )
-    
-#     return llm
-
-
+# =====================================================================
+# 1. HUGGING FACE INFERENCE (CUSTOM CLASS)
+# =====================================================================
 class HFChatModel(BaseChatModel):
     client: InferenceClient = None
-    model_id: str = "meta-llama/Llama-3.1-8B-Instruct"
+    model_id: str = os.getenv("HF_MODEL_ID", "meta-llama/Llama-3.1-8B-Instruct")
     temperature: float = 0.3
     max_tokens: int = 4000
 
@@ -67,13 +21,14 @@ class HFChatModel(BaseChatModel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.client = InferenceClient(model=self.model_id, token=HF_TOKEN)
+        hf_token = os.getenv("HF_TOKEN")
+        self.client = InferenceClient(model=self.model_id, token=hf_token)
 
     @property
     def _llm_type(self) -> str:
         return "hf-chat"
 
-    def _generate(self, messages, stop=None, **kwargs) -> ChatResult:
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs) -> ChatResult:
         hf_msgs = []
         for msg in messages:
             if isinstance(msg, SystemMessage):
@@ -94,6 +49,62 @@ class HFChatModel(BaseChatModel):
         output_text = response.choices[0].message.content
         return ChatResult(generations=[ChatGeneration(message=AIMessage(content=output_text))])
 
+
+# =====================================================================
+# FACTORY PATTERN: GET LLM BASED ON .ENV
+# =====================================================================
 def get_llm():
-    # return OllamaChatModel()
-    return HFChatModel()
+    provider = os.getenv("LLM_PROVIDER", "huggingface").lower().strip()
+
+    if provider == "bedrock":
+        import boto3
+        from langchain_aws import ChatBedrock
+        
+        bedrock_client = boto3.client(
+            service_name="bedrock-runtime",
+            region_name=os.getenv("BEDROCK_REGION", "us-east-1"),
+            endpoint_url=os.getenv("BEDROCK_ENDPOINT_URL"),
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+        )
+        return ChatBedrock(
+            client=bedrock_client,
+            model_id=os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0"),
+            model_kwargs={"temperature": 0.3, "max_tokens": 4000}
+        )
+
+    elif provider == "runpod":
+        from langchain_openai import ChatOpenAI
+        
+        return ChatOpenAI(
+            openai_api_base=os.getenv("RUNPOD_ENDPOINT_URL"),
+            openai_api_key=os.getenv("RUNPOD_API_KEY", "empty"),
+            model_name=os.getenv("RUNPOD_MODEL_ID", "meta-llama/Meta-Llama-3-8B-Instruct"),
+            temperature=0.3,
+            max_tokens=4000
+        )
+
+    elif provider == "kaggle_vllm":
+        from langchain_openai import ChatOpenAI
+        
+        # vLLM di Kaggle menyediakan endpoint OpenAI-compatible
+        return ChatOpenAI(
+            openai_api_base=os.getenv("NGROK_KAGGLE_VLLM"),
+            openai_api_key="empty", # vLLM lokal tidak butuh api key
+            model_name=os.getenv("KAGGLE_VLLM_MODEL_ID", "AITF-SR-02/ub-sr-02-qwen3.5-9b-base-5k-CPT-SFT-v2"),
+            temperature=0.3,
+            max_tokens=4000
+        )
+
+    elif provider == "kaggle_ollama":
+        from langchain_community.chat_models import ChatOllama
+        
+        return ChatOllama(
+            base_url=os.getenv("NGROK_KAGGLE_OLLAMA"),
+            model=os.getenv("KAGGLE_OLLAMA_MODEL_ID", "qwen3.5:9b"), 
+            temperature=0.3
+        )
+
+    else:
+        # Default fallback ke Hugging Face Inference
+        return HFChatModel()

@@ -1,0 +1,205 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Berpikir Komputasional",
+    "sub_bab": "Penerapan Berpikir Komputasional dalam Penyelesaian Masalah Sehari-hari"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Berpikir Komputasional",
+    "sub_bab": "Analisis Masalah"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Berpikir Komputasional",
+    "sub_bab": "Simulasi Penyelesaian Masalah dengan Berpikir Komputasional"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Berpikir Komputasional",
+    "sub_bab": "Integrasi Menggunakan Kecerdasan Artifisial dalam Berpikir Komputasional"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Algoritma Dasar"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Implementasi Logika Pemrograman dalam Flowchart"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Algoritma Terstruktur dan Penerapannya"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Pengenalan Pemrograman Teks"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Sintaks Dasar Pemrograman"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Algoritma dan Pemrograman Lanjut",
+    "sub_bab": "Analisis Kesalahan (Debugging) dalam Kode Program"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Literasi dan Etika Kecerdasan Artifisial",
+    "sub_bab": "Pengenalan Pola Citra dan Suara"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Literasi dan Etika Kecerdasan Artifisial",
+    "sub_bab": "Profesi di Bidang Kecerdasan Artifisial"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Literasi dan Etika Kecerdasan Artifisial",
+    "sub_bab": "Keterkaitan yang Dibutuhkan dan Perspektif Karier dalam Kecerdasan Artifisial"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Literasi dan Etika Kecerdasan Artifisial",
+    "sub_bab": "Dampak Pemanfaatan Kecerdasan Artifisial"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Integrasi Prompt Engineering dan Design Thinking pada Kecerdasan Artifisial",
+    "sub_bab": "Prompt Engineering"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Integrasi Prompt Engineering dan Design Thinking pada Kecerdasan Artifisial",
+    "sub_bab": "Cara Kerja KA dalam Menghasilkan Konten"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Integrasi Prompt Engineering dan Design Thinking pada Kecerdasan Artifisial",
+    "sub_bab": "Bias Kecerdasan Artifisial"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Integrasi Prompt Engineering dan Design Thinking pada Kecerdasan Artifisial",
+    "sub_bab": "Perancangan Sistem KA dengan Design Thinking"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Integrasi Prompt Engineering dan Design Thinking pada Kecerdasan Artifisial",
+    "sub_bab": "Merancang Sistem KA dengan Design Thinking"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Kreativitas dan Etika Produksi Konten Media Sosial",
+    "sub_bab": "Konsep Multimedia"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Kreativitas dan Etika Produksi Konten Media Sosial",
+    "sub_bab": "Hak Cipta dan Lisensi Digital"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Kreativitas dan Etika Produksi Konten Media Sosial",
+    "sub_bab": "Etika Produksi Konten"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Kreativitas dan Etika Produksi Konten Media Sosial",
+    "sub_bab": "Proses Pembuatan Konten Digital"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Kreativitas dan Etika Produksi Konten Media Sosial",
+    "sub_bab": "Teknik Keamanan Digital dalam Berbagi Konten"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Pengelolaan Informasi Digital",
+    "sub_bab": "Pengenalan Basis Data"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Pengelolaan Informasi Digital",
+    "sub_bab": "Jenis-Jenis Basis Data"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Pengelolaan Informasi Digital",
+    "sub_bab": "Basis Data Relasi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Pengelolaan Informasi Digital",
+    "sub_bab": "Sekilas tentang SQL dan Server Lokal"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Koding dan Kecerdasan Artifisial",
+    "bab_judul": "Pengelolaan Informasi Digital",
+    "sub_bab": "Pengolahan Data Dasar"
+  }
+]

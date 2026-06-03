@@ -1,0 +1,272 @@
+[
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah dan Geografi",
+      "sub_bab": "Kajian Ilmu Sejarah",
+      "atp": "Menjelaskan konsep dasar Ilmu Sejarah serta menerapkan cara berpikir kronologis, diakronis, dan sinkronis."
+    },
+    "chunks": [
+      {
+        "content": "Ilmu sejarah mempelajari peristiwa manusia pada masa lampau dengan menggunakan bukti yang dapat diuji. Peristiwa sejarah tidak dipahami sebagai cerita lepas, tetapi sebagai kejadian yang memiliki pelaku, waktu, tempat, sebab, proses, dan akibat. Dalam kajian sejarah, siswa perlu menggunakan cara berpikir kronologis agar mampu menempatkan peristiwa sesuai urutan waktunya. Urutan waktu membantu kita melihat hubungan antarperistiwa secara lebih jelas, misalnya bagaimana suatu perubahan sosial muncul setelah terjadi peristiwa tertentu. Dengan berpikir kronologis, sejarah menjadi lebih mudah dipahami karena peristiwa tidak disusun secara acak, melainkan mengikuti alur waktu yang runtut."
+      },
+      {
+        "content": "Cara berpikir diakronis dan sinkronis menjadi bagian penting dalam memahami sejarah. Diakronis berarti melihat suatu peristiwa dalam rentang waktu panjang, sehingga perubahan dan kesinambungan dapat terlihat. Misalnya, perkembangan kerajaan, perubahan sistem pemerintahan, atau pertumbuhan kota dapat dikaji dari masa ke masa. Sementara itu, sinkronis berarti mengkaji suatu peristiwa secara mendalam pada waktu tertentu dengan memperhatikan berbagai aspek, seperti politik, ekonomi, sosial, budaya, dan lingkungan. Gabungan cara berpikir kronologis, diakronis, dan sinkronis membuat sejarah tidak sekadar menghafal tanggal, tetapi memahami makna peristiwa secara utuh."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah dan Geografi",
+      "sub_bab": "Kajian Geografi",
+      "atp": "Menjelaskan konsep dasar Geografi serta menerapkan pendekatan keruangan dan ekologi untuk menganalisis fenomena geosfer."
+    },
+    "chunks": [
+      {
+        "content": "Geografi adalah ilmu yang mengkaji fenomena geosfer serta hubungan antara manusia dan lingkungannya di permukaan bumi. Fenomena geosfer meliputi litosfer, atmosfer, hidrosfer, biosfer, dan antroposfer. Geografi tidak hanya menjawab pertanyaan tentang apa yang terjadi, tetapi juga di mana fenomena itu terjadi, mengapa terjadi di tempat tersebut, bagaimana pola persebarannya, serta apa dampaknya bagi kehidupan. Karena itu, geografi sangat dekat dengan kehidupan sehari-hari, seperti kajian banjir, kepadatan penduduk, perubahan iklim, persebaran pertanian, dan perkembangan wilayah perkotaan."
+      },
+      {
+        "content": "Dalam menganalisis fenomena geosfer, geografi menggunakan pendekatan keruangan dan ekologi. Pendekatan keruangan menekankan lokasi, jarak, pola, persebaran, dan keterkaitan antarwilayah. Contohnya, persebaran permukiman dapat dikaji berdasarkan kedekatan dengan jalan, sungai, pasar, atau pusat kegiatan. Pendekatan ekologi menekankan hubungan timbal balik antara manusia dan lingkungan. Contohnya, pembukaan lahan di daerah hulu dapat memengaruhi banjir di daerah hilir. Dengan dua pendekatan tersebut, siswa dapat memahami bahwa fenomena alam dan sosial di permukaan bumi saling berhubungan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Penelitian Sosial Suatu Pengantar",
+      "atp": "Menjelaskan definisi, tahapan ilmiah, dan etika dalam melakukan penelitian sosial."
+    },
+    "chunks": [
+      {
+        "content": "Penelitian sosial adalah proses ilmiah untuk memahami gejala sosial berdasarkan data yang dikumpulkan secara sistematis. Penelitian dilakukan untuk menjawab pertanyaan atau memecahkan masalah dalam masyarakat, seperti kemiskinan, perubahan budaya, interaksi sosial, perilaku konsumsi, atau konflik sosial. Tahapan penelitian sosial umumnya dimulai dari menentukan topik, merumuskan masalah, menyusun tujuan, memilih metode, mengumpulkan data, menganalisis data, lalu menyusun kesimpulan. Dengan mengikuti tahapan tersebut, hasil penelitian dapat dipertanggungjawabkan karena tidak hanya berdasarkan pendapat pribadi."
+      },
+      {
+        "content": "Etika menjadi bagian penting dalam penelitian sosial karena objek kajiannya berkaitan dengan manusia dan kehidupan masyarakat. Peneliti harus menghormati narasumber, menjelaskan tujuan penelitian, menjaga kerahasiaan data pribadi, tidak memaksa responden, serta tidak mengubah data demi mendukung pendapat tertentu. Data dapat diperoleh melalui wawancara, observasi, angket, dokumentasi, atau studi pustaka. Penelitian sosial yang baik harus bersifat objektif, terbuka terhadap bukti, dan jujur dalam menyampaikan temuan. Dengan demikian, penelitian sosial dapat membantu masyarakat memahami masalah secara lebih tepat dan mencari solusi yang masuk akal."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Kekhasan Penelitian Sejarah",
+      "atp": "Menerapkan tahapan heuristik, verifikasi, interpretasi, dan historiografi dalam penelitian masa lampau."
+    },
+    "chunks": [
+      {
+        "content": "Penelitian sejarah memiliki kekhasan karena meneliti peristiwa yang sudah terjadi dan tidak dapat diulang kembali. Oleh sebab itu, peneliti sejarah membutuhkan sumber sejarah sebagai dasar penjelasan. Tahap awal penelitian disebut heuristik, yaitu kegiatan mencari dan mengumpulkan sumber, baik sumber tertulis, lisan, maupun benda peninggalan. Sumber tertulis dapat berupa arsip, surat kabar, prasasti, naskah, atau catatan perjalanan. Sumber lisan dapat berupa kesaksian pelaku atau saksi sejarah, sedangkan sumber benda dapat berupa bangunan, alat, pakaian, atau artefak."
+      },
+      {
+        "content": "Setelah sumber terkumpul, peneliti melakukan verifikasi untuk menilai keaslian dan kebenaran sumber. Verifikasi mencakup kritik eksternal terhadap bentuk fisik sumber dan kritik internal terhadap isi sumber. Tahap berikutnya adalah interpretasi, yaitu menafsirkan fakta sejarah agar hubungan sebab-akibat dan makna peristiwa dapat dipahami. Setelah itu, hasil penelitian ditulis dalam bentuk historiografi. Historiografi harus disusun secara logis, berdasarkan bukti, dan menggunakan bahasa yang jelas. Dengan tahapan heuristik, verifikasi, interpretasi, dan historiografi, penelitian sejarah dapat menghasilkan penjelasan masa lampau yang ilmiah."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Kekhasan Penelitian Geografi",
+      "atp": "Menggunakan peta, penginderaan jauh, dan SIG untuk merancang penelitian berbasis spasial."
+    },
+    "chunks": [
+      {
+        "content": "Penelitian geografi menekankan kajian terhadap fenomena geosfer yang memiliki aspek ruang. Masalah yang diteliti dapat berupa banjir, longsor, persebaran penduduk, perubahan penggunaan lahan, pencemaran, atau potensi sumber daya alam. Kekhasan penelitian geografi terlihat dari penggunaan data spasial, yaitu data yang memiliki lokasi. Data tersebut dapat diperoleh melalui observasi lapangan, peta, citra penginderaan jauh, data statistik wilayah, dan Sistem Informasi Geografis. Karena berhubungan dengan ruang, peneliti perlu memperhatikan lokasi, jarak, pola, persebaran, dan keterkaitan antarwilayah."
+      },
+      {
+        "content": "Peta, penginderaan jauh, dan SIG membantu penelitian geografi menjadi lebih akurat. Peta digunakan untuk menunjukkan letak dan pola suatu fenomena. Penginderaan jauh memanfaatkan citra satelit atau foto udara untuk mengamati permukaan bumi tanpa harus mendatangi seluruh lokasi secara langsung. SIG digunakan untuk mengolah, menggabungkan, menganalisis, dan menampilkan data spasial dalam bentuk peta digital. Misalnya, untuk meneliti daerah rawan banjir, peneliti dapat menggabungkan data curah hujan, kemiringan lereng, penggunaan lahan, dan jaringan sungai. Hasilnya dapat digunakan sebagai dasar perencanaan wilayah."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Kehidupan Masyarakat pada Masa Kerajaan Hindu–Buddha",
+      "atp": "Menganalisis pengaruh masuknya budaya Hindu-Buddha dan mengidentifikasi peninggalan budayanya di Nusantara."
+    },
+    "chunks": [
+      {
+        "content": "Pengaruh Hindu-Buddha masuk ke Nusantara melalui hubungan perdagangan, pelayaran, dan kontak budaya dengan India serta wilayah Asia lainnya. Masyarakat Nusantara tidak hanya menerima pengaruh tersebut secara pasif, tetapi menyesuaikannya dengan tradisi lokal. Akibatnya, muncul perubahan dalam sistem pemerintahan, kepercayaan, seni, bahasa, dan sastra. Dalam bidang politik, berkembang kerajaan bercorak Hindu-Buddha seperti Kutai, Tarumanegara, Sriwijaya, Mataram Kuno, Kediri, Singhasari, dan Majapahit. Raja mulai dipandang sebagai pemimpin yang memiliki kedudukan penting secara politik dan keagamaan."
+      },
+      {
+        "content": "Peninggalan masa Hindu-Buddha menunjukkan adanya akulturasi antara budaya India dan budaya lokal Nusantara. Bukti peninggalannya antara lain prasasti, candi, arca, relief, karya sastra, serta penggunaan bahasa Sanskerta dan aksara Pallawa. Candi tidak hanya berfungsi sebagai bangunan keagamaan, tetapi juga mencerminkan kemampuan arsitektur, seni, dan organisasi masyarakat pada masa itu. Prasasti menjadi sumber penting untuk mengetahui kehidupan politik dan sosial kerajaan. Melalui peninggalan tersebut, siswa dapat memahami bahwa masa Hindu-Buddha memberi pengaruh besar terhadap pembentukan budaya Indonesia."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Kehidupan Masyarakat pada Masa Kerajaan Islam",
+      "atp": "Menganalisis akulturasi budaya dan corak kehidupan masyarakat pada masa kesultanan Islam."
+    },
+    "chunks": [
+      {
+        "content": "Perkembangan Islam di Nusantara berlangsung bertahap melalui jalur perdagangan, dakwah, perkawinan, pendidikan, seni, dan hubungan politik. Wilayah pesisir menjadi tempat awal berkembangnya Islam karena banyak dikunjungi pedagang muslim. Dari pesisir, Islam kemudian menyebar ke daerah pedalaman melalui para ulama, saudagar, dan penguasa lokal. Muncul kesultanan bercorak Islam seperti Samudera Pasai, Demak, Aceh, Banten, Gowa-Tallo, Ternate, dan Tidore. Kesultanan tersebut berperan dalam perdagangan, penyebaran agama, pendidikan, dan pengembangan kebudayaan Islam."
+      },
+      {
+        "content": "Kehidupan masyarakat pada masa kerajaan Islam memperlihatkan akulturasi antara ajaran Islam dan budaya lokal. Bentuk akulturasi dapat dilihat pada masjid beratap tumpang, seni kaligrafi, tradisi pesantren, sastra hikayat, upacara keagamaan, serta bentuk makam yang memadukan unsur lokal dan Islam. Perubahan juga tampak dalam penggunaan bahasa Arab pada istilah keagamaan, perkembangan pendidikan Islam, serta bertambahnya peran ulama dalam masyarakat. Islam di Nusantara berkembang dengan corak yang menyesuaikan kebudayaan setempat, sehingga dapat diterima luas tanpa menghapus seluruh tradisi lama."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
+      "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan."
+    },
+    "chunks": [
+      {
+        "content": "Litosfer adalah lapisan batuan yang menyusun kerak bumi dan bagian terluar bumi. Lapisan ini menjadi tempat manusia membangun permukiman, bertani, menambang, dan melakukan berbagai aktivitas. Litosfer tersusun atas batuan beku, sedimen, dan metamorf yang terus mengalami perubahan melalui siklus batuan. Indonesia memiliki kondisi litosfer yang aktif karena berada pada pertemuan lempeng tektonik. Pergerakan lempeng tersebut dapat menimbulkan gempa bumi, pembentukan pegunungan, palung laut, patahan, dan aktivitas vulkanik. Kondisi ini membuat wilayah Indonesia kaya bentang alam tetapi juga rawan bencana geologi."
+      },
+      {
+        "content": "Tektonisme dan vulkanisme memiliki dampak besar bagi kehidupan. Tektonisme dapat membentuk lipatan dan patahan yang memengaruhi relief permukaan bumi, sedangkan vulkanisme berkaitan dengan aktivitas magma yang keluar melalui gunung api. Dampak negatifnya antara lain gempa, letusan gunung api, longsor, kerusakan permukiman, dan korban jiwa. Namun, proses tersebut juga membawa manfaat, seperti tanah vulkanik yang subur, sumber mineral, energi panas bumi, dan potensi wisata alam. Karena itu, masyarakat perlu memahami karakteristik litosfer agar mampu memanfaatkan potensi alam sekaligus mengurangi risiko bencana."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Atmosfer",
+      "atp": "Menjelaskan fenomena lapisan udara, iklim, dan cuaca bagi aktivitas manusia."
+    },
+    "chunks": [
+      {
+        "content": "Atmosfer adalah lapisan gas yang menyelimuti bumi dan berperan penting dalam menjaga kehidupan. Lapisan ini mengandung nitrogen, oksigen, karbon dioksida, uap air, dan gas lainnya. Atmosfer melindungi bumi dari radiasi matahari berlebihan, membantu menjaga suhu, serta menjadi tempat berlangsungnya gejala cuaca. Fenomena atmosfer meliputi suhu udara, tekanan udara, angin, awan, kelembapan, hujan, dan penyinaran matahari. Tanpa atmosfer, bumi akan mengalami suhu ekstrem dan makhluk hidup sulit bertahan. Karena itu, atmosfer menjadi salah satu unsur geosfer yang sangat penting untuk dipelajari."
+      },
+      {
+        "content": "Cuaca dan iklim memengaruhi berbagai aktivitas manusia. Cuaca adalah keadaan udara pada waktu dan tempat tertentu, sedangkan iklim adalah rata-rata kondisi cuaca dalam jangka waktu panjang. Petani membutuhkan informasi musim dan curah hujan untuk menentukan waktu tanam. Nelayan memperhatikan angin dan gelombang sebelum melaut. Transportasi udara dan laut juga sangat bergantung pada kondisi atmosfer. Di Indonesia, letak geografis dan posisi di sekitar garis khatulistiwa menyebabkan iklim tropis dengan dua musim utama, yaitu musim hujan dan musim kemarau. Pemahaman atmosfer membantu manusia menyesuaikan kegiatan dengan kondisi lingkungan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Hidrosfer",
+      "atp": "Menganalisis potensi perairan darat dan laut serta siklus hidrologi di bumi."
+    },
+    "chunks": [
+      {
+        "content": "Hidrosfer adalah seluruh air yang terdapat di bumi, baik di laut, sungai, danau, rawa, air tanah, es, maupun uap air. Air memiliki peran penting bagi kehidupan karena digunakan untuk minum, pertanian, industri, transportasi, pembangkit energi, dan menjaga ekosistem. Perairan darat seperti sungai, danau, rawa, dan air tanah menyediakan kebutuhan air tawar bagi manusia. Sementara itu, laut memiliki potensi besar sebagai sumber ikan, jalur pelayaran, pariwisata, energi, dan sumber daya mineral. Potensi hidrosfer perlu dikelola secara bijak agar tidak menimbulkan pencemaran dan kelangkaan air."
+      },
+      {
+        "content": "Siklus hidrologi menjelaskan perputaran air dari bumi ke atmosfer dan kembali lagi ke bumi. Prosesnya meliputi evaporasi atau penguapan air dari permukaan laut dan darat, transpirasi dari tumbuhan, kondensasi menjadi awan, adveksi atau perpindahan awan, presipitasi berupa hujan, infiltrasi ke dalam tanah, dan aliran permukaan menuju sungai atau laut. Siklus ini menjaga ketersediaan air di bumi. Namun, perubahan penggunaan lahan, kerusakan hutan, pencemaran, dan perubahan iklim dapat mengganggu keseimbangan hidrologi. Oleh karena itu, manusia perlu menjaga daerah resapan, sungai, dan sumber air."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Struktur Sosial dalam Masyarakat",
+      "atp": "Menjelaskan konsep stratifikasi sosial, peran, dan mobilitas sosial dalam struktur masyarakat."
+    },
+    "chunks": [
+      {
+        "content": "Struktur sosial adalah susunan hubungan sosial yang membentuk keteraturan dalam masyarakat. Di dalamnya terdapat status, peran, norma, lembaga sosial, kelompok sosial, dan lapisan sosial. Status menunjukkan kedudukan seseorang, sedangkan peran adalah perilaku yang diharapkan dari kedudukan tersebut. Misalnya, seorang pelajar memiliki peran belajar, menaati aturan sekolah, dan berinteraksi dengan teman secara baik. Struktur sosial membuat kehidupan masyarakat lebih teratur karena setiap orang memahami kedudukan dan tanggung jawabnya dalam lingkungan sosial."
+      },
+      {
+        "content": "Stratifikasi sosial adalah pelapisan masyarakat berdasarkan ukuran tertentu, seperti kekayaan, pendidikan, kekuasaan, kehormatan, atau pekerjaan. Pelapisan ini dapat memengaruhi kesempatan seseorang dalam memperoleh pendidikan, pekerjaan, dan fasilitas sosial. Dalam masyarakat juga terjadi mobilitas sosial, yaitu perpindahan kedudukan sosial seseorang atau kelompok. Mobilitas dapat bersifat naik, turun, atau sejajar. Contohnya, seseorang yang memperoleh pendidikan tinggi lalu mendapatkan pekerjaan lebih baik mengalami mobilitas sosial naik. Dengan memahami struktur sosial, siswa dapat melihat bagaimana hubungan sosial, peran, dan ketimpangan terbentuk dalam masyarakat."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Ragam Gejala Sosial dalam Masyarakat",
+      "atp": "Mengidentifikasi berbagai fenomena sosial seperti kemiskinan dan kejahatan sebagai dampak interaksi sosial."
+    },
+    "chunks": [
+      {
+        "content": "Gejala sosial adalah peristiwa atau keadaan yang muncul akibat interaksi dalam masyarakat. Gejala sosial dapat terlihat dalam kehidupan sehari-hari, seperti kerja sama, persaingan, konflik, perubahan gaya hidup, kemiskinan, pengangguran, kejahatan, dan masalah lingkungan. Tidak semua gejala sosial bersifat negatif, tetapi gejala sosial dapat menjadi masalah apabila mengganggu keteraturan dan merugikan banyak orang. Dalam IPS, gejala sosial dikaji untuk memahami penyebab, dampak, dan kemungkinan penyelesaiannya berdasarkan kondisi masyarakat."
+      },
+      {
+        "content": "Kemiskinan dan kejahatan merupakan contoh gejala sosial yang sering berkaitan dengan faktor ekonomi, pendidikan, lingkungan, dan kesempatan sosial. Kemiskinan dapat terjadi ketika seseorang atau kelompok tidak mampu memenuhi kebutuhan dasar secara layak. Kondisi ini dapat memengaruhi akses pendidikan, kesehatan, pekerjaan, dan kualitas hidup. Kejahatan dapat muncul karena berbagai faktor, seperti tekanan ekonomi, lemahnya kontrol sosial, lingkungan yang tidak mendukung, atau penyimpangan nilai. Analisis gejala sosial membantu siswa memahami bahwa masalah masyarakat biasanya memiliki sebab yang kompleks dan membutuhkan penyelesaian bersama."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Diferensiasi Sosial Budaya",
+      "atp": "Menjelaskan perbedaan suku, religi, gender, dan profesi dalam bingkai masyarakat multikultural."
+    },
+    "chunks": [
+      {
+        "content": "Diferensiasi sosial budaya adalah pembedaan masyarakat secara horizontal berdasarkan ciri tertentu, seperti suku bangsa, agama, bahasa, jenis kelamin, ras, daerah asal, dan profesi. Pembedaan ini tidak menunjukkan kedudukan lebih tinggi atau lebih rendah, melainkan menunjukkan keberagaman identitas. Indonesia memiliki banyak suku bangsa, bahasa daerah, tradisi, dan sistem kepercayaan yang hidup berdampingan. Keragaman tersebut merupakan kekayaan sosial budaya yang dapat memperkuat persatuan apabila disertai sikap saling menghargai."
+      },
+      {
+        "content": "Dalam masyarakat multikultural, perbedaan suku, religi, gender, dan profesi perlu dipahami sebagai bagian dari kehidupan sosial. Setiap kelompok memiliki nilai, kebiasaan, dan peran yang berbeda, tetapi semuanya memiliki hak untuk dihormati. Sikap toleransi, dialog, kerja sama, dan anti-diskriminasi menjadi penting agar keberagaman tidak berubah menjadi konflik. Profesi juga menunjukkan diferensiasi karena setiap pekerjaan memiliki keahlian dan fungsi sosial yang berbeda. Dengan memahami diferensiasi sosial budaya, siswa dapat membangun cara pandang yang terbuka terhadap perbedaan dalam masyarakat Indonesia."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Masyarakat, Pasar, dan Terbentuknya Harga Pasar",
+      "atp": "Menganalisis mekanisme permintaan, penawaran, dan terbentuknya titik keseimbangan harga pasar."
+    },
+    "chunks": [
+      {
+        "content": "Pasar adalah sarana bertemunya penjual dan pembeli untuk melakukan transaksi barang atau jasa. Pasar tidak selalu berupa tempat fisik, karena transaksi juga dapat terjadi secara daring. Dalam pasar, konsumen melakukan permintaan, sedangkan produsen atau penjual melakukan penawaran. Permintaan dipengaruhi oleh harga, pendapatan, selera, jumlah penduduk, dan harga barang lain. Penawaran dipengaruhi oleh biaya produksi, teknologi, harga bahan baku, jumlah produsen, dan harapan keuntungan. Interaksi antara permintaan dan penawaran menentukan perubahan harga di pasar."
+      },
+      {
+        "content": "Harga pasar terbentuk ketika jumlah barang yang diminta sama dengan jumlah barang yang ditawarkan. Keadaan ini disebut keseimbangan pasar. Jika permintaan lebih besar daripada penawaran, barang menjadi langka dan harga cenderung naik. Sebaliknya, jika penawaran lebih besar daripada permintaan, harga cenderung turun karena barang melimpah. Keseimbangan harga dapat berubah apabila ada perubahan pada faktor permintaan atau penawaran. Misalnya, saat musim panen, penawaran beras meningkat sehingga harga dapat turun. Dengan memahami mekanisme pasar, siswa dapat menganalisis mengapa harga barang berubah dalam kehidupan sehari-hari."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Masyarakat dan Peran Lembaga Keuangan dalam Kehidupan Sehari hari",
+      "atp": "Membedakan fungsi bank dan lembaga keuangan non-bank (IKNB) dalam mengelola keuangan masyarakat."
+    },
+    "chunks": [
+      {
+        "content": "Lembaga keuangan membantu masyarakat mengelola dana, melakukan pembayaran, memperoleh pinjaman, menabung, berinvestasi, dan melindungi diri dari risiko. Bank adalah lembaga keuangan yang menghimpun dana dari masyarakat dalam bentuk simpanan dan menyalurkannya kembali dalam bentuk kredit atau pembiayaan. Layanan bank meliputi tabungan, deposito, transfer, kartu debit, kredit, dan layanan pembayaran. Dalam kehidupan sehari-hari, bank memudahkan masyarakat menyimpan uang dengan lebih aman, mengirim dana, membayar tagihan, serta memperoleh modal usaha secara teratur."
+      },
+      {
+        "content": "Selain bank, terdapat Industri Keuangan Non-Bank atau IKNB yang memiliki fungsi berbeda. Contohnya asuransi untuk perlindungan risiko, pegadaian untuk memperoleh pinjaman dengan jaminan, dana pensiun untuk persiapan masa tua, koperasi simpan pinjam untuk layanan keuangan anggota, perusahaan pembiayaan untuk pembelian barang secara angsuran, dan pasar modal untuk investasi. Perbedaan utama bank dan IKNB terletak pada kegiatan utamanya. Bank menghimpun simpanan dan menyalurkan kredit, sedangkan IKNB menyediakan layanan keuangan khusus. Pemahaman ini membantu masyarakat memilih layanan keuangan sesuai kebutuhan."
+      }
+    ]
+  }
+]

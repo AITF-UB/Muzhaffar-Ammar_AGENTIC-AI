@@ -1,0 +1,93 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Larutan dan Koloid",
+    "sub_bab": "Sifat dan Konsep Asam Basa"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Larutan dan Koloid",
+    "sub_bab": "Kekuatan dan pH Asam Basa"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Larutan dan Koloid",
+    "sub_bab": "Kesetimbangan dalam Larutan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Larutan dan Koloid",
+    "sub_bab": "Sifat Koligatif Larutan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Larutan dan Koloid",
+    "sub_bab": "Koloid"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Elektrokimia",
+    "sub_bab": "Reaksi Redoks"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Elektrokimia",
+    "sub_bab": "Sel Elektrokimia"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Elektrokimia",
+    "sub_bab": "Potensial Elektrode Standar"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Elektrokimia",
+    "sub_bab": "Aplikasi Elektrokimia"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Gugus Fungsi dalam Senyawa Karbon",
+    "sub_bab": "Struktur dan Gugus Fungsi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Gugus Fungsi dalam Senyawa Karbon",
+    "sub_bab": "Tata Nama dan Reaksi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Makromolekul Organik",
+    "sub_bab": "Struktur dan Reaksi Polimer"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Kimia",
+    "bab_judul": "Makromolekul Organik",
+    "sub_bab": "Jenis Polimer dan Biopolimer"
+  }
+]

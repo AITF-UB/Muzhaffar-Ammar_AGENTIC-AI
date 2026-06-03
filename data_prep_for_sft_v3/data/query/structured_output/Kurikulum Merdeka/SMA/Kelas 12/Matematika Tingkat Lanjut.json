@@ -1,0 +1,58 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Geometri Analitik",
+    "sub_bab": "Lingkaran dan Garis Singgung"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Geometri Analitik",
+    "sub_bab": "Irisan Kerucut"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Limit",
+    "sub_bab": "Limit Fungsi Aljabar dan Trigonometri"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Turunan Fungsi",
+    "sub_bab": "Sifat-Sifat Turunan Fungsi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Turunan Fungsi",
+    "sub_bab": "Aplikasi Turunan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Integral",
+    "sub_bab": "Integral Tak Tentu dan Tentu"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Integral",
+    "sub_bab": "Penerapan Integral"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Matematika Tingkat Lanjut",
+    "bab_judul": "Analisis Data Dan Peluang",
+    "sub_bab": "Distribusi Peluang"
+  }
+]

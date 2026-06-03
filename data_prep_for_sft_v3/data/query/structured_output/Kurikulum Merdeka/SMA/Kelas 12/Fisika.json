@@ -1,0 +1,184 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Statis",
+    "sub_bab": "Gaya Listrik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Statis",
+    "sub_bab": "Medan Listrik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Statis",
+    "sub_bab": "Kapasitor Keping Sejajar"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Statis",
+    "sub_bab": "Rangkaian Kapasitor"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Arus Searah",
+    "sub_bab": "Arus Listrik dan Hambatan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Arus Searah",
+    "sub_bab": "Hambatan Jenis"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Arus Searah",
+    "sub_bab": "Rangkaian Listrik dan Hukum Kirchhoff"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Listrik Arus Searah",
+    "sub_bab": "Daya Listrik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Kemagnetan",
+    "sub_bab": "Medan Magnet dan Gaya Magnet"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Kemagnetan",
+    "sub_bab": "Medan Magnet Induksi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Kemagnetan",
+    "sub_bab": "GGL Induksi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Kemagnetan",
+    "sub_bab": "Induktansi dan Transformator"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Arus Bolak-Balik",
+    "sub_bab": "Persamaan Arus Bolak-Balik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Arus Bolak-Balik",
+    "sub_bab": "Karakteristik Rangkaian RLC"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Arus Bolak-Balik",
+    "sub_bab": "Resonansi Rangkaian"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Gelombang Elektromagnetik",
+    "sub_bab": "Sifat dan Spektrum Gelombang Elektromagnetik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Gelombang Elektromagnetik",
+    "sub_bab": "Pemanfaatan Gelombang Elektromagnetik"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Pengantar Elektronika",
+    "sub_bab": "Sistem Elektronika dan Semikonduktor"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Pengantar Elektronika",
+    "sub_bab": "Prinsip Gerbang Logika"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Relativitas",
+    "sub_bab": "Postulat Einstein"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Relativitas",
+    "sub_bab": "Dampak Relativitas"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Gejala Kuantum",
+    "sub_bab": "Konsep Foton dan Radiasi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Gejala Kuantum",
+    "sub_bab": "Efek Fotolistrik dan Compton"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Fisika Inti dan Radioaktivitas",
+    "sub_bab": "Inti Atom"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Fisika Inti dan Radioaktivitas",
+    "sub_bab": "Radioaktivitas dan Peluruhan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Fisika",
+    "bab_judul": "Fisika Inti dan Radioaktivitas",
+    "sub_bab": "Reaksi Inti"
+  }
+]

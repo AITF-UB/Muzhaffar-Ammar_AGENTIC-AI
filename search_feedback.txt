@@ -1,0 +1,3 @@
+2126:   "instruksi_revisi": "Tambahkan level kesulitan di pertanyaan terakhir dan buat feedback lebih informatif"
+2266: > - Feedback evaluasi quiz via CTA badge "📊 Evaluasi Kuis" (endpoint terpisah)
+2376: Identik dengan `/mentor/evaluasi` tapi response via **SSE**. Sesuai flow aplikasi: feedback masuk ke chat sebagai streaming response dengan badge **"📊 Evaluasi Kuis"**.

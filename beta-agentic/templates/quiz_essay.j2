@@ -24,14 +24,16 @@ Hasilkan 5 soal Essay dalam format **JSON murni**. DILARANG menyertakan teks pem
   "pertanyaan": [
     {
       "id": "e1",
-      "soal": "[Tuliskan stimulus narasi + pertanyaan disini]",
+      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
       "image_path": "[Isi dengan path asli gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan kosong string \"\"]",
-      "rubrik": "[Tuliskan poin-poin penilaian/rubrik disini]"
+      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
+      "rubrik": "[Tuliskan poin-poin penilaian/rubrik disini]",
+      "penjelasan": "[Penjelasan atau pembahasan dari jawaban ideal]"
     }
   ]
 }
 Catatan Penting JSON: 
-- "soal" adalah gabungan dari Stimulus dan Pertanyaan Essay.
+- "soal" HANYA berisi pertanyaan. Konteks/narasi dimasukkan ke dalam "stimulus".
 
 [RULES]
 - Aturan Stimulus Essay (100 - 250 kata): Wajib menyusun teks pengantar soal yang komprehensif berdasarkan empat poin aturan mutlak berikut:

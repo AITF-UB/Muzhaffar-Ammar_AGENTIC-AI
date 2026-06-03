@@ -1,0 +1,626 @@
+[
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Membandingkan Informasi yang Akurat dalam Laporan Hasil Observasi",
+      "atp": "Membandingkan temuan informasi dari dua media laporan hasil observasi visual yang berbeda secara objektif."
+    },
+    "chunks": [
+      {
+        "content": "Laporan hasil observasi merupakan teks yang mengungkapkan fakta-fakta yang didapatkan melalui proses pengamatan. Sebagai jenis teks faktual, laporan hasil observasi harus bersifat objektif. Artinya, informasi yang diberikan harus sesuai dengan data yang diperoleh selama observasi. Oleh karena itu, laporan hasil observasi yang disusun harus dipastikan hanya berisi informasi yang diperoleh dari lapangan berdasarkan apa yang dilihat, didengar, dicium, disentuh, dan dirasakan."
+      },
+      {
+        "content": "Dalam mempelajari teks laporan hasil observasi, salah satu keterampilan penting adalah membandingkan informasi berupa gagasan yang akurat. Kita dapat membandingkan temuan informasi dari laporan hasil observasi dalam bentuk monolog yang disimak dengan catatan pengamatan langsung atau media visual lainnya. Merumuskan gagasan utama dari berbagai sumber yang berbeda membantu kita dalam mengecek kebenaran dan ketepatan informasi."
+      },
+      {
+        "content": "Informasi atau pengetahuan awal terhadap suatu objek observasi akan sangat membantu kita dalam membuat prediksi. Sebelum menyimak laporan visual, kita dapat menyusun tabel prediksi mengenai bagian tubuh, bentuk tubuh, makanan, atau daur hidup objek. Setelah itu, kita membandingkan prediksi tersebut dengan informasi faktual yang didapatkan setelah menyimak beserta bukti informasinya. Hal ini melatih kepekaan kita dalam mengevaluasi fakta alam secara objektif."
+      },
+      {
+        "content": "Untuk membandingkan informasi secara utuh, kita juga perlu mengidentifikasi struktur teks laporan hasil observasi. Teks ini secara umum disusun dengan tiga struktur utama: pernyataan umum atau klasifikasi, deskripsi bagian, dan deskripsi manfaat atau simpulan. Pernyataan umum berisi pengantar objek yang dikaji, deskripsi bagian memuat penjelasan detail, dan deskripsi manfaat menjelaskan kegunaan objek tersebut. Menganalisis struktur ini memudahkan kita menilai kualitas gagasan dari berbagai media."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Mengidentifikasi Makna Kata dan Informasi Faktual dalam Laporan Hasil Observasi dan Sumber Lainnya yang Mendukung",
+      "atp": "Menemukan kosakata teknis, menentukan arti kata, serta mengidentifikasi informasi faktual dalam teks LHO."
+    },
+    "chunks": [
+      {
+        "content": "Dalam mempelajari laporan hasil observasi, kita perlu mengevaluasi informasi faktual secara kritis, baik yang tersurat maupun tersirat. Salah satu cara untuk menyajikan dan menilai keakuratan data adalah dengan menggunakan sumber pendukung lain sebagai pembanding, misalnya teks eksplanasi. Teks eksplanasi yang menjelaskan proses bagaimana dan mengapa suatu fenomena alam terjadi dapat digunakan untuk membandingkan dan mengecek kebenaran informasi dalam laporan hasil observasi."
+      },
+      {
+        "content": "Sebagai teks ilmiah, laporan hasil observasi sering menggunakan kosakata teknis atau bahasa ilmiah yang mungkin jarang dijumpai dalam percakapan sehari-hari. Untuk memahami informasi faktual secara utuh, kita harus mampu mengidentifikasi makna kata-kata baru tersebut. Terkadang, makna atau arti kata dijelaskan secara langsung di dalam teks melalui kalimat definisi. Kalimat definisi ini biasanya ditandai dengan penggunaan kata kopula, seperti 'adalah' atau 'merupakan'."
+      },
+      {
+        "content": "Selain dijelaskan secara langsung, makna kosakata teknis juga dapat ditemukan dari penjelasan secara tidak langsung di dalam teks. Kita dapat menyimpulkan arti sebuah kata dengan membaca dan memahami konteks kalimat yang mengelilinginya. Di samping itu, makna kata juga dapat diidentifikasi melalui petunjuk visual yang menyertai teks, seperti gambar anatomi hewan atau bagan, yang memberikan gambaran jelas mengenai istilah yang digunakan."
+      },
+      {
+        "content": "Apabila makna kata teknis masih belum dapat dipahami melalui konteks kalimat maupun petunjuk visual, kita dapat menggunakan rujukan kebahasaan yang tepercaya. Kita dapat mencari makna kata menggunakan kamus, ensiklopedia, atau tesaurus, baik dalam bentuk cetak maupun daring. Pemanfaatan fasilitas seperti Kamus Besar Bahasa Indonesia (KBBI) Daring dan Tesaurus Tematis sangat membantu kita dalam menemukan arti kata secara akurat guna mendukung pemahaman terhadap laporan hasil observasi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Menggunakan Kaidah Kebahasaan dalam Laporan Hasil Observasi",
+      "atp": "Menulis teks LHO dengan memperhatikan kalimat definisi, deskripsi, dan istilah teknis secara tepat."
+    },
+    "chunks": [
+      {
+        "content": "Laporan hasil observasi yang baik harus menggunakan kaidah kebahasaan yang tepat agar informasi dapat tersampaikan secara objektif dan jelas. Salah satu kaidah kebahasaan yang utama adalah kalimat definisi. Kalimat definisi merupakan kalimat yang menjelaskan suatu hal, baik benda hidup maupun benda mati, secara umum. Dalam teks laporan, penggunaan kalimat definisi biasanya merujuk pada istilah teknis atau ilmiah yang berkaitan dengan bidang tertentu. Hal ini sangat penting untuk membantu pembaca memahami istilah-istilah teknis atau ilmiah yang mungkin jarang dijumpai dalam percakapan sehari-hari."
+      },
+      {
+        "content": "Ciri khas dari kalimat definisi dalam teks laporan hasil observasi adalah penggunaan kata kopula, seperti kata 'adalah' dan 'merupakan'. Meskipun terkesan mirip, kedua kata ini memiliki perbedaan dalam penggunaannya. Kata 'adalah' digunakan untuk menjelaskan suatu pengertian yang mutlak. Sebaliknya, kata 'merupakan' digunakan untuk menjelaskan suatu pengertian yang bisa mengacu pada satu pengertian atau lebih yang bersifat tidak mutlak. Pemilihan kopula yang tepat membantu menyajikan fakta secara lebih ilmiah dan akurat."
+      },
+      {
+        "content": "Kaidah kebahasaan penting lainnya dalam laporan hasil observasi adalah kalimat deskripsi. Kalimat deskripsi digunakan untuk menggambarkan sifat atau ciri yang khusus dan spesifik dari suatu objek. Dengan menggunakan kalimat deskripsi, kita dapat menjelaskan rincian sebuah benda kepada pembaca berdasarkan apa yang ditangkap oleh indra. Pemilihan gaya bahasa yang tepat pada kalimat deskripsi akan membuat pembaca seolah-olah dapat melihat, mendengar, atau merasakan sendiri objek faktual yang sedang dilaporkan."
+      },
+      {
+        "content": "Selain menggambarkan sifat atau ciri khusus fisik dari suatu objek, kalimat deskripsi juga dapat dimanfaatkan untuk menjelaskan sebuah aktivitas yang dilakukan oleh objek observasi tersebut. Untuk menyusun kalimat deskripsi jenis ini, kita menggunakan kata kerja material. Kata kerja material merupakan kata kerja yang menunjukkan tindakan nyata dari suatu benda, binatang, manusia, atau peristiwa. Dengan memadukan kalimat definisi, kalimat deskripsi, istilah teknis, dan kata kerja material secara tepat, kita dapat menulis teks laporan hasil observasi yang utuh dan informatif."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Menulis Laporan Hasil Observasi yang Objektif",
+      "atp": "Menyusun kerangka dan menulis laporan hasil observasi yang padu sesuai sistematika struktur teks."
+    },
+    "chunks": [
+      {
+        "content": "Langkah pertama dalam menulis laporan hasil observasi yang objektif adalah merencanakan kegiatan observasi dengan matang. Mulailah dengan menentukan objek yang akan diamati. Pilihlah objek yang menarik, kalian kuasai, dan sebaiknya berada di sekitar lingkungan kalian untuk memudahkan proses pengamatan. Setelah itu, tentukan hal apa saja yang akan diamati dari objek tersebut untuk dijadikan sebagai panduan pengamatan. Panduan ini akan menjaga fokus kalian selama berada di lapangan."
+      },
+      {
+        "content": "Setelah persiapan matang, lakukanlah observasi menggunakan panduan pengamatan yang telah dibuat. Carilah informasi seakurat mungkin yang didasarkan pada fakta lapangan. Untuk mendukung keakuratan data, dokumentasikan kegiatan observasi kalian. Jika memungkinkan, ambillah gambar objek observasi, bawa beberapa sampel objek, atau rekamlah menggunakan kamera dan alat perekam video. Dokumentasi yang baik akan sangat membantu saat kalian memindahkan fakta di lapangan ke dalam bentuk tulisan."
+      },
+      {
+        "content": "Data dan informasi yang telah dikumpulkan kemudian disusun ke dalam sebuah kerangka laporan. Kerangka laporan harus disusun sesuai dengan sistematika struktur teks laporan hasil observasi, yang meliputi tiga bagian utama: definisi umum, deskripsi per bagian, dan deskripsi manfaat. Susunlah rincian topik untuk masing-masing bagian tersebut agar tulisan menjadi terarah. Kerangka yang sistematis akan memudahkan kalian dalam merangkai informasi yang padu."
+      },
+      {
+        "content": "Langkah terakhir adalah mengembangkan kerangka menjadi teks laporan yang utuh dan padu. Pada tahap ini, sangat penting untuk memperhatikan kaidah kebahasaan khas laporan hasil observasi, seperti penggunaan kalimat definisi, kalimat deskripsi, dan istilah teknis yang tepat. Setelah selesai, periksa kembali laporan kalian menggunakan daftar periksa. Pastikan judul ditulis dengan benar, struktur teks sudah lengkap, informasi yang disampaikan murni bersifat objektif, serta penulisan ejaan dan kutipan sudah tepat."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Menyajikan Laporan Hasil Observasi dalam Bentuk Buku Tempel",
+      "atp": "Mengevaluasi gagasan utama dan menyajikan teks LHO dalam bentuk visual kreatif (scrapbook)."
+    },
+    "chunks": [
+      {
+        "content": "Agar laporan hasil observasi lebih menarik untuk dibaca, kalian dapat menyajikannya ke dalam format kreatif, salah satunya adalah dalam bentuk buku tempel atau scrapbook. Buku tempel merupakan seni kerajinan menata atau menempel berbagai gambar, foto, dan tulisan di atas lembaran-lembaran kertas secara menarik. Selain membuat sajian fakta lebih interaktif, penyajian laporan dalam bentuk buku tempel juga akan membuat hasil karya kalian menjadi semacam memorabilia atau sesuatu yang patut dikenang."
+      },
+      {
+        "content": "Dalam membuat buku tempel untuk laporan hasil observasi, peralatan dasar yang kalian butuhkan adalah buku tulis atau buku gambar tebal sebagai media utama. Apabila ingin lebih berkreasi, kalian juga dapat membuatnya dari bahan alternatif seperti kertas karton atau kardus. Media yang kokoh sangat diperlukan agar mampu menahan berbagai tempelan dokumentasi observasi dan hiasan sehingga buku tempel tersebut dapat tersimpan dengan awet."
+      },
+      {
+        "content": "Setelah media dasar disiapkan, langkah selanjutnya adalah menempelkan foto-foto hasil observasi kalian dan memberikan teks keterangan secukupnya agar esensi laporan tetap faktual. Tidak hanya foto, kalian juga dapat menempelkan benda-benda pendukung yang didapatkan saat observasi lapangan. Misalnya, menempelkan tiket masuk tempat observasi, sampel daun, bunga kering, atau benda-benda lain yang secara langsung berkaitan dengan objek observasi kalian."
+      },
+      {
+        "content": "Setelah buku tempel selesai dibuat dan dievaluasi kelengkapan informasinya, kalian dapat memublikasikan karya tersebut agar gagasan utamanya dapat dibaca oleh orang lain. Publikasi dapat dilakukan dengan mengirimkannya ke penerbit atau dipamerkan di sekolah. Alternatif lainnya, kalian bisa memublikasikannya secara digital melalui media sosial, blog, atau situs web sekolah. Kalian juga dapat mendokumentasikan proses pembuatan buku tempel tersebut menjadi bentuk video edukatif untuk diunggah ke berbagai kanal digital."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkap Fakta Alam Secara Objektif",
+      "sub_bab": "Mempresentasikan Laporan Hasil Observasi",
+      "atp": "Menyajikan hasil observasi secara lisan dengan memperhatikan intonasi, pelafalan, dan gestur yang tepat."
+    },
+    "chunks": [
+      {
+        "content": "Setelah menulis teks laporan hasil observasi, langkah selanjutnya adalah mempresentasikannya di hadapan orang lain. Mempresentasikan laporan tidak hanya sekadar membacakan teks, tetapi juga harus memperhatikan beberapa aspek penting agar pesan dapat tersampaikan dengan baik. Salah satu hal utama yang harus dikuasai saat melakukan presentasi adalah mengatur intonasi. Penggunaan intonasi yang tepat dan bervariasi akan menjadikan presentasi laporan kalian terasa lebih hidup dan menarik bagi para pendengar."
+      },
+      {
+        "content": "Intonasi adalah lagu kalimat atau tinggi rendahnya suatu nada pada kalimat yang berfungsi memberikan penekanan pada kata-kata tertentu. Mengatur intonasi berbicara ketika melakukan presentasi sangatlah penting untuk diperhatikan. Jelas atau tidaknya kalimat yang diucapkan oleh pemateri akan sangat berpengaruh kepada audiensi dalam menerima dan memahami pesan. Tanpa intonasi yang tepat, penyampaian fakta-fakta dalam laporan hasil observasi akan terdengar sangat monoton dan membosankan."
+      },
+      {
+        "content": "Terdapat beberapa cara yang dapat dilakukan untuk mengatur intonasi saat presentasi. Pertama, gunakan suara yang lantang untuk menegaskan suatu hal penting agar lebih diperhatikan dan diingat oleh audiensi. Kedua, gunakan tempo berbicara yang lambat untuk menyampaikan sebuah poin utama pada laporan. Sebaliknya, kalian dapat menggunakan tempo berbicara yang sedikit lebih cepat untuk menyampaikan suatu hal yang bersifat pelengkap, seperti cerita pengantar atau sekadar basa-basi kepada audiensi."
+      },
+      {
+        "content": "Selain volume dan tempo, aturlah tinggi rendahnya suara selama presentasi. Tinggikan suara kalian ketika menyapa audiensi pada awal presentasi untuk menarik perhatian dan menunjukkan semangat. Sebaliknya, rendahkan suara secara wajar saat mulai menjelaskan isi inti presentasi. Pastikan suara kalian diatur agar tidak terlalu rendah hingga tidak terdengar, maupun tidak terlalu tinggi hingga mengganggu pendengaran. Terakhir, libatkanlah perasaan atau emosi yang sesuai dengan kalimat yang sedang diucapkan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Mengevaluasi Pesan dari Menyimak Teks Monolog Lawakan Tunggal",
+      "atp": "Menentukan dan mengevaluasi masalah serta pesan tersirat dalam teks monolog lawakan tunggal."
+    },
+    "chunks": [
+      {
+        "content": "Anekdot tidak semata berbentuk visual yang isinya hanya dapat dilihat atau dibaca menggunakan indra penglihatan. Ada pula anekdot yang dapat didengarkan isi ceritanya melalui indra pendengaran, yang dikenal dengan sebutan anekdot aural. Kita dapat menemukan anekdot aural melalui siaran radio, televisi, atau media rekam suara lainnya. Salah satu bentuk penyajian anekdot aural yang sangat populer di tengah masyarakat saat ini adalah lawakan tunggal atau yang sering kita kenal dengan sebutan stand up comedy."
+      },
+      {
+        "content": "Lawakan tunggal atau komedi tunggal merupakan sebuah penyajian lawakan yang dilakukan oleh seorang diri di atas panggung. Seseorang yang membawakan lawakan ini dikenal dengan sebutan komika. Melalui lawakan tunggal, seorang komika tidak sekadar melontarkan lelucon, tetapi berusaha mengungkapkan ketidaksetujuan atau keresahan terhadap suatu hal. Oleh karena itu, lawakan tunggal sering disebut juga sebagai komedi cerdas yang menyampaikan pesan bermakna bagi para pendengarnya."
+      },
+      {
+        "content": "Keresahan yang dibawakan oleh seorang komika biasanya berupa kritik sosial yang didasarkan pada penelitian, pengamatan lingkungan sekitar, maupun murni dari kegelisahan pribadinya. Tujuannya adalah menyampaikan kritik atau sindiran halus berdasarkan fakta dan peristiwa yang sering terjadi dalam kehidupan sosial masyarakat. Melalui balutan humor yang segar, komika menyisipkan nilai-nilai kehidupan atau pelajaran tertentu yang dapat dijadikan pesan moral."
+      },
+      {
+        "content": "Dalam mempelajari teks monolog lawakan tunggal, keterampilan penting yang harus dikuasai adalah mengevaluasi gagasan dan pesan yang disampaikan secara kritis. Saat menyimak lawakan tersebut, kita harus mampu menentukan masalah utama yang sedang dikritisi serta memahami pesan tersirat di balik humor yang dilontarkan. Dengan mengevaluasi pesan dari sebuah lawakan tunggal, kita dapat melatih kepekaan terhadap isu sosial sekaligus menilai relevansi kritik tersebut dengan realitas masyarakat."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Menentukan Struktur Teks dari Menyimak Monolog Lawakan Tunggal dan/atau Anekdot",
+      "atp": "Mengevaluasi struktur abstraksi, orientasi, krisis, reaksi, dan koda pada teks anekdot."
+    },
+    "chunks": [
+      {
+        "content": "Setiap teks memiliki struktur pembangunnya masing-masing, tidak terkecuali teks anekdot. Sebuah anekdot harus disusun berdasarkan urutan penyajian yang kronologis. Urutan ini tidak boleh ditukar posisinya agar cerita memiliki kesatuan pola penyajian yang runtut dan mudah dipahami oleh pembaca atau pendengar. Secara umum, teks anekdot memiliki struktur yang terdiri atas abstraksi, orientasi, krisis, reaksi, dan koda. Bagian pertama adalah abstraksi yang merupakan bagian awal cerita yang berfungsi sebagai gambaran umum isi anekdot, meskipun struktur ini tidak selalu ada di setiap teks."
+      },
+      {
+        "content": "Struktur selanjutnya setelah abstraksi adalah orientasi. Orientasi merupakan bagian pembuka cerita yang biasanya memuat perkenalan tokoh atau latar kejadian. Pada bagian orientasi inilah cerita awal mulai dibangun hingga akhirnya mengarah pada sebuah konflik atau permasalahan. Setelah orientasi, terdapat bagian krisis yang menjadi inti dari cerita anekdot. Pada bagian krisis inilah masalah utama terjadi yang kemudian akan menimbulkan reaksi. Istilah krisis dalam struktur anekdot ini juga sering dikenal dengan sebutan komplikasi."
+      },
+      {
+        "content": "Setelah masalah pada bagian krisis muncul, struktur berikutnya adalah reaksi. Reaksi merupakan bagian cerita yang berisi tanggapan atau respons terhadap krisis yang terdapat pada bagian sebelumnya. Bagian ini sangat penting karena sering kali menimbulkan sesuatu yang tidak terduga, memuat kelucuan, sekaligus menyisipkan unsur kritik. Istilah reaksi ini juga sering disamakan dengan resolusi. Respons tokoh dalam menyelesaikan masalah inilah yang menjadi daya tarik utama dalam sebuah monolog lawakan tunggal maupun teks anekdot."
+      },
+      {
+        "content": "Bagian terakhir dari struktur teks anekdot adalah koda. Koda merupakan bagian akhir cerita yang menandai bahwa peristiwa sudah selesai. Biasanya, di dalam koda dimuat komentar atau sikap dari sebuah reaksi yang telah terjadi sebelumnya. Sama halnya dengan abstraksi, keberadaan koda dalam teks anekdot bersifat opsional, yang berarti bisa ada dan bisa juga tidak ada. Dengan mengevaluasi kelima struktur ini secara utuh saat menyimak lawakan tunggal, kita dapat lebih mudah menangkap alur cerita serta pesan yang ingin disampaikan oleh komika."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Menilai Akurasi Kritik Sosial yang Disampaikan dengan Membandingkan Beberapa Isi Teks",
+      "atp": "Membandingkan akurasi informasi dari berbagai sumber untuk menyampaikan kritik sosial yang bertanggung jawab."
+    },
+    "chunks": [
+      {
+        "content": "Sebuah kritikan sosial dapat dikembangkan melalui berbagai sumber pendukung, antara lain dari sumber berbentuk komik, berita, maupun artikel. Sering kali terdapat beberapa sumber yang membahas topik yang sama, tetapi pola penyajian ataupun isi informasinya bisa jadi berbeda. Dengan membandingkan beberapa informasi dari sumber yang berbeda, kita diharapkan dapat memperoleh informasi yang lebih akurat dan bertanggung jawab saat menyampaikan kritik. Selain itu, hal ini juga membuat kita menguasai lebih detail topik yang akan dijadikan bahan untuk membuat kritikan."
+      },
+      {
+        "content": "Selama membandingkan informasi dari berbagai sumber, kita juga dapat mengklasifikasikan informasi berupa gagasan yang bersifat simpati, peduli, empati, dan pandangan pro atau kontra. Memahami klasifikasi ini sangat membantu dalam menyaring informasi. Simpati merupakan keikutsertaan dalam merasakan perasaan, baik berupa rasa senang maupun sedih. Sementara itu, empati adalah keadaan mental seseorang yang melibatkan dirinya untuk sama-sama merasakan sesuatu yang dialami oleh orang lain."
+      },
+      {
+        "content": "Selain simpati dan empati, gagasan dalam suatu teks juga dapat berupa kepedulian. Peduli merupakan rasa memperhatikan seseorang dengan diikuti tindakan pro-aktif terhadap kondisi atau keadaan sekitar. Saat mengevaluasi isu sosial, kita juga akan melihat adanya keberpihakan. Pro merupakan sikap seseorang yang setuju atau memihak pada suatu pendapat atau hal yang dikerjakan pihak lain. Sebaliknya, kontra merupakan keadaan seseorang yang tidak setuju atau menentang sebuah pendapat maupun tindakan."
+      },
+      {
+        "content": "Dalam menilai akurasi kritik sosial, kita dapat mempraktikkannya dengan membandingkan isi komik potongan dengan beberapa teks berita yang mengangkat isu yang sama. Langkah pertama adalah mencari persamaan dan perbedaan informasi dari sumber-sumber tersebut. Selanjutnya, kita mengklasifikasikan kalimat-kalimat di dalamnya untuk mencari unsur simpati, peduli, empati, serta pro dan kontra. Melalui perbandingan yang kritis ini, kita dapat menilai apakah kritik sosial yang diangkat sudah relevan dengan realitas masyarakat sebelum kita menyampaikannya kembali."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Menggunakan Kaidah Bahasa untuk Menyampaikan Kritik",
+      "atp": "Menggunakan pertanyaan retoris, majas sindiran, dan kata kerja material dalam teks anekdot."
+    },
+    "chunks": [
+      {
+        "content": "Dalam menyampaikan kritikan melalui anekdot, kita perlu memperhatikan kaidah kebahasaan yang umum digunakan di masyarakat. Ciri kebahasaan yang sering dipergunakan saat menyampaikan kritikan ialah menggunakan pertanyaan retoris, majas sindiran, dan kata kerja material. Salah satu cara menyindir secara halus adalah menggunakan pertanyaan retoris. Pertanyaan retoris adalah pertanyaan yang sudah jelas jawabannya dan bahkan bisa dijawab oleh penanya itu sendiri. Pertanyaan jenis ini tidak ditujukan untuk mencari jawaban, melainkan diberikan untuk menyindir, memberi nasihat, memberikan dukungan, atau menyampaikan pesan terhadap orang lain secara halus."
+      },
+      {
+        "content": "Selain pertanyaan retoris, teks anekdot juga lazim menggunakan majas sindiran. Majas sindiran merupakan kelompok gaya bahasa yang mengungkapkan maksud atau gagasan dengan cara menyindir, yang bertujuan untuk meningkatkan kesan dan makna kata terhadap pembaca. Dalam teks anekdot, majas sindiran yang lebih diterima untuk digunakan adalah yang bersifat santun, seperti ironi dan sinisme. Ironi adalah gaya bahasa yang melukiskan suatu maksud dengan mengatakan kebalikan dari keadaan yang sebenarnya dengan maksud menyindir. Penggunaan ironi membuat kritikan terasa lebih halus karena menggunakan pernyataan yang berlawanan dengan fakta."
+      },
+      {
+        "content": "Jenis majas sindiran lainnya adalah sinisme dan sarkasme. Sinisme merupakan gaya bahasa berupa ejekan atau sindiran yang menggunakan kata-kata kasar dan disampaikan secara langsung dengan setulus hati. Meskipun lebih langsung dibandingkan ironi, sinisme masih sering ditemui dalam lawakan tunggal atau anekdot. Sementara itu, sarkasme merupakan gaya sindiran yang paling keras di antara tiga majas sindiran yang ada. Majas ini secara terang-terangan menyinggung, menyindir, atau menyerang seseorang atau sesuatu secara langsung, bahkan sering menggunakan kata-kata yang sangat kasar."
+      },
+      {
+        "content": "Kaidah kebahasaan ketiga yang juga mendominasi teks anekdot adalah kata kerja material. Kata kerja material merupakan kata yang menunjukkan suatu aktivitas, tindakan fisik, atau perbuatan nyata dari suatu benda, binatang, manusia, atau peristiwa. Teks anekdot sangat banyak menggunakan kata kerja material karena teks ini pada dasarnya adalah cerita naratif. Penggunaan kata kerja ini sangat erat kaitannya dengan tindakan para tokoh dan pergerakan alur yang membentuk rangkaian peristiwa atau kegiatan di dalam cerita. Dengan kata kerja material, pembaca dapat dengan mudah membayangkan adegan atau tingkah laku tokoh yang memuat unsur kelucuan sekaligus kritikan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Menulis Teks Eksposisi Hasil Penelitian Sederhana sebagai Bahan untuk Menyampaikan Kritik Sosial",
+      "atp": "Menulis gagasan dalam teks eksposisi secara logis minimal empat paragraf berdasarkan hasil penelitian sederhana."
+    },
+    "chunks": [
+      {
+        "content": "Selain anekdot, ada beberapa jenis teks yang dapat dijadikan sebagai media untuk menyampaikan kritikan. Salah satu media kritikan tersebut adalah teks eksposisi. Teks eksposisi merupakan suatu tulisan yang berisi informasi yang dilengkapi dengan gagasan, perasaan, dan pengetahuan dari penulis. Terdapat beragam jenis teks eksposisi, salah satunya adalah teks eksposisi laporan. Teks eksposisi laporan dapat diartikan sebagai tulisan yang dikembangkan melalui data temuan pada sebuah peristiwa atau penelitian, yang kemudian ditambah dengan gagasan penulis sebagai penguatnya."
+      },
+      {
+        "content": "Untuk menghasilkan sebuah teks eksposisi laporan yang akurat sebagai bahan menyampaikan kritik sosial, kita perlu melakukan penelitian sederhana terlebih dahulu. Penelitian ini dapat menggunakan metode survei yang bertujuan untuk mendapatkan data faktual sebelum melakukan kritik. Langkah pertama yang harus dilakukan adalah menentukan topik yang berhubungan dengan fenomena sosial di sekitar kita. Setelah itu, tentukan objek yang akan menjadi responden atau sumber data penelitian, lalu tentukan cara pengambilan datanya, misalnya melalui angket isian atau wawancara."
+      },
+      {
+        "content": "Setelah menentukan topik, responden, dan metode pengambilan data, langkah selanjutnya adalah merumuskan hal-hal yang ingin diketahui ke dalam bentuk daftar pertanyaan. Daftar pertanyaan ini akan menjadi panduan saat mengumpulkan data di lapangan. Apabila data sudah terkumpul, kita harus mengolah data tersebut dengan saksama. Pengolahan data dapat dilakukan dengan menggunakan persentase untuk melihat kecenderungan jawaban responden. Data yang telah diolah inilah yang nantinya akan menjadi argumen kuat untuk mendukung gagasan dan kritik sosial yang ingin kita sampaikan."
+      },
+      {
+        "content": "Tahap terakhir adalah menyajikan data hasil penelitian sederhana tersebut ke dalam bentuk teks eksposisi laporan yang utuh. Teks harus disajikan sesuai dengan strukturnya, yaitu pernyataan pendapat, argumen atau hasil penelitian, dan penegasan ulang atau simpulan. Pada bagian pernyataan pendapat, sampaikan gagasan utama dan alasan pemilihan topik. Pada bagian argumen, paparkan data hasil penelitian dengan jelas, bila perlu lengkapi dengan tabel atau grafik. Terakhir, sampaikan penegasan ulang atau simpulan terhadap hasil yang telah dibahas sebagai penutup kritik sosial tersebut."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Mengungkapkan Kritik Lewat Humor",
+      "sub_bab": "Mengubah Teks Anekdot ke dalam Bentuk Komik Potongan (Comic Strip)",
+      "atp": "Mengonversi teks narasi anekdot ke dalam bentuk visual komik potongan secara sistematis."
+    },
+    "chunks": [
+      {
+        "content": "Anekdot tidak hanya dapat disampaikan melalui teks lisan maupun tulisan, tetapi juga dapat diekspresikan melalui media grafis atau visual. Salah satu bentuk penyajian visual yang sering digunakan untuk menyampaikan anekdot adalah komik potongan atau comic strip. Komik potongan umumnya terdiri atas empat panel, meskipun jumlah ini bisa menyesuaikan kebutuhan cerita. Panel sendiri merupakan satu bingkai atau kotak pada komik yang berisi satu adegan. Menyajikan anekdot dalam bentuk komik membuat pesan kritik sosial menjadi lebih menarik dan mudah dipahami oleh pembaca."
+      },
+      {
+        "content": "Langkah pertama dalam membuat komik potongan adalah menentukan cerita anekdot yang akan divisualisasikan. Kalian dapat menggunakan teks narasi anekdot yang telah dipahami makna dan strukturnya sebagai sumber cerita. Setelah cerita ditentukan, langkah berikutnya adalah mengubah cerita tersebut ke dalam bentuk skenario atau naskah komik. Mengingat jumlah panel yang sangat terbatas dalam komik potongan, kalian harus pandai menyeleksi dan memilih adegan-adegan inti dari cerita tersebut agar alur peristiwa dan pesan kelucuannya tetap utuh."
+      },
+      {
+        "content": "Saat menyusun naskah komik, pastikan untuk membaginya ke dalam panel-panel yang memuat deskripsi visual secara detail beserta dialog tokohnya. Setelah naskah komik siap, langkah selanjutnya adalah membuat sketsa gambar atau sketching. Pada tahap ini, kalian mulai memvisualisasikan adegan dan dialog ke dalam bentuk draf gambar kasar. Pastikan ekspresi wajah tokoh, gestur, dan komposisi adegan di dalam setiap panel tergambar dengan tepat agar humor dan sindiran yang menjadi esensi anekdot dapat ditangkap dengan jelas."
+      },
+      {
+        "content": "Tahap terakhir dalam mengubah teks anekdot menjadi komik potongan adalah penyempurnaan sketsa gambar. Setelah kalian merasa yakin dengan draf sketsa yang dibuat, lakukan proses penebalan garis gambar atau inking. Selanjutnya, kalian dapat mewarnai sketsa tersebut hingga menjadi karya komik potongan yang utuh dan estetik. Komik yang sudah selesai ini dapat dipublikasikan atau peragakan dialognya di depan kelas sebagai bentuk kreasi seni sekaligus sarana untuk menyampaikan pesan moral yang menghibur."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Menyusuri Nilai Dalam Cerita Lintas Zaman",
+      "sub_bab": "Mengidentifikasi Ide dan Makna Kata dalam Teks Hikayat",
+      "atp": "Memahami makna kata arkais dan mengidentifikasi alur serta pesan moral dalam teks hikayat."
+    },
+    "chunks": [
+      {
+        "content": "Kata hikayat diturunkan dari bahasa Arab, yaitu kata 'haka' yang memiliki arti menceritakan, menirukan, mewartakan, menyerupai, berkata, meneruskan, dan melukiskan. Secara umum, sastra hikayat adalah karya sastra lama Melayu berbentuk prosa yang berisi cerita, undang-undang, dan silsilah. Sastra ini bisa bersifat rekaan, keagamaan, historis, biografis, atau gabungan dari sifat-sifat tersebut. Sebagian besar kandungan cerita dalam hikayat berkisar pada kehidupan istana atau yang lazim disebut sebagai istanasentris. Selain itu, unsur rekaan merupakan ciri yang sangat menonjol dan pada lazimnya mencakup bentuk prosa yang panjang."
+      },
+      {
+        "content": "Dalam tradisi masyarakat masa lampau, hikayat biasanya dibaca untuk pelipur lara, pembangkit semangat juang, atau sekadar untuk meramaikan sebuah pesta. Mengingat hikayat merupakan cerita yang berasal dari masa lalu, maka dalam mempelajarinya kita perlu memahami ide pokok dan makna kata yang terkandung di dalamnya. Langkah awal yang dapat dilakukan untuk mengidentifikasi ide dan alur cerita dalam teks hikayat adalah dengan menyimak pembacaan teks tersebut secara saksama. Saat menyimak, kita dapat menggunakan panduan pertanyaan Adiksimba, yaitu apa, di mana, kapan, siapa, mengapa, dan bagaimana, untuk mengidentifikasi tokoh, masalah, dan peristiwa-peristiwa penting."
+      },
+      {
+        "content": "Sebagai karya sastra klasik, hikayat sering kali menggunakan kosakata yang sudah jarang atau bahkan tidak lazim lagi digunakan dalam percakapan bahasa Indonesia saat ini. Kosakata semacam ini dikenal dengan sebutan kata arkais. Salah satu bentuk kata arkais yang sangat dominan dalam teks hikayat adalah penggunaan konjungsi urutan waktu. Kata-kata seperti alkisah, bermula, sebermula, arkian, hatta, kalakian, syahdan, dan maka sering digunakan oleh pencerita untuk merangkai urutan kejadian. Pemahaman terhadap makna kata-kata arkais ini sangat penting agar kita dapat mengidentifikasi alur cerita secara kronologis dan tidak kehilangan konteks peristiwanya."
+      },
+      {
+        "content": "Selain kaya akan imajinasi dan penggunaan bahasa klasik, hikayat juga tidak pernah lepas dari nilai-nilai luhur kehidupan masyarakat. Melalui tingkah laku, pola pikir, serta sikap tokoh-tokohnya, hikayat senantiasa menyajikan pesan moral yang dapat diambil hikmahnya oleh para pembaca. Nilai-nilai yang terkandung dalam karya sastra ini sangat beragam, mulai dari nilai pendidikan, religius, moral, hingga nilai sosial. Dengan menganalisis dan mengidentifikasi alur serta karakterisasi tokoh di dalamnya, kita tidak hanya sekadar menikmati hiburan dari sebuah cerita lintas zaman, tetapi juga dapat memetik pesan moral untuk diaplikasikan dalam kehidupan sehari-hari."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Menyusuri Nilai Dalam Cerita Lintas Zaman",
+      "sub_bab": "Menganalisis Karakterisasi, Plot, dan Nilai pada Hikayat dan Cerpen",
+      "atp": "Menganalisis perbedaan karakteristik tokoh, alur berbingkai, dan nilai budaya antara hikayat dan cerpen."
+    },
+    "chunks": [
+      {
+        "content": "Meskipun hikayat dan cerpen sama-sama merupakan cerita naratif berupa fiksi, terdapat perbedaan mendasar antara keduanya akibat perbedaan kondisi sosial budaya saat cerita dibuat. Salah satu perbedaan utama terletak pada karakterisasi tokoh. Tokoh pada hikayat cenderung berlatar belakang keluarga kerajaan atau orang-orang di sekitarnya, yang lazim dikenal dengan sebutan istanasentris. Tokoh-tokoh ini sering diceritakan memiliki kesaktian dan mampu melakukan hal-hal di luar kewajaran manusia biasa. Perbedaan kasta masyarakat juga tampak sangat jelas dalam cerita. Sebaliknya, cerpen menampilkan penokohan yang jauh lebih bervariasi dan membumi dengan realitas kehidupan masyarakat sehari-hari."
+      },
+      {
+        "content": "Latar belakang tokoh yang berasal dari lingkungan istana sangat memengaruhi konflik yang muncul di dalam cerita hikayat. Konflik yang terjadi biasanya tidak lepas dari perselisihan antarkerajaan dan pertentangan antargolongan. Penyelesaian konflik dalam hikayat pun sering kali diselesaikan melalui peperangan atau penggunaan kekuatan gaib, yang pada akhirnya selalu membawa cerita pada akhir yang bahagia. Sementara itu, konflik di dalam cerpen cenderung lebih beragam, realistis, dan berfokus pada masalah psikologis atau kehidupan nyata dengan ragam penyelesaian yang bervariasi."
+      },
+      {
+        "content": "Sebagai cerita yang ukurannya lebih panjang dibandingkan cerpen, hikayat memiliki alur yang terbilang kompleks. Hikayat umumnya selalu menggunakan alur maju dan pola alur berbingkai. Maksud dari alur berbingkai adalah terdapat sebuah cerita lain di dalam cerita utama. Sering kali di tengah narasi utama, tokoh di dalam hikayat akan menceritakan sebuah dongeng atau kisah fabel sebagai kiasan. Dari segi penceritaan, hikayat secara dominan menggunakan sudut pandang orang ketiga. Hal ini cukup berbeda dengan cerpen modern yang lebih bebas mengeksplorasi alur campuran serta menggunakan sudut pandang penceritaan yang beragam."
+      },
+      {
+        "content": "Sebagai bagian dari sastra rakyat dan peninggalan budaya, hikayat tidak pernah lepas dari nilai-nilai luhur masyarakat pada zamannya. Melalui pola tingkah laku, pola pikir, serta ucapan para tokohnya, hikayat bukan sekadar menyajikan hiburan bagi pembaca, melainkan juga memberikan tuntunan hidup. Nilai-nilai kehidupan yang terkandung dalam karya klasik ini mencakup nilai pendidikan, nilai religius, nilai moral, hingga nilai sosial. Dengan menganalisis dan membandingkan keberadaan nilai-nilai tersebut dengan cerpen, kita dapat mengambil keteladanan positif dari budaya masa lalu untuk diterapkan dalam kehidupan sehari-hari."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Menyusuri Nilai Dalam Cerita Lintas Zaman",
+      "sub_bab": "Menulis Cerpen Berdasarkan Nilai dalam Hikayat",
+      "atp": "Mengembangkan kerangka cerita pendek dengan mengadaptasi nilai-nilai luhur dari teks hikayat."
+    },
+    "chunks": [
+      {
+        "content": "Setelah menganalisis nilai-nilai luhur yang terkandung dalam sebuah cerita hikayat, langkah selanjutnya adalah menggunakan nilai-nilai tersebut sebagai inspirasi dasar untuk menulis cerita pendek atau cerpen. Agar proses penulisan cerita menjadi lebih terarah dan ide-ide tidak melenceng, pembuatan kerangka cerita sangatlah dianjurkan. Salah satu metode yang efektif dan kreatif untuk menyusun kerangka cerita adalah dengan membuat peta konsep. Peta konsep merupakan sebuah bagan atau gambar visual yang digunakan untuk memetakan hubungan antargagasan secara ringkas dan menarik."
+      },
+      {
+        "content": "Langkah pertama dalam menyusun peta konsep adalah menentukan topik utama dari cerpen yang akan ditulis, misalnya tentang persahabatan, kejujuran, atau keberanian. Tuliskan topik utama tersebut tepat di tengah kertas sebagai pusat gagasan. Selanjutnya, buatlah cabang-cabang utama yang mewakili elemen-elemen penting pembangun cerita. Cabang utama ini biasanya mencakup rincian tokoh beserta karakteristiknya, konflik atau permasalahan yang akan dihadapi oleh tokoh utama, serta solusi atau cara tokoh tersebut dalam menyelesaikan masalah."
+      },
+      {
+        "content": "Setelah cabang utama dibuat, langkah berikutnya adalah menambahkan cabang-cabang pendukung yang berisi kata-kata kunci terkait. Gunakan warna yang berbeda, simbol, atau gambar sederhana untuk memicu imajinasi visual kalian. Gambarlah garis lengkung untuk menghubungkan kata-kata kunci yang saling berkaitan. Jika seluruh ide sudah tertuang, berikanlah nomor urut pada setiap kata kunci untuk menentukan kronologi alur cerita. Pada tahap ini, kalian juga dapat menyeleksi dan mencoret gagasan yang dirasa kurang relevan dengan topik utama."
+      },
+      {
+        "content": "Tahap terakhir adalah mengembangkan rangkaian kata kunci yang telah diurutkan tersebut menjadi sebuah teks cerpen yang utuh. Kalian diperbolehkan untuk menambahkan peristiwa atau detail imajinatif tambahan selama tidak mengubah nilai luhur dan topik utama cerita. Setelah cerpen selesai ditulis, lakukanlah penilaian diri atau evaluasi untuk menelaah kualitas karya kalian. Pastikan alur cerita tersusun secara runtut, konflik dan karakter saling memperkuat, struktur paragraf padu, serta penggunaan diksi, ejaan, dan tanda baca telah sesuai dengan kaidah bahasa Indonesia."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Menyusuri Nilai Dalam Cerita Lintas Zaman",
+      "sub_bab": "Membuat Media Presentasi Berupa Video Gerak Henti",
+      "atp": "Menyusun papan cerita (storyboard) dan membuat video gerak henti (stop motion) dari cerita pendek."
+    },
+    "chunks": [
+      {
+        "content": "Menyajikan teks narasi seperti cerita pendek dapat dilakukan dengan cara yang kreatif dan inovatif, salah satunya melalui media presentasi berupa video gerak henti atau stop motion. Video gerak henti adalah salah satu teknik animasi di mana gambar diambil bingkai demi bingkai (frame by frame) dengan objek isik yang dipindahkan. Objek tersebut digerakkan sedikit demi sedikit pada setiap bingkainya yang kemudian difoto secara berurutan untuk menciptakan ilusi pergerakan visual."
+      },
+      {
+        "content": "Langkah pertama dalam membuat video gerak henti adalah menyusun papan cerita atau storyboard sederhana. Papan cerita ini berfungsi sebagai panduan visual yang memuat rincian alur kejadian yang akan difoto serta narasi yang akan direkam untuk setiap adegannya. Dengan membuat storyboard yang runtut, kalian dapat menentukan gambar latar yang bersifat statis dan gambar bergerak yang harus dipindahkan secara perlahan pada setiap pengambilan gambar agar cerita tampak hidup."
+      },
+      {
+        "content": "Setelah papan cerita selesai disusun, siapkan objek-objek isik yang akan difoto. Kalian dapat menggunakan berbagai benda sekreatif mungkin, seperti potongan gambar, potongan huruf, hingga boneka karakter. Selanjutnya, siapkan kamera yang akan digunakan untuk mengambil gambar, misalnya kamera telepon pintar. Fotolah adegan tersebut satu per satu. Sangat disarankan untuk membuat adegan transisi yang baik agar pergerakan objek pada video nantinya dapat terlihat lebih halus."
+      },
+      {
+        "content": "Tahap terakhir dalam pembuatan media ini adalah perekaman narasi dan penyuntingan. Rekamlah suara narasi cerita pendek kalian menggunakan alat perekam dari telepon pintar. Setelah itu, rangkailah foto-foto yang telah diambil menggunakan aplikasi pengolah video hingga menjadi rangkaian cerita visual yang utuh. Tambahkan rekaman suara yang telah dibuat, lalu cocokkan keselarasan antara suara narasi dengan adegan visualnya agar menghasilkan presentasi video gerak henti yang komunikatif."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Belajar Menjadi Negosiator Ulung",
+      "sub_bab": "Menyimak Kritis Teks Negosiasi",
+      "atp": "Menentukan tujuan kesepakatan dan menganalisis perbedaan kepentingan dalam teks negosiasi."
+    },
+    "chunks": [
+      {
+        "content": "Negosiasi pada dasarnya adalah kegiatan berunding atau tawar-menawar untuk mencapai kesepakatan atau persetujuan bersama antara dua pihak atau lebih. Kesepakatan tersebut didapat setelah mengatasi berbagai perbedaan atau perselisihan antarpihak yang terlibat. Dalam menyimak kritis teks negosiasi, kita perlu memahami bahwa tujuan utama negosiasi adalah tercapainya kesepakatan yang saling menguntungkan. Kedua belah pihak harus dapat saling menerima dan mengambil jalan tengah atau solusi yang ditawarkan serta tidak bersikeras pada kepentingan masing-masing."
+      },
+      {
+        "content": "Dalam sebuah teks negosiasi, selalu terdapat perbedaan kepentingan antara pihak-pihak yang terlibat. Misalnya, dalam sebuah percakapan jual beli, pihak pembeli memiliki kepentingan untuk mendapatkan barang dengan harga terjangkau, sedangkan penjual ingin memperoleh keuntungan. Menganalisis perbedaan kepentingan ini sangat penting agar kita dapat menentukan argumen atau alasan yang logis. Untuk mencapai kesepakatan, diperlukan cara dan teknik komunikasi yang santun agar kedua belah pihak dapat saling memahami penawaran yang diajukan tanpa merasa tersinggung."
+      },
+      {
+        "content": "Kedua belah pihak yang bernegosiasi tidak selalu dapat langsung mencapai kesepakatan. Terkadang, negosiasi menemui jalan buntu atau bahkan batal dilaksanakan karena masing-masing pihak bersikeras pada keinginannya. Oleh karena itu, negosiasi sering kali melibatkan pihak ketiga sebagai penengah untuk memuluskan jalannya perundingan. Pihak penengah atau perantara ini dianggap sebagai pihak netral yang tidak memiliki kepentingan pribadi. Penengah diminta bantuannya untuk terlibat agar pihak-pihak yang berselisih dapat menemukan solusi terbaik yang dapat diterima semua pihak."
+      },
+      {
+        "content": "Untuk dapat mengevaluasi teks negosiasi secara kritis, kita juga harus mampu menganalisis faktor-faktor penentu keberhasilan suatu negosiasi. Sebuah kesepakatan dapat tercapai apabila pihak-pihak yang terlibat bersedia kompromi dan tidak saling memaksakan kehendak. Selain itu, alasan dan pengajuan harus disampaikan secara logis, jelas, tepat sesuai fakta, dan dengan bahasa yang sopan. Memprioritaskan kepentingan bersama di atas ego pribadi merupakan kunci utama agar hasil kesepakatan dapat diterima tanpa ada satu pun pihak yang merasa dirugikan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Belajar Menjadi Negosiator Ulung",
+      "sub_bab": "Menilai Informasi dan Membandingkan Isi Teks",
+      "atp": "Membandingkan berbagai bentuk teks negosiasi (dialog, narasi, surat) untuk memahami proses pencapaian kesepakatan."
+    },
+    "chunks": [
+      {
+        "content": "Teks negosiasi pada dasarnya merupakan proses tawar-menawar untuk mencapai kesepakatan yang saling menguntungkan. Teks ini dapat ditampilkan dalam berbagai bentuk penyajian yang berbeda. Bentuk yang paling umum dijumpai adalah negosiasi dalam bentuk dialog berupa percakapan langsung antara dua pihak. Selain dialog, ada pula teks narasi yang menyajikan negosiasi melalui gabungan antara narasi penceritaan dan percakapan para tokohnya. Di samping itu, teks negosiasi juga dapat ditemukan dalam bentuk surat formal, seperti surat penawaran kerja sama atau barang antarperusahaan."
+      },
+      {
+        "content": "Dalam urusan perniagaan atau kelembagaan, proses tawar-menawar untuk mencapai kesepakatan sering kali dilakukan secara tertulis melalui surat penawaran. Melalui surat penawaran, sebuah pihak bermaksud menawarkan kerja sama atau penyediaan barang dan jasa kepada pihak lain dengan harga yang bersaing. Surat penawaran ini umumnya didukung oleh dokumen lain, seperti teks deskripsi profil perusahaan dan brosur produk, yang bertujuan untuk meyakinkan calon pelanggan. Penggunaan bahasa yang baik, sopan, dan persuasif menjadi kunci utama agar kesepakatan dalam surat penawaran dapat tercapai."
+      },
+      {
+        "content": "Keterampilan mengevaluasi dan membandingkan informasi sangat dibutuhkan saat mempelajari teks negosiasi dari berbagai sumber. Misalnya, dengan menyandingkan teks deskripsi perusahaan dan surat penawarannya, kita dapat menilai kelengkapan informasi, menemukan persamaan atau perbedaan data, hingga mengevaluasi maksud frasa tertentu seperti 'harga kompetitif'. Proses perbandingan ini melatih kita untuk lebih teliti dan kritis dalam menangkap informasi penting yang diajukan oleh suatu pihak sebelum kita merespons dan membuat kesepakatan negosiasi."
+      },
+      {
+        "content": "Meskipun teks negosiasi dapat disajikan ke dalam ragam bentuk yang berbeda—baik dialog, narasi, maupun surat—teks ini memiliki struktur inti yang membangunnya secara utuh. Secara umum, struktur teks negosiasi terdiri atas orientasi, pengajuan, penawaran, dan persetujuan. Orientasi berfungsi sebagai salam sapaan atau pengenalan awal topik. Pengajuan berisi penyampaian maksud, kebutuhan, atau permintaan dari pihak pertama. Penawaran merupakan proses tawar-menawar argumen atau harga untuk menemukan titik temu. Terakhir, persetujuan adalah bagian ketika kedua belah pihak akhirnya menyepakati hasil negosiasi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Belajar Menjadi Negosiator Ulung",
+      "sub_bab": "Memahami Unsur Kebahasaan dalam Teks Negosiasi",
+      "atp": "Menganalisis penggunaan kalimat persuasif, pronomina, dan tuturan pasangan dalam teks negosiasi."
+    },
+    "chunks": [
+      {
+        "content": "Setiap teks memiliki ciri kebahasaannya masing-masing, tidak terkecuali teks negosiasi. Salah satu unsur kebahasaan yang lazim ditemukan dalam teks negosiasi adalah pronomina atau kata ganti. Pronomina merupakan kata ganti orang yang sering digunakan dalam teks negosiasi yang berbentuk dialog atau percakapan langsung. Penggunaan kata ganti orang pertama atau kedua sangat mendominasi teks ini untuk menggantikan penyebutan pihak-pihak yang saling berinteraksi secara spesifik. Hal ini membuat proses tawar-menawar menjadi lebih terarah, sopan, dan komunikatif layaknya percakapan sehari-hari."
+      },
+      {
+        "content": "Selain pronomina, teks negosiasi berbentuk dialog hampir seluruhnya tersusun atas kalimat langsung, yaitu kalimat yang langsung disampaikan penutur melalui dialog dan umumnya ditandai dengan penggunaan tanda kutip. Dalam rangkaian dialog tersebut, sering digunakan kalimat deklaratif dan kalimat interogatif. Kalimat deklaratif merupakan kalimat pernyataan yang memuat suatu informasi atau berita kepada pihak lawan. Sebaliknya, kalimat interogatif merupakan kalimat yang digunakan untuk menanyakan sesuatu guna menggali informasi atau mengecek kebutuhan lawan bicara."
+      },
+      {
+        "content": "Mengingat tujuan inti dari kegiatan negosiasi adalah untuk mencapai kesepakatan, teks ini sangat bergantung pada penggunaan kalimat persuasif. Kalimat persuasif merupakan kalimat yang bertujuan untuk membujuk, menarik perhatian, atau memengaruhi pihak lain. Melalui kalimat persuasif yang santun dan rasional, suatu pihak dapat meyakinkan lawan bicaranya untuk menerima penawaran atau usulan yang diajukan tanpa merasa disudutkan. Sebagai contoh, seorang penjual dapat membujuk pembeli dengan memaparkan kelebihan produknya melalui kalimat yang menggugah ketertarikan secara logis."
+      },
+      {
+        "content": "Karakteristik kebahasaan lainnya yang sangat merepresentasikan dinamika komunikasi dalam teks negosiasi adalah tuturan pasangan. Tuturan pasangan merupakan bentuk tanya jawab atau interaksi timbal balik antara pembicara dan lawan bicara. Tuturan ini merupakan bentuk respons atau tanggapan langsung terhadap apa yang disampaikan oleh pihak lain. Beberapa pola tuturan pasangan yang sering ditemui di antaranya meliputi: mengucapkan salam yang diikuti dengan membalas salam, bertanya yang direspons dengan menjawab, meminta yang dibalas dengan memenuhi atau menolak permintaan, serta menawarkan yang berujung pada menerima atau menolak tawaran tersebut."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Belajar Menjadi Negosiator Ulung",
+      "sub_bab": "Menulis Teks Negosiasi Berbentuk Naratif",
+      "atp": "Menulis teks negosiasi secara sistematis mengikuti struktur orientasi, pengajuan, penawaran, dan persetujuan."
+    },
+    "chunks": [
+      {
+        "content": "Teks negosiasi tidak hanya berbentuk dialog atau percakapan langsung antartokoh. Dalam keseharian maupun dalam bacaan, kita juga bisa menemukan teks negosiasi berbentuk naratif atau cerita. Pada teks naratif, proses tawar-menawar antara dua belah pihak disajikan melalui gabungan antara narasi penceritaan dan percakapan para tokohnya. Teks naratif ini umumnya memiliki prolog yang memberikan gambaran situasi awal sebelum tokoh-tokohnya mulai melakukan pengajuan dan penawaran."
+      },
+      {
+        "content": "Langkah pertama dalam menulis teks negosiasi berbentuk naratif adalah merencanakan tema atau topik cerita. Pilihlah tema yang paling menarik berdasarkan pengalaman di lingkungan sekitar, seperti tawar-menawar barang atau musyawarah kegiatan sekolah. Setelah itu, tentukan pihak yang terlibat beserta perbedaan kepentingannya. Mengingat tujuan negosiasi adalah mencari kesepakatan, perbedaan pandangan antara dua pihak ini harus dimunculkan terlebih dahulu sebelum pada akhirnya dicarikan solusi yang saling menguntungkan."
+      },
+      {
+        "content": "Setelah merumuskan topik dan perbedaan kepentingan, langkah selanjutnya adalah menyusun kerangka teks. Penyusunan kerangka berfungsi sebagai pedoman dasar untuk mengembangkan cerita secara utuh. Kerangka teks naratif ini harus disesuaikan dengan struktur inti negosiasi, yang meliputi orientasi sebagai pengantar cerita, pengajuan dari pihak pertama, proses penawaran tawar-menawar argumen, hingga akhirnya mencapai tahap persetujuan. Kerangka yang sistematis akan menjaga alur cerita tetap logis dan tidak keluar dari konteks."
+      },
+      {
+        "content": "Tahap berikutnya adalah mengembangkan kerangka tersebut menjadi sebuah tulisan naratif yang utuh. Pada tahap ini, sangat penting untuk memperhatikan pilihan kata, struktur kalimat, kepaduan antarparagraf, serta cara penulisan kalimat langsung di dalam narasi. Sebelum dipublikasikan, hasil tulisan perlu ditelaah kembali atau direvisi untuk menyempurnakan ejaan, tanda baca, serta kepaduan cerita. Tulisan negosiasi naratif yang sudah final kemudian dapat dipublikasikan melalui majalah dinding, blog, atau media sosial."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Memetik Keteladanan Dari Biografi Tokoh Inspiratif",
+      "sub_bab": "Menafsirkan Ide Pokok dan Ide Penjelas dari Teks Biografi",
+      "atp": "Menentukan gagasan utama (deduktif/induktif) dan menjabarkan ide penjelas dalam teks biografi."
+    },
+    "chunks": [
+      {
+        "content": "Dalam membaca dan memahami sebuah teks biografi, salah satu keterampilan penting yang harus dikuasai adalah menemukan ide pokok dan ide penjelas. Ide pokok merupakan sebuah gagasan yang menjadi pokok atau inti pengembangan dalam suatu paragraf. Karena menjadi gagasan utama, bentuk kalimat dari ide pokok biasanya bersifat sangat umum. Untuk menjabarkan ide pokok tersebut agar lebih mudah dipahami oleh pembaca, diperlukan beberapa topik pendukung yang lebih rinci atau khusus, yang lazim disebut dengan ide penjelas."
+      },
+      {
+        "content": "Letak ide pokok dalam suatu paragraf umumnya mengikuti keberadaan kalimat utamanya. Berdasarkan letak kalimat utamanya, paragraf dapat dibagi menjadi beberapa jenis, salah satunya adalah paragraf deduktif. Paragraf deduktif menempatkan ide pokok dan kalimat utamanya pada awal paragraf. Setelah kalimat utama yang memuat gagasan umum disampaikan, penulis akan melanjutkan dengan memaparkan ide-ide penjelas secara khusus pada kalimat-kalimat berikutnya untuk merincikan gagasan tersebut."
+      },
+      {
+        "content": "Selain di awal paragraf, ide pokok juga dapat diletakkan di akhir paragraf yang dikenal dengan istilah paragraf induktif. Pada paragraf induktif, penulis terlebih dahulu memaparkan berbagai fakta, rincian, atau ide-ide penjelas secara khusus di awal hingga tengah paragraf. Setelah seluruh informasi penjelas tersebut dipaparkan, penulis kemudian akan menyimpulkannya ke dalam sebuah kalimat utama yang bersifat umum di bagian akhir paragraf sebagai ide pokok dari paragraf tersebut."
+      },
+      {
+        "content": "Di samping paragraf deduktif dan induktif, letak ide pokok juga bisa berada pada tengah paragraf yang disebut ineratif, maupun di awal dan di akhir paragraf secara bersamaan yang disebut campuran. Untuk menemukan gagasan utama dan menjabarkan ide penjelas dalam teks biografi, kita perlu membaca seluruh paragraf dengan saksama dan menentukan kalimat mana yang merangkum inti pembicaraan. Kemampuan menafsirkan ide pokok ini sangat membantu kita dalam memetik keteladanan dari tokoh yang diceritakan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Memetik Keteladanan Dari Biografi Tokoh Inspiratif",
+      "sub_bab": "Menginterpretasi Isi Teks Rekon dan/atau Biografi untuk Menemukan Gagasan, Pikiran, dan Pesan",
+      "atp": "Menemukan pesan moral dan inspirasi hidup dari kronologi peristiwa masa lalu tokoh."
+    },
+    "chunks": [
+      {
+        "content": "Inspirasi, motivasi, dan pelajaran hidup dari tokoh tidak hanya bisa didapatkan dari teks berbentuk biografi, tetapi juga dari teks rekon. Teks rekon merupakan jenis teks yang menceritakan kembali suatu kronologi peristiwa tertentu berdasarkan pengalaman yang dialami di masa lalu dengan tujuan untuk memberi informasi atau menghibur pembaca. Dengan membaca kisah perjalanan hidup tokoh, kita dapat menemukan gagasan, pikiran, dan pesan yang tersurat maupun tersirat. Mempelajari rekam jejak perjuangan, pengorbanan, serta pemikiran tokoh masa lalu memberikan kita keteladanan yang relevan untuk diterapkan dalam kehidupan sehari-hari."
+      },
+      {
+        "content": "Dalam membaca teks rekon maupun biografi, kita perlu mengidentifikasi kejadian-kejadian penting yang dialami oleh tokoh. Setiap peristiwa yang diceritakan, mulai dari masa kecil, pendidikan, hingga pencapaian kariernya, senantiasa mengandung nilai-nilai perjuangan yang dapat dipetik hikmahnya. Melalui teks rekon, kita diajak untuk menyelami bagaimana tokoh tersebut memecahkan masalah, menghadapi tantangan berat, dan berinteraksi dengan lingkungannya. Proses inilah yang akan menuntun kita secara kritis dalam menafsirkan pesan moral serta menemukan motivasi di balik sikap dan tindakan yang diambil oleh sang tokoh."
+      },
+      {
+        "content": "Untuk memahami secara utuh sebuah teks biografi maupun teks rekon, kita perlu mendalami struktur pembangunnya. Kedua teks ini pada dasarnya menyajikan kisah hidup seseorang berbentuk cerita yang disajikan secara kronologis atau sesuai urutan waktu. Secara umum, struktur teks rekon dan biografi terdiri atas tiga bagian utama, yaitu orientasi, masalah atau peristiwa penting, dan reorientasi. Orientasi berfungsi sebagai pengenalan awal tokoh, meliputi nama, tempat dan tanggal lahir, latar belakang keluarga, serta riwayat pendidikannya. Pemahaman terhadap latar belakang ini membantu kita mengenali fondasi karakter sang tokoh."
+      },
+      {
+        "content": "Setelah orientasi, teks akan dilanjutkan dengan pemaparan masalah atau peristiwa penting. Bagian ini berisi rangkaian kejadian saat tokoh mengalami berbagai masalah, merintis karier, menghadapi peristiwa menegangkan maupun menyedihkan, yang pada akhirnya mengantarkannya mencapai cita-cita dan kesuksesan. Struktur terakhir adalah reorientasi, yang merupakan bagian penutup atau simpulan. Reorientasi berisi pandangan, ulasan, atau pemikiran penulis secara pribadi atas tokoh yang dikisahkan. Meskipun keberadaannya bersifat opsional atau boleh tidak ada, bagian ini sering kali memuat intisari pesan yang sangat menginspirasi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Memetik Keteladanan Dari Biografi Tokoh Inspiratif",
+      "sub_bab": "Menelaah Penggunaan Tanda Baca dan Kata Serapan dalam Teks Biografi",
+      "atp": "Menganalisis ketepatan tanda baca dan penulisan kata serapan sesuai kaidah EYD V."
+    },
+    "chunks": [
+      {
+        "content": "Penggunaan tanda baca yang tepat sangat penting dalam menulis teks biografi agar informasi riwayat hidup tokoh dapat dipahami dengan jelas dan tidak menimbulkan makna ganda. Pedoman resmi yang digunakan dalam penulisan teks berbahasa Indonesia saat ini adalah Ejaan Bahasa Indonesia yang Disempurnakan atau EYD edisi V. Pedoman ini tidak hanya mengatur kaidah penggunaan tanda baca, tetapi juga pemakaian huruf, penulisan kata, hingga penulisan unsur serapan dari bahasa asing maupun bahasa daerah."
+      },
+      {
+        "content": "Beberapa tanda baca yang sering dijumpai dan krusial penggunaannya dalam teks biografi adalah tanda titik dan tanda koma. Tanda titik lazim digunakan untuk mengakhiri sebuah kalimat pernyataan, serta diletakkan pada penulisan singkatan nama orang, gelar, sapaan, jabatan, atau pangkat. Sementara itu, tanda koma sangat sering digunakan untuk memisahkan unsur-unsur dalam suatu pemerincian atau pembilangan. Tanda koma juga wajib dipakai di belakang kata atau ungkapan penghubung antarkalimat, seperti 'oleh karena itu', 'jadi', 'dengan demikian', dan 'meskipun demikian'."
+      },
+      {
+        "content": "Selain tanda titik dan koma, penulisan teks biografi juga kerap menggunakan tanda kurung dan tanda petik. Tanda kurung berfungsi untuk mengapit tambahan keterangan atau penjelasan tambahan terkait suatu istilah atau kejadian yang dialami tokoh. Di sisi lain, tanda petik digunakan untuk mengapit judul sajak, lagu, film, sinetron, artikel, naskah, atau bab buku yang dipakai dalam kalimat. Penggunaan tanda petik ini sangat penting ketika penulis ingin mengutip karya-karya atau tulisan yang pernah dihasilkan oleh tokoh yang sedang diceritakan."
+      },
+      {
+        "content": "Teks biografi tokoh-tokoh yang hidup pada masa pergerakan nasional atau masa kolonial sering kali mengandung kata serapan, baik dari bahasa asing seperti bahasa Belanda dan bahasa Inggris, maupun dari bahasa daerah. Kata serapan adalah kata yang diserap dari bahasa lain dengan menyesuaikan kaidah ejaan bahasa Indonesia. Contohnya, kata dengan akhiran '-ic' atau '-ive' dalam bahasa Inggris akan diserap menjadi akhiran '-ik' dan '-if' dalam bahasa Indonesia. Penelaahan dan perbaikan penulisan kata serapan yang sesuai kaidah EYD edisi V akan menjadikan teks biografi lebih baku dan berterima."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Berkarya Dan Berekspresi Melalui Puisi",
+      "sub_bab": "Mengidentifikasi Diksi dalam Teks Puisi yang Dibacakan",
+      "atp": "Menelaah makna gaya bahasa, citraan, dan kata konkret untuk memahami perasaan penyair dalam puisi."
+    },
+    "chunks": [
+      {
+        "content": "Untuk memahami suatu teks puisi secara mendalam, kita harus menelaah makna kata-kata yang terdapat di dalamnya. Pilihan kata yang tepat dan sesuai untuk mengungkapkan gagasan, pikiran, dan perasaan seorang penyair disebut dengan diksi. Diksi bertujuan untuk memunculkan efek dan makna tertentu yang mampu menggugah imajinasi pembaca. Dalam memilih kata, penyair sering kali memberdayakan berbagai unsur kebahasaan yang padat, di antaranya dengan menggunakan gaya bahasa atau majas, pengimajian atau citraan, serta pilihan kata konkret dan kata bermakna konotatif."
+      },
+      {
+        "content": "Salah satu unsur penting dalam membangun diksi yang memikat adalah majas atau gaya bahasa. Majas merupakan bahasa kiasan yang sengaja digunakan untuk menampilkan efek tertentu bagi para pembacanya. Dalam penulisan puisi, majas berfungsi untuk mempersamakan, mengibaratkan, atau mewakili suatu hal dengan hal lainnya agar makna yang disampaikan terasa lebih hidup. Beberapa jenis gaya bahasa yang umum digunakan oleh penyair untuk memperkaya makna puisinya antara lain adalah majas simile, metafora, personifikasi, dan hiperbola."
+      },
+      {
+        "content": "Selain majas, penyair juga sangat mengandalkan pengimajian atau citraan. Pengimajian merupakan kata atau susunan kata yang dapat menimbulkan efek khayalan atau imajinasi pada diri pembacanya. Melalui susunan kata tersebut, pembaca seolah-olah diajak untuk ikut merasakan, mendengar, melihat, meraba, hingga mengecap secara langsung peristiwa yang diungkapkan dalam puisi. Berdasarkan efek imajinasi yang ditimbulkannya, citraan dibagi menjadi citraan penglihatan, pendengaran, perabaan, pengecapan, penciuman, dan citraan gerak."
+      },
+      {
+        "content": "Unsur pembangun diksi berikutnya adalah kata konkret dan kata bermakna konotatif. Kata konkret adalah kata yang rujukannya lebih mudah ditangkap oleh indra karena sifatnya yang nyata dan berwujud. Penggunaan kata konkret ini berfungsi untuk mengonkretkan maksud atau ide penyair yang masih abstrak. Sementara itu, kata bermakna konotatif merupakan kata-kata yang memiliki keterkaitan makna dengan hal lain di luar arti asalnya. Makna konotatif timbul sebagai akibat dari asosiasi perasaan pembaca terhadap kata yang dibaca atau didengarnya."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Berkarya Dan Berekspresi Melalui Puisi",
+      "sub_bab": "Menilai Efektivitas Diksi, Rima, dan Tipografi dalam Teks Puisi",
+      "atp": "Menganalisis unsur fisik puisi (rima dan tata wajah) dalam membangun makna dan amanat."
+    },
+    "chunks": [
+      {
+        "content": "Dalam mengkaji sebuah puisi, kita tidak hanya dituntut untuk memahami makna tersuratnya, tetapi juga perlu menilai efektivitas unsur fisik yang membangun puisi tersebut. Penggunaan diksi, rima, dan tipografi dalam puisi sangatlah penting karena ketiganya secara langsung mendukung makna dan amanat yang ingin disampaikan oleh penyair. Oleh karena itu, ketiga unsur ini tidak dapat dipisahkan dari proses penciptaan puisi dan akan sangat memengaruhi pesan utuh yang ditangkap oleh para pembacanya."
+      },
+      {
+        "content": "Pemilihan kata atau diksi yang tepat dapat memperkaya ekspresi dan keindahan sebuah puisi. Dalam penggunaannya, kata-kata yang dipilih oleh penyair dengan cermat dapat menangkap nuansa perasaan sekaligus memberikan kedalaman makna. Diksi yang kuat akan mendorong pembaca untuk merenung dan mencerna setiap kata yang disajikan. Meskipun demikian, pemilihan diksi tidak boleh terlalu mengekang, melainkan harus memberikan ruang bagi penyair untuk mengeksplorasi bahasa dengan cara yang lebih bebas dan tak terduga."
+      },
+      {
+        "content": "Selain diksi, unsur fisik lain yang memegang peranan krusial adalah rima atau persamaan bunyi. Pengaturan rima di dalam sebuah puisi diyakini mampu menciptakan keselarasan dan ritme yang memukau. Alunan bunyi yang teratur ini tidak hanya sekadar menambah nilai keindahan musikal pada puisi, tetapi juga memudahkan pembaca dalam mengingat setiap lariknya. Meskipun begitu, penyair harus bijak agar keterikatannya pada pola rima tertentu tidak malah mengorbankan keaslian makna yang ingin ia sampaikan kepada pembaca."
+      },
+      {
+        "content": "Unsur fisik puisi selanjutnya yang juga tidak kalah penting adalah tipografi atau tata wajah puisi. Tipografi sering dianggap sebagai elemen visual penting karena memberikan dimensi yang berbeda pada teks. Pemilihan jenis huruf, ukuran teks, serta tata letak baris dan bait dapat menciptakan pengalaman membaca yang unik dan menarik. Namun, tipografi yang terlalu rumit harus dihindari apabila hal tersebut justru mengalihkan perhatian pembaca dari substansi atau kedalaman makna puisi itu sendiri."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Bahasa Indonesia",
+      "bab_judul": "Berkarya Dan Berekspresi Melalui Puisi",
+      "sub_bab": "Menulis Resensi Buku Antologi Puisi secara Logis dan Kritis",
+      "atp": "Menyusun ulasan buku antologi puisi yang mencakup identitas, keunggulan, kekurangan, dan rekomendasi pembaca."
+    },
+    "chunks": [
+      {
+        "content": "Membaca buku antologi puisi secara mendalam memungkinkan kita untuk memberikan tanggapan melalui tulisan berupa resensi buku. Resensi merupakan suatu tulisan atau ulasan kritis mengenai nilai sebuah hasil karya atau buku. Tujuan utama dari penulisan resensi adalah untuk menyampaikan informasi sekaligus penilaian kepada pembaca apakah buku tersebut patut mendapat sambutan dari masyarakat atau tidak. Sebuah resensi yang baik umumnya mencakup beberapa unsur penting, yaitu judul, identitas buku, pendahuluan atau orientasi, sinopsis, analisis, serta evaluasi yang berisi kelebihan, kekurangan, dan rekomendasi."
+      },
+      {
+        "content": "Langkah pertama dalam menyusun resensi adalah menentukan buku antologi puisi secara cermat. Sangat dianjurkan untuk memilih antologi puisi yang berkualitas, menarik, atau memiliki nilai kebaruan. Setelah buku ditentukan, langkah berikutnya adalah membaca dengan saksama, baik secara umum maupun rinci. Pembacaan umum mencakup daftar isi, kata pengantar, dan sampul buku untuk mendapatkan gambaran awal. Sementara itu, pembacaan rinci mengharuskan kita untuk membaca keseluruhan isi puisi satu per satu guna memahami makna dan pesan secara utuh."
+      },
+      {
+        "content": "Tahap krusial dalam menyusun resensi adalah mengkaji isi antologi puisi secara mendalam melalui analisis unsur pembangunnya. Kajian antologi puisi dapat dibedakan ke dalam analisis unsur bentuk dan unsur makna. Dalam kajian unsur bentuk, kita dapat menelaah pilihan diksi, tata wajah atau tipografi, majas, kata konkret, pengimajian, serta rima. Adapun terkait unsur makna, analisis dapat difokuskan pada pemaparan tema sentral, nada dan suasana, amanat penyair, serta ragam perasaan yang coba ditangkap dari deretan bait puisi tersebut."
+      },
+      {
+        "content": "Langkah terakhir dalam resensi adalah mengevaluasi buku secara objektif serta menyusunnya menjadi tulisan utuh. Evaluasi mencakup penilaian terhadap tampilan fisik buku, kualitas puisi, gaya penulisan, serta kedalaman pesan. Penulis resensi harus memaparkan keunggulan dan kekurangan karya secara seimbang. Berdasarkan penilaian tersebut, penulis merumuskan simpulan berupa rekomendasi bagi pembaca, untuk siapa buku ini ditujukan dan apakah buku ini layak dibaca. Rangkailah catatan tersebut menjadi sebuah draf yang padu, lalu lakukan revisi akhir untuk menyempurnakan struktur kalimat dan ejaannya."
+      }
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Informatika Sekarang dan Masa Depan",
+    "sub_bab": "Literasi Digital"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Informatika Sekarang dan Masa Depan",
+    "sub_bab": "Informatika Saat Ini"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Sistem Komputer",
+    "sub_bab": "Single Board Computer"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Sistem Komputer",
+    "sub_bab": "Single Board Controller"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Berpikir Komputasional dan Algoritma Pemrograman",
+    "sub_bab": "Berpikir Komputasional"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Berpikir Komputasional dan Algoritma Pemrograman",
+    "sub_bab": "Pemrograman Bahasa C Arduino"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Berpikir Komputasional dan Algoritma Pemrograman",
+    "sub_bab": "Kontrol I/O Arduino"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Berpikir Komputasional dan Algoritma Pemrograman",
+    "sub_bab": "Struktur Kontrol dan Data"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Jaringan Komputer dan Internet",
+    "sub_bab": "Arsitektur Jaringan"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Jaringan Komputer dan Internet",
+    "sub_bab": "Komponen dan Transmisi"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Jaringan Komputer dan Internet",
+    "sub_bab": "Cyber Security"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Jaringan Komputer dan Internet",
+    "sub_bab": "Tata Kelola Data"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Dampak Sosial Informatika",
+    "sub_bab": "Media Sosial"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Dampak Sosial Informatika",
+    "sub_bab": "Informatika di Berbagai Bidang"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Dampak Sosial Informatika",
+    "sub_bab": "Regulasi Hukum"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 12",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Praktik Lintas Bidang",
+    "sub_bab": "Pelaksanaan Proyek"
+  }
+]

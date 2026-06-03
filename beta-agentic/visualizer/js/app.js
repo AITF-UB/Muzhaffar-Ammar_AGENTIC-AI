@@ -66,7 +66,7 @@ async function handleGenerate() {
             `;
             document.getElementById("view-bacaan").classList.add("active");
         } else {
-            if (tipe === "bacaan") renderBacaan(content, data.source);
+            if (tipe === "bacaan") renderBacaan(content, content.source);
             else if (tipe === "quiz_pg") renderQuizPG(content);
             else if (tipe === "quiz_essay") renderQuizEssay(content);
             else if (tipe === "flashcard") renderFlashcard(content);

@@ -1,0 +1,227 @@
+[
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah dan Geografi",
+      "sub_bab": "Kajian Ilmu Sejarah",
+      "atp": "Menjelaskan konsep dasar Ilmu Sejarah serta menerapkan cara berpikir kronologis, diakronis, dan sinkronis."
+    },
+    "chunks": [
+      {
+        "content": "Secara etimologis, sejarah berasal dari bahasa Arab, Syajaratun (dibaca: Syajarah), yang berarti pohon kayu. Pohon melambangkan pertumbuhan dan perkembangan yang berkesinambungan. Pertumbuhan pohon yang terus-menerus dimaknai sebagai asal usul, riwayat, silsilah dan hikayat. Dalam Kamus Besar Bahasa Indonesia, istilah sejarah mengandung tiga penjelasan, yaitu asal-usul keturunan atau silsilah; kejadian dan peristiwa yang benar-benar terjadi pada masa lampau; serta pengetahuan atau uraian tentang peristiwa dan kejadian yang benar-benar terjadi dalam masa lampau. Sementara itu, dalam bahasa Inggris, istilah sejarah dinyatakan dengan kata history, yang artinya kajian atau catatan tentang peristiwa yang terjadi pada masa lampau. Secara sederhana, pengertian ilmu sejarah adalah ilmu yang mempelajari peristiwa, orang, negara atau kehidupan yang terjadi pada masa lalu."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah dan Geografi",
+      "sub_bab": "Kajian Geografi",
+      "atp": "Menjelaskan konsep dasar Geografi serta menerapkan pendekatan keruangan dan ekologi untuk menganalisis fenomena geosfer."
+    },
+    "chunks": [
+      {
+        "content": "Ilmu geografi termasuk ilmu yang tua. Geografi muncul sejak abad ke-300 SM ketika bangsa Yunani melalui Eratosthenes, memperkenalkan geografi sebagai gambaran atau tulisan permukaan bumi. Secara etimologis, kata geografi berasal dari bahasa Yunani yaitu geo yang berarti bumi dan graphien yang berarti lukisan. Dengan demikian, geografi secara ringkas dapat dipahami sebagai ilmu yang menggambarkan tentang bumi. Beberapa tokoh seperti Aristoteles, Strabo, Ptolemeus, dan Herodotus kemudian mengembangkan ilmu geografi. Bahkan Ptolemeus, yang juga dikenal sebagai ahli matematika dan astronomi, merupakan orang yang pertama kali mengenalkan peta."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Penelitian Sosial Suatu Pengantar",
+      "atp": "Menjelaskan definisi, tahapan ilmiah, dan etika dalam melakukan penelitian sosial."
+    },
+    "chunks": [
+      {
+        "content": "Ilmu-ilmu sosial adalah ilmu yang bersifat empiris. Artinya, kajian dalam ilmu sosial berdasarkan data, sistematis, tidak spekulatif, dan menggunakan metode ilmiah. Oleh karena itu, penelitian sosial menjadi bagian penting dalam pembelajaran IPS. Penelitian merupakan cara untuk menyelesaikan masalah atau menemukan jawaban dari permasalahan yang dihadapi melalui prosedur ilmiah. Dalam bahasa Inggris, penelitian disebut dengan research yang berasal dari kata re dan search. Research diartikan sebagai upaya mencari atau menyelidiki secara mendalam. Adapun menurut KBBI, penelitian sosial merupakan upaya pemeriksaan secara teliti atau penyelidikan. Selain itu, penelitian diartikan sebagai kegiatan pengumpulan, pengolahan, analisis, dan penyajian data secara sistematis dan objektif yang bertujuan memecahkan suatu persoalan atau menguji suatu hipotesis untuk mengembangkan prinsip-prinsip umum."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Kekhasan Penelitian Sejarah",
+      "atp": "Menerapkan tahapan heuristik, verifikasi, interpretasi, dan historiografi dalam penelitian masa lampau."
+    },
+    "chunks": [
+      {
+        "content": "Penelitian sejarah memiliki kekhasan yang berbeda dengan penelitian ilmu sosial lainnya. Kajian sejarah adalah fenomena kehidupan manusia dan masyarakat yang terjadi pada masa lampau. Oleh sebab itu, peneliti sejarah tidak bisa berinteraksi secara langsung dengan objek yang diteliti dan memerlukan media berupa sumber sejarah. Selain itu, kajian sejarah bukanlah mitos, melainkan peristiwa nyata yang terjadi pada masa lampau. Penelitian sejarah menerapkan empat kegiatan pokok sebagai cara melakukan penelitian dan penulisan sejarah. Keempat kegiatan tersebut, yaitu: mengumpulkan berbagai informasi tertulis dan lisan yang relevan; membuang informasi yang tidak jelas dan keasliannya masih diragukan; mengambil kesimpulan dari bukti dan sumber sejarah yang tepercaya; dan merangkai semua bukti dan sumber menjadi laporan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Penelitian Sosial",
+      "sub_bab": "Kekhasan Penelitian Geografi",
+      "atp": "Menggunakan peta, penginderaan jauh, dan SIG untuk merancang penelitian berbasis spasial."
+    },
+    "chunks": [
+      {
+        "content": "Penelitian geografi adalah kegiatan penyelidikan secara ilmiah dan sistematis yang digunakan untuk memecahkan masalah mengenai fenomena geosfer. Tahapan penelitian geografi pada dasarnya mirip dengan tahapan penelitian sosial lainnya yang disesuaikan dengan topik penelitian geografi. Namun, salah satu ciri khas utama dari penelitian geografi ialah penggunaan tiga pendekatan geografi, yaitu pendekatan keruangan, ekologi atau kelingkungan, dan kompleks wilayah. Kekhasan lainnya ialah penekanan yang kuat pada aspek ruang, sehingga penggunaan peta, penginderaan jauh, sistem informasi geografis (SIG), dan observasi lapangan menjadi bagian penting dan tidak terpisahkan dalam pelaksanaan penelitian geografi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Kehidupan Masyarakat pada Masa Kerajaan Hindu–Buddha",
+      "atp": "Menganalisis pengaruh masuknya budaya Hindu-Buddha dan mengidentifikasi peninggalan budayanya di Nusantara."
+    },
+    "chunks": [
+      {
+        "content": "Pada jenjang sebelumnya kamu telah mempelajari tentang asal-usul nenek moyang dan perdagangan rempah di Nusantara. Sejak ribuan tahun lalu nenek moyang bangsa Indonesia sudah melakukan perdagangan antarpulau dengan komoditas atau barang dagangan berupa hasil bumi. Seiring berjalannya waktu, komoditas Nusantara mulai diperdagangkan secara internasional dengan komoditas unggulan berupa bahan wewangian dan pengawet, seperti kayu gaharu dan kapur barus. Jalur perdagangan yang sudah terbentuk sejak masa sebelum Masehi ini menjadi cikal bakal jalur rempah Nusantara yang makin berkembang hingga masa berikutnya."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Kehidupan Masyarakat pada Masa Kerajaan Islam",
+      "atp": "Menganalisis akulturasi budaya dan corak kehidupan masyarakat pada masa kesultanan Islam."
+    },
+    "chunks": [
+      {
+        "content": "Bukti tertua peninggalan sejarah yang menunjukkan awal mula pengaruh Islam di Nusantara masih memiliki banyak versi. Versi pertama menunjukkan bahwa pengaruh Islam sudah masuk di Nusantara sejak abad ke-7 Masehi. Versi ini mengacu pada beberapa informasi yang mengarah pada keberadaan orang Islam di beberapa prasasti dan relief candi Hindu–Buddha serta fakta bahwa sudah terdapat permukiman muslim di Barus, Sumatra Utara. Versi kedua, bukti kuat pengaruh Islam baru ada pada abad ke-11 dengan ditemukannya makam Fatimah Binti Maimun di Desa Leran, Kecamatan Manyar, Gresik, Jawa Timur yang berangka tahun 1082 Masehi. Versi ketiga, pengaruh Islam baru ada pada abad ke-13 Masehi dengan berdirinya Kerajaan Samudera Pasai di Aceh dengan bukti makam bercorak Islam dari Sultan Malik as-Saleh di Desa Beuringin, Kecamatan Samudera, Aceh Utara, yang berangka tahun 1297 Masehi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Litosfer",
+      "atp": "Menjelaskan karakteristik lapisan batuan bumi serta dampak tektonisme dan vulkanisme bagi kehidupan."
+    },
+    "chunks": [
+      {
+        "content": "Fenomena geosfer merupakan gejala atau peristiwa yang berkaitan dengan unsur-unsur pembentuk bumi, salah satunya adalah litosfer (batuan). Litosfer merupakan lapisan bumi yang padat, meliputi kerak bumi dan lapisan terluar dari struktur bumi tempat manusia beraktivitas. Secara geologis, wilayah Indonesia memiliki karakteristik litosfer yang sangat dinamis karena berada di titik pertemuan tiga lempeng tektonik besar, yaitu Lempeng Indo-Australia, Lempeng Eurasia, dan Lempeng Pasifik. Interaksi pergerakan ketiga lempeng ini tidak hanya berdampak pada tingginya aktivitas kegempaan (seisme) di berbagai wilayah Indonesia, tetapi juga turut membentuk jalur pegunungan muda dunia yang menjadikan Indonesia dilalui deretan gunung api aktif atau yang dikenal luas sebagai wilayah cincin api."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Atmosfer",
+      "atp": "Menjelaskan fenomena lapisan udara, iklim, dan cuaca bagi aktivitas manusia."
+    },
+    "chunks": [
+      {
+        "content": "Secara etimologis, kata atmosfer berasal dari bahasa Yunani, yaitu atmos yang artinya uap dan sphaira yang artinya bola. Atmosfer dapat dimaknai sebagai lapisan-lapisan udara yang menyelimuti bumi. Atmosfer sangat penting bagi kehidupan karena pada atmosfer terdapat berbagai fenomena yang saling memengaruhi seperti cuaca, suhu, angin, penyinaran matahari, awan, kelembapan udara, dan hujan. Atmosfer juga memengaruhi kondisi iklim dan cuaca suatu wilayah sehingga terdapat keragaman sumber daya alam, flora dan fauna, serta aktivitas dan budaya manusia."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Sejarah Kerajaan dan Geosfer",
+      "sub_bab": "Lingkungan Geosfer Fisikal Indonesia: Hidrosfer",
+      "atp": "Menganalisis potensi perairan darat dan laut serta siklus hidrologi di bumi."
+    },
+    "chunks": [
+      {
+        "content": "Air menutupi sebagian besar permukaan bumi, dengan hampir tujuh puluh satu persen bagian bumi tertutup oleh air dalam berbagai bentuk, seperti uap air, sungai, danau, gletser, genangan, serta akuifer. Komposisi air yang terdapat di bumi didominasi oleh air asin sebanyak sembilan puluh tujuh persen dan sisanya merupakan air tawar. Secara sederhana, hidrosfer dapat dipahami sebagai lapisan air yang terdapat di bumi. Hidrosfer mencakup semua air yang ada di bumi, baik dalam bentuk cair, padat seperti es, maupun gas seperti uap air. Keberadaan air ini memiliki fungsi yang sangat penting, karena ketiadaan air dapat menyebabkan kepunahan makhluk hidup. Fenomena hidrosfer ini dipelajari secara khusus dalam ilmu hidrologi, yang mencakup sirkulasi air dari atmosfer ke bumi dan kembali lagi ke atmosfer melalui proses siklus air."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Struktur Sosial dalam Masyarakat",
+      "atp": "Menjelaskan konsep stratifikasi sosial, peran, dan mobilitas sosial dalam struktur masyarakat."
+    },
+    "chunks": [
+      {
+        "content": "Menurut Selo Soemardjan dan Soelaeman Soemardi, struktur sosial adalah keseluruhan jalinan antara unsur-unsur sosial, yaitu norma sosial, lembaga sosial, kelompok sosial, serta lapisan-lapisan sosial. Setiap masyarakat memiliki struktur sosial. Misalnya, di desa terdapat kepala desa, perangkat desa, tokoh masyarakat, anggota masyarakat, lembaga-lembaga desa, kelompok tani, kelompok pemuda, kelompok perempuan, serta aturan desa yang menunjukkan adanya jalinan pada unsur-unsur tersebut. Adanya kepala desa, tokoh masyarakat, dan masyarakat biasa di desa menunjukkan lapisan sosial dalam suatu masyarakat yang disebut sebagai stratifikasi sosial."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Ragam Gejala Sosial dalam Masyarakat",
+      "atp": "Mengidentifikasi berbagai fenomena sosial seperti kemiskinan dan kejahatan sebagai dampak interaksi sosial."
+    },
+    "chunks": [
+      {
+        "content": "Pitirim Sorokin menyatakan bahwa sosiologi adalah ilmu yang mempelajari hubungan timbal balik berbagai macam gejala sosial. Gejala sosial merupakan fenomena atau peristiwa sosial yang terjadi akibat hubungan antarindividu ataupun kelompok sosial. Masalah sosial merupakan bagian dari gejala sosial. Menurut Soekanto, masalah sosial adalah ketidaksesuaian antara unsur-unsur masyarakat yang membahayakan kehidupan kelompok sosial. Selain itu, masalah sosial juga terjadi akibat interaksi sosial antarindividu, kelompok dengan individu, maupun antarkelompok. Interaksi sosial tersebut bersifat disosiatif yang mengarah pada konflik dan pertentangan sosial. Berbagai gejala sosial yang menjadi perhatian sosiologi di antaranya adalah kemiskinan, kejahatan, persoalan keluarga, kependudukan, dan masalah lingkungan hidup."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Diferensiasi Sosial Budaya",
+      "atp": "Menjelaskan perbedaan suku, religi, gender, dan profesi dalam bingkai masyarakat multikultural."
+    },
+    "chunks": [
+      {
+        "content": "Diferensiasi sosial budaya adalah pembedaan individu secara horizontal atau sejajar berdasarkan ciri fisik, sosial, dan budaya. Dasar diferensiasi sosial budaya antara lain suku, jenis kelamin, agama, dan profesi. Perbedaan sosial budaya dalam masyarakat menunjukkan bahwa kita hidup dalam masyarakat multikultural, yaitu masyarakat yang memiliki keragaman suku bangsa, agama, serta perbedaan lainnya. Keberagaman manusia Indonesia dapat dikaji berdasarkan suku bangsa, sistem religi, jenis kelamin, dan profesi. Profesi dalam hal ini mengacu pada keahlian yang dimiliki oleh individu, bukan pada jumlah kekayaan yang dimilikinya."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Masyarakat, Pasar, dan Terbentuknya Harga Pasar",
+      "atp": "Menganalisis mekanisme permintaan, penawaran, dan terbentuknya titik keseimbangan harga pasar."
+    },
+    "chunks": [
+      {
+        "content": "Sepanjang hayat, manusia akan selalu memenuhi kebutuhan hidup, mulai dari kebutuhan primer seperti pakaian, makanan, dan tempat tinggal hingga kebutuhan tambahan untuk meningkatkan taraf hidup. Upaya pemenuhan kebutuhan tersebut melibatkan kegiatan ekonomi berupa produksi, distribusi yang menyalurkan barang dari produsen, hingga kegiatan konsumsi oleh masyarakat. Dalam proses ini, masyarakat yang berperan sebagai konsumen maupun produsen akan saling berinteraksi dan bertemu di pasar. Pasar tidak hanya terbatas pada tempat belanja fisik seperti pasar tradisional dan swalayan, melainkan juga mencakup pasar abstrak seperti toko daring. Melalui interaksi permintaan dan penawaran di pasar inilah, akan terbentuk sebuah kesepakatan yang dikenal dengan istilah keseimbangan harga atau harga pasar. Secara sederhana, keseimbangan harga tersebut dapat digambarkan sebagai titik perpotongan antara kurva permintaan dan kurva penawaran."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "IPS",
+      "bab_judul": "Keragaman Sosial, Budaya, dan Ekonomi Masyarakat Indonesia",
+      "sub_bab": "Masyarakat dan Peran Lembaga Keuangan dalam Kehidupan Sehari hari",
+      "atp": "Membedakan fungsi bank dan lembaga keuangan non-bank (IKNB) dalam mengelola keuangan masyarakat."
+    },
+    "chunks": [
+      {
+        "content": "Keberadaan lembaga keuangan sangat bermanfaat bagi masyarakat, tidak terkecuali bagi para pelajar dalam kehidupan sehari-hari. Keterlibatan dalam lembaga keuangan dapat dilihat dari contoh sederhana seperti menjadi nasabah di suatu bank, melakukan tarik tunai melalui mesin Anjungan Tunai Mandiri (ATM), atau menjadi pengguna jasa asuransi untuk rencana pendidikan. Salah satu lembaga keuangan yang paling dikenal dan memiliki peran penting dalam masyarakat adalah bank. Menurut Undang-Undang Nomor 10 Tahun 1998 tentang Perbankan, bank adalah badan usaha yang menghimpun dana dari masyarakat dalam bentuk simpanan dan mengeluarkannya dalam bentuk kredit dan/atau bentuk lainnya dalam rangka meningkatkan taraf hidup masyarakat. Secara sederhana, bank merupakan badan usaha yang menghimpun dana dan menyalurkannya kembali kepada masyarakat demi kemaslahatan bersama."
+      }
+    ]
+  }
+]

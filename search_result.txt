@@ -1,0 +1,41 @@
+158: | `POST /siswa/:id/quiz` | **Deprecated** → dipecah menjadi `POST /siswa/:id/quiz/mc` dan `POST /siswa/:id/quiz/essay` |
+164: | WebSocket | **Tambah** event `essay_dinilai` — push agregasi setelah Tim 3 selesai nilai essay |
+196: | `POST /content/quiz/submit` | `POST /siswa/:id/quiz/mc` + `/essay` |
+241: | 12 | Section 15 QUIZ | **Update referensi** — ganti `POST /siswa/:id/quiz` (deprecated) ke endpoint baru `/mc` dan `/essay` |
+261: | 5 | Section 22 WebSocket | **Tambah `22.1.2 WebSocket Siswa`** — endpoint `wss://.../ws/siswa` tersendiri untuk siswa; clarify bahwa event `essay_dinilai` dikirim ke dua channel (siswa + guru) |
+1077: > **Formula poin quiz:** `Σ (mc_score × 60% + essay_score × 40%)` di semua sesi.  
+1188:           "konten_id": "konten_mat_quiz_essay_low_1746342000",
+1189:           "tipe": "quiz_essay",
+1243: > `bacaan×3 + quiz_pg×3 + quiz_essay×3 + flashcard×3 + mindmap×1 + game×3`
+1298:       { "hasil_quiz_id": "hq_20260501_0002", "tipe": "essay", "level": "low", "nilai": 78, "terkunci": true, "dikerjakan_at": "2026-05-01T09:10:00.000Z" },
+1359:     "menunggu_essay": true,
+1369: > - `menunggu_essay: true` → agregasi belum dihitung, essay belum dikerjakan
+1370: > - `menunggu_essay: false` → essay sudah dikerjakan, agregasi tersedia di field `agregasi`
+1372: > - `naik_level`: selalu `false` dari endpoint ini — naik level baru ditentukan setelah agregasi MC+Essay selesai. BE push via WebSocket event `essay_dinilai`
+1376: ### POST /siswa/:id/quiz/essay — Tim 6 BE + Tim 3 RAG
+1377: Submit jawaban Quiz Essay. BE forward ke Tim 3 RAG untuk dinilai secara asinkronus.
+1398: > - `jawaban`: key = `id` soal essay. Value = string teks jawaban siswa
+1404:     "tipe": "essay",
+1424: > **Logika agregasi & naik level (di BE, otomatis setelah essay dinilai):**
+1426: > agregasi = nilai_mc × 60% + nilai_essay × 40%
+1429: > BE push hasil via WebSocket event `essay_dinilai` → FE update UI naik level tanpa polling.
+1472: - `quiz_essay` × 3 level
+1574: | `quiz_essay` | `{ "pertanyaan": [{ "id", "soal", "rubrik"}] }` | 5 pertanyaan |
+1639:       "konten_id": "konten_mat_quiz_essay_low_1746342000",
+1640:       "tipe": "quiz_essay",
+1674: > `bacaan×3 + quiz_pg×3 + quiz_essay×3 + flashcard×3 + mindmap×1 + game×3`
+1778:     { "level": "low", "tipe": "essay", "nilai": 72 },
+1783:     "nilai_essay": 72,
+1801:     "teks": "Summary sesi 2026-05-01 — Budi Santoso:\n\nMateri level Menengah sudah dicoba namun perlu pendalaman pada soal essay...",
+1865: > Pretest **berbeda** dari quiz MC & essay di chatbot. Dipakai sekali untuk menentukan level awal konten siswa.  
+1965: > - `POST /siswa/:id/quiz/essay` — submit quiz Essay
+2357: > - `hasil_quiz_id`: **wajib** — dari response `POST /siswa/:id/quiz/mc` atau `/essay`. BE Tim 6 lookup dan inject seluruh data quiz ke Tim 5: soal, jawaban siswa, kunci jawaban (MC) / rubrik (essay), nilai per soal, nilai total
+2406: **Formula poin:** `Σ (nilai_mc × 60% + nilai_essay × 40%)` semua sesi dalam periode.
+2498: **22.1.2 WebSocket Siswa — Notifikasi Async (essay dinilai & naik level)**
+2510: > Digunakan siswa untuk menerima notifikasi async dari BE — khususnya event `essay_dinilai` setelah Tim 3 selesai menilai essay.  
+2523: Reconnect & fallback siswa: sama dengan aturan 21.5 — exponential backoff, refresh token jika expired. Jika WS tidak tersedia, FE siswa **poll** `GET /siswa/:id/quiz?elemen_id=` setiap 10 detik untuk update status nilai essay.
+2651: **`essay_dinilai`** — Tim 3 selesai menilai essay, agregasi sudah dihitung:
+2654:   "type": "essay_dinilai",
+2660:     "nilai_essay": 78,
+2933: | POST | `/siswa/:id/quiz/essay` | Submit quiz Essay (async, Tim 3 nilai) |
+3035: | `wss://api.sekolahrakyat.id/v1/ws/siswa?siswa_id=&sesi_id=&token=` | siswa | Notifikasi async siswa (essay dinilai, naik level) |

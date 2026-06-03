@@ -1,0 +1,458 @@
+[
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Eksponen",
+      "sub_bab": "Definisi Eksponen",
+      "atp": "Menyatakan perkalian bilangan bulat berulang sebagai bilangan berpangkat (eksponen)."
+    },
+    "chunks": [
+      {
+        "content": "Perkalian berulang adalah perkalian yang dilakukan secara terus-menerus dengan menggunakan faktor bilangan yang sama. Konsep bilangan berpangkat akan sangat memudahkan kita untuk menyederhanakan bentuk penulisan dari perkalian berulang tersebut. Sebagai contoh, operasi perkalian berulang bilangan dua yang dilakukan sebanyak enam kali, yaitu 2 x 2 x 2 x 2 x 2 x 2, dapat disederhanakan dan ditulis dalam bentuk pangkat sebagai 2^6. Begitu pula dengan bilangan lima yang dikalikan berulang sebanyak delapan kali, yaitu 5 x 5 x 5 x 5 x 5 x 5 x 5 x 5, dapat dituliskan dengan 5^8. Hal ini juga berlaku untuk variabel matematika, misalnya a x a x a x a x a x a x a ditulis dengan a^7."
+      },
+      {
+        "content": "Secara definisi matematis formal, bilangan berpangkat atau yang lazim disebut sebagai eksponen dijabarkan melalui syarat dasar berikut: Jika a adalah sebuah bilangan real dan n adalah sebuah bilangan bulat positif, maka lambang a^n menyatakan hasil kali bilangan a tersebut secara berulang sebanyak n faktor. Bentuk perkalian berulangnya dapat dituliskan dengan a^n = a x a x a x... x a (sebanyak n faktor). Di dalam notasi bentuk a^n, komponen a dinamakan sebagai bilangan pokok (atau basis), sedangkan komponen n disebut sebagai pangkat (atau eksponen)."
+      },
+      {
+        "content": "Pemahaman mengenai eksponen atau perkalian bilangan bulat berulang ini bukan hanya sekadar konsep teoretis, melainkan sangat bermanfaat untuk memecahkan berbagai permasalahan nyata di kehidupan manusia. Konsep pertumbuhan eksponensial dapat digunakan untuk memodelkan fenomena yang memiliki pola penggandaan berantai atau kuantitas yang bertumbuh secara konstan. Beberapa contoh nyata fenomena di alam dan kehidupan sosial yang mengikuti pola eksponensial antara lain adalah pertumbuhan populasi penduduk dunia, proses pembelahan koloni bakteri, kecepatan penyebaran virus, hingga kecepatan peredaran informasi hoaks atau video viral di media sosial."
+      },
+      {
+        "content": "Sebagai gambaran konkret bagaimana eksponen merepresentasikan perkalian berulang di kehidupan nyata, kita dapat mengamati pola penyebaran pesan berantai. Jika satu orang menyebarkan pesan kepada dua orang, lalu dua orang tersebut masing-masing menyebarkan kembali kepada dua orang lainnya secara terus-menerus, maka pola bilangannya adalah perkalian berulang dari dua. Pada fase pertama jumlahnya adalah 2^1, pada fase kedua 2 x 2 = 2^2, fase ketiga 2 x 2 x 2 = 2^3, fase keempat 2 x 2 x 2 x 2 = 2^4, dan begitu seterusnya. Jika banyak fase penyebaran dinyatakan dengan variabel n, maka banyak orang yang menerima pesan pada fase ke-n tersebut dapat dihitung secara akurat menggunakan rumus sederhana 2^n."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Eksponen",
+      "sub_bab": "Sifat-Sifat Eksponen",
+      "atp": "Menggeneralisasi sifat-sifat bilangan berpangkat."
+    },
+    "chunks": [
+      {
+        "content": "Dalam menggeneralisasi sifat-sifat bilangan berpangkat atau eksponen, kita dapat mengamati pola perkalian dan pembagian bilangan berpangkat dengan basis yang sama. Dari pengamatan tersebut, diperoleh tiga sifat dasar eksponen. Sifat pertama adalah perkalian eksponen: jika dua bilangan berpangkat dengan bilangan pokok (basis) yang sama dikalikan, maka pangkatnya dijumlahkan, yaitu a^m x a^n = a^(m+n), dengan syarat a bukan nol, serta m dan n adalah bilangan bulat. Sifat kedua adalah pembagian eksponen: jika dibagikan, maka pangkatnya dikurangkan, yaitu a^m / a^n = a^(m-n). Sifat ketiga adalah pangkat dari eksponen: jika suatu bilangan berpangkat dipangkatkan lagi, maka kedua pangkat tersebut dikalikan, sehingga (a^m)^n = a^(m x n)."
+      },
+      {
+        "content": "Selain sifat dasar perkalian dan pembagian dengan basis yang sama, sifat eksponen juga berlaku pada operasi perkalian dan pembagian dua bilangan pokok yang berbeda dengan pangkat yang sama. Sifat keempat menyatakan bahwa pangkat dari perkalian dua bilangan sama dengan hasil kali dari masing-masing bilangan yang dipangkatkan, yang dirumuskan dengan (a x b)^m = a^m x b^m, dengan syarat a dan b tidak sama dengan nol, dan m bilangan bulat. Sifat kelima berlaku untuk pembagian, di mana pangkat dari pembagian dua bilangan sama dengan hasil bagi dari masing-masing bilangan yang dipangkatkan, dirumuskan secara matematis dengan (a / b)^m = a^m / b^m."
+      },
+      {
+        "content": "Lebih lanjut, sifat-sifat bilangan berpangkat juga dapat digeneralisasi untuk kondisi di mana pangkatnya berupa bilangan pecahan atau rasional. Sifat keenam menjelaskan perkalian bilangan berpangkat pecahan dengan penyebut pangkat yang sama: (a^(m/n)) x (a^(p/n)) = a^((m+p)/n), dengan syarat a > 0, serta m/n dan p/n merupakan bilangan rasional di mana n bukan nol. Sifat ketujuh berlaku untuk perkalian bilangan berpangkat pecahan dengan penyebut pangkat yang berbeda, di mana pangkatnya ditambahkan dengan cara menyamakan penyebutnya: (a^(m/n)) x (a^(p/q)) = a^((m/n) + (p/q)), dengan syarat a > 0, serta m/n dan p/q adalah bilangan rasional di mana n dan q tidak sama dengan nol."
+      },
+      {
+        "content": "Pemahaman mengenai generalisasi sifat-sifat eksponen ini sangat penting untuk menyederhanakan berbagai bentuk ekspresi matematika yang kompleks. Sebagai contoh penerapannya, untuk menyederhanakan bentuk eksponen (2^5 x 2^3) / 2^2, kita dapat menggunakan sifat perkalian dan pembagian eksponen secara berurutan. Pertama, jumlahkan pangkat pada bagian pembilang karena basisnya sama, sehingga 2^5 x 2^3 menjadi 2^(5+3) = 2^8. Setelah itu, bagikan hasilnya dengan penyebut menggunakan sifat pembagian eksponen, yaitu dengan mengurangkan pangkatnya. Hasil akhirnya adalah 2^8 / 2^2 = 2^(8-2) = 2^6."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Eksponen",
+      "sub_bab": "Fungsi Eksponensial",
+      "atp": "Menyelesaikan persamaan eksponensial dengan bilangan pokok yang sama dan mengidentifikasi grafik fungsi eksponensial."
+    },
+    "chunks": [
+      {
+        "content": "Sebuah fungsi eksponensial secara matematis dinyatakan dengan bentuk umum f(x) = n × a^x. Dalam persamaan ini, komponen 'a' bertindak sebagai bilangan pokok atau basis dengan syarat nilai a > 0 dan a tidak sama dengan 1. Sementara itu, 'n' adalah sebuah bilangan real tak nol yang sering kali mewakili kuantitas nilai awal, dan 'x' adalah sebarang bilangan real yang berposisi sebagai pangkat atau eksponen. Perubahan nilai pada sebuah fungsi eksponensial sangatlah signifikan dari waktu ke waktu, yang membedakannya secara jelas dari pola fungsi linear biasa."
+      },
+      {
+        "content": "Fungsi eksponensial secara garis besar dibedakan menjadi dua bentuk utama, yaitu pertumbuhan eksponensial dan peluruhan eksponensial. Pertumbuhan eksponensial terjadi ketika tingkat pertumbuhannya berbanding lurus dengan besarnya nilai kuantitas tersebut, yang dirumuskan dengan f(x) = a^x di mana nilai basis a > 1. Pada grafik pertumbuhan eksponen, bentuk kurvanya akan terus menanjak ke atas secara drastis seiring bertambah besarnya nilai x. Contoh penerapan fungsi ini dapat diamati pada fenomena pembelahan koloni sel bakteri atau eskalasi penyebaran virus."
+      },
+      {
+        "content": "Bentuk kedua dari fungsi eksponensial adalah peluruhan eksponensial. Berbeda dengan pertumbuhan, peluruhan eksponen menggambarkan penurunan kuantitas secara konsisten pada periode waktu tertentu. Fungsi peluruhan eksponen dituliskan sebagai f(x) = n × a^x, di mana syarat untuk basis 'a' berada pada rentang nilai 0 < a < 1. Grafik fungsi peluruhan ini memiliki karakteristik kurva yang terus menurun mendekati batas sumbu horizontal seiring bertambahnya nilai x. Salah satu contoh nyata dari fenomena peluruhan eksponensial adalah meluruhnya dosis obat-obatan di dalam aliran tubuh seorang pasien setiap jamnya."
+      },
+      {
+        "content": "Dalam mengeksplorasi dan memodelkan fungsi eksponensial, kita juga akan berhadapan dengan bentuk persamaan eksponensial. Salah satu prinsip penyelesaian yang paling dasar melibatkan persamaan eksponensial yang memiliki bilangan pokok (basis) yang sama di kedua ruasnya. Berdasarkan sifat kesamaan eksponen, jika kita memiliki persamaan berbentuk a^f(x) = a^g(x) dengan syarat nilai basis a > 0 dan a tidak sama dengan 1, maka pangkatnya dapat disamakan secara langsung menjadi f(x) = g(x). Menguasai penyelesaian persamaan dengan bilangan pokok yang sama ini merupakan kunci utama sebelum beralih ke pemecahan masalah fungsi eksponensial yang lebih kompleks."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Eksponen",
+      "sub_bab": "Bentuk Akar",
+      "atp": "Menyelesaikan operasi hitung pada bentuk akar dan merasionalkan penyebut pecahan."
+    },
+    "chunks": [
+      {
+        "content": "Konsep bentuk akar memiliki kaitan yang sangat erat dengan bilangan berpangkat pecahan. Sebagai contoh pada fungsi perhitungan peluruhan suatu zat, kita mungkin menemukan bentuk pangkat pecahan seperti bilangan berpangkat setengah. Menghitung nilai dari pangkat bilangan bulat positif tentu lebih mudah dibandingkan pangkat pecahan. Akan tetapi, bentuk pangkat pecahan yang bernilai setengah ini sebenarnya memiliki penulisan bentuk lain yang setara di dalam matematika, yaitu bentuk akar kuadrat. Pemahaman mengenai transformasi dari bilangan berpangkat pecahan ke bentuk akar ini merupakan konsep paling dasar dalam mempelajari operasi hitung bentuk akar."
+      },
+      {
+        "content": "Secara matematis, bentuk akar didefinisikan melalui syarat pangkat rasional. Untuk setiap bilangan dengan pangkat rasional berbentuk pecahan m/n, di mana m dan n merupakan bilangan bulat serta nilai n lebih besar dari nol, maka berlaku definisi: a pangkat m/n sama dengan akar pangkat n dari a yang kemudian dipangkatkan m. Bentuk ini juga dapat dinyatakan secara ekuivalen sebagai akar pangkat n dari a pangkat m. Karena bentuk akar pada dasarnya bermula dari konsep bilangan pangkat pecahan, maka seluruh sifat-sifat dasar operasi hitung yang berlaku pada bilangan berpangkat (eksponen) juga dapat diaplikasikan untuk menyelesaikan operasi hitung pada bentuk akar."
+      },
+      {
+        "content": "Dalam memecahkan operasi hitung matematika, sering kali kita berhadapan dengan bentuk pecahan yang bagian penyebutnya masih memuat bentuk akar tak rasional. Bentuk pecahan semacam ini perlu disederhanakan melalui sebuah proses yang dikenal sebagai merasionalkan penyebut pecahan. Untuk merasionalkan bentuk akar tunggal pada sebuah penyebut pecahan, langkah yang harus dilakukan adalah mengalikan bagian pembilang dan penyebut pecahan tersebut dengan akar sekawannya. Sebagai contoh, untuk merasionalkan bentuk pecahan a dibagi akar b, kita dapat langsung mengalikannya dengan akar sekawan yaitu akar b dibagi akar b."
+      },
+      {
+        "content": "Selain bentuk akar tunggal, proses merasionalkan penyebut pecahan yang lebih kompleks melibatkan operasi hitung penjumlahan atau pengurangan pada bagian penyebutnya. Untuk pecahan dengan penyebut yang memuat bentuk binomial, penyelesaiannya juga menuntut kita untuk mengalikannya dengan bentuk sekawannya masing-masing. Sangat penting untuk dipahami bahwa bentuk penjumlahan antara akar a dan akar b merupakan sekawan langsung dari bentuk pengurangan akar a dan akar b. Prinsip kesekawanan yang saling berkebalikan ini juga senantiasa berlaku untuk operasi binomial gabungan antara bilangan rasional dan irasional pada sebuah penyebut pecahan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Barisan dan Deret",
+      "sub_bab": "Barisan",
+      "atp": "Menentukan suku ke-n pada barisan aritmetika dan geometri."
+    },
+    "chunks": [
+      {
+        "content": "Dalam kehidupan sehari-hari, kita sering menjumpai susunan bilangan yang berpola, seperti saat menghitung jumlah kursi di gedung pertunjukan yang baris belakangnya selalu bertambah dengan jumlah yang sama. Pola bilangan yang disusun berdasarkan aturan tertentu ini disebut barisan bilangan. Salah satu jenis barisan yang paling dasar adalah barisan aritmetika. Barisan aritmetika merupakan suatu barisan dengan beda atau selisih antara dua suku yang berurutan selalu tetap atau konstan. Beda pada barisan aritmetika ini umumnya dilambangkan dengan huruf b. Untuk mencari nilai beda (b), kita dapat mengurangkan suatu suku dengan suku sebelumnya yang berurutan, yang secara matematis dirumuskan dengan b = Un - U(n-1)."
+      },
+      {
+        "content": "Setelah mengetahui nilai beda (b) dan suku pertama (a) dari suatu barisan aritmetika, kita dapat menentukan nilai suku pada urutan ke-n tanpa harus mendaftar semua bilangannya satu per satu. Rumus umum yang digunakan untuk menentukan suku ke-n pada barisan aritmetika adalah Un = a + (n - 1)b. Dalam formula tersebut, Un mewakili nilai suku ke-n, a adalah nilai suku pertama, n merupakan nomor urutan suku yang dicari, dan b adalah beda antarsuku. Sebagai contoh, jika pada barisan kursi terdapat 20 kursi di baris pertama dan selalu bertambah 4 kursi di baris berikutnya, maka suku pertamanya (a) adalah 20 dan bedanya (b) adalah 4. Kita dapat mensubstitusikan nilai tersebut ke dalam rumus untuk mencari banyak kursi pada baris ke-n."
+      },
+      {
+        "content": "Selain barisan aritmetika yang memiliki selisih konstan, terdapat pula susunan bilangan yang memiliki perbandingan tetap, yang dikenal sebagai barisan geometri. Suatu barisan dikatakan sebagai barisan geometri apabila rasio atau perbandingan antara dua suku yang berurutan selalu bernilai tetap atau konstan. Contoh penerapan barisan geometri dalam kehidupan nyata dapat diamati pada proses pembelahan sel bakteri, di mana satu sel membelah menjadi dua, dua menjadi empat, dan seterusnya. Rasio pada barisan geometri ini biasa dilambangkan dengan huruf r. Untuk mendapatkan nilai rasio (r), kita membagi suatu suku dengan suku yang mendahuluinya secara berurutan, yang dapat dituliskan dengan persamaan r = Un / U(n-1)."
+      },
+      {
+        "content": "Sama halnya dengan barisan aritmetika, pada barisan geometri kita juga dapat merumuskan sebuah persamaan matematis untuk menentukan suku ke-n. Rumus umum untuk mencari suku ke-n pada barisan geometri adalah Un = a x r^(n-1). Pada persamaan tersebut, Un merupakan nilai suku ke-n, a melambangkan suku pertama, r adalah rasio yang selalu konstan, dan n adalah letak urutan suku yang akan dicari. Sangat penting untuk diperhatikan bahwa dalam menghitung suku ke-n barisan geometri, operasi perpangkatan pada rasio r harus diselesaikan terlebih dahulu sebelum hasilnya dikalikan dengan nilai suku pertama (a). Pemahaman terhadap rumus ini akan sangat membantu kita dalam memprediksi kuantitas suatu objek yang berkembang secara konstan pada kurun waktu tertentu."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Barisan dan Deret",
+      "sub_bab": "Deret",
+      "atp": "Menghitung jumlah n suku pertama pada deret aritmetika dan geometri."
+    },
+    "chunks": [
+      {
+        "content": "Apabila barisan bilangan merupakan susunan angka yang memiliki pola tertentu, maka bentuk penjumlahan dari barisan bilangan tersebut dikenal dengan istilah deret bilangan. Deret bilangan secara umum terbagi menjadi dua kelompok utama, yaitu deret aritmetika dan deret geometri. Deret aritmetika adalah suatu deret yang diperoleh dengan cara menjumlahkan suku-suku pada barisan aritmetika. Sebagai contoh penerapan matematisnya, konsep deret aritmetika ini pernah digunakan oleh matematikawan Carl Friedrich Gauss saat ia masih kecil untuk menghitung secara cepat total penjumlahan bilangan dari 1 hingga 100, yakni dengan cara mengelompokkan suku-suku yang memiliki nilai penjumlahan yang sama."
+      },
+      {
+        "content": "Dalam mempelajari deret aritmetika, terdapat formula matematis untuk mempermudah kita dalam menghitung jumlah seluruh suku tanpa harus menjumlahkannya satu per satu secara manual. Rumus untuk menghitung jumlah n suku pertama deret aritmetika adalah Sn = n/2 (a + Un) atau dapat dijabarkan lebih lanjut menjadi Sn = n/2 (2a + (n - 1)b). Pada persamaan tersebut, lambang Sn mewakili jumlah deret sebanyak n suku pertama, a adalah suku pertama, b merupakan nilai beda atau selisih antar suku, dan n adalah banyaknya suku. Rumus ini akan sangat berguna untuk memecahkan permasalahan sehari-hari yang melibatkan penambahan secara konstan."
+      },
+      {
+        "content": "Selain deret aritmetika, terdapat pula deret geometri yang diperoleh dengan cara menjumlahkan suku-suku pada barisan geometri. Deret geometri sangat erat kaitannya dengan permasalahan perhitungan kuantitas yang memiliki pola perbandingan atau rasio tetap, seperti menghitung total hasil produksi barang di sebuah pabrik dari bulan ke bulan atau total jumlah pasien yang terinfeksi virus. Rumus umum untuk menghitung jumlah suku-suku deret geometri adalah Sn = a(r^n - 1) / (r - 1) untuk kondisi rasio r lebih dari 1, atau Sn = a(1 - r^n) / (1 - r) untuk kondisi rasio r kurang dari 1. Sangat penting untuk dicatat bahwa perhitungan rumus deret geometri ini hanya berlaku sah dengan syarat nilai rasio (r) tidak boleh sama dengan 1."
+      },
+      {
+        "content": "Lebih lanjut, di dalam konsep deret geometri dikenal pula sebuah bentuk khusus yang dinamakan deret geometri tak hingga. Sesuai dengan penamaannya, deret geometri tak hingga memiliki banyak sekali suku yang jumlahnya tidak terhingga. Secara karakteristik, deret geometri tak hingga terbagi menjadi dua jenis, yaitu konvergen dan divergen. Deret konvergen memiliki nilai mutlak rasio di antara -1 dan 1 (|r| < 1) dan jumlah deretnya akan terus mengerucut menuju ke suatu nilai tertentu. Sebaliknya, deret geometri divergen terjadi jika nilai mutlak rasionya lebih dari 1 (|r| > 1), di mana hasil jumlahnya akan terus membesar tanpa batasan tertentu sehingga nilainya dinyatakan mendekati tak terhingga."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Barisan dan Deret",
+      "sub_bab": "Bunga",
+      "atp": "Menghitung dan membedakan bunga tunggal serta bunga majemuk dalam konteks keuangan."
+    },
+    "chunks": [
+      {
+        "content": "Dalam kehidupan sehari-hari, konsep barisan dan deret sangat erat kaitannya dengan transaksi keuangan, salah satunya adalah perhitungan bunga di bank. Bunga simpanan merupakan balas jasa dari bank kepada nasabah atas uang yang disimpannya, sedangkan bunga pinjaman adalah balas jasa yang ditetapkan bank kepada peminjam. Secara umum, sistem perhitungan bunga terbagi menjadi dua jenis utama, yaitu bunga tunggal dan bunga majemuk. Bunga tunggal adalah sistem perhitungan bunga yang besarnya hanya ditentukan oleh modal atau pokok uang awal saja. Berapa lama pun uang tersebut disimpan di bank, nilai nominal bunganya akan selalu tetap setiap periode karena hanya dihitung dari nilai pokok uangnya."
+      },
+      {
+        "content": "Penerapan perhitungan bunga tunggal pada dasarnya mengikuti prinsip barisan aritmetika. Sebagai contoh, jika seseorang menabung di bank sebesar Rp1.000.000,00 dengan sistem bunga tunggal 5% per tahun, maka setiap tahun ia akan mendapatkan tambahan bunga tetap sebesar Rp50.000,00. Pada tahun pertama, saldo tabungannya menjadi Rp1.050.000,00. Pada tahun kedua bertambah lagi menjadi Rp1.100.000,00, pada tahun ketiga menjadi Rp1.150.000,00, dan seterusnya. Penambahan nominal uang yang selalu konstan sebesar Rp50.000,00 di setiap tahunnya ini bertindak sebagai beda atau selisih yang selalu tetap dalam konsep barisan aritmetika."
+      },
+      {
+        "content": "Berbeda dengan bunga tunggal, jenis bunga yang kedua adalah bunga majemuk. Dalam perhitungan bunga majemuk, nominal bunga yang didapatkan pada periode sebelumnya tidak dibiarkan terpisah, melainkan akan diakumulasikan atau dimasukkan ke dalam pokok tabungan. Akibatnya, perhitungan bunga pada periode berikutnya akan dihitung berdasarkan nilai pokok tabungan yang baru (pokok awal ditambah akumulasi bunga sebelumnya). Sistem ini sering kali disebut oleh masyarakat awam sebagai 'bunga berbunga', di mana seiring berjalannya waktu, nominal bunga yang diperoleh akan semakin membesar di tiap periodenya karena dihitung dari pokok uang yang terus bertumbuh."
+      },
+      {
+        "content": "Konsep pertumbuhan saldo pada sistem bunga majemuk merupakan bentuk penerapan matematis dari barisan geometri. Sebagai contoh, dengan modal awal Rp1.000.000,00 dan bunga majemuk 5% per tahun, saldo pada akhir tahun pertama adalah Rp1.050.000,00. Memasuki tahun kedua, bunga 5% tidak lagi dihitung dari Rp1.000.000,00, melainkan dihitung dari pokok baru yaitu Rp1.050.000,00, sehingga bunganya menjadi Rp52.500,00 dan total saldo menjadi Rp1.102.500,00. Peningkatan saldo yang memiliki rasio pengali tetap di setiap periodenya inilah yang membuat perhitungan bunga majemuk sangat erat kaitannya dengan prinsip dasar suku ke-n pada barisan geometri."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Perbandingan Trigonometri",
+      "sub_bab": "Perbandingan Trigonometri",
+      "atp": "Mengidentifikasi hubungan sudut dan sisi pada segitiga siku-siku menggunakan konsep sinus, cosinus, dan tangen."
+    },
+    "chunks": [
+      {
+        "content": "Dalam mempelajari perbandingan trigonometri, langkah paling dasar yang harus dikuasai adalah mengenali penamaan ketiga sisi pada segitiga siku-siku berdasarkan letak sudut acuannya. Ketiga sisi tersebut memiliki penamaan khusus. Pertama, sisi depan adalah sisi yang letaknya berada tepat di seberang atau di depan sudut acuan yang sedang ditinjau. Kedua, sisi samping adalah sisi yang posisinya berada tepat di samping sudut acuan tersebut. Ketiga, sisi miring atau yang juga lazim disebut sebagai hipotenusa, merupakan sisi terpanjang dalam segitiga siku-siku, dan letaknya selalu berada tepat di seberang sudut siku-sikunya (sudut 90 derajat). Pemahaman posisi sisi-sisi ini sangat penting sebelum menghitung nilai perbandingannya."
+      },
+      {
+        "content": "Salah satu jenis perbandingan trigonometri dasar yang sering dimanfaatkan untuk memecahkan permasalahan pengukuran secara tidak langsung adalah tangen (ditulis singkat sebagai tan). Nilai perbandingan tangen dari suatu sudut pada segitiga siku-siku dapat dihitung dengan cara membagi panjang sisi depannya dengan panjang sisi sampingnya. Sangat penting untuk dipahami bahwa nilai perbandingan tangen ini bersifat konstan atau tetap untuk besar sudut yang sama. Artinya, jika kita memperbesar atau memperkecil ukuran segitiga siku-siku secara proporsional, selama besar sudut acuannya tidak berubah, maka hasil perbandingan panjang sisi depan terhadap sisi sampingnya akan selalu menghasilkan nilai yang sama."
+      },
+      {
+        "content": "Selain perbandingan tangen, para matematikawan zaman kuno yang mempelajari segitiga siku-siku juga merumuskan dua pola perbandingan trigonometri penting lainnya, yaitu sinus (sin) dan cosinus (cos). Perbandingan sinus untuk sebuah sudut tertentu dihitung dengan membagi panjang sisi depan sudut tersebut dengan panjang sisi miringnya (hipotenusa). Sementara itu, nilai perbandingan cosinus didapatkan dengan membagi panjang sisi samping sudut tersebut terhadap panjang sisi miringnya. Baik nilai sinus maupun cosinus, keduanya merupakan sebuah rasio yang hanya dipengaruhi oleh besarnya sudut acuan, sehingga nilainya akan selalu konsisten terlepas dari ukuran dimensi segitiganya."
+      },
+      {
+        "content": "Ketiga nilai perbandingan trigonometri utama, yaitu sinus, cosinus, dan tangen, pada dasarnya saling memiliki hubungan matematis yang erat satu sama lain. Jika nilai sinus dari suatu sudut dibagi dengan nilai cosinus dari sudut yang sama, maka hasil pembagian rasio tersebut akan sama persis dengan nilai tangen sudut tersebut. Selain itu, prinsip perbandingan trigonometri ini juga memiliki keterkaitan yang kuat dengan Teorema Pythagoras yang berlaku pada segitiga siku-siku. Keterkaitan antara sudut dan panjang sisi-sisi ini sangat membantu para insinyur dalam memecahkan masalah pengukuran di dunia nyata, seperti menghitung tinggi gedung, memperkirakan jarak aman pendaratan pesawat, hingga perancangan jalan dan jembatan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Perbandingan Trigonometri",
+      "sub_bab": "Pemanfaatan Perbandingan Trigonometri",
+      "atp": "Menyelesaikan masalah kontekstual (tinggi objek/jarak) menggunakan perbandingan trigonometri."
+    },
+    "chunks": [
+      {
+        "content": "Dalam kehidupan sehari-hari, kita sering dihadapkan pada situasi untuk mengukur objek yang sangat tinggi atau jarak yang sangat jauh, seperti mengukur tinggi gunung, gedung pencakar langit, atau lebar sungai. Mengukur objek-objek tersebut secara langsung tentu sangat sulit dan tidak praktis. Oleh karena itu, kita dapat memanfaatkan konsep perbandingan trigonometri untuk melakukan pengukuran secara tidak langsung. Para ahli bangunan dan insinyur umumnya menggunakan alat khusus bernama teodolit atau klinometer sederhana. Alat ini berfungsi untuk mengukur besarnya sudut elevasi (sudut pandang ke atas dari garis horizontal) dan sudut depresi (sudut pandang ke bawah). Dengan mengetahui jarak pengamat ke objek dan besar sudut tersebut, tinggi objek dapat dihitung dengan mudah."
+      },
+      {
+        "content": "Salah satu perbandingan trigonometri yang paling sering diaplikasikan dalam penyelesaian masalah pengukuran tinggi objek adalah tangen (tan). Nilai tangen diperoleh dari perbandingan antara panjang sisi di depan sudut dengan panjang sisi di samping sudut pada sebuah segitiga siku-siku. Sebagai contoh, jika kita ingin menghitung tinggi sebuah tiang bendera, kita dapat berdiri pada jarak tertentu dari tiang, lalu mengukur sudut elevasi ke arah puncak tiang. Tinggi tiang bendera (sisi depan) dapat dihitung dengan mengalikan jarak kita berdiri (sisi samping) dengan nilai tangen sudut elevasi yang terbentuk. Hasilnya kemudian ditambahkan dengan tinggi badan kita dari tanah hingga ke mata pengamat."
+      },
+      {
+        "content": "Selain tangen, perbandingan sinus (sin) dan cosinus (cos) juga memiliki pemanfaatan yang tak kalah penting, seperti pada kasus perancangan bangunan bersejarah berukuran masif yakni piramida. Jika sebuah piramida disederhanakan ke dalam bentuk model segitiga siku-siku, ukurannya ditentukan oleh tinggi piramida, panjang setengah diagonal alas, dan besar sudut kemiringan sisi rusuk luarnya. Untuk menghitung tinggi piramida, kita dapat menggunakan perbandingan sinus, yaitu dengan melihat rasio antara tinggi piramida (sisi depan) dengan panjang rusuk luarnya (sisi miring). Sementara itu, perbandingan cosinus dapat digunakan untuk menghitung panjang setengah diagonal alas piramida tersebut."
+      },
+      {
+        "content": "Pemanfaatan perbandingan trigonometri juga sangat esensial di bidang navigasi dan perancangan infrastruktur publik. Dalam dunia penerbangan, perbandingan trigonometri dimanfaatkan untuk memprediksi jarak pendaratan pesawat terbang secara akurat. Standar sudut mendarat pesawat yang direkomendasikan demi kemulusan dan kenyamanan penumpang biasanya berada pada nilai tertentu, seperti 3 derajat. Dengan mengetahui besaran sudut turun dan ketinggian pesawat saat ini di udara, pilot maupun sistem dapat menghitung sisa jarak horizontal pesawat menuju landasan pendaratan. Begitu pula dalam dunia teknik sipil, pembuatan jembatan bentang panjang melintasi lautan atau lembah sangat bergantung pada perhitungan trigonometri."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Sistem Persamaan dan Pertidaksamaan Linear",
+      "sub_bab": "Sistem Persamaan Linear",
+      "atp": "Menyajikan grafik dan menentukan daerah penyelesaian persamaan linear dua variabel."
+    },
+    "chunks": [
+      {
+        "content": "Dalam menyelesaikan Sistem Persamaan Linear Dua Variabel (SPLDV), salah satu metode yang sangat visual dan intuitif adalah menggunakan metode grafik. Setiap persamaan linear dengan dua variabel, apabila digambarkan pada bidang koordinat Kartesius, akan membentuk sebuah garis lurus. Untuk menyajikan grafiknya secara akurat, langkah paling mudah adalah dengan menentukan titik potong terhadap sumbu horizontal atau sumbu-x (ketika nilai y = 0) dan titik potong terhadap sumbu vertikal atau sumbu-y (ketika nilai x = 0). Penyelesaian dari sistem persamaan linear ini adalah titik-titik koordinat yang memenuhi semua persamaan yang ada di dalam sistem tersebut secara bersamaan."
+      },
+      {
+        "content": "Ketika kita menyajikan dua persamaan linear di dalam satu bidang koordinat yang sama, terdapat tiga kemungkinan kedudukan dari kedua garis tersebut. Kedudukan garis-garis inilah yang nantinya akan menentukan banyaknya jumlah solusi atau penyelesaian dari SPLDV. Kemungkinan pertama yang paling sering dijumpai adalah kedua garis tersebut saling berpotongan tepat di satu titik koordinat tertentu. Sistem persamaan linear yang grafiknya berupa dua garis yang berpotongan ini dikatakan memiliki tepat satu buah solusi penyelesaian. Titik potong persilangan dari kedua garis lurus itulah yang bertindak sebagai himpunan penyelesaian tunggalnya."
+      },
+      {
+        "content": "Kemungkinan kedua saat menggambar grafik sistem persamaan linear dua variabel adalah munculnya dua garis lurus yang letaknya saling sejajar. Hal ini umumnya terjadi jika dua persamaan garis memiliki tingkat kemiringan atau gradien yang persis sama, namun berpotongan di titik sumbu-y yang berbeda. Dalam konteks sistem persamaan linear, grafik yang berupa dua garis sejajar menandakan bahwa sistem tersebut sama sekali tidak memiliki solusi atau himpunan penyelesaian. Hal ini secara logis dapat dibuktikan karena sejauh apa pun kedua garis tersebut diperpanjang, tidak akan pernah ada satu pun titik potong yang dilalui secara bersamaan oleh keduanya."
+      },
+      {
+        "content": "Kemungkinan ketiga sekaligus yang terakhir dari penyajian grafik SPLDV adalah kedua garis lurus tersebut saling berimpit satu sama lain. Kondisi ini dapat terjadi apabila dua buah persamaan linear pada dasarnya merupakan bentuk persamaan yang saling ekuivalen, atau persamaan yang satu adalah bentuk kelipatan konstan dari persamaan yang lainnya. Saat diproyeksikan pada bidang koordinat, kedua garis akan menempati lintasan yang sama persis. Sistem persamaan linear yang grafiknya berupa dua garis yang berimpit ini memiliki penyelesaian yang jumlahnya tak terhingga atau sangat banyak solusi. Seluruh titik yang berada di sepanjang garis lurus tersebut merupakan titik penyelesaian yang sah."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Sistem Persamaan dan Pertidaksamaan Linear",
+      "sub_bab": "Sistem Pertidaksamaan Linear",
+      "atp": "Menentukan daerah penyelesaian pertidaksamaan linear dua variabel dan menggambarkannya pada grafik."
+    },
+    "chunks": [
+      {
+        "content": "Dalam kehidupan sehari-hari, kita sering menjumpai permasalahan yang melibatkan batasan atau kendala tertentu, seperti kapasitas muatan truk, batas anggaran belanja, atau batas waktu pengerjaan. Berbeda dengan persamaan linear yang menggunakan tanda sama dengan, permasalahan yang melibatkan kendala ini dapat dimodelkan menggunakan sistem pertidaksamaan linear. Sistem pertidaksamaan linear dua variabel terdiri atas beberapa pertidaksamaan linear yang saling terkait, dengan menggunakan tanda ketidaksamaan seperti kurang dari, lebih dari, kurang dari atau sama dengan, serta lebih dari atau sama dengan. Solusi dari sistem ini bukanlah suatu nilai tunggal, melainkan sekumpulan nilai yang memenuhi semua pertidaksamaan secara bersamaan."
+      },
+      {
+        "content": "Penyelesaian dari sebuah sistem pertidaksamaan linear dua variabel paling mudah divisualisasikan melalui metode grafik pada bidang koordinat. Langkah pertama yang harus dilakukan adalah menggambar garis batas untuk setiap pertidaksamaan. Garis batas ini didapatkan dengan mengubah tanda ketidaksamaan menjadi tanda persamaan linear terlebih dahulu. Perlu dicatat dan diingat baik-baik, bahwa garis batas yang didapat dari pertidaksamaan 'lebih dari atau sama dengan' serta 'kurang dari atau sama dengan' harus digambarkan dengan garis utuh. Hal ini mengartikan bahwa garis tersebut termasuk dalam daerah penyelesaian. Sebaliknya, garis batas untuk pertidaksamaan 'lebih dari' atau 'kurang dari' digambarkan dengan garis putus-putus."
+      },
+      {
+        "content": "Setelah garis batas selesai digambar pada bidang koordinat, langkah selanjutnya adalah menentukan daerah penyelesaian yang memenuhi pertidaksamaan. Cara yang paling umum digunakan adalah dengan memilih sebuah titik uji sembarang yang tidak terletak tepat pada garis batas, misalnya titik koordinat (0,0). Substitusikan nilai koordinat titik uji tersebut ke dalam pertidaksamaan awal. Apabila hasil substitusi menghasilkan ketidaksamaan yang bernilai benar, maka daerah yang memuat titik uji tersebut adalah daerah penyelesaiannya, dan daerah itu dapat diberi arsiran. Namun, jika hasil substitusinya bernilai salah, maka daerah penyelesaiannya adalah wilayah yang berada di sisi seberang dari garis batas tersebut."
+      },
+      {
+        "content": "Karena sebuah sistem pertidaksamaan linear terdiri atas lebih dari satu pertidaksamaan, maka kamu harus melakukan langkah pengujian dan pengarsiran daerah untuk setiap pertidaksamaan yang ada di dalam sistem tersebut pada satu bidang koordinat yang sama. Solusi akhir atau daerah penyelesaian dari sistem pertidaksamaan linear adalah daerah irisan yang terbentuk dari semua daerah jawab pertidaksamaan tersebut. Semua titik koordinat (x, y) yang jatuh tepat di dalam daerah irisan yang saling tumpang tindih ini merupakan himpunan penyelesaian yang sah. Melalui pemahaman terhadap daerah irisan inilah kita dapat mengambil keputusan atau mencari nilai-nilai yang memenuhi kendala pada masalah aslinya."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Persamaan dan Fungsi Kuadrat",
+      "sub_bab": "Persamaan Kuadrat",
+      "atp": "Menentukan akar-akar, menganalisis diskriminan, serta menyusun persamaan kuadrat baru."
+    },
+    "chunks": [
+      {
+        "content": "Persamaan kuadrat merupakan suatu persamaan matematika polinomial dengan pangkat tertinggi dua yang memiliki bentuk umum ax^2 + bx + c = 0, dengan syarat a, b, dan c adalah bilangan real serta a tidak sama dengan nol. Nilai-nilai variabel yang memenuhi persamaan tersebut dinamakan sebagai solusi atau akar-akar persamaan kuadrat. Dalam kehidupan sehari-hari, konsep persamaan kuadrat banyak diterapkan untuk menyelesaikan berbagai masalah, misalnya untuk menentukan panjang sisi sebuah bidang area jika total luasnya diketahui, menghubungkan luas persegi dengan persegi panjang, atau memprediksi waktu tempuh suatu objek yang melaju."
+      },
+      {
+        "content": "Untuk menentukan akar-akar dari sebuah persamaan kuadrat, terdapat beberapa metode penyelesaian yang dapat dipelajari. Salah satu cara yang paling dasar adalah pemfaktoran, yaitu mengubah bentuk persamaan menjadi a(x - x1)(x - x2) = 0, di mana x1 dan x2 saling mewakili akar-akarnya. Apabila sebuah persamaan kuadrat sulit untuk difaktorkan secara langsung atau diselesaikan dengan metode melengkapkan kuadrat sempurna, kita dapat mencari akar-akarnya secara pasti menggunakan rumus persamaan kuadrat. Rumus matematis tersebut dituliskan sebagai x = (-b ± √(b^2 - 4ac)) / 2a."
+      },
+      {
+        "content": "Di dalam rumus persamaan kuadrat, terdapat sebuah ekspresi matematika b^2 - 4ac yang terletak di bawah tanda akar, yang dikenal secara khusus dengan sebutan diskriminan (D). Nilai diskriminan ini berfungsi sangat penting untuk menganalisis jenis-jenis akar dari suatu persamaan kuadrat. Apabila nilai diskriminannya bernilai positif (D > 0), maka persamaan tersebut dipastikan memiliki dua akar real yang nilainya berbeda. Jika diskriminannya bernilai persis nol (D = 0), maka persamaannya menghasilkan solusi akar real kembar atau sama. Sementara jika nilai diskriminannya negatif (D < 0), maka persamaan tidak memiliki solusi real, melainkan menghasilkan dua akar imajiner yang berbeda."
+      },
+      {
+        "content": "Pemahaman yang utuh mengenai akar-akar persamaan kuadrat tidak hanya sebatas menemukan nilainya saja, melainkan juga harus mampu menganalisis hubungan antar akarnya. Berdasarkan penurunan dari rumus persamaan kuadrat, kita dapat menyimpulkan sifat penting berupa hasil penjumlahan dan hasil perkalian kedua akarnya. Penjumlahan dari kedua akar dirumuskan secara singkat dengan x1 + x2 = -b/a, sedangkan hasil perkalian kedua akarnya adalah x1 × x2 = c/a. Penggunaan kedua sifat penjumlahan dan perkalian akar-akar ini sangat praktis dan esensial ketika kita dituntut untuk mengonstruksi atau menyusun sebuah persamaan kuadrat baru."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Persamaan dan Fungsi Kuadrat",
+      "sub_bab": "Fungsi Kuadrat",
+      "atp": "Menganalisis karakteristik grafik fungsi kuadrat (titik puncak, sumbu simetri) dan menyajikannya dalam grafik."
+    },
+    "chunks": [
+      {
+        "content": "Fungsi kuadrat merupakan salah satu bentuk fungsi nonlinear yang memiliki karakteristik grafik melengkung menyerupai bentuk parabola. Bentuk umum dari fungsi kuadrat dinyatakan dengan persamaan f(x) = ax^2 + bx + c, di mana a, b, dan c adalah bilangan real dan a tidak sama dengan nol. Salah satu karakteristik utama yang membedakan bentuk grafik fungsi kuadrat dapat dilihat dengan jelas dari nilai koefisien a. Jika nilai a > 0 (bernilai positif), maka grafik fungsi kuadrat akan terbuka ke atas. Sebaliknya, apabila nilai a < 0 (bernilai negatif), maka grafik fungsi tersebut akan terbuka ke bawah. Karakteristik bukaan grafik ini akan sangat menentukan di mana letak dan jenis dari titik puncak parabola tersebut."
+      },
+      {
+        "content": "Setiap grafik fungsi kuadrat selalu memiliki sebuah titik balik atau vertex yang biasa disebut sebagai titik puncak. Titik puncak ini dapat berupa titik minimum jika grafik parabolanya terbuka ke atas (saat a > 0), dan dapat berupa titik maksimum jika grafik parabolanya terbuka ke bawah (saat a < 0). Tepat melalui titik puncak tersebut, terdapat sebuah garis lurus vertikal yang membelah kurva parabola menjadi dua bagian yang simetris atau sama besar. Garis imajiner pembelah inilah yang dinamakan sebagai sumbu simetri. Karena letaknya yang selalu ditarik lurus melalui titik puncak parabola, nilai absis (koordinat x) pada sumbu simetri akan selalu bernilai sama persis dengan nilai absis pada titik puncak tersebut."
+      },
+      {
+        "content": "Karakteristik penting lain dari grafik fungsi kuadrat adalah letak titik potongnya terhadap sumbu vertikal atau sumbu y. Untuk menentukan di mana letak persis grafik tersebut memotong sumbu y, kita dapat mengamati nilai konstanta c pada persamaan fungsi f(x) = ax^2 + bx + c. Titik potong grafik dengan sumbu y akan selalu terletak secara pasti pada koordinat (0, c). Hal ini secara logis dapat dibuktikan dengan mensubstitusikan nilai x = 0 ke dalam persamaan fungsinya. Mengetahui posisi titik potong terhadap sumbu y ini merupakan salah satu acuan dasar yang sangat membantu kita saat menyajikan atau membuat sketsa grafik fungsi kuadrat secara akurat pada bidang koordinat."
+      },
+      {
+        "content": "Titik potong grafik fungsi kuadrat terhadap sumbu horizontal atau sumbu x memiliki kaitan yang sangat erat dengan penyelesaian akar-akar persamaan kuadrat. Banyaknya titik potong grafik dengan sumbu x ditentukan oleh nilai diskriminan yang dirumuskan dengan D = b^2 - 4ac. Jika nilai D > 0, grafik akan memotong sumbu x di dua titik yang berbeda. Jika nilai D = 0, grafik hanya akan memotong atau menyinggung sumbu x tepat di satu titik saja (akar kembar). Namun, apabila nilai D < 0, maka grafik fungsi kuadrat tersebut akan terlepas mengambang dan tidak memotong maupun menyinggung sumbu x sama sekali, yang menandakan bahwa fungsi tersebut tidak memiliki akar penyelesaian bilangan real."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Representasi dan Interpretasi Data",
+      "sub_bab": "Representasi Data",
+      "atp": "Menampilkan data secara visual menggunakan diagram lingkaran, batang, dan histogram secara tepat."
+    },
+    "chunks": [
+      {
+        "content": "Dalam kehidupan sehari-hari, kita selalu berhubungan dengan pengumpulan dan pengolahan data. Untuk memudahkan pembacaan dan analisis, sekumpulan data dapat direpresentasikan secara visual melalui berbagai jenis diagram. Diagram lingkaran sederhana atau diagram batang sederhana merupakan bentuk representasi yang paling umum digunakan untuk menampilkan informasi, baik dalam bentuk data tunggal maupun dalam bentuk tabel frekuensi. Pemilihan jenis grafik visual yang tepat sangatlah esensial karena akan memberikan gambaran situasi yang lebih akurat, sehingga kita mampu mengambil suatu kesimpulan atau keputusan secara objektif."
+      },
+      {
+        "content": "Selain diagram batang dan diagram lingkaran, terdapat pula satu bentuk diagram spesifik yang dikenal dengan sebutan histogram. Walaupun secara visual histogram tampak hampir serupa dengan diagram batang, keduanya memiliki beberapa perbedaan mendasar. Histogram lazimnya digunakan untuk menunjukkan distribusi atau sebaran dari suatu kelompok data yang bersifat kuantitatif, dengan rentang data yang telah dikelompokkan secara berurutan ke dalam interval-interval kelas. Sebaliknya, diagram batang lebih difungsikan secara umum untuk membandingkan suatu kelompok data yang sifat pengelompokannya berupa kategori."
+      },
+      {
+        "content": "Perbedaan antara histogram dan diagram batang juga dapat diamati dengan sangat jelas melalui tampilan visualnya. Pada sebuah histogram, gambar balok penyusunnya diletakkan menempel satu sama lain tanpa jarak, yang merepresentasikan kontinuitas rentang data interval. Sementara itu, pada diagram batang lazimnya terdapat spasi kosong di antara setiap batang kategorinya. Selain itu, setiap batang pada diagram batang umumnya memiliki ukuran lebar yang seragam, sedangkan ukuran lebar batang pada histogram tidak harus sama, karena nilai frekuensinya secara akurat direpresentasikan melalui luas area pada masing-masing batangnya."
+      },
+      {
+        "content": "Dalam penyajian data yang lebih kompleks, histogram dengan frekuensi relatif (berupa persentase) sangat efektif digunakan saat kita ingin membandingkan dua kelompok data interval yang memiliki total observasi berbeda. Sementara itu, jika kita ingin membandingkan dua kelompok data kategorikal secara bersamaan, kita dapat menyajikannya ke dalam grafik batang ganda, di mana setiap kategori memiliki dua batang yang diletakkan saling berdampingan. Alternatif visual lainnya adalah menampilkannya ke dalam dua buah diagram lingkaran terpisah agar proporsi persentase dari setiap kategori data dapat langsung terlihat dengan jelas."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Representasi dan Interpretasi Data",
+      "sub_bab": "Statistik Deskriptif",
+      "atp": "Menentukan ukuran pemusatan (mean, median, modus) dan penyebaran data (jangkauan, kuartil)."
+    },
+    "chunks": [
+      {
+        "content": "Dalam ilmu statistika, ukuran pemusatan sangat berguna untuk melihat kecenderungan dari suatu kumpulan data. Dua ukuran pemusatan yang paling mendasar adalah median dan modus. Median adalah nilai data yang berada tepat di tengah ketika seluruh kumpulan data telah diurutkan dari nilai yang terkecil sampai yang terbesar. Jika banyaknya data bernilai genap, median tidak diambil dari satu data tunggal, melainkan dari nilai tengah di antara dua nilai data yang berada di urutan paling tengah. Sementara itu, modus dari sebuah kumpulan data adalah nilai data yang paling sering muncul atau memiliki frekuensi paling besar. Keuntungan menggunakan modus dan median adalah nilainya tidak akan terpengaruh oleh keberadaan data pencilan yang ekstrem."
+      },
+      {
+        "content": "Selain modus dan median, ukuran pemusatan data lainnya yang sangat penting dipahami adalah rerata atau yang lazim disebut sebagai mean. Mean dari sebuah kumpulan data adalah bilangan yang diperoleh dengan mendistribusikan nilai secara merata ke seluruh anggota dari kumpulan data tersebut. Untuk menghitung nilai mean, kamu dapat melakukannya dengan cara menambahkan seluruh nilai data yang ada, lalu membaginya dengan total banyaknya data. Walaupun mean sangat sering digunakan karena melibatkan seluruh data secara utuh dalam perhitungannya, ukuran pemusatan ini memiliki karakteristik khusus. Berbeda dengan median, nilai mean akan sangat terpengaruh oleh keberadaan sekumpulan data yang memiliki nilai yang terlalu ekstrem."
+      },
+      {
+        "content": "Selain ukuran pemusatan, kita juga dapat menganalisis suatu kumpulan data melalui ukuran penyebarannya untuk mengetahui seberapa jauh data-data tersebut tersebar. Ukuran penyebaran yang paling sederhana adalah jangkauan atau range. Jangkauan diperoleh dengan cara menghitung selisih antara nilai data terkecil dengan nilai data terbesar. Lebih lanjut, jika median membagi data menjadi dua bagian yang sama besar, maka ada pula ukuran penempatan yang membagi kumpulan data berurutan menjadi empat bagian yang sama besar, yaitu kuartil. Terdapat tiga jenis kuartil, yaitu kuartil bawah (Q1) di urutan 25% data, kuartil tengah atau median (Q2) di urutan 50% data, dan kuartil atas (Q3) di urutan 75% dari kelompok data."
+      },
+      {
+        "content": "Dalam praktiknya, data statistik sering kali disajikan bukan sebagai data tunggal, melainkan diolah ke dalam bentuk tabel distribusi frekuensi data kelompok. Untuk menentukan mean pada data kelompok, kita dapat menggunakan nilai tengah dari tiap kelas interval dengan asumsi bahwa data tunggal tersebar secara merata di dalam interval tersebut. Sementara itu, untuk mencari letak nilai median, kuartil bawah (Q1), dan kuartil atas (Q3) pada data berkelompok, kita perlu menggunakan bantuan metode interpolasi. Langkah pertama adalah menentukan kelas letak median atau kuartilnya, kemudian membandingkan selisih nilai tepi bawah dan tepi atas kelas interval tersebut dengan frekuensi kumulatif datanya."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Representasi dan Interpretasi Data",
+      "sub_bab": "Representasi Data Lanjutan",
+      "atp": "Merepresentasikan data dalam bentuk boxplot dan scatter plot untuk menganalisis hubungan antar variabel."
+    },
+    "chunks": [
+      {
+        "content": "Dalam menganalisis distribusi sekumpulan data, kita dapat menggunakan representasi visual berupa diagram box-and-whisker atau yang lazim dikenal sebagai box plot. Diagram ini sangat efektif untuk menampilkan sebaran data secara ringkas karena disusun berdasarkan lima ukuran statistik utama. Kelima ukuran penyajian data tersebut meliputi nilai minimum (data terkecil), kuartil pertama atau kuartil bawah (Q1), kuartil kedua atau median (Q2), kuartil ketiga atau kuartil atas (Q3), serta nilai maksimum (data terbesar). Selain itu, box plot juga mampu menampilkan jangkauan interkuartil atau Inter Quartile Range (IQR). Nilai IQR ini diperoleh dari selisih antara kuartil ketiga dan kuartil pertama, yang merepresentasikan rentang di mana 50 persen data pengamatan bagian tengah berada. Melalui visualisasi kotak dan garis (whisker) pada diagram ini, kita dapat dengan mudah melihat seberapa terpusat atau seberapa menyebar distribusi data yang sedang kita analisis."
+      },
+      {
+        "content": "Selain kelima ukuran utama, keunggulan lain dari box plot adalah kemampuannya dalam mengidentifikasi pencilan atau outlier secara visual. Pencilan adalah data yang nilainya menyimpang atau terletak sangat jauh dari kelompok data lainnya. Secara matematis, sebuah data umumnya dikategorikan sebagai pencilan apabila nilainya lebih kecil dari batas bawah (Q1 dikurangi 1,5 kali IQR) atau lebih besar dari batas atas (Q3 ditambah 1,5 kali IQR). Pada box plot, pencilan biasanya digambarkan dengan tanda silang atau titik khusus di luar batas garis whisker. Lebih jauh lagi, box plot tidak hanya berguna untuk melihat sebaran satu kelompok data saja. Diagram ini sangat sering dimanfaatkan untuk membandingkan dua atau lebih kelompok data secara berdampingan. Dengan membandingkan letak kotak, panjang IQR, serta jangkauan nilai maksimum dan minimum antar kelompok, kita dapat menarik kesimpulan mengenai kelompok data mana yang lebih konsisten atau lebih tersebar."
+      },
+      {
+        "content": "Bentuk representasi data lanjutan lainnya yang tidak kalah penting adalah diagram pencar atau scatter plot. Berbeda dengan box plot yang fokus pada sebaran satu kelompok data, diagram pencar secara khusus digunakan untuk memvisualisasikan kemungkinan adanya hubungan atau korelasi antara dua variabel kuantitatif yang berbeda. Setiap data direpresentasikan sebagai titik-titik pada sebuah bidang koordinat Kartesius. Titik-titik ini mewakili pasangan nilai, di mana nilai dari variabel pertama diletakkan pada sumbu horizontal (sumbu x), sedangkan nilai dari variabel kedua diletakkan pada sumbu vertikal (sumbu y). Tujuan utama dari penyajian data menggunakan diagram pencar adalah untuk memudahkan kita dalam mengamati pola tren titik-titik yang terbentuk. Dari pola yang tergambar tersebut, kita dapat mengidentifikasi apakah terdapat kaitan sebab-akibat atau relasi tertentu yang kuat, lemah, atau bahkan tidak memiliki hubungan sama sekali di antara kedua variabel pengamatan."
+      },
+      {
+        "content": "Ketika melakukan analisis pada diagram pencar, kita umumnya akan mencari jenis korelasi atau hubungan antara kedua variabel. Secara garis besar, terdapat tiga jenis korelasi yang mungkin terjadi. Pertama adalah korelasi positif, yang terjadi ketika nilai satu variabel meningkat, maka nilai variabel lainnya juga ikut meningkat. Pola titik pada diagram akan cenderung naik dari kiri bawah ke kanan atas. Kedua adalah korelasi negatif, yaitu kondisi di mana peningkatan nilai pada satu variabel justru diikuti oleh penurunan nilai pada variabel lainnya, sehingga pola titiknya cenderung menurun dari kiri atas ke kanan bawah. Ketiga adalah kondisi tidak ada korelasi, di mana titik-titik data menyebar secara acak tanpa membentuk pola tren yang jelas. Selain arahnya, korelasi juga dapat dinilai dari kekuatannya. Korelasi dikatakan kuat apabila titik-titik penyusunnya berada sangat dekat dan merapat membentuk pola menyerupai garis linear yang konsisten secara terarah."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Peluang",
+      "sub_bab": "Distribusi Peluang",
+      "atp": "Menentukan semua kemungkinan hasil percobaan (ruang sampel) dan menghitung nilai peluangnya."
+    },
+    "chunks": [
+      {
+        "content": "Peluang adalah suatu ukuran tentang kemungkinan suatu kejadian yang akan terjadi di masa mendatang. Rentang nilai peluang selalu berada di antara 0 hingga 1, di mana nilai 0 berarti kejadian tersebut tidak mungkin terjadi dan nilai 1 berarti kejadian pasti terjadi. Dalam melakukan sebuah percobaan matematika, seperti melempar dadu atau keping uang logam, kita akan menemukan berbagai kemungkinan hasil. Himpunan dari semua hasil yang mungkin terjadi dalam suatu percobaan peluang ini dinamakan sebagai ruang sampel, yang umumnya disimbolkan dengan huruf S. Setiap hasil individu di dalam ruang sampel tersebut dikenal dengan istilah titik sampel, sedangkan total banyaknya anggota dalam ruang sampel dituliskan dengan notasi n(S)."
+      },
+      {
+        "content": "Ketika kita melakukan sebuah percobaan di mana setiap hasil di dalam ruang sampel memiliki kemungkinan yang sama besar untuk terjadi, kita dapat menghitung nilai peluangnya secara matematis. Peluang terjadinya sebuah kejadian spesifik, misalnya kejadian A, ditentukan dengan membagi banyaknya kejadian yang diinginkan dengan total seluruh hasil yang mungkin terjadi. Secara matematis, rumus peluang kejadian A dituliskan sebagai P(A) = n(A)/n(S), di mana n(A) merepresentasikan banyaknya anggota dalam kejadian A dan n(S) merepresentasikan banyaknya seluruh anggota dalam himpunan ruang sampel. Pemahaman terhadap rumus dasar ini sangat penting untuk menyelesaikan berbagai permasalahan yang melibatkan ketidakpastian."
+      },
+      {
+        "content": "Setelah memahami konsep ruang sampel, kita dapat menyusun sebuah distribusi peluang. Distribusi peluang adalah sebuah representasi atau deskripsi lengkap dari semua kemungkinan hasil dari suatu situasi acak, yang disandingkan secara langsung dengan nilai peluang terjadinya masing-masing hasil tersebut. Distribusi peluang berbeda dari ruang sampel biasa karena dalam distribusi peluang, setiap hasil kemungkinan harus dinyatakan dalam bentuk angka tunggal dan setiap angka tersebut harus sudah memiliki besaran nilai peluang yang ditentukan secara spesifik. Representasi ini akan sangat memudahkan kita untuk mengamati variasi kemungkinan dari sebuah percobaan secara utuh."
+      },
+      {
+        "content": "Sebagai contoh penerapan, mari kita tinjau situasi pelemparan dua buah dadu secara bersamaan. Ruang sampel dari pelemparan dua dadu ini terdiri atas 36 titik sampel hasil kombinasi angka yang mungkin muncul. Dari ruang sampel tersebut, kita dapat membuat sebuah tabel distribusi peluang, misalnya untuk melihat distribusi hasil penjumlahan angka pada kedua mata dadu. Hasil penjumlahan yang mungkin akan terentang dari angka 2 hingga 12. Kita kemudian dapat menghitung peluang untuk setiap angka penjumlahan tersebut, seperti peluang munculnya jumlah 2 adalah 1/36, peluang munculnya jumlah 3 adalah 2/36, dan seterusnya, hingga memuat seluruh kemungkinan distribusi."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Peluang",
+      "sub_bab": "Aturan Penjumlahan",
+      "atp": "Menghitung peluang kejadian saling lepas dan tidak saling lepas menggunakan aturan penjumlahan."
+    },
+    "chunks": [
+      {
+        "content": "Dalam mempelajari teori peluang, sering kali kita ingin mengetahui kemungkinan terjadinya suatu kejadian A atau kejadian B. Di dalam matematika, kata 'atau' memiliki makna 'salah satu atau kedua-duanya'. Sebagai contoh, peluang seorang siswa pergi ke sekolah menggunakan sepeda atau motor mencakup kemungkinan siswa tersebut hanya menggunakan sepeda, hanya menggunakan motor, atau bisa menggunakan keduanya di kesempatan berbeda. Untuk menghitung peluang gabungan dari kejadian semacam ini, kita menggunakan sebuah prinsip yang dinamakan aturan penjumlahan. Namun, sebelum menjumlahkan nilainya, kita harus menentukan apakah kedua kejadian tersebut bersifat saling lepas atau tidak saling lepas."
+      },
+      {
+        "content": "Dua buah kejadian dikatakan sebagai kejadian saling lepas (atau disjoint) apabila sangat tidak mungkin bagi kedua kejadian tersebut untuk terjadi secara bersamaan pada satu hasil percobaan yang sama. Sebagai contoh, pada pelemparan sepasang dadu, kejadian mendapatkan jumlah kedua mata dadu 7 dan kejadian mendapatkan angka dadu yang kembar adalah contoh dua kejadian yang saling lepas. Hal ini dikarenakan tidak ada satupun kombinasi dadu kembar yang jika dijumlahkan akan menghasilkan angka 7. Untuk menentukan peluang kejadian saling lepas, kita dapat menjumlahkan peluang masing-masing secara langsung, yang dirumuskan secara matematis dengan P(A atau B) = P(A) + P(B)."
+      },
+      {
+        "content": "Berbeda halnya dengan kejadian tidak saling lepas, di mana dua kejadian memiliki irisan dan masih mungkin untuk terjadi secara bersamaan pada satu hasil percobaan yang sama. Contoh nyatanya dapat diamati pada pelemparan dua buah dadu, antara kejadian mendapatkan jumlah mata dadu 8 dan kejadian mendapatkan angka dadu kembar. Kedua kejadian ini dinyatakan tidak saling lepas karena terdapat kemungkinan muncul hasil dadu kembar yang sekaligus berjumlah 8, yaitu ketika kedua mata dadu sama-sama menunjukkan angka 4. Karena terdapat hasil kejadian yang beririsan dan dapat terjadi pada waktu yang sama, perhitungan aturan penjumlahan pada kasus ini harus dimodifikasi."
+      },
+      {
+        "content": "Pada perhitungan kejadian tidak saling lepas, apabila kita sekadar menjumlahkan peluang kejadian A dan kejadian B, maka peluang irisan dari kedua kejadian tersebut akan terhitung dua kali. Hal ini dapat dilihat dengan jelas melalui alat bantu visual berupa diagram Venn, di mana area irisan yang tumpang tindih harus dikurangkan agar perhitungannya akurat. Oleh karena itu, secara matematis aturan penjumlahan untuk kejadian tidak saling lepas dituliskan dengan mengurangi total peluang awal dengan peluang irisannya. Formula ini dirumuskan sebagai P(A atau B) = P(A) + P(B) - P(A dan B). Pemahaman terhadap kedua formula penjumlahan ini sangat penting untuk mencegah kesalahan perhitungan."
+      }
+    ]
+  },
+  {
+    "query": {
+      "jenjang": "SMA",
+      "kelas": "Kelas 10",
+      "mata_pelajaran": "Matematika Umum",
+      "bab_judul": "Peluang",
+      "sub_bab": "Aturan Perkalian",
+      "atp": "Menghitung peluang terjadinya dua kejadian saling bebas menggunakan aturan perkalian."
+    },
+    "chunks": [
+      {
+        "content": "Dalam mempelajari teori peluang, kita sering dihadapkan pada situasi di mana dua kejadian terjadi secara berurutan atau bersamaan. Salah satu konsep penting dalam hal ini adalah kejadian saling bebas. Dua buah kejadian dikatakan sebagai kejadian saling bebas apabila terjadinya kejadian yang satu sama sekali tidak memengaruhi kemungkinan atau peluang terjadinya kejadian yang lain. Sebagai contoh sederhana, jika kita melemparkan dua buah dadu secara bersamaan, angka yang muncul pada dadu pertama tidak akan memberikan pengaruh apa pun terhadap angka yang akan muncul pada dadu kedua. Begitu pula saat kita melempar keping uang logam sebanyak dua kali berturut-turut, hasil lemparan pertama tidak akan mengubah peluang munculnya sisi gambar atau angka pada lemparan kedua."
+      },
+      {
+        "content": "Untuk menentukan peluang terjadinya dua kejadian yang bersifat saling bebas, kita dapat menggunakan sebuah prinsip matematis yang dikenal dengan aturan perkalian. Jika kejadian A dan kejadian B merupakan dua kejadian yang saling bebas, maka peluang untuk kejadian A dan kejadian B terjadi secara bersamaan atau berurutan dapat dihitung dengan cara mengalikan peluang kejadian A dengan peluang kejadian B. Secara simbolis matematis, aturan perkalian ini dituliskan sebagai P(A dan B) = P(A) x P(B), atau bisa juga dituliskan P(A terjadi lalu B terjadi) = P(A) x P(B). Penggunaan aturan perkalian ini akan sangat mempermudah kita dalam memecahkan masalah peluang tanpa harus mendaftar semua kemungkinan pada diagram model luas atau ruang sampel yang sangat besar."
+      },
+      {
+        "content": "Mari kita amati penerapan aturan perkalian pada pelemparan dua buah dadu berurutan. Misalkan kita ingin mencari peluang mendapatkan angka ganjil pada dadu pertama dan mendapatkan angka genap pada dadu kedua. Peluang mendapatkan angka ganjil pada dadu pertama adalah 3/6 atau 1/2. Peluang mendapatkan angka genap pada dadu kedua juga 1/2. Karena kedua kejadian ini saling bebas, peluang terjadinya kedua hasil tersebut secara berurutan adalah hasil kali dari masing-masing peluangnya, yaitu 1/2 dikali 1/2 yang menghasilkan nilai peluang sebesar 1/4. Aturan perkalian ini memberikan cara perhitungan yang efisien dan rasional untuk menyederhanakan perhitungan peluang majemuk."
+      },
+      {
+        "content": "Sangat penting untuk diperhatikan bahwa formula perkalian peluang P(A dan B) = P(A) x P(B) hanya berlaku secara sah jika dan hanya jika kedua kejadian tersebut terbukti saling bebas. Jika kejadian pertama memengaruhi peluang kejadian kedua, maka kedua kejadian tersebut dinamakan kejadian tidak saling bebas, dan aturan perkalian dasar ini tidak dapat langsung digunakan. Contoh klasik dari kejadian tidak saling bebas adalah pengambilan dua buah bola dari dalam kantong secara berurutan tanpa pengembalian. Saat bola pertama diambil dan tidak dikembalikan, jumlah total bola di dalam kantong akan berkurang, sehingga peluang terambilnya bola kedua dengan warna tertentu akan berubah secara otomatis dan bergantung penuh pada hasil pengambilan bola yang pertama."
+      }
+    ]
+  }
+]

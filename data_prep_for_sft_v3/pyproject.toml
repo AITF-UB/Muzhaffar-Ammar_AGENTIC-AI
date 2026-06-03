@@ -1,0 +1,29 @@
+[project]
+name = "sft-data-generator"
+version = "0.1.0"
+description = "SFT data generator for Sekolah Rakyat via OpenRouter API"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.0",
+    "huggingface-hub>=1.14.0",
+    "matplotlib>=3.10.9",
+    "nbformat>=5.10.4",
+    "numpy>=2.4.4",
+    "pandas>=3.0.3",
+    "plotly>=6.7.0",
+    "python-dotenv>=1.1.0",
+    "rich>=14.0.0",
+    "seaborn>=0.13.2",
+    "sentencepiece>=0.2.1",
+    "tenacity>=9.0.0",
+    "tiktoken>=0.12.0",
+    "transformers>=5.8.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

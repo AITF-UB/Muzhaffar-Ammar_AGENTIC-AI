@@ -69,7 +69,7 @@ class EssaySubmitRequest(BaseModel):
 # --- RAG Specific Models ---
 class RekomendasiRequest(BaseModel):
     siswa_id: str
-    levels: Dict[str, str] = Field(default_factory=dict)
+    available_ids: List[str] = Field(default_factory=list)
     sudah_selesai_ids: List[str] = Field(default_factory=list)
     sedang_dipelajari_ids: List[str] = Field(default_factory=list)
 

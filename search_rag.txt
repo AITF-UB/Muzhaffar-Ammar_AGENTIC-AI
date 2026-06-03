@@ -1,0 +1,36 @@
+4: > **Status:** FINAL — Acuan wajib untuk Tim 6 BE, Tim 3 RAG, Tim 4 Game, Tim 5 Mentor, Tim 1 Emosi, Tim 6 FE  
+23: 12. [KONTEN — Tim 3 RAG + Tim 6 BE](#12-konten--tim-3-rag--tim-6-be)
+25: 14. [PRETEST — Tim 3 RAG (generate) + Tim 6 BE (serve)](#14-pretest--tim-3-rag-generate--tim-6-be-serve)
+27: 16. [RAG — Tim 3](#16-rag--tim-3)
+164: | WebSocket | **Tambah** event `essay_dinilai` — push agregasi setelah Tim 3 selesai nilai essay |
+219: | 5 | `POST /konten/generate`, `POST /konten/publish`, semua endpoint terkait pretest | **Pretest di-generate bersamaan konten** oleh Tim 3 RAG secara internal; tidak dikembalikan ke FE/guru |
+244: | 15 | Section pretest | **Fix ownership** — perjelas Tim 3 RAG generate, Tim 6 BE serve |
+279: /rag           → Semua permintaan ke Tim 3 RAG (insight, rekomendasi)
+1376: ### POST /siswa/:id/quiz/essay — Tim 6 BE + Tim 3 RAG
+1377: Submit jawaban Quiz Essay. BE forward ke Tim 3 RAG untuk dinilai secara asinkronus.
+1419: > - `menunggu_penilaian: true` → Tim 3 sedang menilai, FE tampilkan indikator loading di panel quiz
+1420: > - `nilai: null` → akan diisi setelah Tim 3 selesai, BE push via WebSocket
+1421: > - Jika Tim 3 gagal: BE retry otomatis dengan exponential backoff — FE tidak perlu spam retry
+1460: ## 12. KONTEN — Tim 3 RAG + Tim 6 BE
+1463: > - `POST /konten/generate` → **Tim 3 RAG** — generate konten dari VectorDB
+1468: ### POST /konten/generate — Tim 3 RAG
+1492:   "konten_id": "konten_mat_bacaan_low_1746342000",    // opsional — referensi konteks untuk Tim 3
+1501: > - `konten_id`: opsional — referensi konteks untuk Tim 3
+1583: > **Pretest (V3.4):** Tim 3 generate soal pretest bersamaan dengan ke-13 konten — **secara internal, tanpa request tambahan dari FE**. Trigger generate pretest terjadi pada **panggilan `POST /konten/generate` pertama** dari 13 panggilan paralel (Tim 3 RAG mendeteksi ini adalah batch baru berdasarkan kombinasi `mapel_id + elemen_id + materi_id + kelas_id`). Soal pretest disimpan langsung ke database Tim 6 BE. **Tidak dikembalikan** di response ini dan **tidak ditampilkan** di panel review guru.
+1763: ### POST /sesi/:id/summary — Tim 3 RAG
+1794: > - `last_quiz`: shortcut agregasi akhir untuk Tim 3
+1863: ## 14. PRETEST — Tim 3 RAG (generate) + Tim 6 BE (serve)
+1866: > **Tim 3 RAG** meng-generate soal pretest bersamaan dengan generate konten (internal, tanpa request FE).  
+1971: ## 16. RAG — Tim 3
+1973: > Semua endpoint yang memerlukan komputasi AI dari Tim 3 RAG dikumpulkan di domain `/rag`.
+2034: > FE mengirim data KPI ini dari hasil `GET /siswa/:id/kpi`. BE meneruskan ke Tim 3 RAG untuk generate insight.
+2510: > Digunakan siswa untuk menerima notifikasi async dari BE — khususnya event `essay_dinilai` setelah Tim 3 selesai menilai essay.  
+2651: **`essay_dinilai`** — Tim 3 selesai menilai essay, agregasi sudah dihitung:
+2757: - BE / Tim 3 / Tim 4 / Tim 5 **wajib menolak** payload yang punya `mapel_id` tapi **tidak punya `elemen_id`**
+2933: | POST | `/siswa/:id/quiz/essay` | Submit quiz Essay (async, Tim 3 nilai) |
+2978: | POST | `/konten/generate` | Tim 3 RAG | Generate satu tipe konten (return `konten_id`) |
+2979: | POST | `/konten/regenerate` | Tim 3 RAG | Regenerate per konten per level via `konten_id` |
+2987: | POST | `/sesi/:id/summary` | Generate evaluasi AI (Tim 3) |
+2994: | POST | `/pretest/soal` | Tim 6 BE | Ambil soal pretest (soal di-generate Tim 3 RAG saat publish konten) |
+3000: | POST | `/rag/rekomendasi` | Tim 3 | Rekomendasi topik |
+3001: | POST | `/rag/insight` | Tim 3 | Insight personal dashboard |

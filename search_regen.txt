@@ -1,0 +1,9 @@
+165: | `POST /konten/generate` | **Tambah** field `konten_id` di response — identifier per konten per level untuk regenerate |
+166: | `POST /konten/regenerate` | Deprecated — digabung ke `POST /konten/generate`. instruksi_revisi ada = regenerate, tidak ada = generate baru |
+167: | `POST /game/regenerate` | **Baru** — iterative refinement per game menggunakan `game_id` |
+200: | 1 | `POST /game/generate`, `POST /game/regenerate`, `GET /game/:id`, `POST /konten/publish` (item game) | **`html_url` → `html_string`** — Tim 4 kirim game sebagai HTML string penuh. FE render via `<iframe srcDoc={html_string}>` |
+1481: > - `konten_id`: opsional — referensi konteks untuk Tim 3 saat regenerate
+1482: > - `instruksi_revisi`: opsional — jika ada = regenerate
+2243: ### POST /game/regenerate — Tim 4
+2259: **Error 422:** "instruksi_revisi wajib diisi untuk regenerate."
+3075: | POST | `/game/regenerate` | Tim 4 | Regenerate game via `game_id` |

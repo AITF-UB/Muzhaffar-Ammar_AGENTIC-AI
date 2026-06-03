@@ -15,18 +15,18 @@ Distribusi soal WAJIB: 2 soal LOTS (Low), 2 soal MOTS (Mid), dan 1 soal HOTS (Hi
   "soal": [
     {
       "id": "p1",
-      "level": "low",
-      "soal": "[Tuliskan stimulus narasi + pertanyaan disini]",
+      "tingkat_kesulitan": "low",
+      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
+      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
       "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D", "Opsi E"],
-      "jawaban": 0,
-      "penjelasan": "[Penjelasan soal]"
+      "jawaban": 0
     }
   ]
 }
 Catatan Penting JSON: 
 - "jawaban" adalah INDEX INTEGER dari array "pilihan" (0 untuk opsi pertama, 1 untuk opsi kedua, dst).
-- "soal" adalah gabungan dari Stimulus dan Pertanyaan.
-- "level" diisi dengan "low", "mid", atau "high" sesuai dengan tingkat kesulitan soal.
+- "soal" HANYA berisi pertanyaan. Konteks/narasi dimasukkan ke dalam "stimulus".
+- "tingkat_kesulitan" diisi dengan "low", "mid", atau "high" sesuai dengan tingkat kesulitan soal.
 
 [RULES]
 - Aturan Stimulus Pilgan (50 - 150 kata): Wajib menyusun teks pengantar soal yang kritikal berdasarkan empat poin aturan mutlak berikut:

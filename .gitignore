@@ -14,7 +14,3 @@ semantic_chunker_results/
 .env
 **/.env
 *.env
-
-# Extraction data folders
-extraction/
-**/extraction/

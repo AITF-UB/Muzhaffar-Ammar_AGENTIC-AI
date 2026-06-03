@@ -7,7 +7,7 @@ from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import SystemMessage, HumanMessage
 
 from state import AgentState
-from tools import RAGEngine, clean_json_from_llm, extract_source, generate_konten_id
+from tools import RAGEngine, clean_json_from_llm, extract_source, generate_konten_id, truncate_context_to_budget
 from llm import get_llm
 
 env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -20,8 +20,8 @@ def load_prompt(template_name: str, **kwargs) -> str:
 # ================================================================
 # 1. NODES
 # ================================================================
-def retrieve_node(state: AgentState) -> dict:
-    """Melakukan pencarian ke Qdrant menggunakan RAGEngine."""
+async def retrieve_node(state: AgentState) -> dict:
+    """Melakukan pencarian ke Qdrant menggunakan RAGEngine secara asynchronous."""
     tipe = state["tipe"]
     req = state["request_params"]
     
@@ -54,7 +54,7 @@ def retrieve_node(state: AgentState) -> dict:
         if digits:
             kelas_int = int(digits)
     
-    rag_results = RAGEngine.unified_search(query, tipe, mapel=mapel_str, kelas=kelas_int)
+    rag_results = await RAGEngine.unified_search(query, tipe, mapel=mapel_str, kelas=kelas_int)
     
     # Format texts
     text_ctx_parts = []
@@ -69,16 +69,20 @@ def retrieve_node(state: AgentState) -> dict:
         text_ctx_parts.append(part)
         
     text_ctx = "\n---\n".join(text_ctx_parts)
+    if text_ctx:
+        text_ctx = truncate_context_to_budget(text_ctx, max_tokens=3500)
     sumber = extract_source(rag_results["text"])
-    
-    # Format images (multimodal constraint)
+
     # Build formatted image context string
     img_ctx_str = ""
     if rag_results["images"]:
-        for idx, img_path in enumerate(rag_results["images"]):
+        for idx, img_info in enumerate(rag_results["images"]):
+            img_path = img_info["path"]
+            img_context = img_info["context"].replace("\n", " ") # Bersihkan newline agar rapi
             img_ctx_str += f"Gambar {idx+1}:\n"
             img_ctx_str += f"- filename: {os.path.basename(img_path)}\n"
-            img_ctx_str += f"- image_path: {img_path}\n\n"
+            img_ctx_str += f"- image_path: {img_path}\n"
+            img_ctx_str += f"- konteks_materi_gambar: {img_context}...\n\n"
         
     return {
         "rag_context": text_ctx if text_ctx else "Tidak ada dokumen relevan di database.",
@@ -86,7 +90,7 @@ def retrieve_node(state: AgentState) -> dict:
         "image_context": img_ctx_str.strip()
     }
 
-def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
+async def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
     req = state["request_params"]
     lvl = state["level"]
     sys_prompt = load_prompt("system.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), level=lvl)
@@ -97,44 +101,44 @@ def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
     if state.get("evaluator_result") and state["revision_count"] > 0:
         usr_prompt += f"\n\n[FEEDBACK REVISI SEBELUMNYA]:\n{state['evaluator_result'].get('poin_revisi')}\nPerbaiki JSON-mu!"
 
-    response = llm.invoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
+    response = await llm.ainvoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
     content_dict = clean_json_from_llm(response.content)
     
     return {
         "generated_content": content_dict
     }
 
-def bacaan_node(state: AgentState) -> dict:
+async def bacaan_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def pretest_node(state: AgentState) -> dict:
+async def pretest_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=state["level"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def quiz_pg_node(state: AgentState) -> dict:
+async def quiz_pg_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def quiz_essay_node(state: AgentState) -> dict:
+async def quiz_essay_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def flashcard_node(state: AgentState) -> dict:
+async def flashcard_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=state["level"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def mindmap_node(state: AgentState) -> dict:
+async def mindmap_node(state: AgentState) -> dict:
     req = state["request_params"]
     usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"])
-    return _call_generation_llm(state, usr_prompt)
+    return await _call_generation_llm(state, usr_prompt)
 
-def evaluator_node(state: AgentState) -> dict:
+async def evaluator_node(state: AgentState) -> dict:
     """Mengevaluasi output generator."""
     if state["revision_count"] >= 2:
         return {"evaluator_result": {"skor": 100, "poin_revisi": []}}
@@ -151,7 +155,7 @@ def evaluator_node(state: AgentState) -> dict:
         generated_content=json.dumps(state["generated_content"], indent=2)
     )
     
-    response = llm.invoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
+    response = await llm.ainvoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
     eval_dict = clean_json_from_llm(response.content)
     
     # Fallback if evaluation is weird

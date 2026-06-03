@@ -57,7 +57,7 @@ def load_prompt(template_name: str, **kwargs) -> str:
 # KONTEN ENDPOINTS
 # ---------------------------------------------------------
 @app.post("/konten/generate", response_model=StandardResponse)
-def generate_konten(req: GenerateRequest):
+async def generate_konten(req: GenerateRequest):
     try:
         # Menyiapkan State Awal untuk Graf
         initial_state = {
@@ -69,7 +69,7 @@ def generate_konten(req: GenerateRequest):
         }
         
         # Mengeksekusi State Machine
-        final_state = beta_graph.invoke(initial_state)
+        final_state = await beta_graph.ainvoke(initial_state)
         final_payload = final_state["final_payload"]
         
         # Pertahankan konten_id jika diberikan dari klien (untuk regen)
@@ -144,9 +144,9 @@ def rekomendasi(req: RekomendasiRequest):
         prompt = load_prompt(
             "rekomendasi.j2",
             siswa_id=req.siswa_id,
+            available_ids=req.available_ids,
             sudah_selesai=req.sudah_selesai_ids,
-            sedang_dipelajari=req.sedang_dipelajari_ids,
-            levels=req.levels
+            sedang_dipelajari=req.sedang_dipelajari_ids
         )
         sys_msg = SystemMessage(content="Kamu adalah AI Recommender JSON.")
         res = llm.invoke([sys_msg, HumanMessage(content=prompt)])
@@ -175,7 +175,7 @@ def insight(req: InsightRequest):
         return StandardResponse(error={"code": "INSIGHT_ERR", "message": str(e)})
 
 # Serve extraction folder for images
-EXTRACTION_BASE_DIR = Path(__file__).resolve().parent.parent / "extraction"
+EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
 if EXTRACTION_BASE_DIR.exists():
     app.mount("/extraction", StaticFiles(directory=str(EXTRACTION_BASE_DIR)), name="extraction")
 

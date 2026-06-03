@@ -1,0 +1,93 @@
+[
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Data, Informasi, dan Validasinya",
+    "sub_bab": "Pencarian dengan Banyak Variabel"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Data, Informasi, dan Validasinya",
+    "sub_bab": "Koleksi Data"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Data, Informasi, dan Validasinya",
+    "sub_bab": "Ekosistem Periksa Fakta"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Data, Informasi, dan Validasinya",
+    "sub_bab": "Evaluasi Data dan Sumbernya"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Algoritma dan Struktur Data",
+    "sub_bab": "Mengenal Algoritma dan Pemrograman"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Algoritma dan Struktur Data",
+    "sub_bab": "Membuat Program Sesuai Struktur Kendalinya"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Algoritma dan Struktur Data",
+    "sub_bab": "Memilih Algoritma untuk Masalah di Kehidupan Nyata"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Algoritma dan Struktur Data",
+    "sub_bab": "Memilih Struktur Data untuk Masalah di Kehidupan Nyata"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Teknologi dan Budaya Digital",
+    "sub_bab": "Sistem Komputer"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Teknologi dan Budaya Digital",
+    "sub_bab": "Otomatisasi dengan Perangkat Lunak Perkantoran"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Teknologi dan Budaya Digital",
+    "sub_bab": "Pemrosesan Dokumen dengan Perangkat Lunak Perkantoran"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Teknologi dan Budaya Digital",
+    "sub_bab": "Budaya Baru di Era Informatika"
+  },
+  {
+    "jenjang": "SMA",
+    "kelas": "Kelas 10",
+    "mata_pelajaran": "Informatika",
+    "bab_judul": "Teknologi dan Budaya Digital",
+    "sub_bab": "Budaya Karier dan Beragam Sertifikasi di Bidang Informatika"
+  }
+]
