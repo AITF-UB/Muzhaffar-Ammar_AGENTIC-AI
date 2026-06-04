@@ -10,9 +10,11 @@
 {{ image_context }}
 
 *** INSTRUKSI MUTLAK UNTUK GAMBAR ***
-Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
-Pilih satu path gambar yang paling relevan dengan materi yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
-JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal. Cukup isikan URL path aslinya di field `image_path`.
+Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskannya.
+BACA `konteks_materi_gambar` (khususnya bagian "Deskripsi Visual").
+JIKA DAN HANYA JIKA gambar tersebut SECARA VISUAL sangat relevan dan mendukung narasi `stimulus` soalmu, isikan URL path aslinya di field `image_path`.
+JIKA gambar tersebut HANYA berupa ilustrasi dekoratif (misal: orang membaca buku, logo, kartun abstrak) ATAU tidak nyambung dengan isu narasi soalmu, MAKA WAJIB KOSONGKAN field `image_path`.
+JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal.
 {% endif %}
 
 [TASK]
@@ -24,11 +26,11 @@ Hasilkan 5 soal Essay dalam format **JSON murni**. DILARANG menyertakan teks pem
   "pertanyaan": [
     {
       "id": "e1",
-      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
-      "image_path": "[Isi dengan path asli gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan kosong string \"\"]",
+      "stimulus": "[Buat narasi pengantar atau masalah YANG BERBEDA-BEDA untuk setiap soal]",
+      "image_path": "[Isi dengan path gambar HANYA JIKA deskripsi visualnya BENAR-BENAR relevan dengan isu stimulus atau pertanyaan. Jika sekadar gambar dekoratif/ilustrasi umum, WAJIB KOSONGKAN \"\"]",
       "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
-      "rubrik": "[Tuliskan poin-poin penilaian/rubrik disini]",
-      "penjelasan": "[Penjelasan atau pembahasan dari jawaban ideal]"
+      "rubrik": "[Tuliskan rubrik penilaian secara rinci dengan MAKSIMAL SKOR 20 UNTUK SOAL INI]",
+      "penjelasan": "[Tuliskan KUNCI JAWABAN LENGKAP dan pembahasan ideal untuk soal ini]"
     }
   ]
 }

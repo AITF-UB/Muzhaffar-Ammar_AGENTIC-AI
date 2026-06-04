@@ -24,4 +24,4 @@ EXPOSE 8000
 
 # Run with Gunicorn and Uvicorn workers
 # Note: we use -w 2 by default to keep RAM usage low for local embeddings
-CMD ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120"]
+CMD ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "600"]
