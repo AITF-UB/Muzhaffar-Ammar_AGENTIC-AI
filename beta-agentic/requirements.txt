@@ -16,3 +16,6 @@ langchain_openai
 langchain_community
 boto3
 jinja2
+docling
+pypdf
+python-multipart

@@ -19,8 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose port
-EXPOSE 8000
+# Expose ports for both agentic (8002) and upload (8005)
+EXPOSE 8002 8005
 
 # Run with Gunicorn and Uvicorn workers
 # Note: we use -w 2 by default to keep RAM usage low for local embeddings

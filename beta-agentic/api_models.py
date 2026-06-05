@@ -1,16 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
 
-# --- Envelope Models (V3.6) ---
-class ErrorDetail(BaseModel):
-    code: str
-    message: str
-    details: Optional[Dict[str, Any]] = None
-
-class StandardResponse(BaseModel):
-    data: Optional[Any] = None
-    meta: Optional[Dict[str, Any]] = None
-    error: Optional[ErrorDetail] = None
 
 # --- Generate Models ---
 class GenerateRequest(BaseModel):
@@ -21,7 +11,7 @@ class GenerateRequest(BaseModel):
     materi_id: Optional[str] = ""
     kelas_id: Optional[str] = ""
     jenjang: str
-    atp: Optional[str] = ""
+    atp: Optional[List[str]] = Field(default_factory=list)
     tipe: str = Field(description="pretest, bacaan, quiz_pg, quiz_essay, flashcard, mindmap")
     level: Optional[str] = Field(default=None, description="Low, Mid, or High (Null for mindmap)")
     instruksi_revisi: Optional[str] = None
@@ -54,17 +44,13 @@ class SesiSummaryRequest(BaseModel):
     emosi_sesi: List[str] = Field(default_factory=list)
     violations: List[Violation] = Field(default_factory=list)
 
-class EssaySubmitRequest(BaseModel):
-    publish_id: str
-    mapel_id: str
-    elemen_id: str
-    elemen_label: str
-    materi: str
-    materi_id: str
-    level: str
-    soal: Dict[str, str]
-    rubrik: Dict[str, str]
-    jawaban: Dict[str, str]
+class EssayEvalItem(BaseModel):
+    jawaban_siswa: str
+    soal: str
+    rubrik: str
+    stimulus: Optional[str] = None
+    image_path: Optional[str] = None
+    penjelasan: Optional[str] = None
 
 # --- RAG Specific Models ---
 class RekomendasiRequest(BaseModel):
@@ -74,9 +60,8 @@ class RekomendasiRequest(BaseModel):
     sedang_dipelajari_ids: List[str] = Field(default_factory=list)
 
 class InsightRequest(BaseModel):
-    siswa_id: str
     nama: str
     streak: int
     total_topik: int
     total_poin_kuiz: int
-    total_durasi: int
+    total_durasi_menit: int

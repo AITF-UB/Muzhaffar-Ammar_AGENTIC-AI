@@ -28,8 +28,26 @@ async def retrieve_node(state: AgentState) -> dict:
     # Fokuskan query RAG HANYA pada elemen dan materi.
     query = f"{req.get('materi', '')}".strip()
     
-    # Mapping sederhana dari mapel_id ke string di metadata Qdrant
+    # Mapping mapel_id ke string di metadata Qdrant (VDB)
     mapel_mapping = {
+        # Mapping berdasar ID (MVP)
+        "1": "Bahasa Indonesia",
+        "2": "Bahasa Inggris",
+        "3": "Ilmu Pengetahuan Alam",
+        "4": "Ilmu Pengetahuan Sosial",
+        "5": "Informatika",
+        "6": "Koding dan Kecerdasan Artifisial",
+        "7": "Matematika",
+        "8": "Pendidikan Agama Islam dan Budi Pekerti",
+        "9": "Pendidikan Agama Katolik dan Budi Pekerti",
+        "10": "Pendidikan Agama Kristen dan Budi Pekerti",
+        "11": "Pendidikan Jasmani, Olahraga, dan Kesehatan",
+        "12": "Pendidikan Pancasila",
+        "17": "Seni Musik",
+        "18": "Seni Rupa",
+        "19": "Seni Tari",
+        "20": "Seni Teater",
+        # Mapping legacy text (fallback)
         "bahasa_indonesia": "Bahasa Indonesia",
         "bindo": "Bahasa Indonesia",
         "matematika_umum": "Matematika",
@@ -38,7 +56,7 @@ async def retrieve_node(state: AgentState) -> dict:
         "mtk": "Matematika",
         "ips": "Ilmu Pengetahuan Sosial"
     }
-    raw_mapel = req.get("mapel_id", "")
+    raw_mapel = str(req.get("mapel_id", ""))
     mapel_key = raw_mapel.lower().replace(" ", "_")
     mapel_str = mapel_mapping.get(mapel_key, raw_mapel)
     

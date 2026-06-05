@@ -1,11 +1,12 @@
 import uvicorn
 import os
+from typing import List
 
 # Mematikan handler Ctrl+C bawaan Fortran (MKL/Sentence-Transformer)
 # agar Uvicorn --reload tidak crash saat file berubah.
 os.environ["FOR_DISABLE_CONSOLE_CTRL_HANDLER"] = "1"
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
@@ -14,8 +15,8 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from jinja2 import Environment, FileSystemLoader
 
 from api_models import (
-    StandardResponse, GenerateRequest,
-    SesiSummaryRequest, EssaySubmitRequest, RekomendasiRequest, InsightRequest
+    GenerateRequest,
+    SesiSummaryRequest, EssayEvalItem, RekomendasiRequest, InsightRequest
 )
 from datetime import datetime, timedelta
 
@@ -56,7 +57,7 @@ def load_prompt(template_name: str, **kwargs) -> str:
 # ---------------------------------------------------------
 # KONTEN ENDPOINTS
 # ---------------------------------------------------------
-@app.post("/konten/generate", response_model=StandardResponse)
+@app.post("/konten/generate")
 async def generate_konten(req: GenerateRequest):
     try:
         # Menyiapkan State Awal untuk Graf
@@ -72,21 +73,21 @@ async def generate_konten(req: GenerateRequest):
         final_state = await beta_graph.ainvoke(initial_state)
         final_payload = final_state["final_payload"]
         
-        # Pertahankan konten_id jika diberikan dari klien (untuk regen)
-        if req.konten_id:
+        # Pertahankan konten_id jika diberikan dari klien (kecuali untuk quiz dan essay)
+        if req.konten_id and req.tipe not in ["quiz_pg", "quiz_essay", "pretest"]:
             final_payload["konten_id"] = req.konten_id
             
-        return StandardResponse(data=final_payload)
+        return final_payload
         
     except Exception as e:
-        return StandardResponse(error={"code": "GEN_ERROR", "message": str(e)})
+        raise HTTPException(status_code=500, detail=f"GEN_ERROR: {str(e)}")
 
 
 # ---------------------------------------------------------
 # SUMMARY SESI (Tim 3 RAG)
 # ---------------------------------------------------------
-@app.post("/sesi/{id}/summary", response_model=StandardResponse)
-def generate_summary(id: str, req: SesiSummaryRequest):
+@app.post("/sesi/summary")
+def generate_summary(req: SesiSummaryRequest):
     try:
         prompt = load_prompt(
             "summary.j2",
@@ -99,46 +100,49 @@ def generate_summary(id: str, req: SesiSummaryRequest):
         now = datetime.utcnow()
         berlaku = now + timedelta(days=1)
         
-        return StandardResponse(data={
+        return {
             "teks": content.get("teks", "Gagal menghasilkan summary."),
             "dibuat_at": now.isoformat() + "Z",
             "berlaku_hingga": berlaku.isoformat() + "Z"
-        })
+        }
     except Exception as e:
-        return StandardResponse(error={"code": "SUMMARY_ERR", "message": str(e)})
+        raise HTTPException(status_code=500, detail=f"SUMMARY_ERR: {str(e)}")
 
 # ---------------------------------------------------------
 # QUIZ EVALUATION ENDPOINTS (Dipanggil BE)
 # ---------------------------------------------------------
-@app.post("/siswa/{id}/quiz/essay", response_model=StandardResponse)
-def submit_essay(id: str, req: EssaySubmitRequest):
+@app.post("/siswa/quiz/essay")
+def submit_essay(req: List[EssayEvalItem]):
     try:
-        # Kita evaluasi setiap jawaban secara individual
-        evaluasi_hasil = {}
+        evaluasi_hasil = []
+        total_skor = 0
         sys_msg = SystemMessage(content="Kamu adalah Guru Penilai Esai JSON.")
         
-        for e_id, jwb_siswa in req.jawaban.items():
-            soal_teks = req.soal.get(e_id, "")
-            rubrik_teks = req.rubrik.get(e_id, "")
-            
+        for item in req:
             usr_prompt = load_prompt(
                 "essay_evaluation.j2",
-                soal=soal_teks,
-                rubrik=rubrik_teks,
-                jawaban_siswa=jwb_siswa
+                soal=item.soal,
+                rubrik=item.rubrik,
+                jawaban_siswa=item.jawaban_siswa,
+                stimulus=item.stimulus,
+                penjelasan=item.penjelasan
             )
             res = llm.invoke([sys_msg, HumanMessage(content=usr_prompt)])
-            evaluasi_hasil[e_id] = clean_json_from_llm(res.content)
+            hasil = clean_json_from_llm(res.content)
             
-        return StandardResponse(data={"siswa_id": id, "evaluasi": evaluasi_hasil})
+            skor = hasil.get("skor", 0)
+            total_skor += skor
+            evaluasi_hasil.append(hasil)
+            
+        return {"evaluasi": evaluasi_hasil, "total_skor": total_skor}
     except Exception as e:
-        return StandardResponse(error={"code": "EVAL_ERR", "message": str(e)})
+        raise HTTPException(status_code=500, detail=f"EVAL_ERR: {str(e)}")
 
 
 # ---------------------------------------------------------
 # RAG SERVICES ENDPOINTS
 # ---------------------------------------------------------
-@app.post("/rag/rekomendasi", response_model=StandardResponse)
+@app.post("/rag/rekomendasi")
 def rekomendasi(req: RekomendasiRequest):
     try:
         prompt = load_prompt(
@@ -151,11 +155,11 @@ def rekomendasi(req: RekomendasiRequest):
         sys_msg = SystemMessage(content="Kamu adalah AI Recommender JSON.")
         res = llm.invoke([sys_msg, HumanMessage(content=prompt)])
         content = clean_json_from_llm(res.content)
-        return StandardResponse(data=content)
+        return content
     except Exception as e:
-        return StandardResponse(error={"code": "REKOM_ERR", "message": str(e)})
+        raise HTTPException(status_code=500, detail=f"REKOM_ERR: {str(e)}")
 
-@app.post("/rag/insight", response_model=StandardResponse)
+@app.post("/rag/insight")
 def insight(req: InsightRequest):
     try:
         prompt = load_prompt(
@@ -164,15 +168,15 @@ def insight(req: InsightRequest):
             streak=req.streak,
             total_topik=req.total_topik,
             poin=req.total_poin_kuiz,
-            durasi=req.total_durasi
+            durasi=req.total_durasi_menit
         )
         sys_msg = SystemMessage(content="Kamu adalah Penyedia Motivasi Pendek JSON.")
         usr_msg = HumanMessage(content=prompt)
         res = llm.invoke([sys_msg, usr_msg])
         content = clean_json_from_llm(res.content)
-        return StandardResponse(data=content)
+        return content
     except Exception as e:
-        return StandardResponse(error={"code": "INSIGHT_ERR", "message": str(e)})
+        raise HTTPException(status_code=500, detail=f"INSIGHT_ERR: {str(e)}")
 
 # Serve extraction folder for images
 EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
