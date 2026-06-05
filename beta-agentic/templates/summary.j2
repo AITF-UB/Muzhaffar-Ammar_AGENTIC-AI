@@ -1,8 +1,11 @@
 Berikan summary singkat dalam 1-2 paragraf mengenai performa belajar siswa dalam sesi ini.
-Tuliskan teks hasil evaluasi dalam objek JSON: { "teks": "<summary>" }.
-
+ATURAN PENTING: DILARANG memberikan teks pengantar atau penutup. Output HANYA BOLEH JSON murni.
+OUTPUT WAJIB RAW JSON:
+{ "summary_text": "<teks summarymu di sini>" }
 Data sesi:
-Siswa ID: {{ req.siswa_id }}
+Nama Siswa: {{ req.siswa }}
+Mata Pelajaran: {{ req.mapel_label }}
+Elemen: {{ req.elemen_label }}
 Materi ID: {{ req.materi_id }}
 Durasi: {{ req.durasi_menit }} menit
 Hasil Quiz Keseluruhan:

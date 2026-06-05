@@ -25,18 +25,18 @@ class QuizResult(BaseModel):
     nilai: float
 
 class LastQuiz(BaseModel):
-    nilai_mc: float
-    nilai_essay: float
-    agregasi: float
+    nilai_mc: Optional[float] = None
+    nilai_essay: Optional[float] = None
+    agregasi: Optional[float] = None
 
 class Violation(BaseModel):
     detail: str
     terjadi_at: str
 
 class SesiSummaryRequest(BaseModel):
-    siswa_id: str
-    mapel_id: str
-    elemen_id: str
+    siswa: str
+    mapel_label: str
+    elemen_label: str
     materi_id: str
     durasi_menit: int
     hasil_quiz: List[QuizResult] = Field(default_factory=list)

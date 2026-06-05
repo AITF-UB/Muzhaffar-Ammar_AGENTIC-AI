@@ -309,12 +309,44 @@ POST {{baseUrl}}/rag/insight
 Content-Type: application/json
 
 {
-  "siswa_id": "s_001",
   "nama": "Andi Setiawan",
   "streak": 5,
   "total_topik": 3,
   "total_poin_kuiz": 450,
-  "total_durasi": 120
+  "total_durasi_menit": 120
+}
+
+### RAG SUMMARY (Sesi)
+POST {{baseUrl}}/sesi/summary
+Content-Type: application/json
+
+{
+  "siswa": "Andi Setiawan",
+  "mapel_label": "Matematika",
+  "elemen_label": "Aljabar dan Fungsi",
+  "materi_id": "mat__pemanfaatan_trigonometri",
+  "durasi_menit": 45,
+  "hasil_quiz": [
+    {
+      "level": "Mid",
+      "tipe": "quiz_pg",
+      "nilai": 80
+    }
+  ],
+  "last_quiz": {
+    "nilai_mc": 80,
+    "nilai_essay": null,
+    "agregasi": null
+  },
+  "emosi_sesi": [
+    "senang", "fokus"
+  ],
+  "violations": [
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-03T09:46:55.352000+07:00"
+    }
+  ]
 }
 
 ### EVALUASI ESSAY

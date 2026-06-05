@@ -97,13 +97,8 @@ def generate_summary(req: SesiSummaryRequest):
         res = llm.invoke([sys_msg, HumanMessage(content=prompt)])
         content = clean_json_from_llm(res.content)
         
-        now = datetime.utcnow()
-        berlaku = now + timedelta(days=1)
-        
         return {
-            "teks": content.get("teks", "Gagal menghasilkan summary."),
-            "dibuat_at": now.isoformat() + "Z",
-            "berlaku_hingga": berlaku.isoformat() + "Z"
+            "summary_text": content.get("summary_text", "Gagal menghasilkan summary.")
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"SUMMARY_ERR: {str(e)}")
@@ -134,7 +129,7 @@ def submit_essay(req: List[EssayEvalItem]):
             total_skor += skor
             evaluasi_hasil.append(hasil)
             
-        return {"evaluasi": evaluasi_hasil, "total_skor": total_skor}
+        return {"total_skor": total_skor}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"EVAL_ERR: {str(e)}")
 

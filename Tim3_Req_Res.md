@@ -529,5 +529,100 @@
     "penjelasan": "4^3 berarti 4 x 4 x 4 = 64."
   },
 }
+```
+### Format Request Insight RAG (katanya token dibatas 256)
+```json
+{
+  "nama": "Nama Siswa",
+  "streak": 3,
+  "total_topik": 2,
+  "total_poin_kuiz": 85,
+  "total_durasi_menit": 45,
+}
+```
 
+### Format Response Insight RAG
+```json
+{
+  "insight_text": "string"
+}
+```
+
+### Format Request RAG Summary
+```json
+{
+  "siswa": "nama",
+  "mapel_label": "string",
+  "elemen_label": "string",
+  "materi_id": "string",
+  "durasi_menit": 15,
+  "hasil_quiz": [
+    {
+      "level": "high",
+      "tipe": "mc",
+      "nilai": 30
+    }
+  ],
+  "last_quiz": {
+    "nilai_mc": 30,
+    "nilai_essay": null,
+    "agregasi": null
+  },
+  "emosi_sesi": [
+    "bosan"
+  ],
+  "violations": [
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-03T09:46:55.352000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-03T10:06:08.782000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-04T05:52:53.624000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-04T10:26:27.626000+07:00"
+    },
+    {
+      "detail": "Berpindah Tab / Menyembunyikan Halaman",
+      "terjadi_at": "2026-06-04T10:26:42.819000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-04T17:49:24.653000+07:00"
+    },
+    {
+      "detail": "Berpindah Tab / Menyembunyikan Halaman",
+      "terjadi_at": "2026-06-04T17:49:57.652000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-04T17:53:56.102000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-04T18:01:16.500000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-05T19:17:20.048000+07:00"
+    },
+    {
+      "detail": "Membuka Aplikasi / Window Lain",
+      "terjadi_at": "2026-06-05T19:17:41.787000+07:00"
+    }
+  ]
+}
+```
+
+### Format Response Summary RAG
+```json
+{
+  "summary_text": "string"
+}
 ```
