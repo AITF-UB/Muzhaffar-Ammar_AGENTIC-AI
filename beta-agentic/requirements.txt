@@ -19,3 +19,8 @@ jinja2
 docling
 pypdf
 python-multipart
+Pillow
+requests
+qdrant-client
+transformers
+numpy

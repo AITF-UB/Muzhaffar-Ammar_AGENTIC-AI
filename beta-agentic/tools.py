@@ -16,11 +16,12 @@ load_dotenv()
 
 from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
+from transformers import AutoTokenizer, AutoModelForMaskedLM
 
 # ================================================================
 # Models Configuration
 # ================================================================
-QDRANT_HOST        = os.getenv("QDRANT_HOST", "76.13.195.1")
+QDRANT_HOST        = os.getenv("QDRANT_HOST")
 if QDRANT_HOST.startswith("http://"):
     QDRANT_HOST = QDRANT_HOST[7:]
 elif QDRANT_HOST.startswith("https://"):
@@ -28,8 +29,9 @@ elif QDRANT_HOST.startswith("https://"):
 QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
 TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION")
 
-TEXT_MODEL_NAME    = "microsoft/harrier-oss-v1-0.6b"
-RERANKER_MODEL_NAME= "BAAI/bge-reranker-base"
+TEXT_MODEL_NAME    = os.getenv("DENSE_MODEL")
+SPARSE_MODEL_NAME  = os.getenv("SPARSE_MODEL")
+RERANKER_MODEL_NAME= os.getenv("RERANKER_MODEL")
 DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
 
 EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
@@ -38,6 +40,7 @@ BM25_CACHE_PATH = Path(__file__).resolve().parent / f"bm25_{TEXT_COLLECTION}.pkl
 
 # Lazy load globals
 _sentence_model = None
+_sparse_model   = None
 _reranker_model = None
 _bm25 = None
 _bm25_docs = []
@@ -53,6 +56,37 @@ def tokenize(text: str):
 # ================================================================
 # 1. Models Loader
 # ================================================================
+class SpladeEncoder:
+    def __init__(self, model_name: str, device: str):
+        print(f"⏳ Loading SPLADE: {model_name} ...")
+        self.device    = device
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model     = AutoModelForMaskedLM.from_pretrained(model_name).to(device)
+        self.model.eval()
+        print(f"✅ SPLADE loaded ({device})")
+
+    def encode_query(self, text: str) -> dict:
+        enc = self.tokenizer(
+            [text], return_tensors="pt", padding=True, truncation=True, max_length=512,
+        ).to(self.device)
+        with torch.no_grad():
+            logits = self.model(**enc).logits
+        relu_log = torch.log1p(torch.relu(logits))
+        mask     = enc["attention_mask"].unsqueeze(-1).float()
+        sparse   = torch.max(relu_log * mask, dim=1).values
+        vec = sparse.cpu().numpy()[0]
+        nonzero_idx = np.nonzero(vec)[0]
+        return {
+            "indices": nonzero_idx.tolist(),
+            "values": vec[nonzero_idx].tolist()
+        }
+
+def get_sparse_model():
+    global _sparse_model
+    if _sparse_model is None:
+        _sparse_model = SpladeEncoder(SPARSE_MODEL_NAME, DEVICE)
+    return _sparse_model
+
 def get_sentence_model():
     global _sentence_model
     if _sentence_model is None:
@@ -78,17 +112,56 @@ async def embed_text_for_text_vdb(query: str) -> list:
 # ================================================================
 # 2. Qdrant Search Engine
 # ================================================================
-def _search_qdrant(collection: str, vector: list, top_k: int, filter_payload: Optional[dict] = None) -> list:
+def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_payload: Optional[dict] = None) -> list:
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/search"
-    payload = {"vector": vector, "limit": top_k, "with_payload": True}
+    payload = {"vector": {"name": "dense", "vector": vector}, "limit": top_k, "with_payload": True}
+    if filter_payload:
+        payload["filter"] = filter_payload
+    try:
+        response = requests.post(url, json=payload, timeout=30)
+        
+        # Fallback ke vector biasa jika collection tidak pakai named vectors (seperti srma-22)
+        if response.status_code == 400 and "Not existing vector name error" in response.text:
+            payload["vector"] = vector
+            response = requests.post(url, json=payload, timeout=30)
+            
+        response.raise_for_status()
+        return response.json().get("result", [])
+    except Exception as e:
+        print(f"❌ Error query Qdrant Dense: {e}")
+        return []
+
+def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payload: Optional[dict] = None) -> list:
+    model = get_sparse_model()
+    sparse_vector = model.encode_query(query)
+    
+    url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/search"
+    payload = {
+        "vector": {"name": "sparse", "vector": sparse_vector},
+        "limit": top_k,
+        "with_payload": True
+    }
     if filter_payload:
         payload["filter"] = filter_payload
     try:
         response = requests.post(url, json=payload, timeout=30)
         response.raise_for_status()
-        return response.json().get("result", [])
+        hits = response.json().get("result", [])
+        
+        results = []
+        for hit in hits:
+            payload_data = hit.get("payload", {})
+            metadata = payload_data.get("metadata", {})
+            results.append({
+                "score": hit.get("score", 0.0),
+                "text": payload_data.get("text", payload_data.get("page_content", "N/A")),
+                "metadata": metadata,
+                "source_file": payload_data.get("source_file", metadata.get("source_file", "N/A")),
+                "retrieval_type": "splade"
+            })
+        return results
     except Exception as e:
-        print(f"❌ Error query Qdrant: {e}")
+        print(f"❌ Error query Qdrant Splade: {e}")
         return []
 
 def _scroll_qdrant(collection: str, scroll_filter: dict, limit: int = 200) -> list:
@@ -199,23 +272,26 @@ def sparse_search(query: str, top_k: int = 10, mata_pelajaran: Optional[str] = N
 # ================================================================
 # 4. RRF, Dedup, Expand, Rerank
 # ================================================================
-def reciprocal_rank_fusion(dense_results, sparse_results, k=60):
+def reciprocal_rank_fusion(dense_results, splade_results, bm25_results, k=60):
     fused_scores = {}
 
-    for rank, doc in enumerate(dense_results):
-        text = doc["text"]
-        rrf_score = 1 / (k + rank + 1)
-        if text not in fused_scores:
-            fused_scores[text] = {"doc": dict(doc), "score": 0, "dense_score": doc.get("score", 0), "bm25_score": 0}
-        fused_scores[text]["score"] += rrf_score
+    def add_to_fusion(results, type_key):
+        for rank, doc in enumerate(results):
+            text = doc["text"]
+            rrf_score = 1 / (k + rank + 1)
+            if text not in fused_scores:
+                fused_scores[text] = {"doc": dict(doc), "score": 0, "dense_score": 0, "splade_score": 0, "bm25_score": 0}
+            fused_scores[text]["score"] += rrf_score
+            if type_key == "dense":
+                fused_scores[text]["dense_score"] = doc.get("score", 0)
+            elif type_key == "splade":
+                fused_scores[text]["splade_score"] = doc.get("score", 0)
+            elif type_key == "bm25":
+                fused_scores[text]["bm25_score"] = doc.get("bm25_score", 0)
 
-    for rank, doc in enumerate(sparse_results):
-        text = doc["text"]
-        rrf_score = 1 / (k + rank + 1)
-        if text not in fused_scores:
-            fused_scores[text] = {"doc": dict(doc), "score": 0, "dense_score": 0, "bm25_score": doc.get("bm25_score", 0)}
-        fused_scores[text]["score"] += rrf_score
-        fused_scores[text]["bm25_score"] = doc.get("bm25_score", 0)
+    add_to_fusion(dense_results, "dense")
+    add_to_fusion(splade_results, "splade")
+    add_to_fusion(bm25_results, "bm25")
 
     reranked = sorted(fused_scores.values(), key=lambda x: x["score"], reverse=True)
     final_results = []
@@ -223,6 +299,7 @@ def reciprocal_rank_fusion(dense_results, sparse_results, k=60):
         doc = item["doc"]
         doc["rrf_score"] = item["score"]
         doc["dense_score"] = item["dense_score"]
+        doc["splade_score"] = item["splade_score"]
         doc["bm25_score"] = item["bm25_score"]
         final_results.append(doc)
     return final_results
@@ -303,7 +380,7 @@ async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str
     # 1. Dense Search
     vector = await embed_text_for_text_vdb(query)
     payload_filter = _build_qdrant_filter(mata_pelajaran=mata_pelajaran, kelas=kelas)
-    hits = _search_qdrant(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
+    hits = _search_qdrant_dense(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
     dense_results = []
     for hit in hits:
         payload = hit.get("payload", {})
@@ -316,11 +393,12 @@ async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str
             "retrieval_type": "dense"
         })
 
-    # 2. Sparse Search
-    sparse_results = sparse_search(query, top_k=retrieve_k, mata_pelajaran=mata_pelajaran, kelas=kelas)
+    # 2. Sparse Search (SPLADE & BM25)
+    splade_results = _search_qdrant_splade(TEXT_COLLECTION, query, top_k=retrieve_k, filter_payload=payload_filter)
+    bm25_results = sparse_search(query, top_k=retrieve_k, mata_pelajaran=mata_pelajaran, kelas=kelas)
 
     # 3. RRF + Dedup + Expand
-    fused_results = reciprocal_rank_fusion(dense_results, sparse_results)
+    fused_results = reciprocal_rank_fusion(dense_results, splade_results, bm25_results)
     unique_results = deduplicate(fused_results)
     expanded_results = expand_chunk_context(unique_results, window=1)
 
