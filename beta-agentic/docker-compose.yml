@@ -2,13 +2,14 @@ services:
   agentic_api:
     build: .
     container_name: agentic_api
-    command: ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
+    command: ["gunicorn", "main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
     ports:
       - "8002:8002"
     volumes:
       - ./.env:/app/.env
       - ./extraction:/app/extraction
       - ./templates:/app/templates
+      - ./bm25_hybrid_new.pkl:/app/bm25_hybrid_new.pkl
     env_file:
       - .env
     restart: unless-stopped
