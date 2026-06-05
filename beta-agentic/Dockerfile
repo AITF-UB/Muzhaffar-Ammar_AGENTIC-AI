@@ -7,14 +7,17 @@ ENV PYTHONUNBUFFERED=1
 # Create and set working directory
 WORKDIR /app
 
-# Install system dependencies if needed (e.g., for building some C-extensions)
+# Install system dependencies in a single layer
+# - build-essential: for compiling C-extensions (numpy, torch, etc.)
+# - tesseract-ocr: for Docling OCR
+# - libgl1, libglib2.0-0, etc.: for OpenCV/image processing
+# - git: needed by some pip packages (e.g., docling submodules)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y \
+    git \
     tesseract-ocr \
     libgl1 \
+    libglib2.0-0 \
     libxcb1 \
     libx11-xcb1 \
     libxrender1 \
@@ -24,19 +27,21 @@ RUN apt-get update && apt-get install -y \
     libxdamage1 \
     libxrandr2 \
     libxi6 \
-    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install
+# Copy requirements first (Docker cache layer — rebuild hanya jika requirements berubah)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Expose ports for both agentic (8002) and upload (8005)
-EXPOSE 8002 8005
+# Buat direktori yang dibutuhkan pipeline
+RUN mkdir -p uploads pipeline_output chunks extraction outputs/extracted outputs/chunks
 
-# Run with Gunicorn and Uvicorn workers
-# Note: we use -w 2 by default to keep RAM usage low for local embeddings
-CMD ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "600"]
+# Expose port untuk unified service
+EXPOSE 8002
+
+# 1 worker saja — model ML berat (dense, sparse, reranker, docling) di-load sebagai singleton
+# Timeout 600s untuk pipeline yang prosesnya lama
+CMD ["gunicorn", "main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
