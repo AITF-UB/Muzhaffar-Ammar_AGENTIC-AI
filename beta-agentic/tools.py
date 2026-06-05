@@ -118,12 +118,12 @@ def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_paylo
     if filter_payload:
         payload["filter"] = filter_payload
     try:
-        response = requests.post(url, json=payload, timeout=30)
+        response = requests.post(url, json=payload, timeout=60)
         
         # Fallback ke vector biasa jika collection tidak pakai named vectors (seperti srma-22)
         if response.status_code == 400 and "Not existing vector name error" in response.text:
             payload["vector"] = vector
-            response = requests.post(url, json=payload, timeout=30)
+            response = requests.post(url, json=payload, timeout=60)
             
         if response.status_code != 200:
             print(f"⚠️ Qdrant Dense Error Body: {response.text}")
