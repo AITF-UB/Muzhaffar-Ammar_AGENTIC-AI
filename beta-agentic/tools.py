@@ -26,7 +26,7 @@ if QDRANT_HOST.startswith("http://"):
 elif QDRANT_HOST.startswith("https://"):
     QDRANT_HOST = QDRANT_HOST[8:]
 QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
-TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION", "srma-22")
+TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION")
 
 TEXT_MODEL_NAME    = "microsoft/harrier-oss-v1-0.6b"
 RERANKER_MODEL_NAME= "BAAI/bge-reranker-base"
