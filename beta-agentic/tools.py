@@ -15,8 +15,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from rank_bm25 import BM25Okapi
-from sentence_transformers import CrossEncoder
-from transformers import AutoTokenizer, AutoModelForMaskedLM
+
+# ── Import model dari centralized registry ──────────────────────────────────
+from model_registry import (
+    get_dense_model,
+    get_sparse_model,
+    get_reranker,
+    get_device,
+)
+
+# Alias agar kode lama yang import get_sentence_model tetap kompatibel
+get_sentence_model = get_dense_model
 
 # ================================================================
 # Models Configuration
@@ -29,19 +38,13 @@ elif QDRANT_HOST.startswith("https://"):
 QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
 TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION")
 
-TEXT_MODEL_NAME    = os.getenv("DENSE_MODEL")
-SPARSE_MODEL_NAME  = os.getenv("SPARSE_MODEL")
-RERANKER_MODEL_NAME= os.getenv("RERANKER_MODEL")
-DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE             = get_device()
 
 EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
 
 BM25_CACHE_PATH = Path(__file__).resolve().parent / f"bm25_{TEXT_COLLECTION}.pkl"
 
-# Lazy load globals
-_sentence_model = None
-_sparse_model   = None
-_reranker_model = None
+# Lazy load globals (BM25 only — model singletons sekarang di model_registry)
 _bm25 = None
 _bm25_docs = []
 _chunk_expansion_cache = {}
@@ -52,55 +55,6 @@ _chunk_expansion_cache = {}
 def tokenize(text: str):
     text = text.lower()
     return re.findall(r"\w+", text)
-
-# ================================================================
-# 1. Models Loader
-# ================================================================
-class SpladeEncoder:
-    def __init__(self, model_name: str, device: str):
-        print(f"⏳ Loading SPLADE: {model_name} ...")
-        self.device    = device
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model     = AutoModelForMaskedLM.from_pretrained(model_name).to(device)
-        self.model.eval()
-        print(f"✅ SPLADE loaded ({device})")
-
-    def encode_query(self, text: str) -> dict:
-        enc = self.tokenizer(
-            [text], return_tensors="pt", padding=True, truncation=True, max_length=512,
-        ).to(self.device)
-        with torch.no_grad():
-            logits = self.model(**enc).logits
-        relu_log = torch.log1p(torch.relu(logits))
-        mask     = enc["attention_mask"].unsqueeze(-1).float()
-        sparse   = torch.max(relu_log * mask, dim=1).values
-        vec = sparse.cpu().numpy()[0]
-        nonzero_idx = np.nonzero(vec)[0]
-        return {
-            "indices": nonzero_idx.tolist(),
-            "values": vec[nonzero_idx].tolist()
-        }
-
-def get_sparse_model():
-    global _sparse_model
-    if _sparse_model is None:
-        _sparse_model = SpladeEncoder(SPARSE_MODEL_NAME, DEVICE)
-    return _sparse_model
-
-def get_sentence_model():
-    global _sentence_model
-    if _sentence_model is None:
-        from sentence_transformers import SentenceTransformer
-        print(f"⏳ Loading text model: {TEXT_MODEL_NAME}")
-        _sentence_model = SentenceTransformer(TEXT_MODEL_NAME)
-    return _sentence_model
-
-def get_reranker():
-    global _reranker_model
-    if _reranker_model is None:
-        print(f"⏳ Loading reranker: {RERANKER_MODEL_NAME}")
-        _reranker_model = CrossEncoder(RERANKER_MODEL_NAME, device=DEVICE)
-    return _reranker_model
 
 async def embed_text_for_text_vdb(query: str) -> list:
     model = get_sentence_model()

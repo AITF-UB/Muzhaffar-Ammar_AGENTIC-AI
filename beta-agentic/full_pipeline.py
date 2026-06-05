@@ -161,9 +161,7 @@ def step1_extract(config: PipelineConfig) -> List[Path]:
     Returns: list path JSON yang dihasilkan.
     """
     from pypdf import PdfReader, PdfWriter
-    from docling.document_converter import DocumentConverter, PdfFormatOption
-    from docling.datamodel.pipeline_options import PdfPipelineOptions
-    from docling.datamodel.base_models import InputFormat
+    from model_registry import get_docling_converter
 
     config.ensure_dirs()
 
@@ -245,17 +243,8 @@ def step1_extract(config: PipelineConfig) -> List[Path]:
                     working_pdf = sliced_pdf
                     print(f"   ✂️  Menggunakan halaman {s+1}–{e} dari {total_doc_pages} ({e-s} hal)")
 
-            # --- Docling ---
-            pipeline_options = PdfPipelineOptions()
-            pipeline_options.generate_page_images   = True
-            pipeline_options.generate_table_images   = True
-            pipeline_options.generate_picture_images = True
-            pipeline_options.do_ocr = True
-            pipeline_options.images_scale = 3.0  
-
-            converter = DocumentConverter(
-                format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)}
-            )
+            # --- Docling (singleton dari registry) ---
+            converter = get_docling_converter()
 
             print(f"   🔍 Mengekstrak struktur PDF...")
             result      = converter.convert(working_pdf)
@@ -1298,16 +1287,20 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
     """
     Load JSONL chunks, encode dense + sparse, upsert ke Qdrant.
     Butuh GPU untuk encoding optimal.
+
+    Model diambil dari model_registry (singleton) — tidak perlu load ulang
+    jika sudah di-preload saat startup.
     """
     import torch
     import numpy as np
-    from transformers import AutoTokenizer, AutoModelForMaskedLM
-    from sentence_transformers import SentenceTransformer
     from qdrant_client import QdrantClient
     from qdrant_client.models import (
         Distance, VectorParams, SparseVectorParams, SparseIndexParams,
         SparseVector, PointStruct,
     )
+
+    # ── Import model dari centralized registry ─────────────────────────────
+    from model_registry import get_dense_model, get_sparse_model, SpladeEncoder
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -1319,52 +1312,6 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
     print(f"  Dense  : {config.dense_model_name}")
     print(f"  Sparse : {config.sparse_model_name}")
     print("=" * 60)
-
-    # ── SPLADE Encoder ────────────────────────────────────────────────────────
-    class SpladeEncoder:
-        def __init__(self, model_name: str, device: str):
-            print(f"⏳ Loading SPLADE: {model_name} ...")
-            self.device    = device
-            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-            self.model     = AutoModelForMaskedLM.from_pretrained(model_name).to(device)
-            self.model.eval()
-            print(f"✅ SPLADE loaded ({device})")
-
-        def _encode_batch(self, texts: List[str]) -> np.ndarray:
-            enc = self.tokenizer(
-                texts, return_tensors="pt", padding=True, truncation=True, max_length=512,
-            ).to(self.device)
-            with torch.no_grad():
-                logits = self.model(**enc).logits
-            relu_log = torch.log1p(torch.relu(logits))
-            mask     = enc["attention_mask"].unsqueeze(-1).float()
-            sparse   = torch.max(relu_log * mask, dim=1).values
-            return sparse.cpu().numpy()
-
-        def encode_passages(self, texts: List[str]) -> List[np.ndarray]:
-            return list(self._encode_batch(texts))
-
-        @staticmethod
-        def to_qdrant(vec: np.ndarray) -> SparseVector:
-            nonzero_idx = np.nonzero(vec)[0]
-            return SparseVector(
-                indices=nonzero_idx.tolist(),
-                values=vec[nonzero_idx].tolist(),
-            )
-
-    # ── Dense Encoder ─────────────────────────────────────────────────────────
-    class DenseEncoder:
-        def __init__(self, model_name: str):
-            print(f"⏳ Loading dense model: {model_name} ...")
-            self.model = SentenceTransformer(model_name)
-            print("✅ Dense model loaded.")
-
-        def embed_documents(self, texts: List[str]) -> List[List[float]]:
-            passages = [f"passage: {t.strip()}" for t in texts]
-            return self.model.encode(
-                passages, batch_size=32, normalize_embeddings=True,
-                convert_to_numpy=True, show_progress_bar=False,
-            ).tolist()
 
     # ── Metadata helpers ──────────────────────────────────────────────────────
     def remove_base64_recursive(obj):
@@ -1444,11 +1391,19 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
             return False
         return True
 
-    # ── Load models ───────────────────────────────────────────────────────────
-    splade = SpladeEncoder(config.sparse_model_name, DEVICE)
-    dense  = DenseEncoder(config.dense_model_name)
+    # ── Load models (dari registry — singleton, tidak load ulang) ──────────
+    splade = get_sparse_model()
+    dense_model = get_dense_model()
 
-    sample    = dense.model.encode(["query: test"], normalize_embeddings=True, convert_to_numpy=True)[0]
+    def embed_documents(texts: List[str]) -> List[List[float]]:
+        """Wrapper untuk dense embedding batch."""
+        passages = [f"passage: {t.strip()}" for t in texts]
+        return dense_model.encode(
+            passages, batch_size=32, normalize_embeddings=True,
+            convert_to_numpy=True, show_progress_bar=False,
+        ).tolist()
+
+    sample    = dense_model.encode(["query: test"], normalize_embeddings=True, convert_to_numpy=True)[0]
     DENSE_DIM = len(sample)
     print(f"Dense vector dim: {DENSE_DIM}")
 
@@ -1584,7 +1539,7 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
         batch = chunks[batch_start : batch_start + BATCH_SIZE]
         texts = [doc["page_content"] for doc in batch]
 
-        dense_vecs  = dense.embed_documents(texts)
+        dense_vecs  = embed_documents(texts)
         sparse_vecs = splade.encode_passages(texts)
 
         points = []
