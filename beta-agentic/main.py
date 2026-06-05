@@ -123,18 +123,19 @@ class JobInfo(BaseModel):
 
 class PipelineParams(BaseModel):
     """Parameter opsional untuk pipeline."""
-    step:             Optional[StepName] = Field(None, description="Step tertentu, kosong = semua step")
-    qdrant_host:      str  = Field("76.13.195.1",           description="Host Qdrant")
-    qdrant_port:      int  = Field(6333,                    description="Port Qdrant")
-    collection_name:  str  = Field("test_pipeline",         description="Nama collection Qdrant")
-    chunk_size:       int  = Field(1000,                    description="Ukuran chunk teks")
-    force_reindex:    bool = Field(False,                   description="Hapus & buat ulang collection")
+    step:             Optional[str] = Field(None, description="Step tertentu, kosong = semua step")
+    qdrant_host:      str  = Field(os.getenv("QDRANT_HOST", "76.13.195.1"),           description="Host Qdrant")
+    qdrant_port:      int  = Field(int(os.getenv("QDRANT_PORT", "6333")),             description="Port Qdrant")
+    collection_name:  str  = Field(os.getenv("QDRANT_TEXT_COLLECTION", "Test_pipeline"), description="Nama collection Qdrant")
+    chunk_size:       int  = Field(1000,                                              description="Ukuran chunk teks")
+    force_reindex:    bool = Field(False,                                             description="Hapus & buat ulang collection")
     # Batasan halaman — 0 berarti tidak dibatasi (proses semua)
     start_page:       int  = Field(0, description="Halaman awal (1-based). 0 = dari halaman pertama")
     end_page:         int  = Field(0, description="Halaman akhir (inklusif). 0 = sampai halaman terakhir")
     # Metadata buku — masuk ke setiap chunk di Qdrant
     mata_pelajaran:   Optional[str] = Field(None, description="Mata pelajaran (mis. Biologi, Matematika)")
     kelas:            Optional[int] = Field(None, description="Tingkat kelas (mis. 10, 11, 12)")
+    id_guru:          Optional[str] = Field(None, description="ID Guru")
     vlm_model:        str  = Field(DEFAULT_OLLAMA_MODEL, description="Nama model Ollama untuk VLM")
     ollama_host:      str  = Field(DEFAULT_OLLAMA_HOST,  description="URL server Ollama")
     dense_model:      str  = Field(DEFAULT_DENSE_MODEL,  description="Model dense embedding")
@@ -197,6 +198,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
             end_page          = params.end_page,
             mata_pelajaran    = params.mata_pelajaran,
             kelas             = params.kelas,
+            id_guru           = params.id_guru,
             vlm_model_id      = params.vlm_model,
             ollama_host       = params.ollama_host,
             dense_model_name  = params.dense_model,
@@ -204,7 +206,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
             skip_existing     = False,
         )
 
-        run_full_pipeline(cfg, step=params.step.value if params.step else None)
+        run_full_pipeline(cfg, step=params.step if params.step else None)
 
         # Hitung artefak yang dihasilkan
         json_files  = list(OUTPUT_DIR.rglob("*_structure.json"))
@@ -221,7 +223,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
             message = "Pipeline selesai.",
             result  = {
                 "pdf_file":          pdf_path.name,
-                "step_run":          params.step.value if params.step else "all",
+                "step_run":          params.step if params.step else "all",
                 "json_files":        [str(p) for p in json_files],
                 "markdown_files":    [str(p) for p in md_files],
                 "jsonl_files":       [str(p) for p in jsonl_files],
@@ -431,23 +433,13 @@ def insight(req: InsightRequest):
 async def upload_and_run(
     background_tasks: BackgroundTasks,
     file:             UploadFile = File(..., description="File PDF yang akan diproses"),
-    # Pipeline params sebagai form fields agar bisa dikirim bersama file
-    step:             Optional[StepName] = Form(None),
-    qdrant_host:      str  = Form("76.13.195.1"),
-    qdrant_port:      int  = Form(6333),
-    collection_name:  str  = Form("Test_pipeline"),
-    chunk_size:       int  = Form(1000),
-    force_reindex:    bool = Form(False),
-    # Halaman: 0 = tidak dibatasi. Jika ada range valid, PDF dipotong sebelum ekstraksi.
+    # Parameter opsional
+    step:             Optional[str] = Form(None),
     start_page:       int  = Form(0, description="Halaman awal (1-based). 0 = dari awal"),
     end_page:         int  = Form(0, description="Halaman akhir (inklusif). 0 = sampai akhir"),
-    # Metadata buku — masuk ke setiap chunk di Qdrant
     mata_pelajaran:   Optional[str] = Form(None, description="Mata pelajaran (mis. Biologi)"),
     kelas:            Optional[int] = Form(None, description="Tingkat kelas (mis. 10)"),
-    vlm_model:        str  = Form(DEFAULT_OLLAMA_MODEL),
-    ollama_host:      str  = Form(DEFAULT_OLLAMA_HOST),
-    dense_model:      str  = Form(DEFAULT_DENSE_MODEL),
-    sparse_model:     str  = Form(DEFAULT_SPARSE_MODEL),
+    id_guru:          Optional[str] = Form(None, description="ID Guru"),
 ):
     """
     Upload satu file PDF dan jalankan pipeline RAG secara asinkron.
@@ -473,22 +465,14 @@ async def upload_and_run(
 
     params = PipelineParams(
         step            = step,
-        qdrant_host     = qdrant_host,
-        qdrant_port     = qdrant_port,
-        collection_name = collection_name,
-        chunk_size      = chunk_size,
-        force_reindex   = force_reindex,
         start_page      = start_page,
         end_page        = end_page,
         mata_pelajaran  = mata_pelajaran,
         kelas           = kelas,
-        vlm_model       = vlm_model,
-        ollama_host     = ollama_host,
-        dense_model     = dense_model,
-        sparse_model    = sparse_model,
+        id_guru         = id_guru,
     )
 
-    job = _create_job(filename=safe_name, step=step.value if step else "all")
+    job = _create_job(filename=safe_name, step=step if step else "all")
 
     # Jalankan pipeline di background (non-blocking)
     background_tasks.add_task(_run_pipeline_task, job.job_id, dest_path, params)

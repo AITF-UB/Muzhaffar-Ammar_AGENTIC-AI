@@ -128,6 +128,7 @@ class PipelineConfig:
     # Digunakan sebagai nilai langsung (atau fallback jika tidak ada di config file)
     mata_pelajaran:  Optional[str] = None  # mis. "Biologi", "Matematika"
     kelas:           Optional[int] = None  # mis. 10, 11, 12
+    id_guru:         Optional[str] = None  # ID Guru
     skip_existing:   bool = True
 
     def ensure_dirs(self) -> None:
@@ -623,6 +624,7 @@ class HierarchyMetadata:
     has_visual_content: Union[bool, List[Dict[str, str]]] = False
     mata_pelajaran:     Optional[str]              = None
     kelas:              Optional[int]              = None
+    id_guru:            Optional[str]              = None
 
     def to_dict(self) -> Dict[str, Any]:
         result: Dict[str, Any] = {}
@@ -808,12 +810,14 @@ class HierarchyAwareChunker:
         min_chunk_size: int = 150,
         mata_pelajaran: Optional[str] = None,
         kelas:          Optional[int] = None,
+        id_guru:        Optional[str] = None,
         extraction_dir: Optional[Path] = None,
     ) -> None:
         self.chunk_size      = chunk_size
         self.min_chunk_size  = min_chunk_size
         self.mata_pelajaran  = mata_pelajaran
         self.kelas           = kelas
+        self.id_guru         = id_guru
         self.metadata        = HierarchyMetadata()
         self.content_cleaner = ChunkContentCleaner()
         self._img_prefix: str = ""
@@ -956,6 +960,7 @@ class HierarchyAwareChunker:
         self.metadata = HierarchyMetadata(
             mata_pelajaran=self.mata_pelajaran,
             kelas=self.kelas,
+            id_guru=self.id_guru,
         )
         self._img_prefix = img_prefix
         chunks: List[ChunkWithMetadata] = []
@@ -1107,6 +1112,7 @@ class PageRangeAwareChunker(HierarchyAwareChunker):
         page_range:     Optional[Tuple[int, int]] = None,
         mata_pelajaran: Optional[str] = None,
         kelas:          Optional[int] = None,
+        id_guru:        Optional[str] = None,
         extraction_dir: Optional[Path] = None,
     ) -> None:
         super().__init__(
@@ -1114,6 +1120,7 @@ class PageRangeAwareChunker(HierarchyAwareChunker):
             min_chunk_size=min_chunk_size,
             mata_pelajaran=mata_pelajaran,
             kelas=kelas,
+            id_guru=id_guru,
             extraction_dir=extraction_dir,
         )
         self.page_range = page_range
@@ -1203,11 +1210,13 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
             page_range     = None
             mata_pelajaran = None
             kelas          = None
+            id_guru        = None
             if cfg_obj:
                 page_range = cfg_obj.get_page_range(filename)
                 book_meta  = cfg_obj.get_book_metadata(filename)
-                mata_pelajaran = book_meta["mata_pelajaran"]
-                kelas          = book_meta["kelas"]
+                mata_pelajaran = book_meta.get("mata_pelajaran")
+                kelas          = book_meta.get("kelas")
+                id_guru        = book_meta.get("id_guru")
 
             # Gunakan nilai dari PipelineConfig sebagai fallback
             # (jika config file tidak menyediakan, atau tidak ada config file sama sekali)
@@ -1215,11 +1224,14 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
                 mata_pelajaran = config.mata_pelajaran
             if kelas is None and config.kelas:
                 kelas = config.kelas
+            if id_guru is None and config.id_guru:
+                id_guru = config.id_guru
 
             if page_range:
                 print(f"  Page range     : {page_range[0]} - {page_range[1]}")
             print(f"  Mata pelajaran : {mata_pelajaran or '(tidak tersedia)'}")
             print(f"  Kelas          : {kelas or '(tidak tersedia)'}")
+            print(f"  ID Guru        : {id_guru or '(tidak tersedia)'}")
 
             print(f"  Reading   : {md_file.name}")
             text = md_file.read_text(encoding="utf-8")
@@ -1236,6 +1248,7 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
                 page_range=page_range,
                 mata_pelajaran=mata_pelajaran,
                 kelas=kelas,
+                id_guru=id_guru,
                 extraction_dir=extraction_dir,
             )
             chunks = chunker.chunk(cleaned_text, img_prefix=img_prefix)
@@ -1255,7 +1268,7 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
             pr_str = f"{page_range[0]}-{page_range[1]}" if page_range else None
             results[filename] = {
                 "status": "success", "chunks": len(docs),
-                "page_range": pr_str, "mata_pelajaran": mata_pelajaran, "kelas": kelas,
+                "page_range": pr_str, "mata_pelajaran": mata_pelajaran, "kelas": kelas, "id_guru": id_guru,
             }
         except Exception as e:
             print(f"  ❌ Error: {e}")
