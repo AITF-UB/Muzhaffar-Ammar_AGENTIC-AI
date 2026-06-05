@@ -31,9 +31,9 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 # ── Import pipeline ──────────────────────────────────────────────────────────
-# Pastikan full_pipeline.py ada di folder yang sama atau di PYTHONPATH
+# Pastikan upload_pipeline.py ada di folder yang sama atau di PYTHONPATH
 try:
-    from full_pipeline import PipelineConfig, run_full_pipeline
+    from pipeline_pipeline import PipelineConfig, run_full_pipeline
     PIPELINE_AVAILABLE = True
 except ImportError:
     PIPELINE_AVAILABLE = False
@@ -144,7 +144,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
     """Dijalankan sebagai background task."""
     if not PIPELINE_AVAILABLE:
         _update_job(job_id, status=JobStatus.FAILED,
-                    error="full_pipeline.py tidak ditemukan. Pastikan file ada di direktori yang sama.")
+                    error="upload_pipeline.py tidak ditemukan. Pastikan file ada di direktori yang sama.")
         return
 
     _update_job(job_id, status=JobStatus.RUNNING, message="Pipeline dimulai...")
