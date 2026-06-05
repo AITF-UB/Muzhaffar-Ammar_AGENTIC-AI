@@ -14,7 +14,7 @@ class HFChatModel(BaseChatModel):
     client: InferenceClient = None
     model_id: str = os.getenv("HF_MODEL_ID", "meta-llama/Llama-3.1-8B-Instruct")
     temperature: float = 0.3
-    max_tokens: int = 4000
+    max_tokens: int = int(os.getenv("MAX_TOKEN", 4000))
 
     class Config:
         arbitrary_types_allowed = True
@@ -70,7 +70,7 @@ def get_llm():
         return ChatBedrock(
             client=bedrock_client,
             model_id=os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0"),
-            model_kwargs={"temperature": 0.3, "max_tokens": 4000}
+            model_kwargs={"temperature": 0.3, "max_tokens": int(os.getenv("MAX_TOKEN", 4000))}
         )
 
     elif provider == "runpod":
@@ -81,7 +81,7 @@ def get_llm():
             openai_api_key=os.getenv("RUNPOD_API_KEY", "empty"),
             model_name=os.getenv("RUNPOD_MODEL_ID", "meta-llama/Meta-Llama-3-8B-Instruct"),
             temperature=0.3,
-            max_tokens=4000
+            max_tokens=int(os.getenv("MAX_TOKEN", 4000))
         )
 
     elif provider == "kaggle_vllm":
@@ -93,7 +93,7 @@ def get_llm():
             openai_api_key="empty", # vLLM lokal tidak butuh api key
             model_name=os.getenv("KAGGLE_VLLM_MODEL_ID", "AITF-SR-02/ub-sr-02-qwen3.5-9b-base-5k-CPT-SFT-v2"),
             temperature=0.3,
-            max_tokens=4000
+            max_tokens=int(os.getenv("MAX_TOKEN", 4000))
         )
 
     elif provider == "kaggle_ollama":
