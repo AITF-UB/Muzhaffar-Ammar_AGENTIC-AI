@@ -125,6 +125,9 @@ def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_paylo
             payload["vector"] = vector
             response = requests.post(url, json=payload, timeout=30)
             
+        if response.status_code != 200:
+            print(f"⚠️ Qdrant Dense Error Body: {response.text}")
+            
         response.raise_for_status()
         return response.json().get("result", [])
     except Exception as e:
@@ -145,6 +148,10 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
         payload["filter"] = filter_payload
     try:
         response = requests.post(url, json=payload, timeout=30)
+        
+        if response.status_code != 200:
+            print(f"⚠️ Qdrant Splade Error Body: {response.text}")
+            
         response.raise_for_status()
         hits = response.json().get("result", [])
         

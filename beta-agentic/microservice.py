@@ -33,7 +33,7 @@ from pydantic import BaseModel, Field
 # ── Import pipeline ──────────────────────────────────────────────────────────
 # Pastikan upload_pipeline.py ada di folder yang sama atau di PYTHONPATH
 try:
-    from pipeline_pipeline import PipelineConfig, run_full_pipeline
+    from full_pipeline import PipelineConfig, run_full_pipeline
     PIPELINE_AVAILABLE = True
 except ImportError:
     PIPELINE_AVAILABLE = False
