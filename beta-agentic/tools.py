@@ -72,12 +72,12 @@ def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_paylo
     if filter_payload:
         payload["filter"] = filter_payload
     try:
-        response = requests.post(url, json=payload, timeout=60)
+        response = requests.post(url, json=payload, timeout=120)
         
         # Fallback ke vector biasa jika collection tidak pakai named vectors (seperti srma-22)
         if response.status_code == 400 and "Not existing vector name error" in response.text:
             payload["vector"] = vector
-            response = requests.post(url, json=payload, timeout=60)
+            response = requests.post(url, json=payload, timeout=120)
             
         if response.status_code != 200:
             print(f"⚠️ Qdrant Dense Error Body: {response.text}")
@@ -101,7 +101,7 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
     if filter_payload:
         payload["filter"] = filter_payload
     try:
-        response = requests.post(url, json=payload, timeout=30)
+        response = requests.post(url, json=payload, timeout=120)
         
         if response.status_code != 200:
             print(f"⚠️ Qdrant Splade Error Body: {response.text}")
@@ -129,7 +129,7 @@ def _scroll_qdrant(collection: str, scroll_filter: dict, limit: int = 200) -> li
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/scroll"
     payload = {"filter": scroll_filter, "limit": limit, "with_payload": True}
     try:
-        response = requests.post(url, json=payload, timeout=30)
+        response = requests.post(url, json=payload, timeout=120)
         response.raise_for_status()
         return response.json().get("result", {}).get("points", [])
     except Exception as e:
