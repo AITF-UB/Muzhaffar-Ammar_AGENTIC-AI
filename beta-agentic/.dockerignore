@@ -10,5 +10,20 @@ venv/
 *.7z
 *.zip
 *.tar.gz
+
+# Large files — these are mounted as volumes, not baked into image
 *.pkl
 /extraction
+/uploads
+/pipeline_output
+/chunks
+/outputs
+/BukuSIBI_done
+/BukuSIBI_failed
+
+# IDE / OS
+.git
+.gitignore
+.vscode/
+*.ipynb
+*.http

@@ -128,6 +128,7 @@ class PipelineConfig:
     # Digunakan sebagai nilai langsung (atau fallback jika tidak ada di config file)
     mata_pelajaran:  Optional[str] = None  # mis. "Biologi", "Matematika"
     kelas:           Optional[int] = None  # mis. 10, 11, 12
+    id_guru:         Optional[str] = None  # ID Guru
     skip_existing:   bool = True
 
     def ensure_dirs(self) -> None:
@@ -161,9 +162,7 @@ def step1_extract(config: PipelineConfig) -> List[Path]:
     Returns: list path JSON yang dihasilkan.
     """
     from pypdf import PdfReader, PdfWriter
-    from docling.document_converter import DocumentConverter, PdfFormatOption
-    from docling.datamodel.pipeline_options import PdfPipelineOptions
-    from docling.datamodel.base_models import InputFormat
+    from model_registry import get_docling_converter
 
     config.ensure_dirs()
 
@@ -245,17 +244,8 @@ def step1_extract(config: PipelineConfig) -> List[Path]:
                     working_pdf = sliced_pdf
                     print(f"   ✂️  Menggunakan halaman {s+1}–{e} dari {total_doc_pages} ({e-s} hal)")
 
-            # --- Docling ---
-            pipeline_options = PdfPipelineOptions()
-            pipeline_options.generate_page_images   = True
-            pipeline_options.generate_table_images   = True
-            pipeline_options.generate_picture_images = True
-            pipeline_options.do_ocr = True
-            pipeline_options.images_scale = 3.0  
-
-            converter = DocumentConverter(
-                format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)}
-            )
+            # --- Docling (singleton dari registry) ---
+            converter = get_docling_converter()
 
             print(f"   🔍 Mengekstrak struktur PDF...")
             result      = converter.convert(working_pdf)
@@ -634,6 +624,7 @@ class HierarchyMetadata:
     has_visual_content: Union[bool, List[Dict[str, str]]] = False
     mata_pelajaran:     Optional[str]              = None
     kelas:              Optional[int]              = None
+    id_guru:            Optional[str]              = None
 
     def to_dict(self) -> Dict[str, Any]:
         result: Dict[str, Any] = {}
@@ -819,12 +810,14 @@ class HierarchyAwareChunker:
         min_chunk_size: int = 150,
         mata_pelajaran: Optional[str] = None,
         kelas:          Optional[int] = None,
+        id_guru:        Optional[str] = None,
         extraction_dir: Optional[Path] = None,
     ) -> None:
         self.chunk_size      = chunk_size
         self.min_chunk_size  = min_chunk_size
         self.mata_pelajaran  = mata_pelajaran
         self.kelas           = kelas
+        self.id_guru         = id_guru
         self.metadata        = HierarchyMetadata()
         self.content_cleaner = ChunkContentCleaner()
         self._img_prefix: str = ""
@@ -967,6 +960,7 @@ class HierarchyAwareChunker:
         self.metadata = HierarchyMetadata(
             mata_pelajaran=self.mata_pelajaran,
             kelas=self.kelas,
+            id_guru=self.id_guru,
         )
         self._img_prefix = img_prefix
         chunks: List[ChunkWithMetadata] = []
@@ -1118,6 +1112,7 @@ class PageRangeAwareChunker(HierarchyAwareChunker):
         page_range:     Optional[Tuple[int, int]] = None,
         mata_pelajaran: Optional[str] = None,
         kelas:          Optional[int] = None,
+        id_guru:        Optional[str] = None,
         extraction_dir: Optional[Path] = None,
     ) -> None:
         super().__init__(
@@ -1125,6 +1120,7 @@ class PageRangeAwareChunker(HierarchyAwareChunker):
             min_chunk_size=min_chunk_size,
             mata_pelajaran=mata_pelajaran,
             kelas=kelas,
+            id_guru=id_guru,
             extraction_dir=extraction_dir,
         )
         self.page_range = page_range
@@ -1214,11 +1210,13 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
             page_range     = None
             mata_pelajaran = None
             kelas          = None
+            id_guru        = None
             if cfg_obj:
                 page_range = cfg_obj.get_page_range(filename)
                 book_meta  = cfg_obj.get_book_metadata(filename)
-                mata_pelajaran = book_meta["mata_pelajaran"]
-                kelas          = book_meta["kelas"]
+                mata_pelajaran = book_meta.get("mata_pelajaran")
+                kelas          = book_meta.get("kelas")
+                id_guru        = book_meta.get("id_guru")
 
             # Gunakan nilai dari PipelineConfig sebagai fallback
             # (jika config file tidak menyediakan, atau tidak ada config file sama sekali)
@@ -1226,11 +1224,14 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
                 mata_pelajaran = config.mata_pelajaran
             if kelas is None and config.kelas:
                 kelas = config.kelas
+            if id_guru is None and config.id_guru:
+                id_guru = config.id_guru
 
             if page_range:
                 print(f"  Page range     : {page_range[0]} - {page_range[1]}")
             print(f"  Mata pelajaran : {mata_pelajaran or '(tidak tersedia)'}")
             print(f"  Kelas          : {kelas or '(tidak tersedia)'}")
+            print(f"  ID Guru        : {id_guru or '(tidak tersedia)'}")
 
             print(f"  Reading   : {md_file.name}")
             text = md_file.read_text(encoding="utf-8")
@@ -1247,6 +1248,7 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
                 page_range=page_range,
                 mata_pelajaran=mata_pelajaran,
                 kelas=kelas,
+                id_guru=id_guru,
                 extraction_dir=extraction_dir,
             )
             chunks = chunker.chunk(cleaned_text, img_prefix=img_prefix)
@@ -1266,7 +1268,7 @@ def step3_chunk(config: PipelineConfig, md_paths: Optional[List[Path]] = None) -
             pr_str = f"{page_range[0]}-{page_range[1]}" if page_range else None
             results[filename] = {
                 "status": "success", "chunks": len(docs),
-                "page_range": pr_str, "mata_pelajaran": mata_pelajaran, "kelas": kelas,
+                "page_range": pr_str, "mata_pelajaran": mata_pelajaran, "kelas": kelas, "id_guru": id_guru,
             }
         except Exception as e:
             print(f"  ❌ Error: {e}")
@@ -1298,16 +1300,20 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
     """
     Load JSONL chunks, encode dense + sparse, upsert ke Qdrant.
     Butuh GPU untuk encoding optimal.
+
+    Model diambil dari model_registry (singleton) — tidak perlu load ulang
+    jika sudah di-preload saat startup.
     """
     import torch
     import numpy as np
-    from transformers import AutoTokenizer, AutoModelForMaskedLM
-    from sentence_transformers import SentenceTransformer
     from qdrant_client import QdrantClient
     from qdrant_client.models import (
         Distance, VectorParams, SparseVectorParams, SparseIndexParams,
         SparseVector, PointStruct,
     )
+
+    # ── Import model dari centralized registry ─────────────────────────────
+    from model_registry import get_dense_model, get_sparse_model, SpladeEncoder
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -1319,52 +1325,6 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
     print(f"  Dense  : {config.dense_model_name}")
     print(f"  Sparse : {config.sparse_model_name}")
     print("=" * 60)
-
-    # ── SPLADE Encoder ────────────────────────────────────────────────────────
-    class SpladeEncoder:
-        def __init__(self, model_name: str, device: str):
-            print(f"⏳ Loading SPLADE: {model_name} ...")
-            self.device    = device
-            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-            self.model     = AutoModelForMaskedLM.from_pretrained(model_name).to(device)
-            self.model.eval()
-            print(f"✅ SPLADE loaded ({device})")
-
-        def _encode_batch(self, texts: List[str]) -> np.ndarray:
-            enc = self.tokenizer(
-                texts, return_tensors="pt", padding=True, truncation=True, max_length=512,
-            ).to(self.device)
-            with torch.no_grad():
-                logits = self.model(**enc).logits
-            relu_log = torch.log1p(torch.relu(logits))
-            mask     = enc["attention_mask"].unsqueeze(-1).float()
-            sparse   = torch.max(relu_log * mask, dim=1).values
-            return sparse.cpu().numpy()
-
-        def encode_passages(self, texts: List[str]) -> List[np.ndarray]:
-            return list(self._encode_batch(texts))
-
-        @staticmethod
-        def to_qdrant(vec: np.ndarray) -> SparseVector:
-            nonzero_idx = np.nonzero(vec)[0]
-            return SparseVector(
-                indices=nonzero_idx.tolist(),
-                values=vec[nonzero_idx].tolist(),
-            )
-
-    # ── Dense Encoder ─────────────────────────────────────────────────────────
-    class DenseEncoder:
-        def __init__(self, model_name: str):
-            print(f"⏳ Loading dense model: {model_name} ...")
-            self.model = SentenceTransformer(model_name)
-            print("✅ Dense model loaded.")
-
-        def embed_documents(self, texts: List[str]) -> List[List[float]]:
-            passages = [f"passage: {t.strip()}" for t in texts]
-            return self.model.encode(
-                passages, batch_size=32, normalize_embeddings=True,
-                convert_to_numpy=True, show_progress_bar=False,
-            ).tolist()
 
     # ── Metadata helpers ──────────────────────────────────────────────────────
     def remove_base64_recursive(obj):
@@ -1444,11 +1404,19 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
             return False
         return True
 
-    # ── Load models ───────────────────────────────────────────────────────────
-    splade = SpladeEncoder(config.sparse_model_name, DEVICE)
-    dense  = DenseEncoder(config.dense_model_name)
+    # ── Load models (dari registry — singleton, tidak load ulang) ──────────
+    splade = get_sparse_model()
+    dense_model = get_dense_model()
 
-    sample    = dense.model.encode(["query: test"], normalize_embeddings=True, convert_to_numpy=True)[0]
+    def embed_documents(texts: List[str]) -> List[List[float]]:
+        """Wrapper untuk dense embedding batch."""
+        passages = [f"passage: {t.strip()}" for t in texts]
+        return dense_model.encode(
+            passages, batch_size=32, normalize_embeddings=True,
+            convert_to_numpy=True, show_progress_bar=False,
+        ).tolist()
+
+    sample    = dense_model.encode(["query: test"], normalize_embeddings=True, convert_to_numpy=True)[0]
     DENSE_DIM = len(sample)
     print(f"Dense vector dim: {DENSE_DIM}")
 
@@ -1584,7 +1552,7 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
         batch = chunks[batch_start : batch_start + BATCH_SIZE]
         texts = [doc["page_content"] for doc in batch]
 
-        dense_vecs  = dense.embed_documents(texts)
+        dense_vecs  = embed_documents(texts)
         sparse_vecs = splade.encode_passages(texts)
 
         points = []

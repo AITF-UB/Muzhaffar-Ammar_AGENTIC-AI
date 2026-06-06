@@ -2,37 +2,29 @@ services:
   agentic_api:
     build: .
     container_name: agentic_api
-    command: ["gunicorn", "main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
+    command: >
+      gunicorn main:app
+      -w 1
+      -k uvicorn.workers.UvicornWorker
+      --bind 0.0.0.0:8002
+      --timeout 600
     ports:
       - "8002:8002"
     volumes:
+      # Config & data
       - ./.env:/app/.env
       - ./extraction:/app/extraction
       - ./templates:/app/templates
       - ./bm25_hybrid_new.pkl:/app/bm25_hybrid_new.pkl
-    env_file:
-      - .env
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-
-  upload_file:
-    build: .
-    container_name: upload_file
-    command: ["uvicorn", "microservice:app", "--host", "0.0.0.0", "--port", "8005"]
-    ports:
-      - "8005:8005"
-    volumes:
-      - ./.env:/app/.env
+      # Pipeline directories (persistent across container restarts)
       - ./uploads:/app/uploads
       - ./pipeline_output:/app/pipeline_output
       - ./chunks:/app/chunks
+      - ./outputs:/app/outputs
     env_file:
       - .env
     restart: unless-stopped
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 8G
