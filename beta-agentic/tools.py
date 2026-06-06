@@ -527,35 +527,43 @@ def truncate_context_to_budget(text: str, max_tokens: int = 4000, chars_per_toke
 
 def clean_json_from_llm(raw_text: str) -> dict | list:
     raw_text = _fix_json_escapes(raw_text)
+    
+    # 1. Coba cari di dalam markdown block ```json ... ```
+    match = re.search(r'```(?:json)?\s*(.*?)\s*```', raw_text, re.DOTALL)
+    if match:
+        clean_text = match.group(1).strip()
+        try:
+            return json.loads(clean_text)
+        except json.JSONDecodeError:
+            pass
+
+    # 2. Kalau gak ada markdown block, cari pola json pake regex atau find dari ujung
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
-    idx_brace = clean_text.find('{')
-    idx_bracket = clean_text.find('[')
-    is_array = (idx_bracket != -1 and (idx_brace == -1 or idx_bracket < idx_brace))
+    
+    # Cari list [...] dari belakang (asumsi json ada di bagian paling akhir response)
+    idx_bracket_end = clean_text.rfind(']')
+    if idx_bracket_end != -1:
+        # cari kurung buka pasangannya
+        idx_bracket_start = clean_text.rfind('[', 0, idx_bracket_end)
+        if idx_bracket_start != -1:
+            try:
+                return json.loads(clean_text[idx_bracket_start:idx_bracket_end+1])
+            except json.JSONDecodeError:
+                pass
+                
+    # Cari dict {...} dari belakang
+    idx_brace_end = clean_text.rfind('}')
+    if idx_brace_end != -1:
+        # cari kurung buka pasangannya (beresiko kalau ada nested, tapi kita coba rfind '{' yang masuk akal)
+        # Lebih aman cari '{' yang paling awal *sebelum* akhir JSON yang valid, tapi untuk gampangnya kita coba brute force dari awal ke belakang
+        start_idx = clean_text.find('{')
+        while start_idx != -1 and start_idx < idx_brace_end:
+            try:
+                return json.loads(clean_text[start_idx:idx_brace_end+1])
+            except json.JSONDecodeError:
+                start_idx = clean_text.find('{', start_idx + 1)
 
-    if is_array:
-        start_idx = idx_bracket
-        end_idx = clean_text.rfind(']')
-        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
-            try: return json.loads(clean_text[start_idx:end_idx+1])
-            except json.JSONDecodeError: pass
-            
-        text_to_parse = clean_text[start_idx:].strip()
-        if text_to_parse.endswith(','): text_to_parse = text_to_parse[:-1]
-        for fix in [']', '}]']:
-            try: return json.loads(text_to_parse + fix)
-            except json.JSONDecodeError: pass
-
-    start_idx = clean_text.find('{')
-    end_idx = clean_text.rfind('}')
-    if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
-        try: return json.loads(clean_text[start_idx:end_idx+1])
-        except json.JSONDecodeError: pass
-            
-    if start_idx != -1:
-        try: return json.loads(clean_text[start_idx:] + '}')
-        except json.JSONDecodeError: pass
-
-    return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:200]}
+    return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:500]}
 
 def generate_konten_id(tipe: str, level: str, materi_id: str, kelas_id: str = "all") -> str:
     lvl_str = (level or "all").lower()

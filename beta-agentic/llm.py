@@ -84,6 +84,26 @@ def get_llm():
             max_tokens=int(os.getenv("MAX_TOKEN", 4000))
         )
 
+    elif provider == "tim2_vllm":
+        from langchain_openai import ChatOpenAI
+        
+        endpoint = os.getenv("TIM2_VLLM_ENDPOINT")
+        if endpoint:
+            if not endpoint.startswith("http://") and not endpoint.startswith("https://"):
+                endpoint = "http://" + endpoint
+            if endpoint.endswith("/chat/completions"):
+                endpoint = endpoint.replace("/chat/completions", "")
+        
+        # Endpoint dari Tim 2 (menggunakan format OpenAI-compatible dari vLLM)
+        return ChatOpenAI(
+            openai_api_base=endpoint,
+            openai_api_key="empty",  # Karena Tim 2 bilang tidak pakai token/auth
+            model_name=os.getenv("TIM2_MODEL_ID", "aitf-ub-2026/ub-sr-02-qwen3.5-9b-base-sft-v2"),
+            temperature=float(os.getenv("TIM2_TEMPERATURE", "0.6")),
+            max_tokens=int(os.getenv("MAX_TOKEN", 4098)),
+            model_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
+        )
+
     elif provider == "kaggle_vllm":
         from langchain_openai import ChatOpenAI
         
@@ -93,7 +113,8 @@ def get_llm():
             openai_api_key="empty", # vLLM lokal tidak butuh api key
             model_name=os.getenv("KAGGLE_VLLM_MODEL_ID", "AITF-SR-02/ub-sr-02-qwen3.5-9b-base-5k-CPT-SFT-v2"),
             temperature=0.3,
-            max_tokens=int(os.getenv("MAX_TOKEN", 4000))
+            max_tokens=int(os.getenv("MAX_TOKEN", 4000)),
+            model_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
         )
 
     elif provider == "kaggle_ollama":
