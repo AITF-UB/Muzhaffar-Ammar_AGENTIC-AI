@@ -44,4 +44,4 @@ EXPOSE 8002
 
 # 2 worker karena tim 6 sudah memperbolehkan (tapi perhatikan konsumsi memori model ML)
 # Timeout 600s untuk pipeline yang prosesnya lama
-CMD ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
+CMD ["gunicorn", "main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
