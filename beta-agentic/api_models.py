@@ -53,11 +53,17 @@ class EssayEvalItem(BaseModel):
     penjelasan: Optional[str] = None
 
 # --- RAG Specific Models ---
+class BundleItem(BaseModel):
+    bundle_id: str
+    mapel_label: str
+    elemen_label: str
+    materi: str
+    atp: List[str] = Field(default_factory=list)
+
 class RekomendasiRequest(BaseModel):
-    siswa_id: str
-    available_ids: List[str] = Field(default_factory=list)
-    sudah_selesai_ids: List[str] = Field(default_factory=list)
-    sedang_dipelajari_ids: List[str] = Field(default_factory=list)
+    available: List[BundleItem] = Field(default_factory=list)
+    in_progress_ids: List[BundleItem] = Field(default_factory=list)
+    complete_ids: List[BundleItem] = Field(default_factory=list)
 
 class InsightRequest(BaseModel):
     nama: str

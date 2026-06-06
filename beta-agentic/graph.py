@@ -8,7 +8,8 @@ from langchain_core.messages import SystemMessage, HumanMessage
 
 from state import AgentState
 from tools import RAGEngine, clean_json_from_llm, extract_source, generate_konten_id, truncate_context_to_budget
-from llm import get_llm
+from llm import get_llm, get_eval_llm
+from prompt_config import compile_leveling_registry, compile_subject_registry
 
 env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
 llm = get_llm()
@@ -87,8 +88,6 @@ async def retrieve_node(state: AgentState) -> dict:
         text_ctx_parts.append(part)
         
     text_ctx = "\n---\n".join(text_ctx_parts)
-    if text_ctx:
-        text_ctx = truncate_context_to_budget(text_ctx, max_tokens=3500)
     sumber = extract_source(rag_results["text"])
 
     # Build formatted image context string
@@ -128,32 +127,50 @@ async def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
 
 async def bacaan_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("bacaan", lvl)
+    subject_config = compile_subject_registry("bacaan", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def pretest_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=state["level"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("pretest", lvl)
+    subject_config = compile_subject_registry("pretest", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def quiz_pg_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("quiz_pg", lvl)
+    subject_config = compile_subject_registry("quiz_pg", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def quiz_essay_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state["image_context"], level=state["level"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("quiz_essay", lvl)
+    subject_config = compile_subject_registry("quiz_essay", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def flashcard_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=state["level"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("flashcard", lvl)
+    subject_config = compile_subject_registry("flashcard", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def mindmap_node(state: AgentState) -> dict:
     req = state["request_params"]
-    usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"])
+    lvl = state["level"]
+    level_config = compile_leveling_registry("mindmap", lvl)
+    subject_config = compile_subject_registry("mindmap", req.get("mapel_id", ""))
+    usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"], level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def evaluator_node(state: AgentState) -> dict:
@@ -173,7 +190,7 @@ async def evaluator_node(state: AgentState) -> dict:
         generated_content=json.dumps(state["generated_content"], indent=2)
     )
     
-    response = await llm.ainvoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
+    response = await get_eval_llm().ainvoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
     eval_dict = clean_json_from_llm(response.content)
     
     # Fallback if evaluation is weird
@@ -204,18 +221,7 @@ def structurer_node(state: AgentState) -> dict:
         if isinstance(content, dict):
             content["source"] = state["sumber_text"]
             
-    konten_id = generate_konten_id(tipe, state["level"], req.get("materi_id", "materi"), req.get("kelas_id", "all"))
-    
-    # Envelope "data" internal
-    payload_data = {
-        "konten_id": konten_id,
-        "tipe": tipe,
-        "level": (state["level"] or "").lower(),
-        "content": content,
-        "dibuat_at": datetime.utcnow().isoformat() + "Z"
-    }
-    
-    return {"final_payload": payload_data}
+    return {"final_payload": content}
 
 # ================================================================
 # 2. EDGES & GRAPH

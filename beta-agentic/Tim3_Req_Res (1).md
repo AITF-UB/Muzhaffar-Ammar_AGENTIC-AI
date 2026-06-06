@@ -8,6 +8,7 @@
 - `flashcard`: 3x [`lots`, `mots`, `hots`]
 - `mindmap`: 1x
 - `pretest`: 1x
+- `rekomendasi`: tbd
 ```json
 {
   "mapel_id": "string",
@@ -624,5 +625,84 @@
 ```json
 {
   "summary_text": "string"
+}
+```
+
+### Format Request Rekomendasi RAG
+```json
+{
+    "available": [
+        {
+            "bundle_id": "1",
+            "mapel_label": "Matematika Wajib",
+            "elemen_label": "Bilangan dan Aljabar",
+            "materi": "Persamaan Linear",
+            "atp": [
+                "deskripsi atp 1",
+                "deskripsi atp 2"
+            ]
+        },
+        {
+            "bundle_id": "2",
+            "mapel_label": "Biologi",
+            "elemen_label": "Anatomi Tubuh",
+            "materi": "Sistem Pernapasan",
+            "atp": [
+                "deskripsi atp 1"
+            ]
+        },
+        {
+            "bundle_id": "4",
+            "mapel_label": "Kimia",
+            "elemen_label": "Struktur Atom",
+            "materi": "Nomor massa dan jumlah elektron",
+            "atp": []
+        }
+    ],
+    "in_progress_ids": [
+        {
+            "bundle_id": "2",
+            "mapel_label": "Biologi",
+            "elemen_label": "Anatomi Tubuh",
+            "materi": "Sistem Pernapasan",
+            "atp": [
+                "deskripsi atp 1"
+            ]
+        }
+    ],
+    "complete_ids": [
+        {
+            "bundle_id": "1",
+            "mapel_label": "Matematika Wajib",
+            "elemen_label": "Bilangan dan Aljabar",
+            "materi": "Persamaan Linear",
+            "atp": [
+                "deskripsi atp 1",
+                "deskripsi atp 2"
+            ]
+        }
+    ]
+}
+```
+
+### Format Response Rekomendasi RAG
+```json
+{
+  "rekomendasi": [
+    {
+      "bundle_id": "2",
+      "mapel_label": "Biologi",
+      "elemen_label": "Anatomi Tubuh",
+      "materi": "Sistem Pernapasan",
+      "alasan": "string"
+    },
+    {
+      "bundle_id": "4",
+      "mapel_label": "Kimia",
+      "elemen_label": "Struktur Atom",
+      "materi": "Nomor massa dan jumlah elektron",
+      "alasan": "string"
+    }
+  ]
 }
 ```

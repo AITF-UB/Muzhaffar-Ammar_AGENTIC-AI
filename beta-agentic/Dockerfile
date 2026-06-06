@@ -42,6 +42,6 @@ RUN mkdir -p uploads pipeline_output chunks extraction outputs/extracted outputs
 # Expose port untuk unified service
 EXPOSE 8002
 
-# 1 worker saja — model ML berat (dense, sparse, reranker, docling) di-load sebagai singleton
+# 2 worker karena tim 6 sudah memperbolehkan (tapi perhatikan konsumsi memori model ML)
 # Timeout 600s untuk pipeline yang prosesnya lama
-CMD ["gunicorn", "main:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]
+CMD ["gunicorn", "main:app", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8002", "--timeout", "600"]

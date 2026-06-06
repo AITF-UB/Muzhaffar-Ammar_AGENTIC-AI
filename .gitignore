@@ -14,4 +14,6 @@ semantic_chunker_results/
 .env
 **/.env
 *.env
-*.pkl
+*.pklc
+current_experiments/
+current_experiments_now.7z

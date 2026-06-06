@@ -13,8 +13,8 @@ load_dotenv()
 class HFChatModel(BaseChatModel):
     client: InferenceClient = None
     model_id: str = os.getenv("HF_MODEL_ID", "meta-llama/Llama-3.1-8B-Instruct")
-    temperature: float = 0.3
-    max_tokens: int = int(os.getenv("MAX_TOKEN", 4000))
+    temperature: float = 0.2
+    max_tokens: int = int(os.getenv("MAX_TOKEN", 8192))
 
     class Config:
         arbitrary_types_allowed = True
@@ -99,8 +99,8 @@ def get_llm():
             openai_api_base=endpoint,
             openai_api_key="empty",  # Karena Tim 2 bilang tidak pakai token/auth
             model_name=os.getenv("TIM2_MODEL_ID", "aitf-ub-2026/ub-sr-02-qwen3.5-9b-base-sft-v2"),
-            temperature=float(os.getenv("TIM2_TEMPERATURE", "0.6")),
-            max_tokens=int(os.getenv("MAX_TOKEN", 4098)),
+            temperature=float(os.getenv("TIM2_TEMPERATURE", "0.2")),
+            max_tokens=int(os.getenv("MAX_TOKEN", 8192)),
             model_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
         )
 
@@ -129,3 +129,62 @@ def get_llm():
     else:
         # Default fallback ke Hugging Face Inference
         return HFChatModel()
+
+# =====================================================================
+# FACTORY PATTERN: GET EVAL LLM BASED ON .ENV
+# =====================================================================
+def get_eval_llm():
+    """Mendapatkan instansiasi LLM khusus untuk Evaluator."""
+    # Jika tidak ada setting khusus untuk EVAL, fallback ke LLM utama
+    provider = os.getenv("EVAL_LLM_PROVIDER")
+    if not provider:
+        return get_llm()
+        
+    provider = provider.lower().strip()
+
+    if provider == "huggingface":
+        # Gunakan HFChatModel (dengan EVAL_HF_MODEL_ID khusus atau fallback ke HF biasa)
+        class EvalHFChatModel(HFChatModel):
+            model_id: str = os.getenv("EVAL_HF_MODEL_ID", os.getenv("HF_MODEL_ID", "meta-llama/Llama-3.1-8B-Instruct"))
+            temperature: float = 0.0 # Evaluator sebaiknya temperaturnya 0
+        return EvalHFChatModel()
+    elif provider == "openai":
+        from langchain_openai import ChatOpenAI
+        return ChatOpenAI(
+            openai_api_key=os.getenv("EVAL_OPENAI_API_KEY"),
+            model_name=os.getenv("EVAL_OPENAI_MODEL_ID", "gpt-4o-mini"),
+            temperature=0.0,
+            max_tokens=4000
+        )
+    elif provider == "bedrock":
+        import boto3
+        from langchain_aws import ChatBedrock
+        bedrock_client = boto3.client(
+            service_name="bedrock-runtime",
+            region_name=os.getenv("EVAL_BEDROCK_REGION", "us-east-1"),
+            endpoint_url=os.getenv("EVAL_BEDROCK_ENDPOINT_URL"),
+            aws_access_key_id=os.getenv("EVAL_AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("EVAL_AWS_SECRET_ACCESS_KEY")
+        )
+        return ChatBedrock(
+            client=bedrock_client,
+            model_id=os.getenv("EVAL_BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0"),
+            model_kwargs={"temperature": 0.0, "max_tokens": 4000}
+        )
+    elif provider == "vllm":
+        from langchain_openai import ChatOpenAI
+        endpoint = os.getenv("EVAL_VLLM_ENDPOINT")
+        if endpoint and not endpoint.startswith("http"):
+            endpoint = "http://" + endpoint
+        if endpoint and endpoint.endswith("/chat/completions"):
+            endpoint = endpoint.replace("/chat/completions", "")
+            
+        return ChatOpenAI(
+            openai_api_base=endpoint,
+            openai_api_key="empty",
+            model_name=os.getenv("EVAL_VLLM_MODEL_ID", "Qwen/Qwen2.5-72B-Instruct"),
+            temperature=0.0,
+            max_tokens=4000
+        )
+    else:
+        return get_llm()

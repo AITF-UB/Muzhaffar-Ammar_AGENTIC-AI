@@ -61,7 +61,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from graph import beta_graph
-from llm import get_llm
+from llm import get_llm, get_eval_llm
 from tools import clean_json_from_llm
 from model_registry import preload_all
 
@@ -269,6 +269,7 @@ app.add_middleware(
 
 env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
 llm = get_llm()
+eval_llm = get_eval_llm()
 
 
 def load_prompt(template_name: str, **kwargs) -> str:
@@ -367,7 +368,7 @@ def submit_essay(req: List[EssayEvalItem]):
                 stimulus=item.stimulus,
                 penjelasan=item.penjelasan
             )
-            res = llm.invoke([sys_msg, HumanMessage(content=usr_prompt)])
+            res = eval_llm.invoke([sys_msg, HumanMessage(content=usr_prompt)])
             hasil = clean_json_from_llm(res.content)
             
             skor = hasil.get("skor", 0)
@@ -388,10 +389,9 @@ def rekomendasi(req: RekomendasiRequest):
     try:
         prompt = load_prompt(
             "rekomendasi.j2",
-            siswa_id=req.siswa_id,
-            available_ids=req.available_ids,
-            sudah_selesai=req.sudah_selesai_ids,
-            sedang_dipelajari=req.sedang_dipelajari_ids
+            available=req.available,
+            in_progress=req.in_progress_ids,
+            complete=req.complete_ids
         )
         sys_msg = SystemMessage(content="Kamu adalah AI Recommender JSON.")
         res = llm.invoke([sys_msg, HumanMessage(content=prompt)])

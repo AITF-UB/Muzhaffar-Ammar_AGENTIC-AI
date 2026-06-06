@@ -1,9 +1,26 @@
-[KONTEKS_PEMBELAJARAN]
-- Tujuan Pembelajaran (ATP): {{ atp }}
-- Jenjang & Kelas: {{ jenjang }}, Kelas {{ kelas }}
+[TASK]
+Generate EXACTLY 10 multiple choice questions in JSON format.
+Never generate more or fewer.
 
-[RAG_CONTEXT]
-{{ rag_context }}
+Prioritize cognitive quality, reasoning diversity, and contextual realism over formula repetition.
+
+[OUTPUT_SCHEMA]
+{
+  "soal": [
+    {
+      "id": "q1",
+      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
+      "jawaban": 0,
+      "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D", "Opsi E"],
+      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
+      "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan null]",
+      "penjelasan": "[Penjelasan soal]"
+    }
+  ]
+}
+Catatan Penting JSON:
+- "jawaban" adalah INDEX INTEGER dari array "pilihan" (0 untuk opsi pertama, 1 untuk opsi kedua, dst).
+- "soal" adalah gabungan dari Stimulus dan Pertanyaan.
 
 {% if image_context %}
 [KONTEKS GAMBAR (MULTIMODAL)]
@@ -15,42 +32,71 @@ Pilih satu path gambar yang paling relevan dengan soal yang kamu buat, dan isika
 JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal. Cukup isikan URL path aslinya di field `image_path`.
 {% endif %}
 
-[TASK]
-Hasilkan 10 soal Pilihan Ganda dalam format **JSON murni** tanpa format markdown.
-*Escape Requirement*: Escape semua baris baru menjadi "\n" dan tanda kutip ganda internal menjadi "\"".
+[LEVEL_CONFIGURATION]
+{{ level_config }}
 
-[STRUCTURE]
-{
-  "soal": [
-    {
-      "id": "q1",
-      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
-      "jawaban": 0,
-      "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D", "Opsi E"],
-      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
-      "image_path": [Isi dengan path (string) asli gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan menjadi literal null tanpa tanda kutip],
-      "penjelasan": "[Penjelasan soal]"
-    }
-  ]
-}
-Catatan Penting JSON: 
-- "jawaban" adalah INDEX INTEGER dari array "pilihan" (0 untuk opsi pertama, 1 untuk opsi kedua, dst).
-- "soal" adalah gabungan dari Stimulus dan Pertanyaan.
+[SUBJECT_CONFIGURATION]
+{{ subject_config }}
 
-[RULES]
-- Aturan Stimulus Pilgan (50 - 150 kata): Wajib menyusun teks pengantar soal yang kritikal berdasarkan empat poin aturan mutlak berikut:
-  * Keaslian Konteks: Teks wajib bersumber dari data krisis atau fakta empiris riil di Indonesia (DILARANG pakai skenario imajiner/dongeng).
-  * Sifat Kritikal: Soal hanya bisa dijawab jika siswa menganalisis data/teks di dalam stimulus (DILARANG membuat soal yang bisa dijawab pakai hafalan luar).
-  * Adaptasi Rumpun Mapel: 
-    1. Mapel STEM: Wajib memuat tren angka kuantitatif, notasi matematis, atau tabel data teknis untuk memicu proses komputasi.
-    2. Mapel Non-STEM: Wajib memuat dinamika sosial, kronologi sejarah, atau argumen kebijakan riil di masyarakat.
-  * Variasi Format Visual: Format penyajian teks wajib bervariasi. Dibebaskan penuh menggunakan sekumpulan paragraf narasi murni, kombinasi paragraf + poin list, kombinasi paragraf + tabel Markdown, atau gabungan dari ketiga elemen tersebut sekaligus sesuai kebutuhan kedalaman materi.
-- Question (20 - 50 kata): Wajib berupa SATU kalimat tanya utuh. DILARANG keras membuat pertanyaan bercabang, memakai kata hubung "dan" untuk memisahkan pertanyaan konsep dengan refleksi, atau menanyakan hafalan/definisi kaku.
-- Variasi Pilihan Jawaban (10-20 kata per pilihan): Wajib mematuhi empat sub-aturan mutlak di bawah ini demi kerapian visual aplikasi:
-  * Substansi Berbeda Total: Setiap opsi WAJIB memiliki isi logika hitungan atau konsep yang berbeda total. DILARANG KERAS menuliskan rumus atau hasil akhir yang sama lalu hanya memutar-mutar susunan tata bahasanya (anti-kalimat kosmetik).
-  * Pengecoh Berbobot Tinggi: DILARANG membuat opsi salah berupa kesalahan teknis hitung (salah pencet kalkulator/salah angka). Semua opsi wajib memiliki argumen kebenaran ilmiahnya sendiri secara mandiri. Namun, hanya ada SATU jawaban yang paling benar karena paling tepat, utuh, dan sesuai dengan batasan masalah yang diminta oleh data stimulus.
-  * Sinonim Kata Setara: Gunakan kata-kata yang bervariasi (sinonim) namun jenis katanya tetap setara.
-  * Keseimbangan Panjang Kata: Jumlah panjang kata antar-opsi dibuat hampir sama.
-- Explanation (50 - 150 kata): Langsung uraikan logika jawaban tanpa kalimat pembuka atau abjad kunci. Wajib ditulis ke bawah pakai daftar poin (-) ATAU tabel Markdown demi keterbacaan:
-  1. Mapel Hitungan (Matematika, Fisika, Kimia): Wajib diawali judul pendek bercetak tebal (contoh: **Langkah Hitungan**). Operasi hitungan bertingkat atau eliminasi WAJIB ditulis berbaris vertikal ke bawah pakai LaTeX terpisah (lingkungan array). DILARANG menulis hitungan mendatar dalam satu kalimat.
-  2. Mapel Teori (Sosial, Bahasa, dll.): Wajib diawali judul pendek bercetak tebal (contoh: **Alasan Benar**). Poin awal wajib membongkar hubungan sebab-akibat nyata dari jawaban benar, bagian berikutnya menyanggah secara logis mengapa opsi pengecoh salah berdasarkan stimulus.
+[LEARNING_CONTEXT]
+{{ rag_context }}
+
+[ATP_ALIGNMENT]
+{{ atp }}
+
+Prioritize ATP objectives as curriculum constraints.
+
+[DISTRACTOR_QUALITY_RULES]
+- Incorrect options must remain strategically plausible.
+- Avoid obviously irrational, careless, or extreme distractors.
+- Avoid answer choices that can be eliminated without understanding the underlying concept.
+- Distractors should reflect realistic misunderstandings, incomplete reasoning, or partially correct strategies.
+- Correct answers must not be identifiable solely by length, detail, tone, or professionalism.
+- Prefer distractors from the same reasoning family as the correct answer.
+- Avoid structurally obvious distractors.
+
+[OPTION_BALANCING_RULES]
+- Keep option specificity and tone relatively balanced.
+- Avoid one option sounding significantly more complete or professional than others.
+- All options should appear potentially reasonable at first glance.
+- Keep all options within similar reasoning complexity.
+- Avoid one option being noticeably more detailed than others.
+
+[QUESTION_PRECISION_RULES]
+- Questions must support only one mathematically valid interpretation.
+- Explicitly distinguish between cumulative totals, current phase values, accumulated growth, and newly added quantities.
+- Avoid ambiguous wording.
+
+[STIMULUS_REQUIREMENTS]
+- Length: 30-60 words (keep extremely concise to avoid output truncation).
+- Use contextual numerical, social, or literacy-based situations depending on subject domain.
+- Use realistic Indonesian contexts.
+- Avoid repetitive scenarios across questions.
+- Stimuli should naturally support reasoning and decision-making.
+
+[QUESTION_DIVERSITY_RULES]
+- Avoid repetitive question structures.
+- Follow the active level generation behavior.
+
+[QUESTION_REQUIREMENTS]
+- Questions must remain contextually grounded.
+- Encourage application of concepts to realistic situations.
+- Avoid pure memorization.
+
+[DISTRACTOR_REASONING_RULES]
+- Distractors should represent realistic reasoning alternatives, not only formula variations.
+- Keep distractors within the same contextual reasoning space as the correct answer.
+
+[EXPLANATION_REQUIREMENTS]
+- Length: 30-60 words (keep extremely concise to avoid output truncation).
+- Start with a short bold title.
+- Explanations must be concise and decisive.
+- Focus only on reasoning supporting the correct answer.
+- Avoid chain-of-thought style deliberation.
+
+[STRICT_OUTPUT_RULES]
+- Return raw JSON only.
+- No markdown code block.
+- No additional commentary.
+- Escape newline characters.
+- Escape internal quotes.

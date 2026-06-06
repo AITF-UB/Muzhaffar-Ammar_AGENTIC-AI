@@ -1,50 +1,62 @@
-[KONTEKS_PEMBELAJARAN]
-- Tujuan Pembelajaran (ATP): {{ atp }}
-- Jenjang & Kelas: {{ jenjang }}, Kelas {{ kelas }}
+[TASK]
+Generate EXACTLY 5 essay questions in JSON format.
+Never generate more or fewer.
 
-[RAG_CONTEXT]
-{{ rag_context }}
+[OUTPUT_SCHEMA]
+{
+  "pertanyaan": [
+    {
+      "id": "e1",
+      "soal": "[Kalimat pertanyaan essay]",
+      "rubrik": "[Kriteria penilaian skor tinggi]",
+      "stimulus": "[Narasi pengantar atau konteks masalah]",
+      "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan null]",
+      "penjelasan": "[Penjelasan jawaban benar]"
+    }
+  ]
+}
 
 {% if image_context %}
 [KONTEKS GAMBAR (MULTIMODAL)]
 {{ image_context }}
 
 *** INSTRUKSI MUTLAK UNTUK GAMBAR ***
-Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskannya.
-BACA `konteks_materi_gambar` (khususnya bagian "Deskripsi Visual").
-JIKA DAN HANYA JIKA gambar tersebut SECARA VISUAL sangat relevan dan mendukung narasi `stimulus` soalmu, isikan URL path aslinya di field `image_path`.
-JIKA gambar tersebut HANYA berupa ilustrasi dekoratif (misal: orang membaca buku, logo, kartun abstrak) ATAU tidak nyambung dengan isu narasi soalmu, MAKA WAJIB KOSONGKAN field `image_path`.
-JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal.
+Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
+Pilih satu path gambar yang paling relevan dengan soal yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
+JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal. Cukup isikan URL path aslinya di field `image_path`.
 {% endif %}
 
-[TASK]
-Hasilkan 5 soal Essay dalam format **JSON murni**. DILARANG menyertakan teks pembuka/penutup atau blok markdown (```json).
-*Escape Requirement*: Escape semua baris baru menjadi "\n" dan tanda kutip ganda internal menjadi "\"".
+[LEVEL_CONFIGURATION]
+{{ level_config }}
 
-[STRUCTURE]
-{
-  "pertanyaan": [
-    {
-      "id": "e1",
-      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
-      "rubrik": "[Tuliskan rubrik penilaian secara rinci dengan MAKSIMAL SKOR 20 UNTUK SOAL INI]",
-      "stimulus": "[Buat narasi pengantar atau masalah YANG BERBEDA-BEDA untuk setiap soal]",
-      "image_path": [Isi dengan path (string) gambar HANYA JIKA deskripsi visualnya BENAR-BENAR relevan dengan isu stimulus atau pertanyaan. Jika sekadar gambar dekoratif/ilustrasi umum, WAJIB isikan literal null tanpa tanda kutip],
-      "rubrik": "[Tuliskan rubrik penilaian secara rinci dengan MAKSIMAL SKOR 20 UNTUK SOAL INI]",
-      "penjelasan": "[Tuliskan KUNCI JAWABAN LENGKAP dan pembahasan ideal untuk soal ini]"
-    }
-  ]
-}
-Catatan Penting JSON: 
-- "soal" HANYA berisi pertanyaan. Konteks/narasi dimasukkan ke dalam "stimulus".
+[SUBJECT_CONFIGURATION]
+{{ subject_config }}
 
-[RULES]
-- Aturan Stimulus Essay (100 - 250 kata): Wajib menyusun teks pengantar soal yang komprehensif berdasarkan empat poin aturan mutlak berikut:
-  * Multidimensionalitas Isu: Teks wajib mengangkat kasus krisis/fakta empiris di Indonesia yang bersinggungan dengan lebih dari satu sudut pandang (misal: ekonomi vs lingkungan, efisiensi teknis vs regulasi sosial).
-  * Kedalaman Data Celah (Gap): Sajikan dua set data atau fenomena yang saling bertentangan secara parsial di dalam teks untuk memaksa siswa melakukan evaluasi sintesis, BUKAN sekadar membaca ulang informasi.
-  * Adaptasi Rumpun Mapel:
-    1. Mapel STEM: Wajib menyajikan anomali data eksperimen, kegagalan desain rekayasa lokal, atau tren kuantitatif yang membutuhkan pemodelan ulang.
-    2. Mapel Non-STEM: Wajib menyajikan konflik kebijakan, dilema etika sejarah/sosial, atau bias argumen publik yang terjadi secara nyata.
-  * Format Hibrida Kompleks: Teks wajib menggunakan kombinasi minimal DUA format visual Markdown (misalnya: Paragraf Narasi + Tabel Komparasi Data, atau Paragraf Narasi + Poin List Argumen yang saling bertentangan).
-- Question (30 - 80 kata): Wajib meminta siswa untuk "Mengevaluasi", "Mendesain ulang", atau "Memecahkan dilema". DILARANG KERAS menggunakan kata tanya tertutup atau meminta siswa mendaftar fakta ("Sebutkan", "Apa saja", "Jelaskan definisi").
-- Rubrik Penilaian (100 - 200 kata): Wajib memuat kriteria penilaian berjenjang (Skor 0-100) yang eksplisit dan tidak ambigu. Rubrik harus menilai proses berpikir (logika, koherensi, pembuktian data), BUKAN sekadar ada/tidaknya kata kunci. Gunakan daftar poin (-) ATAU tabel Markdown. Wajib mencantumkan contoh argumen benar dan contoh argumen salah (miskonsepsi umum) sebagai panduan *grading* bagi AI atau guru.
+[LEARNING_CONTEXT]
+{{ rag_context }}
+
+[ATP_ALIGNMENT]
+{{ atp }}
+
+Prioritize ATP objectives as curriculum constraints.
+
+[QUESTION_DESIGN_RULES]
+- Frame questions around real Indonesian scenarios.
+- Avoid simple recall questions ("Sebutkan", "Apa definisi").
+- Require students to explain "Mengapa" or "Bagaimana".
+- Do not make the question overly convoluted.
+
+[RUBRIC_REQUIREMENTS]
+- Keep rubrics concise and actionable.
+- Define exactly what constitutes a high-score answer.
+
+[EXPLANATION_REQUIREMENTS]
+- Keep explanation direct and focused on the key concepts.
+- Use clear cause-effect logic.
+
+[STRICT_OUTPUT_RULES]
+- Return raw JSON only.
+- No markdown code block.
+- No additional commentary.
+- Escape newline characters.
+- Escape internal quotes.

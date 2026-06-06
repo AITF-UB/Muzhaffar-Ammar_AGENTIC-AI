@@ -1,9 +1,13 @@
-[KONTEKS_PEMBELAJARAN]
-- Tujuan Pembelajaran (ATP): {{ atp }}
-- Jenjang & Kelas: {{ jenjang }}, Kelas {{ kelas }}
+[TASK]
+Generate learning material in JSON format.
 
-[RAG_CONTEXT]
-{{ rag_context }}
+[OUTPUT_SCHEMA]
+{
+  "text": "[Gabungan judul utama dan isi materi tanpa nomor, menggunakan markdown]",
+  "judul": "[Judul Konsep Utama]",
+  "source": "[Isi dengan string kosong, akan diisi oleh sistem]",
+  "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan, jika tidak biarkan null]"
+}
 
 {% if image_context %}
 [KONTEKS GAMBAR (MULTIMODAL)]
@@ -12,29 +16,96 @@
 *** INSTRUKSI MUTLAK UNTUK GAMBAR ***
 Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
 Pilih satu path gambar yang paling relevan dengan materi yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
-JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam teks konten_markdown. Cukup isikan URL path aslinya di field `image_path`.
+JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam teks. Cukup isikan URL path aslinya di field `image_path`.
 {% endif %}
 
-[TASK]
-Hasilkan materi pembelajaran digital dalam format JSON murni. DILARANG menyertakan teks pembuka/penutup atau blok markdown (```json).
-*Escape Requirement*: Escape semua baris baru menjadi "\n" dan tanda kutip ganda internal menjadi "\"".
+[LEVEL_CONFIGURATION]
+{{ level_config }}
 
-STRUKTUR JSON:
-{
-  "text": "[Gabungan sub-heading dan isi materi tanpa nomor]",
-  "judul": "[Judul Konsep Utama]",
-  "image_path": [Isi dengan path (string) asli gambar dari KONTEKS GAMBAR jika relevan dengan materi, jika tidak relevan atau tidak ada gambar biarkan nilai menjadi literal null tanpa tanda kutip]
-}
+[SUBJECT_CONFIGURATION]
+{{ subject_config }}
 
-[CONTENT]
-Wajib menghasilkan TOTAL MINIMAL 500 KATA menggunakan alur urutan di bawah ini (Gunakan sub-heading cetak tebal markdown `###` tanpa nomor atau tanda titik dua):
+[LEARNING_CONTEXT]
+{{ rag_context }}
 
-- Direct Hook (Maksimal 1 Paragraf): Narasi alur SCQ tanpa label. Wajib diawali fakta empiris/data krisis riil di Indonesia (Mindful).
-- Penjelasan Konsep (Maksimal 2 Paragraf): Logika sebab-akibat konsep yang dihubungkan dengan analogi lokal Indonesia secara mendalam (Meaningful).
-- Teknis & Formulasi: Rumus matematika/sains dengan LaTeX ($ atau $$) + penjelasan variabel secara sistematis (Gunakan double backslash seperti \\frac atau \\times).
-- Studi Kasus Riil (Minimal 2 Paragraf): Skenario nyata krisis/industri di Indonesia. Selesaikan masalah secara bertahap menggunakan konsep teknis di atas (Joyful/AHA Moment).
-- Penutup & Refleksi (Maksimal 1 Paragraf): Pertanyaan refleksi mandiri terkait regulasi diri siswa di kehidupan sehari-hari.
+[ATP_ALIGNMENT]
+{{ atp }}
 
-[HEADING]
-- Judul Kontekstual: Judul dan subjudul WAJIB memadukan [Konsep Utama] dan [Dampak Sosial di Indonesia] menjadi satu kalimat utuh yang mengalir lancar, formal, serta komunikatif untuk siswa SMA.
-- Batasan Struktur: DILARANG KERAS menggunakan tanda titik dua (:), penomoran (1, 2, A, B), atau label struktural (seperti "Direct Hook", "Penjelasan Konsep", "Formulasi/Teknis", "Studi Kasus", "Refleksi/Penutup") pada judul dan subjudul.
+Prioritize ATP objectives as curriculum constraints.
+
+[CONTENT_REQUIREMENTS]
+- Generate a minimum of 500 words.
+- Use natural Indonesian educational language suitable for SMA students.
+- Maintain strong contextual relevance to Indonesian realities.
+- Build clear cause-effect explanations.
+- Prioritize practical understanding before abstraction.
+
+[CONTENT_STRUCTURE]
+The material should flow naturally through these sections:
+
+- contextual opening
+- concept explanation
+- technical explanation or formulation
+- real Indonesian case study
+- reflective closing
+
+Use markdown subheadings with:
+### Heading
+
+Do not use:
+- numbering
+- rigid section labels
+- colon symbols in headings
+
+[OPENING_REQUIREMENTS]
+- Start with realistic Indonesian situations, problems, or numerical/social phenomena.
+- Build curiosity naturally through contextual tension.
+- Avoid rhetorical greetings or motivational filler.
+
+[CONCEPT_EXPLANATION]
+- Explain concepts gradually and logically.
+- Connect concepts with Indonesian daily life situations.
+- Avoid abstract academic wording.
+
+[TECHNICAL_REQUIREMENTS]
+- STEM subjects:
+  - include formulas using LaTeX
+  - explain variables clearly
+  - use escaped LaTeX:
+    \\frac
+    \\times
+    \\sqrt
+
+- Theory subjects:
+  - explain conceptual relationships
+  - strengthen causal understanding
+
+[CASE_STUDY_REQUIREMENTS]
+- Use realistic Indonesian cases:
+  - UMKM
+  - pertanian
+  - distribusi
+  - sekolah
+  - lingkungan sosial
+  - ekonomi keluarga
+  - industri lokal
+
+- Demonstrate step-by-step reasoning or analysis.
+- Show practical application of concepts.
+
+[REFLECTION_REQUIREMENTS]
+- End with reflective guidance related to learning awareness or daily application.
+- Reflection must remain grounded and realistic.
+- Avoid overly philosophical narration.
+
+[TITLE_REQUIREMENTS]
+- Combine the main concept and Indonesian contextual impact naturally.
+- Titles should feel formal, readable, and educational.
+- Avoid rigid labels or symbolic formatting.
+
+[STRICT_OUTPUT_RULES]
+- Return raw JSON only.
+- No markdown code block.
+- No additional commentary.
+- Escape newline characters.
+- Escape internal quotes.

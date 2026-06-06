@@ -491,33 +491,65 @@ def clean_json_from_llm(raw_text: str) -> dict | list:
         except json.JSONDecodeError:
             pass
 
-    # 2. Kalau gak ada markdown block, cari pola json pake regex atau find dari ujung
+    # 2. Kalau gak ada markdown block, bersihkan teks
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
     
-    # Cari list [...] dari belakang (asumsi json ada di bagian paling akhir response)
-    idx_bracket_end = clean_text.rfind(']')
-    if idx_bracket_end != -1:
-        # cari kurung buka pasangannya
-        idx_bracket_start = clean_text.rfind('[', 0, idx_bracket_end)
-        if idx_bracket_start != -1:
+    # Cari batas awal dan akhir dari kemungkian Dict atau List
+    first_brace = clean_text.find('{')
+    last_brace = clean_text.rfind('}')
+    first_bracket = clean_text.find('[')
+    last_bracket = clean_text.rfind(']')
+    
+    candidates = []
+    if first_brace != -1 and last_brace != -1 and first_brace < last_brace:
+        candidates.append(clean_text[first_brace:last_brace+1])
+    if first_bracket != -1 and last_bracket != -1 and first_bracket < last_bracket:
+        candidates.append(clean_text[first_bracket:last_bracket+1])
+        
+    # Urutkan berdasarkan panjang string menurun (coba box JSON terbesar lebih dulu)
+    candidates.sort(key=len, reverse=True)
+    
+    for text in candidates:
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
+
+    # 3. Coba perbaiki jika model menghasilkan multiple JSON terpisah (seperti `{"text": ...}\n{"judul": ...}`)
+    # Kita cari semua pola {...} yang valid dan gabungkan key-nya
+    # Ambil semua teks yang diapit kurawal terluar (ini tidak sempurna jika nested, tapi cukup baik untuk fallback)
+    potential_blocks = []
+    depth = 0
+    start_idx = -1
+    for i, char in enumerate(clean_text):
+        if char == '{':
+            if depth == 0:
+                start_idx = i
+            depth += 1
+        elif char == '}':
+            depth -= 1
+            if depth == 0 and start_idx != -1:
+                potential_blocks.append(clean_text[start_idx:i+1])
+                start_idx = -1
+                
+    if len(potential_blocks) > 1:
+        merged_dict = {}
+        success_merge = False
+        for block in potential_blocks:
             try:
-                return json.loads(clean_text[idx_bracket_start:idx_bracket_end+1])
+                parsed = json.loads(block)
+                if isinstance(parsed, dict):
+                    merged_dict.update(parsed)
+                    success_merge = True
             except json.JSONDecodeError:
                 pass
-                
-    # Cari dict {...} dari belakang
-    idx_brace_end = clean_text.rfind('}')
-    if idx_brace_end != -1:
-        # cari kurung buka pasangannya (beresiko kalau ada nested, tapi kita coba rfind '{' yang masuk akal)
-        # Lebih aman cari '{' yang paling awal *sebelum* akhir JSON yang valid, tapi untuk gampangnya kita coba brute force dari awal ke belakang
-        start_idx = clean_text.find('{')
-        while start_idx != -1 and start_idx < idx_brace_end:
-            try:
-                return json.loads(clean_text[start_idx:idx_brace_end+1])
-            except json.JSONDecodeError:
-                start_idx = clean_text.find('{', start_idx + 1)
+        if success_merge:
+            return merged_dict
 
-    return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text[:500]}
+    # Jika semua gagal, kembalikan seluruh teks asli agar tidak terlihat terpotong
+    # Tapi kita beri peringatan potong jika kepanjangan (misal lebih dari 2000 char)
+    error_raw = raw_text if len(raw_text) < 2000 else raw_text[:2000] + "... [TERPOTONG UNTUK LOG]"
+    return {"error": "Gagal parsing JSON dari LLM", "raw": error_raw}
 
 def generate_konten_id(tipe: str, level: str, materi_id: str, kelas_id: str = "all") -> str:
     lvl_str = (level or "all").lower()
