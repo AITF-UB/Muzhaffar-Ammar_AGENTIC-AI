@@ -58,7 +58,7 @@ class BundleItem(BaseModel):
     bundle_id: str
     mapel_label: str
     elemen_label: str
-    materi: str
+    materi: Optional[str] = None
     atp: List[str] = Field(default_factory=list)
 
 class RekomendasiRequest(BaseModel):
