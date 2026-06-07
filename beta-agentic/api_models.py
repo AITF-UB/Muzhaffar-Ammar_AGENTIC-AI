@@ -43,6 +43,7 @@ class SesiSummaryRequest(BaseModel):
     last_quiz: Optional[LastQuiz] = None
     emosi_sesi: List[str] = Field(default_factory=list)
     violations: List[Violation] = Field(default_factory=list)
+    aktivitas_ids: List[str] = Field(default_factory=list)
 
 class EssayEvalItem(BaseModel):
     jawaban_siswa: str

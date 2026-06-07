@@ -221,6 +221,13 @@ def structurer_node(state: AgentState) -> dict:
         if isinstance(content, dict):
             content["source"] = state["sumber_text"]
             
+    # Fallback jika LLM open-source membuang wrapper object dan langsung mengembalikan array
+    if isinstance(content, list):
+        if tipe == "quiz_essay":
+            content = {"pertanyaan": content}
+        elif tipe in ["quiz_pg", "pretest"]:
+            content = {"soal": content}
+            
     return {"final_payload": content}
 
 # ================================================================
