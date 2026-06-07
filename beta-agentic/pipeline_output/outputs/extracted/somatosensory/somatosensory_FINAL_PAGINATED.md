@@ -1,6 +1,6 @@
 # somatosensory
 
-*Diekstrak: 05 June 2026, 23:07*
+*Diekstrak: 08 June 2026, 00:17*
 
 ---
 
@@ -31,9 +31,9 @@ Sensory information from Meissner corpuscles and rapidly adapting afferents lead
 
 Elemen-elemen utama yang terdapat dalam gambar termasuk papillary ridges (puncak papillae), septa (septum), Meissner's corpuscle (korpuskul Meissner), Ruffini's corpuscle (korpuskul Ruffini), Pacinian corpuscle (korpuskul Pacinian), Merkel's receptor (receptor Merkel), dan free nerve ending (ujung saraf bebas). Semua elemen ini terletak di dermis, yang merupakan lapisan kulit bawah.
 
-Teks penting yang muncul dalam gambar meliputi "Hairy skin", "Glabrous skin", "Epidermis", "Dermis", "Free nerve ending", "Merkel's receptor", "Meissner's corpuscle", "Ruffini's corpuscle", "Pacinian corpuscle", dan "Hair receptor". Selain itu, ada juga label untuk papillary ridges dan septa.
+Teks penting yang muncul dalam gambar meliputi "Hairy skin", "Glabrous skin", "Epidermis", "Dermis", "Free nerve ending", "Merkel's receptor", "Meissner's corpuscle", "Ruffini's corpuscle", "Pacinian corpuscle", dan "Hair receptor". Label-label ini membantu dalam mengidentifikasi posisi dan fungsi setiap komponen.
 
-Informasi kunci yang dapat diambil dari gambar ini adalah bahwa struktur kulit terdiri dari berbagai jenis sensorik dan mekanis yang memungkinkan individu merasakan berbagai stimulasi. Gambar ini memberikan pemahaman tentang bagaimana rambut, kelenjar sebaceous, serta berbagai receptor sensorik interaksi dengan lapisan kulit bawah untuk mendeteksi berbagai jenis tekanan dan sentuhan.
+Informasi kunci yang dapat diambil dari gambar adalah bahwa struktur kulit terdiri dari berbagai jenis sensorik dan mekanoreceptor, termasuk Meissner's corpuscle untuk deteksi sentuhan lembut, Ruffini's corpuscle untuk perubahan tekanan, Pacinian corpuscle untuk percepatan, Merkel's receptor untuk rasa sentuh kasar, dan free nerve ending untuk sensasi panik. Gambar ini juga menunjukkan bahwa kulit berambut (hairy skin) memiliki struktur yang lebih kompleks dibandingkan kulit bebas rambut (glabrous skin).
 
 This is a sample document to showcase page-based formatting. It contains a chapter from a Wikibook called Sensory Systems. None of the content has been changed in this article, but some content has been removed.
 
@@ -55,13 +55,13 @@ This is a sample document to showcase page-based formatting. It contains a chapt
 
 > **Deskripsi Visual:** Gambar ini adalah ilustrasi yang menunjukkan struktur dan fungsi sistem refleks otot tulang belakang (muscle spindle) dalam tubuh manusia, khususnya bagian otot-otot eksternal. Ilustrasi ini merupakan diagram yang memperlihatkan hubungan antara neuron motor (motoneuron), afferent (serabut saraf pengirim), dan struktur intrafusal dan extrafusal dalam sistem refleks otot tulang belakang.
 
-1. Apa yang ditampilkan secara keseluruhan: Ilustrasi ini menunjukkan bagaimana serabut saraf motorik (motoneuron) berinteraksi dengan otot-otot eksternal melalui afferent dan intrafusal muscle fibers untuk mengontrol gerakan dan reaksi otot.
+1. Apa yang ditampilkan secara keseluruhan: Ilustrasi ini menunjukkan bagaimana serabut saraf motorik (motoneuron) berinteraksi dengan otot-otot eksternal melalui afferent dan intrafusal muscle fibers untuk mengontrol gerakan dan refleks otot.
 
-2. Elemen-elemen utama dan relasinya: Ilustrasi ini menunjukkan motoneuron γ-s, la afferent, II afferent, serta intrafusal muscle fibers yang berinteraksi dengan extrafusal (main) muscle fascicles. Motoneuron γ-s mengontrol otot eksternal melalui serabut saraf pengirim (afferent), sementara la afferent dan II afferent memberikan informasi tentang panjang otot ke sistem saraf pusat.
+2. Elemen-elemen utama dan relasinya: Ilustrasi ini menunjukkan motoneuron γ-s, la afferent, II afferent, serta extrafusal (main) muscle fascicles dan intrafusal muscle fibers. Motoneuron γ-s mengontrol intrafusal muscle fibers, sedangkan la afferent dan II afferent menerima informasi dari otot eksternal.
 
-3. Teks, angka, atau label penting yang terlihat: Ilustrasi ini menggunakan berbagai label seperti "enlarged view of muscle spindle", "γ-s motoneuron", "II afferent", "la afferent", dan "extrafusal (main) muscle fascicles". Label ini membantu dalam memahami hubungan antara komponen-komponen tersebut.
+3. Teks, angka, atau label penting yang terlihat: Gambar ini memiliki beberapa label penting seperti "enlarged view of muscle spindle", "γ-s motoneuron", "II afferent", "la afferent", dan "extrafusal (main) muscle fascicles". Selain itu, ada juga penunjuk pada intrafusal muscle fibers.
 
-4. Informasi kunci yang dapat diambil pembaca: Ilustrasi ini memberikan gambaran tentang bagaimana sistem refleks otot tulang belakang bekerja untuk mengontrol gerakan dan reaksi otot, serta menunjukkan interaksi antara motoneuron dengan serabut saraf pengirim dan intrafusal muscle fibers. Ini sangat penting dalam memahami mekanisme refleksi otot dan bagaimana tubuh kita merespons perubahan dalam lingkungan sekitar.
+4. Informasi kunci yang dapat diambil pembaca: Ilustrasi ini memberikan gambaran tentang bagaimana sistem refleks otot tulang belakang bekerja untuk mengontrol gerakan dan refleksi otot. Ini menunjukkan interaksi antara neuron motorik, serabut saraf pengirim, dan struktur intrafusal dan extrafusal dalam konteks kontrol otot.
 
 rapidly adapting afferent activity, muscle force increases reflexively until the gripped object no longer moves. Such a rapid response to a tactile stimulus is a clear indication of the role played by somatosensory neurons in motor activity.
 
@@ -87,7 +87,7 @@ Nociceptors  have  free  nerve  endings.  Functionally,  skin nociceptors  are  
 
 ![Tabel](extracted_assets/table_p003_003.png)
 
-Tabel ini membahas jenis-jenis receptor kulit berdasarkan kecepatan adaptasi dan lokasinya. Kolom pertama menunjukkan apakah receptor tersebut berada di permukaan (surface) atau dalam (deep), sementara kolom kedua membedakan antara receptor yang cepat adaptasi dengan yang lambat adaptasi. Untuk receptor pada permukaan, hair receptor dan Meissner’s corpuscle digunakan untuk mendeteksi serangga atau vibrasi halus serta mengenali tekstur. Sementara itu, Merkel’s receptor berfungsi untuk detail ruas-ruas ruang seperti tepi lingkaran permukaan atau "X" dalam braille. Pada receptor yang lebih dalam, Pacinian corpuscle merespons vibrasi luas seperti ketukan dengan pensil, sedangkan Ruffini’s corpuscle merespons penarikan kulit dan digunakan untuk menentukan posisi sendi di jari-jari tangan.
+Tabel ini membahas jenis-jenis receptor kulit berdasarkan kecepatan adaptasi dan lokasinya. Kolom pertama menunjukkan apakah receptor tersebut berada di permukaan (surface) atau dalam (deep), dengan ukuran field reseptornya yang kecil atau besar. Kolom kedua membedakan antara receptor yang cepat adaptasi (rapidly adapting) dan lambat adaptasi (slowly adapting). Untuk receptor pada permukaan, hair receptor dan Meissner’s corpuscle digunakan untuk mendeteksi serangga atau vibrasi halus serta mengenali tekstur. Sementara itu, Merkel’s receptor yang termasuk dalam kelompok receptor lambat adaptasi digunakan untuk detail spasial seperti tepi permukaan bulat atau simbol "X" pada Braille. Pada receptor dalam, Pacinian corpuscle berfungsi untuk deteksi vibrasi luas seperti ketukan dengan pensil, sedangkan Ruffini’s corpuscle yang termasuk dalam kelompok lambat adaptasi digunakan untuk merasakan penarikan kulit dan posisi jari-jari.
 
 only to intense mechanical stimuli, but also to heat and to noxious chemicals. These receptors respond to minute punctures of the epithelium, with a response magnitude that depends on the degree of tissue deformation. They also respond to temperatures in the range of 40-60°C, and change their response rates as a linear function of warming (in contrast with the saturating responses displayed by non-noxious thermoreceptors at high temperatures).
 

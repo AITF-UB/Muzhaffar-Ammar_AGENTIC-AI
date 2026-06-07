@@ -127,6 +127,7 @@ class PipelineParams(BaseModel):
     qdrant_host:      str  = Field(os.getenv("QDRANT_HOST", "76.13.195.1"),           description="Host Qdrant")
     qdrant_port:      int  = Field(int(os.getenv("QDRANT_PORT", "6333")),             description="Port Qdrant")
     collection_name:  str  = Field(os.getenv("QDRANT_TEXT_COLLECTION", "Test_pipeline"), description="Nama collection Qdrant")
+    collection_for_ekstraction: str= Field(os.getenv("QDRANT_PIPELINE_EKSTRACTION", "test_pipeline"), description="Nama collection Qdrant")
     chunk_size:       int  = Field(1000,                                              description="Ukuran chunk teks")
     force_reindex:    bool = Field(False,                                             description="Hapus & buat ulang collection")
     # Batasan halaman — 0 berarti tidak dibatasi (proses semua)
@@ -134,7 +135,8 @@ class PipelineParams(BaseModel):
     end_page:         int  = Field(0, description="Halaman akhir (inklusif). 0 = sampai halaman terakhir")
     # Metadata buku — masuk ke setiap chunk di Qdrant
     mata_pelajaran:   Optional[str] = Field(None, description="Mata pelajaran (mis. Biologi, Matematika)")
-    kelas:            Optional[int] = Field(None, description="Tingkat kelas (mis. 10, 11, 12)")
+    id_kelas:         Optional[str] = Field(None, description="ID Kelas")
+    jenjang:          Optional[str] = Field(None, description="Jenjang Kelas")
     id_guru:          Optional[str] = Field(None, description="ID Guru")
     vlm_model:        str  = Field(DEFAULT_OLLAMA_MODEL, description="Nama model Ollama untuk VLM")
     ollama_host:      str  = Field(DEFAULT_OLLAMA_HOST,  description="URL server Ollama")
@@ -191,13 +193,14 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
             outputs_root      = OUTPUT_DIR / "outputs",
             qdrant_host       = params.qdrant_host,
             qdrant_port       = params.qdrant_port,
-            collection_name   = params.collection_name,
+            collection_name   = params.collection_for_ekstraction,
             chunk_size        = params.chunk_size,
             force_reindex     = params.force_reindex,
             start_page        = params.start_page,
             end_page          = params.end_page,
             mata_pelajaran    = params.mata_pelajaran,
-            kelas             = params.kelas,
+            id_kelas          = params.id_kelas,
+            jenjang           = params.jenjang,
             id_guru           = params.id_guru,
             vlm_model_id      = params.vlm_model,
             ollama_host       = params.ollama_host,
@@ -228,7 +231,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
                 "markdown_files":    [str(p) for p in md_files],
                 "jsonl_files":       [str(p) for p in jsonl_files],
                 "total_chunks":      total_chunks,
-                "qdrant_collection": params.collection_name,
+                "qdrant_collection": params.collection_for_ekstraction,
             },
         )
 
@@ -433,7 +436,8 @@ async def upload_and_run(
     start_page:       int  = Form(0, description="Halaman awal (1-based). 0 = dari awal"),
     end_page:         int  = Form(0, description="Halaman akhir (inklusif). 0 = sampai akhir"),
     mata_pelajaran:   Optional[str] = Form(None, description="Mata pelajaran (mis. Biologi)"),
-    kelas:            Optional[int] = Form(None, description="Tingkat kelas (mis. 10)"),
+    id_kelas:         Optional[str] = Form(None, description="Tingkat kelas"),
+    jenjang:          Optional[str] = Form(None, description="Jenjang Kelas (mis. X, XI, XII)"),
     id_guru:          Optional[str] = Form(None, description="ID Guru"),
 ):
     """
@@ -463,7 +467,8 @@ async def upload_and_run(
         start_page      = start_page,
         end_page        = end_page,
         mata_pelajaran  = mata_pelajaran,
-        kelas           = kelas,
+        id_kelas        = id_kelas,
+        jenjang         = jenjang,
         id_guru         = id_guru,
     )
 
