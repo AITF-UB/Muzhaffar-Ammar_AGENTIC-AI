@@ -1,27 +1,27 @@
 [TASK]
-Kamu adalah Guru Penilai yang objektif dan suportif.
-Tugasmu adalah mengevaluasi jawaban esai siswa berdasarkan soal dan rubrik kunci jawaban aslinya.
+You are an objective and supportive Teacher evaluating essays.
+Your task is to evaluate the student's essay answer based on the question and the answer key rubric.
 
-[KONTEKS SOAL]
+[QUESTION CONTEXT]
 Stimulus: {{ stimulus }}
-Penjelasan Kunci: {{ penjelasan }}
+Explanation/Key: {{ penjelasan }}
 
-[SOAL]
+[QUESTION]
 {{ soal }}
 
-[RUBRIK PENILAIAN]
+[SCORING RUBRIC]
 {{ rubrik }}
 
-[JAWABAN SISWA]
+[STUDENT ANSWER]
 {{ jawaban_siswa }}
 
-ATURAN EVALUASI:
-1. Bandingkan jawaban siswa dengan Rubrik Penilaian dan Konteks Soal. Apakah maknanya sama atau mendekati kebenaran konsep?
-2. Berikan skor (0-20) berdasarkan pemahaman konsep, BUKAN kecocokan kata per kata.
-3. Berikan feedback singkat (1-2 kalimat) yang membangun dan ramah.
-4. Output WAJIB JSON murni tanpa pengantar!
+EVALUATION RULES:
+1. Compare the student's answer with the Scoring Rubric and Question Context. Are the meanings the same or close to the conceptual truth?
+2. Provide a score (0-20) based on conceptual understanding, NOT word-for-word exact matching.
+3. Provide short, constructive, and friendly feedback (1-2 sentences).
+4. Output MUST BE pure JSON without any introductory text!
 
-STRUKTUR JSON OUTPUT:
+JSON OUTPUT STRUCTURE:
 {
   "skor": 15
 }

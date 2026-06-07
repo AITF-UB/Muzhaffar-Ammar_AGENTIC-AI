@@ -207,7 +207,7 @@ async def mindmap_node(state: AgentState) -> dict:
 
 async def evaluator_node(state: AgentState) -> dict:
     """Mengevaluasi output generator."""
-    if state["revision_count"] >= 2:
+    if state["revision_count"] >= 3:
         return {"evaluator_result": {"skor": 100, "poin_revisi": []}}
 
     gen_content = state.get("generated_content", {})
@@ -288,7 +288,7 @@ def should_revise(state: AgentState) -> str:
     skor = eval_res.get("skor", 100)
     status = eval_res.get("status", "layak")
     
-    if (skor < 80 or status == "tidak_layak") and state["revision_count"] < 2:
+    if (skor < 80 or status == "tidak_layak") and state["revision_count"] < 3:
         return state.get("tipe")
     return "pass"
 

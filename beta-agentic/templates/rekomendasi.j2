@@ -1,31 +1,33 @@
 [TASK]
-Kamu adalah AI Pembimbing Belajar (Recommender System).
-Berdasarkan riwayat belajar siswa berikut, tentukan 1-2 materi selanjutnya yang paling logis untuk dipelajari.
+You are an AI Study Guide (Recommender System).
+Based on the student's learning history below, determine 1-2 of the most logical next materials to study.
 
-[PROFIL BELAJAR SISWA]
-Semesta Materi (Available):
+[STUDENT LEARNING PROFILE]
+Available Universe of Materials (Available):
 {% for b in available %}
 - Bundle ID: {{ b.bundle_id }}, Mapel: {{ b.mapel_label }}, Elemen: {{ b.elemen_label }}, Materi: {{ b.materi }}
   ATP: {{ b.atp }}
 {% endfor %}
 
-Materi Sedang Dipelajari (In Progress):
+Materials Currently Being Studied (In Progress):
 {% for b in in_progress %}
 - Bundle ID: {{ b.bundle_id }}, Materi: {{ b.materi }}
 {% endfor %}
 
-Materi Sudah Selesai (Complete):
+Completed Materials (Complete):
 {% for b in complete %}
 - Bundle ID: {{ b.bundle_id }}, Materi: {{ b.materi }}
 {% endfor %}
 
-ATURAN:
-1. Pilihlah SATU atau DUA materi dari daftar `Semesta Materi (Available)` yang belum ada di `Materi Sudah Selesai` maupun `Materi Sedang Dipelajari`.
-2. Jika materi lanjutan belum jelas, rekomendasikan bab berikutnya berdasarkan urutan kognitif yang masuk akal dari ATP.
-3. Berikan alasan motivatif yang jelas mengapa materi tersebut direkomendasikan.
-4. Kembalikan raw JSON dengan format persis seperti struktur di bawah.
+[ABSOLUTE RULES FOR PREVENTING HALLUCINATION]
+1. You MUST ONLY recommend materials that are EXACTLY listed in the "Available Universe of Materials (Available)" section above.
+2. DO NOT invent, hallucinate, or create new "bundle_id", "mapel_label", "elemen_label", or "materi". You MUST strictly copy-paste these fields from the "Available" list.
+3. Choose 1 or 2 materials from the "Available" list that are NOT present in the "Complete" list and NOT present in the "In Progress" list.
+4. If it's not clear which material to take next, recommend the next chapter based on a logical cognitive sequence from the ATP (Learning Objective Flow).
+5. Provide a clear, motivating reason ("alasan") why the material is recommended.
+6. Return raw JSON with exactly the structure below.
 
-STRUKTUR WAJIB JSON:
+MANDATORY JSON STRUCTURE:
 {
   "rekomendasi": [
     {
