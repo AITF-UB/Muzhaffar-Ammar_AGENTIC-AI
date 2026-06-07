@@ -210,6 +210,18 @@ async def evaluator_node(state: AgentState) -> dict:
     if state["revision_count"] >= 2:
         return {"evaluator_result": {"skor": 100, "poin_revisi": []}}
 
+    gen_content = state.get("generated_content", {})
+    if isinstance(gen_content, dict) and "error" in gen_content:
+        # Langsung tembak paksa revisi tanpa panggil LLM Evaluator
+        return {
+            "evaluator_result": {
+                "skor": 0, 
+                "status": "tidak_layak",
+                "poin_revisi": ["JSON output sebelumnya gagal diparsing (kemungkinan terpotong atau kurang tanda koma/kurung). Perbaiki struktur JSON agar valid!"]
+            },
+            "revision_count": state["revision_count"] + 1
+        }
+
     req = state["request_params"]
     sys_prompt = "Kamu adalah Evaluator JSON dan Konten Pendidikan."
     usr_prompt = load_prompt(

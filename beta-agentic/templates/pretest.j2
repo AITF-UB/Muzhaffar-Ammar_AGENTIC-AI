@@ -7,21 +7,23 @@ Never generate more or fewer.
   "soal": [
     {
       "id": "p1",
-      "soal": "[Tuliskan HANYA kalimat pertanyaan utuh disini]",
+      "soal": "[Write ONLY the complete question sentence here]",
       "level": "[Must be exactly 'lots', 'mots', or 'hots']",
       "jawaban": 0,
-      "pilihan": ["Opsi A", "Opsi B", "Opsi C", "Opsi D"],
-      "stimulus": "[Tuliskan narasi pengantar atau konteks masalah disini]",
-      "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan null]",
-      "penjelasan": "[Penjelasan soal]"
+      "pilihan": ["Option A", "Option B", "Option C", "Option D"],
+      "stimulus": "[Write the introductory narrative or problem context here]",
+      "image_path": "[Fill with image path from MULTIMODAL IMAGE CONTEXT if relevant, otherwise leave null]",
+      "penjelasan": "[Explanation for the correct answer]"
     }
   ]
 }
-Catatan Penting JSON:
-- "jawaban" adalah INDEX INTEGER dari array "pilihan" (0 untuk opsi pertama, 1 untuk opsi kedua, dst).
-- "soal" adalah gabungan dari Stimulus dan Pertanyaan.
-- DILARANG KERAS membuat soal yang sangat bergantung pada Gambar/Tabel/Grafik. JANGAN PERNAH menggunakan frasa seperti "Berdasarkan gambar di atas...", atau "Perhatikan tabel berikut...". Setiap soal HARUS bisa dijawab tanpa melihat gambar/tabel secara visual!
-- Meskipun ada referensi gambar di Konteks, abaikan saja dan buat pertanyaan teoretis yang mandiri.
+[CRITICAL JSON RULES]
+- "jawaban" MUST be the INTEGER INDEX of the correct answer in the "pilihan" array (e.g., 0 for the first option, 1 for the second option, 2 for the third, etc.).
+- STRICTLY PROHIBITED to fill "jawaban" with question numbers (like 1, 2, 3... 10) or letters (A/B/C/D). THE VALUE OF "jawaban" MUST ALWAYS BE BETWEEN 0 AND THE NUMBER OF OPTIONS MINUS 1!
+- The correct answer must VARY across questions. DO NOT make the correct answer '0' for all questions. Randomize the correct answer index!
+- "soal" MUST be a combination of the Stimulus and the Question.
+- STRICTLY PROHIBITED to create questions that highly depend on Images/Tables/Graphs. NEVER use phrases like "Based on the image above...", or "Look at the following table...". Every question MUST be answerable without visual aids!
+- Even if there are image references in the Context, ignore them and create independent theoretical questions.
 
 [LEVEL_CONFIGURATION]
 {{ level_config }}

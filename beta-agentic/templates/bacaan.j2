@@ -3,21 +3,21 @@ Generate learning material in JSON format.
 
 [OUTPUT_SCHEMA]
 {
-  "text": "[Gabungan judul utama dan isi materi tanpa nomor, menggunakan markdown]",
-  "judul": "[Judul Konsep Utama]",
-  "source": "[Isi dengan string kosong, akan diisi oleh sistem]",
-  "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan, jika tidak biarkan null]"
+  "text": "[Combined main title and material content without numbering, using markdown]",
+  "judul": "[Main Concept Title]",
+  "source": "[Fill with empty string, will be filled by system]",
+  "image_path": "[Fill with image path from MULTIMODAL IMAGE CONTEXT if relevant, otherwise leave null]"
 }
 
 {% if image_context %}
-[KONTEKS GAMBAR (MULTIMODAL)]
+[MULTIMODAL IMAGE CONTEXT]
 {{ image_context }}
 
-*** INSTRUKSI MUTLAK UNTUK GAMBAR ***
-Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
-Pilih satu path gambar yang paling relevan dengan materi yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
-JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam teks. Cukup isikan URL path aslinya di field `image_path`.
-DILARANG KERAS membuat narasi teks yang menggantung atau sangat bergantung pada Gambar/Tabel. JANGAN menggunakan frasa seperti "Perhatikan tabel di bawah ini...". Buatlah kalimat narasi teoretis yang mandiri.
+*** ABSOLUTE INSTRUCTION FOR IMAGES ***
+The reference text above has markers like [Referensi File Gambar: filename.png] right above the text describing the image.
+Select ONE image path that is most relevant to the material you are creating, and put it in the `image_path` field in the JSON structure.
+DO NOT use markdown image syntax `![img](path)` inside the text. Just fill the raw URL path in the `image_path` field.
+STRICTLY PROHIBITED to create text narratives that hang or highly depend on Images/Tables. DO NOT use phrases like "Look at the table below...". Create independent theoretical narrative sentences.
 {% endif %}
 
 [LEVEL_CONFIGURATION]

@@ -7,26 +7,26 @@ Never generate more or fewer.
   "pertanyaan": [
     {
       "id": "e1",
-      "soal": "[Kalimat pertanyaan essay]",
-      "rubrik": "[Kriteria penilaian skor tinggi]",
-      "stimulus": "[Narasi pengantar atau konteks masalah]",
-      "image_path": "[Isi dengan path gambar dari KONTEKS GAMBAR jika relevan dengan soal ini, jika tidak biarkan null]",
-      "penjelasan": "[Penjelasan jawaban benar]"
+      "soal": "[Essay question sentence]",
+      "rubrik": "[High-score grading criteria]",
+      "stimulus": "[Introductory narrative or problem context]",
+      "image_path": "[Fill with image path from MULTIMODAL IMAGE CONTEXT if relevant, otherwise leave null]",
+      "penjelasan": "[Explanation for the correct answer]"
     }
   ]
 }
-Catatan Penting JSON:
-- DILARANG menggunakan kata "Stimulus:" atau "Pertanyaan:" di dalam field "soal". Field "soal" HANYA berisi kalimat pertanyaannya saja.
-- DILARANG KERAS membuat soal yang sangat bergantung pada Gambar/Tabel/Grafik. JANGAN PERNAH menggunakan frasa seperti "Berdasarkan gambar di atas...", atau "Perhatikan tabel berikut...". Setiap soal HARUS bisa dijawab tanpa melihat gambar/tabel secara visual!
-- Meskipun ada referensi gambar di Konteks, abaikan saja dan buat pertanyaan teoretis yang mandiri.
+[CRITICAL JSON RULES]
+- DO NOT use words like "Stimulus:" or "Question:" inside the "soal" field. The "soal" field must ONLY contain the actual question sentence.
+- STRICTLY PROHIBITED to create questions that highly depend on Images/Tables/Graphs. NEVER use phrases like "Based on the image above...", or "Look at the following table...". Every question MUST be answerable without visual aids!
+- Even if there are image references in the Context, ignore them and create independent theoretical questions.
 {% if image_context %}
-[KONTEKS GAMBAR (MULTIMODAL)]
+[MULTIMODAL IMAGE CONTEXT]
 {{ image_context }}
 
-*** INSTRUKSI MUTLAK UNTUK GAMBAR ***
-Teks referensi di atas memiliki penanda [Referensi File Gambar: nama_file.png] tepat di atas teks yang menjelaskan gambar tersebut.
-Pilih satu path gambar yang paling relevan dengan soal yang kamu buat, dan isikan ke dalam field `image_path` pada JSON struktur.
-JANGAN menggunakan sintaks markdown gambar `![img](path)` di dalam soal. Cukup isikan URL path aslinya di field `image_path`.
+*** ABSOLUTE INSTRUCTION FOR IMAGES ***
+The reference text above has markers like [Referensi File Gambar: filename.png] right above the text describing the image.
+Select ONE image path that is most relevant to the question you are creating, and put it in the `image_path` field in the JSON structure.
+DO NOT use markdown image syntax `![img](path)` inside the question. Just fill the raw URL path in the `image_path` field.
 {% endif %}
 
 [LEVEL_CONFIGURATION]
