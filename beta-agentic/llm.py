@@ -102,7 +102,7 @@ def get_llm():
             model_name=os.getenv("TIM2_MODEL_ID", "aitf-ub-2026/ub-sr-02-qwen3.5-9b-base-sft-v2"),
             temperature=float(os.getenv("TIM2_TEMPERATURE", "0.2")),
             max_tokens=int(os.getenv("MAX_TOKEN", 4096)),
-            model_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}}
         )
 
     elif provider == "kaggle_vllm":
@@ -115,7 +115,7 @@ def get_llm():
             model_name=os.getenv("KAGGLE_VLLM_MODEL_ID", "AITF-SR-02/ub-sr-02-qwen3.5-9b-base-5k-CPT-SFT-v2"),
             temperature=0.3,
             max_tokens=int(os.getenv("MAX_TOKEN", 4000)),
-            model_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}}
         )
 
     elif provider == "kaggle_ollama":
@@ -170,6 +170,19 @@ def get_eval_llm():
         return ChatBedrockConverse(
             client=bedrock_client,
             model_id=os.getenv("EVAL_BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0"),
+            temperature=0.0,
+            max_tokens=4000
+        )
+    elif provider == "runpod":
+        from langchain_openai import ChatOpenAI
+        endpoint = os.getenv("EVAL_RUNPOD_ENDPOINT_URL") or os.getenv("RUNPOD_ENDPOINT_URL")
+        if endpoint and endpoint.endswith("/chat/completions"):
+            endpoint = endpoint.replace("/chat/completions", "")
+            
+        return ChatOpenAI(
+            openai_api_base=endpoint,
+            openai_api_key=os.getenv("EVAL_RUNPOD_API_KEY") or os.getenv("RUNPOD_API_KEY", "empty"),
+            model_name=os.getenv("EVAL_RUNPOD_MODEL_ID", "qwen/qwen3-8b"),
             temperature=0.0,
             max_tokens=4000
         )

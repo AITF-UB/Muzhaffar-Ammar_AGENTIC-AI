@@ -388,10 +388,10 @@ def extract_source(chunks: List[dict]) -> List[str]:
 class RAGEngine:
     @staticmethod
     def get_k_for_type(tipe: str) -> int:
-        if tipe == "bacaan": return 10
-        if tipe == "flashcard": return 5
-        if tipe == "mindmap": return 7
-        return 5
+        if tipe == "bacaan": return 8
+        if tipe == "flashcard": return 6
+        if tipe == "mindmap": return 8
+        return 8
 
     @staticmethod
     async def unified_search(query: str, tipe: str, mapel: Optional[str] = None, kelas: Optional[int] = None) -> Dict[str, Any]:
@@ -546,10 +546,8 @@ def clean_json_from_llm(raw_text: str) -> dict | list:
         if success_merge:
             return merged_dict
 
-    # Jika semua gagal, kembalikan seluruh teks asli agar tidak terlihat terpotong
-    # Tapi kita beri peringatan potong jika kepanjangan (misal lebih dari 2000 char)
-    error_raw = raw_text if len(raw_text) < 2000 else raw_text[:2000] + "... [TERPOTONG UNTUK LOG]"
-    return {"error": "Gagal parsing JSON dari LLM", "raw": error_raw}
+    # Jika semua gagal, kembalikan seluruh teks asli secara penuh agar frontend/klien bisa mendebug
+    return {"error": "Gagal parsing JSON dari LLM", "raw": raw_text}
 
 def generate_konten_id(tipe: str, level: str, materi_id: str, kelas_id: str = "all") -> str:
     lvl_str = (level or "all").lower()

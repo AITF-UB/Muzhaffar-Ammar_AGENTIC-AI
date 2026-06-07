@@ -101,11 +101,39 @@ async def retrieve_node(state: AgentState) -> dict:
             img_ctx_str += f"- image_path: {img_path}\n"
             img_ctx_str += f"- konteks_materi_gambar: {img_context}...\n\n"
         
+    max_rag_tokens_str = os.getenv("MAX_RAG_TOKEN")
+    if max_rag_tokens_str and max_rag_tokens_str.isdigit():
+        max_rag_tokens = int(max_rag_tokens_str)
+        text_ctx = truncate_context_to_budget(text_ctx, max_tokens=max_rag_tokens) if text_ctx else ""
+        img_ctx_str = truncate_context_to_budget(img_ctx_str, max_tokens=max_rag_tokens // 4).strip() if img_ctx_str else ""
+        
     return {
         "rag_context": text_ctx if text_ctx else "Tidak ada dokumen relevan di database.",
         "sumber_text": sumber,
-        "image_context": img_ctx_str.strip()
+        "image_context": img_ctx_str.strip() if img_ctx_str else ""
     }
+
+def get_rag_context_for_revision(state: AgentState) -> str:
+    """Mengembalikan rag_context atau string kosong jika error murni dari gagal parsing."""
+    if state["revision_count"] == 0:
+        return state.get("rag_context", "")
+        
+    eval_res = state.get("evaluator_result", {})
+    poin = str(eval_res.get("poin_revisi", ""))
+    gen = state.get("generated_content", {})
+    
+    is_format_error = False
+    if isinstance(gen, dict) and "error" in gen:
+        is_format_error = True
+    elif "JSON" in poin and "rusak" in poin:
+        is_format_error = True
+        
+    if "konteks" in poin.lower() or "jauh" in poin.lower() or "materi" in poin.lower() or "rag" in poin.lower():
+        is_format_error = False
+        
+    if is_format_error:
+        return ""
+    return state.get("rag_context", "")
 
 async def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
     req = state["request_params"]
@@ -117,6 +145,10 @@ async def _call_generation_llm(state: AgentState, usr_prompt: str) -> dict:
 
     if state.get("evaluator_result") and state["revision_count"] > 0:
         usr_prompt += f"\n\n[FEEDBACK REVISI SEBELUMNYA]:\n{state['evaluator_result'].get('poin_revisi')}\nPerbaiki JSON-mu!"
+        
+        gen = state.get("generated_content", {})
+        if isinstance(gen, dict) and "raw" in gen:
+            usr_prompt += f"\n\n[OUTPUT SEBELUMNYA YANG RUSAK]:\n```text\n{gen['raw']}\n```\nTugasmu HANYA memperbaiki format JSON di atas agar valid (tambahkan kutip, kurung, koma, dll yang kurang). JANGAN mengubah isinya secara drastis."
 
     response = await llm.ainvoke([SystemMessage(content=sys_prompt), HumanMessage(content=usr_prompt)])
     content_dict = clean_json_from_llm(response.content)
@@ -130,7 +162,7 @@ async def bacaan_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("bacaan", lvl)
     subject_config = compile_subject_registry("bacaan", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("bacaan.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=get_rag_context_for_revision(state), image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def pretest_node(state: AgentState) -> dict:
@@ -138,7 +170,7 @@ async def pretest_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("pretest", lvl)
     subject_config = compile_subject_registry("pretest", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], level=lvl, level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("pretest.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=get_rag_context_for_revision(state), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def quiz_pg_node(state: AgentState) -> dict:
@@ -146,7 +178,7 @@ async def quiz_pg_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("quiz_pg", lvl)
     subject_config = compile_subject_registry("quiz_pg", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("quiz_pg.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=get_rag_context_for_revision(state), image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def quiz_essay_node(state: AgentState) -> dict:
@@ -154,7 +186,7 @@ async def quiz_essay_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("quiz_essay", lvl)
     subject_config = compile_subject_registry("quiz_essay", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=state["rag_context"], image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("quiz_essay.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), atp=req.get("atp", ""), rag_context=get_rag_context_for_revision(state), image_context=state.get("image_context", ""), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def flashcard_node(state: AgentState) -> dict:
@@ -162,7 +194,7 @@ async def flashcard_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("flashcard", lvl)
     subject_config = compile_subject_registry("flashcard", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=state["rag_context"], level=lvl, level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("flashcard.j2", jenjang=req["jenjang"], kelas=req.get("kelas_id", ""), rag_context=get_rag_context_for_revision(state), level=lvl, level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def mindmap_node(state: AgentState) -> dict:
@@ -170,7 +202,7 @@ async def mindmap_node(state: AgentState) -> dict:
     lvl = state["level"]
     level_config = compile_leveling_registry("mindmap", lvl)
     subject_config = compile_subject_registry("mindmap", req.get("mapel_id", ""))
-    usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=state["rag_context"], level_config=level_config, subject_config=subject_config)
+    usr_prompt = load_prompt("mindmap.j2", matpel=req["mapel_id"], materi=req.get("materi", ""), rag_context=get_rag_context_for_revision(state), level_config=level_config, subject_config=subject_config)
     return await _call_generation_llm(state, usr_prompt)
 
 async def evaluator_node(state: AgentState) -> dict:
