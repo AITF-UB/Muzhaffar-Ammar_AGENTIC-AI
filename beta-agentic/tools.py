@@ -44,6 +44,29 @@ EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
 
 BM25_CACHE_PATH = Path(__file__).resolve().parent / f"bm25_{TEXT_COLLECTION}.pkl"
 
+# ================================================================
+# Search Mode Configuration
+# ─────────────────────────────────────────────────────────────────
+# SEARCH_MODE mengontrol strategi retrieval yang digunakan:
+#
+#   "dense"   → Hanya dense vector search (aktif untuk production saat ini)
+#               Lebih cepat, resource lebih ringan, cocok saat load tinggi.
+#
+#   "hybrid"  → Dense + SPLADE + BM25 + RRF fusion + rerank
+#               Akurasi lebih tinggi, tapi lebih berat & lambat.
+#               Aktifkan kembali ketika infrastruktur sudah siap.
+#
+# Untuk switch mode, cukup ubah nilai env SEARCH_MODE di .env:
+#   SEARCH_MODE=dense    ← production sekarang
+#   SEARCH_MODE=hybrid   ← aktifkan saat siap
+# ================================================================
+SEARCH_MODE: str = os.getenv("SEARCH_MODE", "dense").lower()
+assert SEARCH_MODE in ("dense", "hybrid"), (
+    f"SEARCH_MODE harus 'dense' atau 'hybrid', dapat: '{SEARCH_MODE}'"
+)
+
+print(f"🔍 Search mode aktif: [{SEARCH_MODE.upper()}]")
+
 # Lazy load globals (BM25 only — model singletons sekarang di model_registry)
 _bm25 = None
 _bm25_docs = []
@@ -73,25 +96,27 @@ def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_paylo
         payload["filter"] = filter_payload
     try:
         response = requests.post(url, json=payload, timeout=120)
-        
+
         # Fallback ke vector biasa jika collection tidak pakai named vectors (seperti srma-22)
         if response.status_code == 400 and "Not existing vector name error" in response.text:
             payload["vector"] = vector
             response = requests.post(url, json=payload, timeout=120)
-            
+
         if response.status_code != 200:
             print(f"⚠️ Qdrant Dense Error Body: {response.text}")
-            
+
         response.raise_for_status()
         return response.json().get("result", [])
     except Exception as e:
         print(f"❌ Error query Qdrant Dense: {e}")
         return []
 
+# ── Hybrid-only components (tidak dipakai saat SEARCH_MODE=dense) ──────────
+
 def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payload: Optional[dict] = None) -> list:
     model = get_sparse_model()
     sparse_vector = model.encode_query(query)
-    
+
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/search"
     payload = {
         "vector": {"name": "sparse", "vector": sparse_vector},
@@ -102,13 +127,13 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
         payload["filter"] = filter_payload
     try:
         response = requests.post(url, json=payload, timeout=120)
-        
+
         if response.status_code != 200:
             print(f"⚠️ Qdrant Splade Error Body: {response.text}")
-            
+
         response.raise_for_status()
         hits = response.json().get("result", [])
-        
+
         results = []
         for hit in hits:
             payload_data = hit.get("payload", {})
@@ -145,7 +170,7 @@ def _build_qdrant_filter(asset_type: Optional[str] = None, source: Optional[str]
     return {"must": conditions} if conditions else None
 
 # ================================================================
-# 3. BM25 Sparse Search
+# 3. BM25 Sparse Search  (hybrid only)
 # ================================================================
 def build_bm25_index():
     global _bm25, _bm25_docs
@@ -221,17 +246,17 @@ def sparse_search(query: str, top_k: int = 10, mata_pelajaran: Optional[str] = N
             continue
         if kelas is not None and meta.get("kelas") != kelas:
             continue
-            
+
         doc["bm25_score"] = float(scores[idx])
         doc["retrieval_type"] = "sparse"
         results.append(doc)
         if len(results) >= top_k:
             break
-            
+
     return results
 
 # ================================================================
-# 4. RRF, Dedup, Expand, Rerank
+# 4. RRF, Dedup, Expand, Rerank  (hybrid only, kecuali expand)
 # ================================================================
 def reciprocal_rank_fusion(dense_results, splade_results, bm25_results, k=60):
     fused_scores = {}
@@ -288,7 +313,7 @@ def expand_chunk_context(docs: list, window=1) -> list:
             doc["expanded_text"] = doc["text"]
             expanded_docs.append(doc)
             continue
-            
+
         cache_key = (source_file, chunk_index, window)
         if cache_key in _chunk_expansion_cache:
             doc["expanded_text"] = _chunk_expansion_cache[cache_key]
@@ -297,7 +322,7 @@ def expand_chunk_context(docs: list, window=1) -> list:
 
         min_idx = chunk_index - window
         max_idx = chunk_index + window
-        
+
         points = _scroll_qdrant(TEXT_COLLECTION, scroll_filter={"must": [{"key": "source_file", "match": {"value": source_file}}]})
         chunks = []
         for p in points:
@@ -322,7 +347,7 @@ async def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
     loop = asyncio.get_event_loop()
     scores = await loop.run_in_executor(None, lambda: reranker.predict(pairs, batch_size=16, show_progress_bar=False))
     ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
-    
+
     reranked_docs = []
     for score, doc in ranked[:top_k]:
         doc["rerank_score"] = float(score)
@@ -333,9 +358,41 @@ async def rerank_results(query: str, docs: list, top_k: int = 5) -> list:
 # ================================================================
 # 5. Pipeline Search Utama
 # ================================================================
-async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> list:
-    if not query.strip(): return []
-    
+async def _retrieve_dense(query: str, top_k: int, mata_pelajaran: Optional[str], kelas: Optional[int]) -> list:
+    """
+    Dense-only retrieval: embed → Qdrant dense search → dedup.
+    Tidak menjalankan SPLADE, BM25, RRF, maupun reranker sehingga
+    lebih ringan dan cepat untuk production.
+    """
+    retrieve_k = max(top_k * 3, 20)
+
+    vector = await embed_text_for_text_vdb(query)
+    payload_filter = _build_qdrant_filter(mata_pelajaran=mata_pelajaran, kelas=kelas)
+    hits = _search_qdrant_dense(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
+
+    results = []
+    for hit in hits:
+        payload = hit.get("payload", {})
+        metadata = payload.get("metadata", {})
+        results.append({
+            "score": hit.get("score", 0.0),
+            "text": payload.get("text", payload.get("page_content", "N/A")),
+            "metadata": metadata,
+            "source_file": payload.get("source_file", metadata.get("source_file", "N/A")),
+            "retrieval_type": "dense",
+        })
+
+    unique_results = deduplicate(results)
+    # Kembalikan top_k teratas (sudah diurutkan Qdrant by score)
+    return unique_results[:top_k]
+
+
+async def _retrieve_hybrid(query: str, top_k: int, mata_pelajaran: Optional[str], kelas: Optional[int]) -> list:
+    """
+    Hybrid retrieval: Dense + SPLADE + BM25 → RRF fusion → dedup
+    → chunk expansion → rerank.
+    Lebih akurat namun lebih berat — gunakan saat infrastruktur siap.
+    """
     retrieve_k = max(top_k * 5, 30)
 
     # 1. Dense Search
@@ -366,6 +423,21 @@ async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str
     # 4. Rerank
     reranked_results = await rerank_results(query, expanded_results, top_k=top_k)
     return reranked_results
+
+
+async def retrieve_text(query: str, top_k: int = 5, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> list:
+    """
+    Entry point retrieval. Memilih strategi berdasarkan SEARCH_MODE:
+      - "dense"  → _retrieve_dense()   (default production)
+      - "hybrid" → _retrieve_hybrid()  (aktifkan saat siap)
+    """
+    if not query.strip():
+        return []
+
+    if SEARCH_MODE == "hybrid":
+        return await _retrieve_hybrid(query, top_k, mata_pelajaran, kelas)
+    else:
+        return await _retrieve_dense(query, top_k, mata_pelajaran, kelas)
 
 def extract_source(chunks: List[dict]) -> List[str]:
     sources = set()
@@ -398,13 +470,13 @@ class RAGEngine:
         """Perform full pipeline search with dynamic chunk sizing and multimodal metadata capabilities."""
         k_text = RAGEngine.get_k_for_type(tipe)
         texts = await retrieve_text(query, top_k=k_text, mata_pelajaran=mapel, kelas=kelas)
-        
+
         images = []
         if tipe in ["quiz_pg", "quiz_essay", "bacaan"]:
             for t in texts:
                 vis = t.get("metadata", {}).get("has_visual_content", [])
                 vis_list = vis if isinstance(vis, list) else [vis] if isinstance(vis, str) else []
-                
+
                 for img in vis_list:
                     # Cek apakah image sudah ada di list
                     if not any(x["path"] == img for x in images if isinstance(x, dict)):
@@ -414,7 +486,7 @@ class RAGEngine:
                             "path": img,
                             "context": context_snippet
                         })
-            
+
         return {
             "text": [{"text": t.get("expanded_text", t["text"]), "source_file": t["source_file"], "visual_context": t.get("metadata", {}).get("has_visual_content", [])} for t in texts],
             "images": images
@@ -467,21 +539,21 @@ def truncate_context_to_budget(text: str, max_tokens: int = 4000, chars_per_toke
     """
     if not text:
         return text
-    
+
     max_chars = max_tokens * chars_per_token
     if len(text) <= max_chars:
         return text
-        
+
     truncated = text[:max_chars]
     last_period = truncated.rfind(". ")
     if last_period > max_chars * 0.5:
         truncated = truncated[:last_period + 1]
-        
+
     return truncated + "\n\n[INFO: Teks referensi dipotong karena batas token]"
 
 def clean_json_from_llm(raw_text: str) -> dict | list:
     raw_text = _fix_json_escapes(raw_text)
-    
+
     # 1. Coba cari di dalam markdown block ```json ... ```
     match = re.search(r'```(?:json)?\s*(.*?)\s*```', raw_text, re.DOTALL)
     if match:
@@ -493,22 +565,22 @@ def clean_json_from_llm(raw_text: str) -> dict | list:
 
     # 2. Kalau gak ada markdown block, bersihkan teks
     clean_text = re.sub(r'```(?:json)?', '', raw_text).strip()
-    
+
     # Cari batas awal dan akhir dari kemungkian Dict atau List
     first_brace = clean_text.find('{')
     last_brace = clean_text.rfind('}')
     first_bracket = clean_text.find('[')
     last_bracket = clean_text.rfind(']')
-    
+
     candidates = []
     if first_brace != -1 and last_brace != -1 and first_brace < last_brace:
         candidates.append(clean_text[first_brace:last_brace+1])
     if first_bracket != -1 and last_bracket != -1 and first_bracket < last_bracket:
         candidates.append(clean_text[first_bracket:last_bracket+1])
-        
+
     # Urutkan berdasarkan panjang string menurun (coba box JSON terbesar lebih dulu)
     candidates.sort(key=len, reverse=True)
-    
+
     for text in candidates:
         try:
             return json.loads(text)
@@ -531,7 +603,7 @@ def clean_json_from_llm(raw_text: str) -> dict | list:
             if depth == 0 and start_idx != -1:
                 potential_blocks.append(clean_text[start_idx:i+1])
                 start_idx = -1
-                
+
     if len(potential_blocks) > 1:
         merged_dict = {}
         success_merge = False
