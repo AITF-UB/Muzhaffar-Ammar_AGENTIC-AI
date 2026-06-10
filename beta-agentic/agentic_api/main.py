@@ -63,7 +63,6 @@ load_dotenv()
 from graph import beta_graph
 from llm import get_llm, get_eval_llm
 from tools import clean_json_from_llm
-from model_registry import preload_all
 
 # ── Import pipeline ──────────────────────────────────────────────────────────
 try:
@@ -250,8 +249,7 @@ def _run_pipeline_task(job_id: str, pdf_path: Path, params: PipelineParams) -> N
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Preload SEMUA model ke memory saat startup agar request pertama tidak lambat
-    preload_all()
+    # Tidak perlu preload model lokal karena berjalan dalam proxy mode
     yield
     print("Shutting down...")
 

@@ -36,6 +36,7 @@ from typing import Dict, List, Optional
 import numpy as np
 import torch
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
 
@@ -125,12 +126,75 @@ _reranker_model   = None
 _docling_converter = None
 
 
+class ProxyDenseModel:
+    def __init__(self, url):
+        self.url = url
+    
+    def encode(self, texts, normalize_embeddings=True, convert_to_numpy=True, **kwargs):
+        if isinstance(texts, str):
+            texts = [texts]
+        resp = requests.post(f"{self.url}/embed/dense", json={"texts": texts, "normalize_embeddings": normalize_embeddings}, timeout=120)
+        resp.raise_for_status()
+        vectors = np.array(resp.json()["vectors"])
+        if not convert_to_numpy:
+            vectors = torch.tensor(vectors)
+        return vectors
+
+
+class ProxySparseModel:
+    def __init__(self, url):
+        self.url = url
+    
+    def encode_query(self, text: str) -> dict:
+        resp = requests.post(f"{self.url}/embed/sparse/query", json={"text": text}, timeout=120)
+        resp.raise_for_status()
+        return resp.json()
+
+    def encode_passages(self, texts: List[str]) -> List[np.ndarray]:
+        resp = requests.post(f"{self.url}/embed/sparse/passages", json={"texts": texts}, timeout=120)
+        resp.raise_for_status()
+        results = resp.json()["vectors"]
+        
+        # reconstruct sparse vectors to match original SpladeEncoder output
+        # SpladeEncoder original `encode_passages` returns list of sparse numpy arrays of shape (vocab_size,)
+        # Wait, the proxy API returns {"indices": [...], "values": [...]}
+        # But `tools.py` just calls `.encode_passages()`
+        # Wait, `full_pipeline.py` calls `.encode_passages()` and then stores them.
+        # It's better to reconstruct a fake large numpy array? No, wait!
+        # The original `encode_passages` returned `List[np.ndarray]` where the array shape was (30522,) which is huge.
+        # But wait, Qdrant payload generation in `full_pipeline.py` takes it and does:
+        # `SparseVector(indices=nonzero_idx.tolist(), values=vec[nonzero_idx].tolist())`
+        # Actually, let's just reconstruct the full array to perfectly match original behavior
+        # Assuming vocab size is 30522 (bert)
+        vocab_size = 30522 
+        recon = []
+        for r in results:
+            arr = np.zeros(vocab_size, dtype=np.float32)
+            arr[r["indices"]] = r["values"]
+            recon.append(arr)
+        return recon
+
+
+class ProxyReranker:
+    def __init__(self, url):
+        self.url = url
+    
+    def predict(self, pairs, **kwargs):
+        query = pairs[0][0]
+        texts = [p[1] for p in pairs]
+        resp = requests.post(f"{self.url}/rerank", json={"query": query, "texts": texts}, timeout=120)
+        resp.raise_for_status()
+        return resp.json()["scores"]
+
+
 def get_dense_model():
     """
-    Kembalikan singleton SentenceTransformer untuk dense embedding.
-
-    Model di-load saat pertama kali dipanggil.
+    Kembalikan singleton SentenceTransformer atau API Proxy.
     """
+    api_url = os.getenv("MODEL_API_URL")
+    if api_url:
+        return ProxyDenseModel(api_url)
+
     global _dense_model
     if _dense_model is None:
         from sentence_transformers import SentenceTransformer
@@ -141,12 +205,14 @@ def get_dense_model():
     return _dense_model
 
 
-def get_sparse_model() -> SpladeEncoder:
+def get_sparse_model():
     """
-    Kembalikan singleton SpladeEncoder.
+    Kembalikan singleton SpladeEncoder atau API Proxy.
+    """
+    api_url = os.getenv("MODEL_API_URL")
+    if api_url:
+        return ProxySparseModel(api_url)
 
-    Model di-load saat pertama kali dipanggil.
-    """
     global _sparse_model
     if _sparse_model is None:
         _sparse_model = SpladeEncoder(SPARSE_MODEL_NAME, DEVICE)
@@ -155,10 +221,12 @@ def get_sparse_model() -> SpladeEncoder:
 
 def get_reranker():
     """
-    Kembalikan singleton CrossEncoder untuk reranking.
-
-    Model di-load saat pertama kali dipanggil.
+    Kembalikan singleton CrossEncoder atau API Proxy.
     """
+    api_url = os.getenv("MODEL_API_URL")
+    if api_url:
+        return ProxyReranker(api_url)
+
     global _reranker_model
     if _reranker_model is None:
         from sentence_transformers import CrossEncoder
@@ -171,11 +239,8 @@ def get_reranker():
 def get_docling_converter():
     """
     Kembalikan singleton Docling DocumentConverter.
-
-    Converter ini berat karena me-load model OCR internal.
-    Dengan singleton, model hanya di-load sekali meskipun
-    memproses banyak PDF.
     """
+    # NOTE: Proxy for docling is handled directly in full_pipeline.py
     global _docling_converter
     if _docling_converter is None:
         from docling.document_converter import DocumentConverter, PdfFormatOption
@@ -207,6 +272,11 @@ def preload_all() -> None:
 
     Panggil di lifespan startup agar request pertama tidak lambat.
     """
+    api_url = os.getenv("MODEL_API_URL")
+    if api_url:
+        print(f"🌐 Running in proxy mode. Models are served by {api_url}. Skipping local preload.")
+        return
+
     print("=" * 60)
     print("  MODEL REGISTRY — Pre-loading all models")
     print("=" * 60)

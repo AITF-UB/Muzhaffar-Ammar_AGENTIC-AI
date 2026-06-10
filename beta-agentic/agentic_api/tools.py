@@ -21,7 +21,6 @@ from model_registry import (
     get_dense_model,
     get_sparse_model,
     get_reranker,
-    get_device,
 )
 
 # Alias agar kode lama yang import get_sentence_model tetap kompatibel
@@ -37,8 +36,6 @@ elif QDRANT_HOST.startswith("https://"):
     QDRANT_HOST = QDRANT_HOST[8:]
 QDRANT_PORT        = int(os.getenv("QDRANT_PORT", 6333))
 TEXT_COLLECTION    = os.getenv("QDRANT_TEXT_COLLECTION")
-
-DEVICE             = get_device()
 
 EXTRACTION_BASE_DIR = Path(__file__).resolve().parent / "extraction"
 

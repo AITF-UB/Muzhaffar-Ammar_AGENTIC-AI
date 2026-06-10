@@ -245,63 +245,101 @@ def step1_extract(config: PipelineConfig) -> List[Path]:
                     working_pdf = sliced_pdf
                     print(f"   ✂️  Menggunakan halaman {s+1}–{e} dari {total_doc_pages} ({e-s} hal)")
 
-            # --- Docling (singleton dari registry) ---
-            converter = get_docling_converter()
-
-            print(f"   🔍 Mengekstrak struktur PDF...")
-            result      = converter.convert(working_pdf)
-            total_pages = len(result.document.pages) if hasattr(result.document, "pages") else "?"
-            print(f"   ✅ Selesai. Total halaman: {total_pages}")
-
-            # --- Kumpulkan elemen ---
-            elements    = []
-            img_counter = 0
-            current_page = 0
-
-            for element, _ in result.document.iterate_items():
-                page_no = element.prov[0].page_no if element.prov else current_page
-                current_page = page_no
-
-                if element.label == "section_header":
-                    elements.append({
-                        "type": "section_header",
-                        "page": page_no,
-                        "text": element.text,
-                    })
-                elif element.label in ("text", "list_item"):
-                    text = element.text.strip()
-                    if text:
+            api_url = os.getenv("MODEL_API_URL")
+            if api_url:
+                import requests
+                import base64
+                print(f"   🌐 Mengirim PDF ke API: {api_url}/extract/docling ...")
+                with open(working_pdf, "rb") as f:
+                    resp = requests.post(f"{api_url}/extract/docling", files={"file": f}, timeout=600)
+                resp.raise_for_status()
+                data = resp.json()
+                total_pages = data.get("total_pages", "?")
+                elements_raw = data.get("elements", [])
+                
+                print(f"   ✅ Selesai (via API). Total halaman: {total_pages}")
+                
+                elements = []
+                img_counter = 0
+                for el in elements_raw:
+                    if "image_base64" in el:
+                        img_counter += 1
+                        page_no = el["page"]
+                        img_filename = f"{el['type']}_p{page_no:03d}_{img_counter:03d}.png"
+                        img_path = image_dir / img_filename
+                        
+                        img_data = base64.b64decode(el["image_base64"])
+                        with open(img_path, "wb") as f:
+                            f.write(img_data)
+                            
                         elements.append({
-                            "type":  element.label,
-                            "page":  page_no,
-                            "text":  text,
+                            "type": el["type"],
+                            "page": page_no,
+                            "img_path": str(img_path),
+                            "img_rel": f"extracted_assets/{img_filename}",
+                            "description": None,
                         })
-                elif element.label == "formula":
-                    elements.append({
-                        "type": "formula",
-                        "page": page_no,
-                        "text": element.text,
-                    })
-                elif element.label in ("picture", "table"):
-                    if hasattr(element, "image") and element.image is not None:
-                        try:
-                            pil_img = element.image.pil_image
-                            if pil_img.width < 80 or pil_img.height < 80:
-                                continue
-                            img_counter += 1
-                            img_filename = f"{element.label}_p{page_no:03d}_{img_counter:03d}.png"
-                            img_path     = image_dir / img_filename
-                            pil_img.save(img_path)
+                        print(f"   🖼️  Simpan gambar dari API: {img_filename}")
+                    else:
+                        elements.append(el)
+            else:
+                # --- Docling (singleton dari registry) ---
+                converter = get_docling_converter()
+
+                print(f"   🔍 Mengekstrak struktur PDF (lokal)...")
+                result      = converter.convert(working_pdf)
+                total_pages = len(result.document.pages) if hasattr(result.document, "pages") else "?"
+                print(f"   ✅ Selesai. Total halaman: {total_pages}")
+
+                # --- Kumpulkan elemen ---
+                elements    = []
+                img_counter = 0
+                current_page = 0
+
+                for element, _ in result.document.iterate_items():
+                    page_no = element.prov[0].page_no if element.prov else current_page
+                    current_page = page_no
+
+                    if element.label == "section_header":
+                        elements.append({
+                            "type": "section_header",
+                            "page": page_no,
+                            "text": element.text,
+                        })
+                    elif element.label in ("text", "list_item"):
+                        text = element.text.strip()
+                        if text:
                             elements.append({
-                                "type":        element.label,
-                                "page":        page_no,
-                                "img_path":    str(img_path),
-                                "img_rel":     f"extracted_assets/{img_filename}",
-                                "description": None,
+                                "type":  element.label,
+                                "page":  page_no,
+                                "text":  text,
                             })
-                            print(f"   🖼️  Simpan gambar: {img_filename}")
-                        except Exception as e_img:
-                            print(f"   ⚠️  Gagal simpan gambar halaman {page_no}: {e_img}")
+                    elif element.label == "formula":
+                        elements.append({
+                            "type": "formula",
+                            "page": page_no,
+                            "text": element.text,
+                        })
+                    elif element.label in ("picture", "table"):
+                        if hasattr(element, "image") and element.image is not None:
+                            try:
+                                pil_img = element.image.pil_image
+                                if pil_img.width < 80 or pil_img.height < 80:
+                                    continue
+                                img_counter += 1
+                                img_filename = f"{element.label}_p{page_no:03d}_{img_counter:03d}.png"
+                                img_path     = image_dir / img_filename
+                                pil_img.save(img_path)
+                                elements.append({
+                                    "type":        element.label,
+                                    "page":        page_no,
+                                    "img_path":    str(img_path),
+                                    "img_rel":     f"extracted_assets/{img_filename}",
+                                    "description": None,
+                                })
+                                print(f"   🖼️  Simpan gambar: {img_filename}")
+                            except Exception as e_img:
+                                print(f"   ⚠️  Gagal simpan gambar halaman {page_no}: {e_img}")
 
             # --- Simpan JSON ---
             structure = {
@@ -1326,7 +1364,7 @@ def step4_ingest(config: PipelineConfig, jsonl_paths: Optional[List[Path]] = Non
     )
 
     # ── Import model dari centralized registry ─────────────────────────────
-    from model_registry import get_dense_model, get_sparse_model, SpladeEncoder
+    from model_registry import get_dense_model, get_sparse_model, ProxySparseModel as SpladeEncoder
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
