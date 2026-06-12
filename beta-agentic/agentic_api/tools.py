@@ -411,7 +411,7 @@ async def _retrieve_hybrid(query: str, top_k: int, mata_pelajaran: Optional[str]
     → chunk expansion → rerank.
     Lebih akurat namun lebih berat — gunakan saat infrastruktur siap.
     """
-    retrieve_k = max(top_k * 5, 30)
+    retrieve_k = max(top_k * 5, 15)
 
     # 1. Dense Search
     vector = await embed_text_for_text_vdb(query)

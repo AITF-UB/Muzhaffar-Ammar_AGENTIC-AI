@@ -23,8 +23,6 @@ services:
       - ../outputs:/app/outputs
     env_file:
       - ./.env
-    environment:
-      - MODEL_API_URL=http://model_api:8003
     restart: unless-stopped
     deploy:
       resources:
