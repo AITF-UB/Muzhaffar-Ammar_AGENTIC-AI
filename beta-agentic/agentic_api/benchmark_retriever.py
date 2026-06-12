@@ -373,8 +373,11 @@ def benchmark_hybrid(query: str, top_k: int) -> StageTimings:
     # Stage 6: Dedup
     unique_results, dedup_ms = dedup(fused_results)
 
+    docs_to_rerank = unique_results[:15] 
+
+
     # Stage 7: Rerank
-    reranked, rerank_ms = rerank(query, unique_results, top_k)
+    reranked, rerank_ms = rerank(query, docs_to_rerank, top_k)
 
     total = embed_ms + qdrant_dense_ms + splade_ms + bm25_ms + rrf_ms + dedup_ms + rerank_ms
 

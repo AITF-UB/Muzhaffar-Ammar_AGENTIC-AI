@@ -436,7 +436,14 @@ async def _retrieve_hybrid(query: str, top_k: int, mata_pelajaran: Optional[str]
     # 3. RRF + Dedup + Expand
     fused_results = reciprocal_rank_fusion(dense_results, splade_results, bm25_results)
     unique_results = deduplicate(fused_results)
-    expanded_results = expand_chunk_context(unique_results, window=1)
+    
+    # [OPTIMASI RERANKER & EXPANSION]
+    # Batasi dokumen yang masuk ke proses ekspansi dan reranking (max 15).
+    # Ini sangat penting agar Qdrant tidak di-query 90x untuk ekspansi,
+    # dan model reranker (cross-encoder) tidak kewalahan memproses teks.
+    docs_to_process = unique_results[:15]
+    
+    expanded_results = expand_chunk_context(docs_to_process, window=1)
 
     # 4. Rerank
     reranked_results = await rerank_results(query, expanded_results, top_k=top_k)
