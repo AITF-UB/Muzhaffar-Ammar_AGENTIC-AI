@@ -123,7 +123,7 @@ def get_llm():
         
         return ChatOllama(
             base_url=os.getenv("NGROK_KAGGLE_OLLAMA"),
-            model=os.getenv("KAGGLE_OLLAMA_MODEL_ID", "qwen3.5:9b"), 
+            model=os.getenv("KAGGLE_OLLAMA_MODEL_ID", "qwen3.6:35b"), 
             temperature=0.3
         )
 

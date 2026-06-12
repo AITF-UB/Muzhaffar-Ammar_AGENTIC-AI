@@ -88,20 +88,22 @@ async def embed_text_for_text_vdb(query: str) -> list:
 # ================================================================
 def _search_qdrant_dense(collection: str, vector: list, top_k: int, filter_payload: Optional[dict] = None) -> list:
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/search"
-    payload = {"vector": {"name": "dense", "vector": vector}, "limit": top_k, "with_payload": True}
+    payload = {
+        "vector": {"name": "dense", "vector": vector},
+        "limit": top_k,
+        "with_payload": {
+            "exclude": ["has_visual_content"]
+        },
+    }
     if filter_payload:
         payload["filter"] = filter_payload
     try:
         response = requests.post(url, json=payload, timeout=120)
-
-        # Fallback ke vector biasa jika collection tidak pakai named vectors (seperti srma-22)
         if response.status_code == 400 and "Not existing vector name error" in response.text:
             payload["vector"] = vector
             response = requests.post(url, json=payload, timeout=120)
-
         if response.status_code != 200:
             print(f"⚠️ Qdrant Dense Error Body: {response.text}")
-
         response.raise_for_status()
         return response.json().get("result", [])
     except Exception as e:
@@ -118,7 +120,9 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
     payload = {
         "vector": {"name": "sparse", "vector": sparse_vector},
         "limit": top_k,
-        "with_payload": True
+        "with_payload": {
+            "exclude": ["has_visual_content"]
+        },
     }
     if filter_payload:
         payload["filter"] = filter_payload
@@ -133,13 +137,14 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
 
         results = []
         for hit in hits:
+            # Payload Qdrant FLAT (tidak ada nesting "metadata"),
+            # jadi seluruh payload diperlakukan sebagai metadata.
             payload_data = hit.get("payload", {})
-            metadata = payload_data.get("metadata", {})
             results.append({
                 "score": hit.get("score", 0.0),
                 "text": payload_data.get("text", payload_data.get("page_content", "N/A")),
-                "metadata": metadata,
-                "source_file": payload_data.get("source_file", metadata.get("source_file", "N/A")),
+                "metadata": payload_data,
+                "source_file": payload_data.get("source_file", "N/A"),
                 "retrieval_type": "splade"
             })
         return results
@@ -149,7 +154,13 @@ def _search_qdrant_splade(collection: str, query: str, top_k: int, filter_payloa
 
 def _scroll_qdrant(collection: str, scroll_filter: dict, limit: int = 200) -> list:
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{collection}/points/scroll"
-    payload = {"filter": scroll_filter, "limit": limit, "with_payload": True}
+    payload = {
+        "filter": scroll_filter,
+        "limit": limit,
+        "with_payload": {
+            "exclude": ["has_visual_content"]
+        },
+    }
     try:
         response = requests.post(url, json=payload, timeout=120)
         response.raise_for_status()
@@ -159,6 +170,9 @@ def _scroll_qdrant(collection: str, scroll_filter: dict, limit: int = 200) -> li
         return []
 
 def _build_qdrant_filter(asset_type: Optional[str] = None, source: Optional[str] = None, mata_pelajaran: Optional[str] = None, kelas: Optional[int] = None) -> Optional[dict]:
+    # Field-field ini ada di top-level payload (sudah dikonfirmasi dari
+    # screenshot payload Qdrant: mata_pelajaran, kelas, source_file, dst
+    # semua flat, tidak nested di bawah "metadata").
     conditions = []
     if asset_type: conditions.append({"key": "asset_type", "match": {"value": asset_type}})
     if source: conditions.append({"key": "source", "match": {"value": source}})
@@ -173,7 +187,6 @@ def build_bm25_index():
     global _bm25, _bm25_docs
     if _bm25 is not None:
         return
-
     if BM25_CACHE_PATH.exists():
         print(f"📦 Loading BM25 dari cache: {BM25_CACHE_PATH}")
         with open(BM25_CACHE_PATH, "rb") as f:
@@ -181,14 +194,17 @@ def build_bm25_index():
         _bm25 = cache["bm25"]
         _bm25_docs = cache["docs"]
         return
-
     print("⏳ Building BM25 index dari Qdrant (pertama kali)...")
     url = f"http://{QDRANT_HOST}:{QDRANT_PORT}/collections/{TEXT_COLLECTION}/points/scroll"
     all_points = []
     offset = None
-
     while True:
-        payload = {"limit": 1000, "with_payload": True}
+        payload = {
+            "limit": 1000,
+            "with_payload": {
+                "exclude": ["has_visual_content"]
+            }
+        }
         if offset is not None:
             payload["offset"] = offset
         try:
@@ -202,21 +218,22 @@ def build_bm25_index():
         except Exception as e:
             print(f"❌ BM25 scroll error: {e}")
             break
-
     corpus = []
     docs = []
     for p in all_points:
         payload = p.get("payload", {})
         text = payload.get("text", payload.get("page_content", ""))
         if not text: continue
-        metadata = payload.get("metadata", {})
+        # Payload Qdrant FLAT — seluruh payload diperlakukan sebagai metadata
+        # (mata_pelajaran, kelas, chunk_index, source_file, dll semua di sini).
+        # has_visual_content sudah di-exclude di level request di atas.
+        metadata = payload
         docs.append({
             "text": text,
             "metadata": metadata,
-            "source_file": payload.get("source_file", metadata.get("source_file", "N/A"))
+            "source_file": payload.get("source_file", "N/A")
         })
         corpus.append(tokenize(text))
-
     if corpus:
         _bm25 = BM25Okapi(corpus)
         _bm25_docs = docs
@@ -324,8 +341,8 @@ def expand_chunk_context(docs: list, window=1) -> list:
         chunks = []
         for p in points:
             payload = p.get("payload", {})
-            meta = payload.get("metadata", {})
-            idx = meta.get("chunk_index")
+            # Payload flat — chunk_index langsung di top-level payload
+            idx = payload.get("chunk_index")
             if idx is not None and min_idx <= idx <= max_idx:
                 text = payload.get("text", payload.get("page_content", ""))
                 if text: chunks.append((idx, text))
@@ -369,13 +386,17 @@ async def _retrieve_dense(query: str, top_k: int, mata_pelajaran: Optional[str],
 
     results = []
     for hit in hits:
+        # Payload Qdrant FLAT (tidak ada nesting "metadata").
+        # Seluruh payload (chunk_index, mata_pelajaran, kelas,
+        # has_visual_content, dll) diperlakukan sebagai metadata,
+        # supaya dedup, chunk expansion, dan info gambar di
+        # RAGEngine.unified_search bisa berfungsi dengan benar.
         payload = hit.get("payload", {})
-        metadata = payload.get("metadata", {})
         results.append({
             "score": hit.get("score", 0.0),
             "text": payload.get("text", payload.get("page_content", "N/A")),
-            "metadata": metadata,
-            "source_file": payload.get("source_file", metadata.get("source_file", "N/A")),
+            "metadata": payload,
+            "source_file": payload.get("source_file", "N/A"),
             "retrieval_type": "dense",
         })
 
@@ -398,13 +419,13 @@ async def _retrieve_hybrid(query: str, top_k: int, mata_pelajaran: Optional[str]
     hits = _search_qdrant_dense(TEXT_COLLECTION, vector, retrieve_k, filter_payload=payload_filter)
     dense_results = []
     for hit in hits:
+        # Payload Qdrant FLAT — seluruh payload diperlakukan sebagai metadata.
         payload = hit.get("payload", {})
-        metadata = payload.get("metadata", {})
         dense_results.append({
             "score": hit.get("score", 0.0),
             "text": payload.get("text", payload.get("page_content", "N/A")),
-            "metadata": metadata,
-            "source_file": payload.get("source_file", metadata.get("source_file", "N/A")),
+            "metadata": payload,
+            "source_file": payload.get("source_file", "N/A"),
             "retrieval_type": "dense"
         })
 
@@ -471,6 +492,8 @@ class RAGEngine:
         images = []
         if tipe in ["quiz_pg", "quiz_essay", "bacaan"]:
             for t in texts:
+                # metadata sekarang = seluruh payload (flat), jadi
+                # has_visual_content benar-benar terbaca dari Qdrant.
                 vis = t.get("metadata", {}).get("has_visual_content", [])
                 vis_list = vis if isinstance(vis, list) else [vis] if isinstance(vis, str) else []
 
